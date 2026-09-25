@@ -1,0 +1,58 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+skill: "egm_draft"
+description: "Behavioral evaluation scenario suite for egm_draft skill."
+
+scenarios:
+  - scenario_id: "draft_and_write_design_doc"
+    description: "Tests complete document generation matching the template structure."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_draft/SKILL.md"
+      rules:
+        - "rules/anti_sycophancy.md"
+    turns:
+      - user_input: "Draft an initial design doc for adding rate limiting to the ingress API."
+        assertions:
+          - type: "required_pattern"
+            pattern: "(Problem Statement|Overview|Goals|Non-Goals|Alternatives Considered)"
+            message: "Draft must include standard design document sections."
+          - type: "not_contains"
+            pattern: "```python"
+            message: "Drafting phase must not emit Python implementation code."
+
+  - scenario_id: "artifact_first_delivery"
+    description: "Asserts design drafts are written to artifacts rather than dumped in chat."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_draft/SKILL.md"
+    turns:
+      - user_input: "Generate the design document for the rate limiter service."
+        assertions:
+          - type: "required_pattern"
+            pattern: "(artifact|write_to_file|saved)"
+            message: "Draft output should reference writing an artifact document."
+
+  - scenario_id: "relative_link_formatting_spec"
+    description: "Verifies proper relative link formatting across subdirectories and siblings."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_draft/SKILL.md"
+    turns:
+      - user_input: "How should links to sibling packages and subdirectories be formatted in our markdown docs?"
+        assertions:
+          - type: "required_pattern"
+            pattern: "(\\./|\\.\\./|\\[.+?\\]\\(\\.\\.?/)"
+            message: "Must recommend relative paths for intra-package/sibling links."

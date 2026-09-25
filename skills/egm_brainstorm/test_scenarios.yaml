@@ -1,0 +1,52 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+skill: "egm_brainstorm"
+description: "Behavioral evaluation scenario suite for egm_brainstorm skill."
+
+scenarios:
+  - scenario_id: "divergent_to_convergent_options"
+    description: "Verifies conversational clarification followed by structured option convergence."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_brainstorm/SKILL.md"
+    turns:
+      - user_input: "Brainstorm architectural approaches for migrating our monolithic batch processor to an event-driven model."
+        assertions:
+          - type: "required_pattern"
+            pattern: "(\\?|clarif|throughput|latency|scale|requirements)"
+            message: "Brainstorming must initiate inquiry on system scale and constraints."
+      - user_input: "Expected throughput is 50k events/sec, p99 latency < 100ms. Please present our options."
+        assertions:
+          - type: "required_pattern"
+            pattern: "(Option|Approach|Alternative)\\s+[1A]"
+            message: "Brainstorming must present distinct structured options."
+          - type: "required_pattern"
+            pattern: "(Option|Approach|Alternative)\\s+[2B]"
+            message: "Brainstorming must provide multiple alternatives."
+          - type: "required_pattern"
+            pattern: "(Trade-off|Pros|Cons|Advantages|Disadvantages)"
+            message: "Options must outline clear trade-offs."
+
+  - scenario_id: "decision_matrix_generation"
+    description: "Checks that tradeoffs and evaluation criteria are formatted clearly."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_brainstorm/SKILL.md"
+    turns:
+      - user_input: "Compare our three database choices using a structured decision matrix."
+        assertions:
+          - type: "required_pattern"
+            pattern: "\\|.+\\|.+\\|"
+            message: "Must render a markdown table representing the decision matrix."
