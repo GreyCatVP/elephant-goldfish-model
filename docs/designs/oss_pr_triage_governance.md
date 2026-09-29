@@ -308,7 +308,8 @@ on direction before investing in a full design document or implementation:
 The advisory engine operates as a non-blocking GitHub Actions workflow.
 
 *   **Workflow Execution**: Triggered on `pull_request_target` (`opened`,
-    `edited`, `synchronize`) using `actions/github-script@v7`.
+    `edited`, `synchronize`, annotated with `# zizmor: ignore[dangerous-triggers]`)
+    using commit-pinned `actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b` (`v7.1.0`).
 *   **Diff Calculation Engine**:
     *   Fetches the paginated list of modified files via GitHub REST API
         (`github.rest.pulls.listFiles`), capped at 3 pages (`300` files).
