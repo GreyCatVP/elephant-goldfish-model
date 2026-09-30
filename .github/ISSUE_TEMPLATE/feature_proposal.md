@@ -25,7 +25,7 @@ limitations under the License.
 <!-- 1-2 plain-English paragraphs explaining the user need, problem, or motivation for reaching out. -->
 
 ## Proposed Scope (Goals vs. Non-Goals)
-<!-- High-level summary of what is in scope and out of scope (e.g., generated via `/egm-brainstorm` or `/egm-discuss`). Once maintainers apply `status: approved-for-design`, open a Stage-1 Design Doc PR (`Refs #<issue>`) adding `docs/designs/<name>.md`; when maintainers merge that PR, they will apply `status: approved-for-pr` for your Stage-2 Implementation PR (`Closes #<issue>`). -->
+<!-- High-level summary of what is in scope and out of scope (e.g., generated via `/egm-brainstorm`). Once maintainers apply `status: approved-for-design`, open a Stage-1 Design Doc PR (`Refs #<issue>`) adding `docs/designs/<name>.md`; when maintainers merge that PR, they will apply `status: approved-for-pr` for your Stage-2 Implementation PR (`Closes #<issue>`). -->
 
 ### 1. Proposed Overview
 <!-- High-level summary of the proposed change. -->

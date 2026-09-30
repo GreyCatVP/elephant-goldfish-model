@@ -54,7 +54,7 @@ follows the EGM Spec-Driven Development process:
     [Feature / Architectural Inquiry Issue](https://github.com/google/elephant-goldfish-model/issues/new?template=feature_proposal.md)
     (`.github/ISSUE_TEMPLATE/feature_proposal.md`) outlining the problem
     statement and proposed `Goals` vs. `Non-Goals` (e.g., using
-    `/egm-brainstorm` or `/egm-discuss`). Maintainers will review and apply
+    `/egm-brainstorm`). Maintainers will review and apply
     `status: approved-for-design` once aligned on direction.
 
 2.  **Draft & Review Design Specification**:

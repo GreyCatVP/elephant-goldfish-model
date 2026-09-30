@@ -131,19 +131,13 @@ punitive auto-close bots that discourage community engagement.
 
 --------------------------------------------------------------------------------
 
-## Open Questions
+## Key Design Decisions
 
-*   **Question 1 (Resolved)**: Should the non-test diff threshold for the
-    advisory bot be strictly 100 lines, or should it scale dynamically based on
-    the directory touched (e.g., lower for core prompt templates in `rules/`,
-    higher for utility scripts)? *Decision*: Maintain the uniform 100-line
-    non-test diff threshold across all directories; any patch exceeding 100
-    non-test lines (even bug patching) warrants additional explanation and
-    review context.
-*   **Question 2 (Resolved)**: How should contributors initiate large changes
-    (`> 100` non-test lines or `>= 3` core files), and how are design documents
-    reviewed and persisted before implementation begins? *Decision*:
-    Contributors first reach out to maintainers via a GitHub Issue
+*   **Diff Threshold Uniformity**: Maintain the uniform 100-line non-test diff
+    threshold across all directories; any patch exceeding 100 non-test lines
+    (even bug patching) warrants additional explanation and review context.
+*   **Two-Stage Feature Progression**: Contributors first reach out to
+    maintainers via a GitHub Issue
     (`.github/ISSUE_TEMPLATE/feature_proposal.md`). When maintainers agree the
     problem is worth solving, they apply `status: approved-for-design`,
     authorizing the contributor to open a Stage-1 **Design Doc PR** (`Refs
@@ -154,6 +148,12 @@ punitive auto-close bots that discourage community engagement.
     which point maintainers manually transition the issue label to `status:
     approved-for-pr` for the subsequent Stage-2 **Implementation PR** (`Closes
     #<issue>`).
+
+--------------------------------------------------------------------------------
+
+## Open Questions
+
+*None.* All architectural decisions have been resolved.
 
 --------------------------------------------------------------------------------
 
@@ -221,87 +221,33 @@ Hardening.
 
 ### 1. Governance Policies (`AI_POLICY.md` & `AGENTS.md`)
 
-The policy layer defines legal, ethical, and operational expectations for both
-human contributors and automated agents.
+The repository's policy layer establishes enforceable boundaries for both human
+contributors and AI coding agents:
 
-*   **Location**: At the root of the repository (`AI_POLICY.md` and
-    `AGENTS.md`).
-*   **Codified Clause**:
-
-    > "We encourage using AI tools when developing changes for our codebase.
-    > However, purely autonomous contributions are not accepted; human
-    > contributors must review, understand, and explain every submitted change."
-
-*   **Operational Directives**:
-
-    1.  **Autonomous Submission Prohibition**: Issues, pull requests, and
-        comments must not be created autonomously by bots or automated scripts
-        without direct human inspection.
-    2.  **Interactive Defense**: Contributors must be capable of answering
-        maintainer review questions directly. Copying maintainer comments into
-        an LLM and pasting unverified model responses back into review threads
-        is explicitly prohibited.
-    3.  **EGM Dogfooding & Two-Stage Feature Progression**: Contributors
-        planning a feature or large change (`> 100` non-test lines or `>= 3`
-        core files in `skills/`, `personas/`, or `rules/`) should:
-        *   **a)** Reach out to maintainers first via a GitHub Issue
-            (`.github/ISSUE_TEMPLATE/feature_proposal.md`) to receive `status:
-            approved-for-design`.
-        *   **b)** Submit and merge a full EGM design document PR
-            (`docs/designs/<name>.md` authored via `/egm-brainstorm`,
-            `/egm-draft`, and `/egm-review`, using `Refs #<issue>`) so
-            maintainers can apply `status: approved-for-pr`.
-        *   **c)** Submit and merge an implementation PR of the approved design
-            into the codebase (`Closes #<issue>`).
-    4.  **No Artificial PR Splitting**: Contributors and agents must not
-        artificially split a cohesive change into multiple smaller pull requests
-        (e.g., two 60-line PRs) to bypass the 100-line scope threshold.
+*   **[`AI_POLICY.md`](../../AI_POLICY.md)**: Establishes human-in-the-loop
+    accountability for AI-assisted contributions (prohibiting unreviewed
+    autonomous PR creation, requiring interactive defense in review threads,
+    and enforcing two-stage EGM alignment for features).
+*   **[`AGENTS.md`](../../AGENTS.md)**: Defines hard operational constraints for
+    automated coding agents operating in the repository (restricting push/PR
+    capabilities, requiring human authorization for external actions, and
+    prohibiting artificial PR splitting to circumvent scope limits).
 
 ### 2. Ingestion Templates
 
-#### A. Pull Request Template (`.github/PULL_REQUEST_TEMPLATE.md`)
+The ingestion layer introduces cognitive speed bumps at the point of
+contribution:
 
-The PR template provides cognitive speed bumps via structured sections:
-
-1.  **Contribution Taxonomy**:
-    *   `[ ] Bug Fix / Minor Patch` (targeted fixes without behavioral changes,
-        non-test diff `<= 100` lines and `< 3` core files in `skills/`,
-        `personas/`, `rules/`; no design doc required).
-    *   `[ ] Feature / Architectural Change -- Stage 1: Design Doc PR` (`Refs
-        #___` with `status: approved-for-design` | Adds
-        `docs/designs/<name>.md` and updates `docs/designs/README.md`).
-    *   `[ ] Feature / Architectural Change -- Stage 2: Implementation PR`
-        (`Closes #___` with `status: approved-for-pr` | Implements merged
-        `docs/designs/<name>.md`).
-2.  **Summary of Key Changes**:
-    *   Concise bullet points describing all key changes made in the pull
-        request and why.
-3.  **Human Accountability Affirmation**:
-    *   `[ ] I am a human contributor. I have personally reviewed, understood,
-        and can explain every line of this change in review (using AI tools to
-        write code is welcome, but human understanding of the submitted change
-        is required).`
-4.  **Verification Details**:
-    *   Stage-1 Design Doc PR verification (`/egm-review`,
-        `/goldfish-review-resolve`, and `pytest tests/unit/test_link_integrity.py`)
-        and Stage-2 / Bug Fix verification (`pytest tests/unit` and
-        `test_scenarios.yaml`).
-
-#### B. Feature Inquiry Issue Template (`.github/ISSUE_TEMPLATE/feature_proposal.md`)
-
-The issue template (`labels: ["feature-inquiry", "needs-triage"]`) provides a
-low-friction touchpoint for contributors to reach out to maintainers and align
-on direction before investing in a full design document or implementation:
-
-1.  **Problem Statement & Motivation**: 1–2 plain-English paragraphs defining
-    the problem or user need.
-2.  **Proposed Direction (`Goals` vs. `Non-Goals`)**: High-level summary of
-    in-scope goals and out-of-scope non-goals (e.g., from `/egm-brainstorm` or
-    `/egm-discuss`) so maintainers can confirm directional alignment (`status:
-    approved-for-design`). Once approved for design, the contributor opens a
-    Stage-1 Design Doc PR (`docs/designs/<name>.md` using `Refs #<issue>`),
-    which upon merge prompts maintainers to transition the issue to `status:
-    approved-for-pr` for the Stage-2 Implementation PR (`Closes #<issue>`).
+*   **Pull Request Template ([`.github/PULL_REQUEST_TEMPLATE.md`](../../.github/PULL_REQUEST_TEMPLATE.md))**:
+    Provides structured track selection (Bug Fix vs. Stage-1 Design Doc PR vs.
+    Stage-2 Implementation PR), requires a concise summary of all key changes
+    made and why, mandates a human accountability affirmation, and specifies
+    verification steps.
+*   **Feature Inquiry Issue Template ([`.github/ISSUE_TEMPLATE/feature_proposal.md`](../../.github/ISSUE_TEMPLATE/feature_proposal.md))**:
+    A low-friction template (`labels: ["feature-inquiry", "needs-triage"]`) for
+    contributors to outline problem statements and high-level scope (e.g., from
+    `/egm-brainstorm`) so maintainers can confirm directional alignment
+    (`status: approved-for-design`) before a design document is drafted.
 
 ### 3. Automated Scope Advisory Engine (`pr-scope-advisory.yml`)
 
