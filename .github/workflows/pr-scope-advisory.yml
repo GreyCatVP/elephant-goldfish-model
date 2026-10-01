@@ -1,0 +1,109 @@
+# Copyright 2026 Google LLC.
+# SPDX-License-Identifier: Apache-2.0
+
+name: "PR Scope Advisory"
+
+on:
+  # zizmor: ignore[dangerous-triggers] - Only inspects PR metadata/diff stats and posts advisory comment; never checks out or executes untrusted code.
+  pull_request_target:
+    types: [opened, edited, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  scope-advisory:
+    name: "Evaluate PR Scope"
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read # Required to list changed files on the PR
+      issues: write # Required to post/update advisory comments and labels
+      contents: read # Required for baseline repository metadata access
+    steps:
+      - name: "Analyze PR Scope and Track"
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const body = pr.body || "";
+            const isBugFix = /\[[xX]\]\s*\*\*Bug Fix/i.test(body);
+
+            // Fetch changed files (paginated, capped at 3 pages / 300 files)
+            let pageCount = 0;
+            const files = await github.paginate(
+              github.rest.pulls.listFiles,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                per_page: 100
+              },
+              (response, done) => {
+                if (++pageCount >= 3) {
+                  done();
+                }
+                return response.data;
+              }
+            );
+
+            // Path filter: Exclude docs/**, README.md, TEST.md, lockfiles, tests/**, and test_* / *_test files.
+            // Core executable Markdown definitions in skills/**, personas/**, and rules/** remain included.
+            const testOrDocRegex = /(^|\/)docs\/|(^|\/)(README|TEST)\.md$|.*\.lock$|package-lock\.json$|(^|\/)(tests?|testdata)\/|((^|\/)test_[^/]+|_test|\.test|\.spec)\.[a-zA-Z0-9]+$/;
+
+            let nonTestChanges = 0;
+            let coreFilesCount = 0;
+
+            for (const file of files) {
+              const isTestOrDoc = testOrDocRegex.test(file.filename);
+              if (!isTestOrDoc) {
+                nonTestChanges += file.changes;
+                if (/^(skills|personas|rules)\//.test(file.filename)) {
+                  coreFilesCount++;
+                }
+              }
+            }
+
+            const advisoryLabel = "advisory: design-doc-suggested";
+            const signature = "<!-- egm-scope-advisory -->";
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                per_page: 100
+              }
+            );
+            const existingComment = comments.find(c => (c.body || "").includes(signature));
+
+            const shouldAdvise = isBugFix && (nonTestChanges > 100 || coreFilesCount >= 3 || files.length >= 300);
+
+            if (shouldAdvise) {
+              if (!existingComment) {
+                const message = `${signature}\n### 💡 Contribution Scope Advisory\n\nThank you for your contribution! This PR is marked as a **Bug Fix**, but modifies **${nonTestChanges} non-test lines** across **${coreFilesCount} core definition files** (\`skills/\`, \`personas/\`, \`rules/\`).\n\nFor changes exceeding 100 non-test lines or touching 3+ core files, we recommend reaching out to maintainers first via a [Feature Inquiry Issue](https://github.com/${context.repo.owner}/${context.repo.repo}/issues/new?template=feature_proposal.md) (\`status: approved-for-design\`), merging a full EGM design document PR (\`docs/designs/<name>.md\`) authored with \`/egm-brainstorm\`, \`/egm-draft\`, and \`/egm-review\`, and then submitting the implementation PR (\`status: approved-for-pr\`).\n\n*Note: This is a non-blocking advisory; your PR remains open in the maintainer queue.*`;
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: message
+                });
+              }
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: [advisoryLabel]
+              }).catch(() => {});
+            } else {
+              // Bidirectional label cleanup if diff is trimmed or track is switched
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                name: advisoryLabel
+              }).catch(() => {});
+            }

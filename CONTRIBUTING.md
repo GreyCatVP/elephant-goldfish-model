@@ -1,17 +1,6 @@
 <!--
-Copyright 2026 Google LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Copyright 2026 Google LLC.
+SPDX-License-Identifier: Apache-2.0
 -->
 
 # Contributing to the Elephant & Goldfish Model (EGM)
@@ -30,36 +19,57 @@ These general principles guide development of the EGM framework:
 *   **Living Specifications**: Code and design specifications must evolve
     together.
 
-## Contribution Workflow
+## Contribution Tracks & Workflow
 
-Any non-trivial feature, new skill, or architectural change should follow the
-EGM Spec-Driven Development process:
+All contributions must comply with our [AI & Automated Contribution Policy](AI_POLICY.md):
+every pull request requires a human author who has personally reviewed, tested,
+and can explain every line of changed code.
 
-1.  **Discuss & Ideate**:
-    Start by framing the problem using `/egm-brainstorm` or `/egm-discuss`.
-    Align on goals, constraints, non-goals, and alternatives before writing code.
+Contributions follow a two-track intake model defined in
+[`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md):
 
-2.  **Draft Design Specification**:
-    Draft a technical design specification under `docs/designs/<feature>.md`
-    using `/egm-draft`.
+### Track 1: Bug Fix / Minor Patch (`<= 100` Non-Test Lines, `< 3` Core Files)
+Targeted fixes, typo corrections, and test additions that do not alter core
+agent behavior or touch 3+ core files (`skills/`, `personas/`, `rules/`) can be
+submitted directly as a Pull Request without a prior issue or design document.
 
-3.  **Goldfish Review**:
-    Run `/egm-review docs/designs/<feature>.md` to stress-test your proposal
-    against the EGM document standards. Triage and resolve findings using
+### Track 2: Feature / Architectural Change (Two-Stage Alignment)
+Any new skill, persona, behavioral rule, or change exceeding `100` non-test
+lines (or touching `>= 3` core files in `skills/`, `personas/`, `rules/`)
+follows the EGM Spec-Driven Development process:
+
+1.  **Reach Out & Align (`status: approved-for-design`)**:
+    Before investing in a large implementation or full specification, open a
+    [Feature / Architectural Inquiry Issue](https://github.com/google/elephant-goldfish-model/issues/new?template=feature_proposal.md)
+    (`.github/ISSUE_TEMPLATE/feature_proposal.md`) outlining the problem
+    statement and proposed `Goals` vs. `Non-Goals` (e.g., using
+    `/egm-brainstorm`). Maintainers will review and apply
+    `status: approved-for-design` once aligned on direction.
+
+2.  **Draft & Review Design Specification**:
+    Draft a technical design specification under `docs/designs/<name>.md`
+    using `/egm-draft`, and register it in [`docs/designs/README.md`](docs/designs/README.md).
+    Run `/egm-review docs/designs/<name>.md` to stress-test your proposal
+    against the EGM document standards and resolve findings with
     `/goldfish-review-resolve`.
 
-4.  **Open a Pull Request**:
-    Submit your proposed design specification in a PR. Tag the PR description
-    with `#egm`.
+3.  **Submit a Stage-1 Design Doc PR (`status: approved-for-pr`)**:
+    Open a dedicated **Design Doc PR** containing `docs/designs/<name>.md`
+    and `docs/designs/README.md` (referencing your aligned issue with
+    `Refs #<issue>` rather than `Closes #<issue>` so the issue stays open).
+    When maintainers merge the Design Doc PR, the specification is checked into
+    the codebase and maintainers manually transition the issue label to
+    `status: approved-for-pr`.
 
-5.  **Implement against the Spec**:
-    Once the specification is merged or approved, implement code following the
-    detailed execution plan.
+4.  **Submit the Stage-2 Implementation PR**:
+    Once the specification is merged and your issue is labeled
+    `status: approved-for-pr`, open the implementation PR (`Closes #<issue>`)
+    referencing `docs/designs/<name>.md`.
 
 ## Automated Validation & Testing
 
 *   **Skill Definitions**: Ensure all `SKILL.md` files contain valid YAML
-    frontmatter (`name`, `description`, `inputs`).
+    frontmatter (`name`, `description`, and optional `disable-model-invocation`).
 *   **Evaluation Suites**: New skills must include a co-located behavioral
     evaluation suite in `skills/<skill_name>/test_scenarios.yaml` and
     verification instructions in `skills/<skill_name>/TEST.md`. See

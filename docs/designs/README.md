@@ -1,17 +1,6 @@
 <!--
-Copyright 2026 Google LLC
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    https://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Copyright 2026 Google LLC.
+SPDX-License-Identifier: Apache-2.0
 -->
 
 # EGM Design Specifications
@@ -32,3 +21,4 @@ operational guardrails.
 | [rules.md](rules.md)<br>Persistent behavioral, anti-sycophancy, link hygiene, and formatting constraints injected across agent sessions. | [@quinnjim](https://github.com/quinnjim) | [`rules/`](../../rules/) |
 | [synthesizer.md](synthesizer.md)<br>Intermediate orchestration subagent to coordinate swarm fan-out, deduplicate critiques, and normalize link citations. | [@briansuchy](https://github.com/briansuchy) | [`synthesizer`](../../personas/synthesizer.md) |
 | [oss_testing_architecture.md](oss_testing_architecture.md)<br>Two-tiered static verification (`pytest`) and provider-agnostic LiteLLM behavioral evaluation architecture. | [@eewing314](https://github.com/eewing314) | [Testing & Evaluation](../../TESTING.md) |
+| [oss_pr_triage_governance.md](oss_pr_triage_governance.md)<br>Open-source PR triage, contributor speed bumps, two-stage design alignment, and automated scope advisory architecture. | [@briansuchy](https://github.com/briansuchy) | [Contribution Governance](../../CONTRIBUTING.md) |
