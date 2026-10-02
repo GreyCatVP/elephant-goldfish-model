@@ -33,7 +33,7 @@ on the problem and high-level architecture.
 ## Execution Constraints (CRITICAL)
 
 1.  You **MUST** read and apply the
-    [execution instructions](references/instructions.md).
+    execution instructions in `resources/execution_instructions.md`.
 2.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, summaries, or plans directly in the chat
     pane. You **MUST** write them directly to the working directory (or your harness's artifact directory, if it has one)
@@ -133,7 +133,7 @@ consensus from the user. Confirm with the user before proceeding between steps.
 
     *   **Self-Evaluate against Zoom Out Standard**: Before saving, perform a
         self-evaluation of the proposed architecture against the standard in
-        `references/zoom-out-standard.md`.
+        `resources/document_standards/zoom-out-standard.md`.
         Ensure the design focuses on the root problem, avoids premature
         optimization and speculative features (YAGNI), and leverages existing
         codebase utilities. If you detect any potential violations, note them as
