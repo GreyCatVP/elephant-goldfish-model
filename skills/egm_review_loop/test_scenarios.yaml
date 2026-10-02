@@ -12,18 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-skill: "goldfish_review_resolve"
-description: "Behavioral evaluation scenario suite for goldfish_review_resolve skill."
+skill: "egm_review_loop"
+description: "Behavioral evaluation scenario suite for egm_review_loop skill."
 
 scenarios:
-  - scenario_id: "resolve_findings_gate"
-    description: "Verifies review comments are systematically classified, addressed, and verified."
+  - scenario_id: "orchestrate_parallel_critiques"
+    description: "Verifies review persona orchestration and findings compilation."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/goldfish_review_resolve/SKILL.md"
+      skill_file: "skills/egm_review_loop/SKILL.md"
     turns:
-      - user_input: "Run goldfish-review-resolve with TargetFile: docs/design.md, Finding: Missing SLO on line 2."
+      - user_input: "Orchestrate multi-perspective Goldfish review on docs/design.md."
         assertions:
           - type: "required_pattern"
-            pattern: "(report|findings|resolve|SLO|comment)"
-            message: "Review resolve skill must compile review findings report and prompt user resolution."
+            pattern: "(Review|Goldfish|findings|persona|comprehension|critic)"
+            message: "Review loop orchestrator must acknowledge review personas and structured findings compilation."

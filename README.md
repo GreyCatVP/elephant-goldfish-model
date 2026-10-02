@@ -64,8 +64,8 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 | **Brainstorm** | `/egm-brainstorm` | Zero-doc ideation tool using a 6-lens Goldfish shootdown swarm to stress-test early concepts. |
 | **Draft** | `/egm-draft` | Iterative, section-by-section markdown design specification compiler. |
 | **Review** | `/egm-review` | Multi-stage verification pipeline orchestrator (Zoom Out → Comprehension → Critic → Readiness). |
-| **Review Loop** | `goldfish_review_loop` | Concurrent review subagent dispatch engine supporting direct and hierarchical dispatch. |
-| **Review Resolve** | `/goldfish-review-resolve` | Interactive triage and automated patch application engine for review findings. |
+| **Review Loop** | `egm_review_loop` | Concurrent review subagent dispatch engine supporting direct and hierarchical dispatch. |
+| **Review Resolve** | `/egm-resolve` | Interactive triage and automated patch application engine for review findings. |
 | **Drift Report** | `/egm-drift-report` | Sequential AST scanner detecting divergence between checked-in specs and live code. |
 | **Bootstrap** | `/egm-bootstrap` | Recursive bottom-up codebase documentation generator and sentinel-block upserting engine. |
 
@@ -94,7 +94,7 @@ EGM behavioral rules are natively supported in Antigravity. Place or symlink the
 3.  **Review**:
     Run `/egm-review docs/designs/<feature>.md` to launch the multi-stage Goldfish reviewer swarm.
 4.  **Resolve & Merge**:
-    Triage findings using `/goldfish-review-resolve`, submit the design doc via Pull Request, and implement code against the verified specification.
+    Triage findings using `/egm-resolve`, submit the design doc via Pull Request, and implement code against the verified specification.
 
 For detailed setup and walkthroughs, see [Getting Started](docs/getting_started.md) and the [Framework Architecture](docs/designs/architecture.md).
 

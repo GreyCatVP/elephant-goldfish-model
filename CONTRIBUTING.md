@@ -51,7 +51,7 @@ follows the EGM Spec-Driven Development process:
     using `/egm-draft`, and register it in [`docs/designs/README.md`](docs/designs/README.md).
     Run `/egm-review docs/designs/<name>.md` to stress-test your proposal
     against the EGM document standards and resolve findings with
-    `/goldfish-review-resolve`.
+    `/egm-resolve`.
 
 3.  **Submit a Stage-1 Design Doc PR (`status: approved-for-pr`)**:
     Open a dedicated **Design Doc PR** containing `docs/designs/<name>.md`

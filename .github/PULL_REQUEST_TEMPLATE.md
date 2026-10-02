@@ -23,5 +23,5 @@ List all key changes made in this pull request and why:
 
 ## Verification
 
-- [ ] **For Design Doc PRs (Stage 1)**: Executed `/egm-review docs/designs/<name>.md`, resolved findings via `/goldfish-review-resolve`, and verified relative links (`pytest tests/unit/test_link_integrity.py`).
+- [ ] **For Design Doc PRs (Stage 1)**: Executed `/egm-review docs/designs/<name>.md`, resolved findings via `/egm-resolve`, and verified relative links (`pytest tests/unit/test_link_integrity.py`).
 - [ ] **For Bug Fix / Implementation PRs (Stage 2)**: Unit tests or `test_scenarios.yaml` added/updated and `pytest tests/unit` executed.

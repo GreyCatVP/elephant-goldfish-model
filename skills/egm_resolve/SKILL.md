@@ -1,5 +1,5 @@
 ---
-name: goldfish-review-resolve
+name: egm-resolve
 disable-model-invocation: true
 description: >-
   The Elephant resolution skill. Ingests flat deficiency reports from
@@ -169,6 +169,6 @@ Interpret the user's action/response as follows:
 1.  **Re-verify Lines**: If changes were made to `TargetFile`, verify that the
     file remains structurally coherent and valid markdown.
 2.  Mark the report as resolved (add a `Status: resolved` line at the top).
-3.  **Handoff**: Exit cleanly back to the caller (such as `goldfish-review-loop`)
+3.  **Handoff**: Exit cleanly back to the caller (such as `egm-review-loop`)
     with the count of accepted fixes, contested items, and remaining unaddressed
     issues.

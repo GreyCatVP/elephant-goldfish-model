@@ -1,5 +1,5 @@
 ---
-name: goldfish-review-loop
+name: egm-review-loop
 disable-model-invocation: true
 description: >-
   Executes the Antagonistic-Review process from the Elephant & Goldfish
@@ -143,7 +143,7 @@ file` mode is specified, confirm full-file line bounds).
 #### 2.3 Aggregated Resolution Hand-off
 
 1.  Pass `TargetFile`, the active line range, and the aggregated `FindingsList`
-    to the **`goldfish-review-resolve`** workflow.
+    to the **`egm-resolve`** workflow.
 2.  Execute the resolution workflow in the primary Elephant context:
     *   Categorize findings into `CONTEST` vs. `PROPOSE FIX`.
     *   Save `goldfish_review_report.md` with your file-writing tool.
@@ -158,7 +158,7 @@ explicitly halts it.
 
 **Crucial Turn-Taking Requirement**: After the resolution phase finishes for a
 given round, the loop driver **MUST respect the turn-taking checkpoint in
-`goldfish-review-resolve`**. The driver must remain idle across human turns,
+`egm-resolve`**. The driver must remain idle across human turns,
 only looping back to Step 2.1 when the user explicitly confirms they wish to run
 another round of review.
 

@@ -32,11 +32,11 @@ strict qualitative rubrics.
 This document specifies:
 
 1.  The multi-stage review pipeline (`/egm-review`).
-2.  The review orchestration driver (`goldfish_review_loop`).
+2.  The review orchestration driver (`egm_review_loop`).
 3.  The complete catalog of specialized reviewer personas.
 4.  The mapping to document standards and evaluation rubrics
     (`resources/document_standards/`).
-5.  The interactive resolution engine (`goldfish_review_resolve`).
+5.  The interactive resolution engine (`egm_resolve`).
 
 ## The Problem
 
@@ -66,14 +66,14 @@ flowchart TD
     Step6 --> Gate6{Gaps Found?}
     Gate6 -- Yes --> UpdateContext[Clarify Definitions / Context]
     Gate6 -- No --> Step7[Step 7: Critic Review]
-    Step7 --> Loop7[goldfish_review_loop: design_critic + structural + style]
-    Loop7 --> Resolve7[goldfish_review_resolve]
+    Step7 --> Loop7[egm_review_loop: design_critic + structural + style]
+    Loop7 --> Resolve7[egm_resolve]
     Resolve7 --> Step8[Step 8: Intermediate Zoom Out Review]
     Step8 --> Gate8{YAGNI / Bloat Found?}
     Gate8 -- Yes --> PruneBloat[Prune Defensive Over-Engineering]
     Gate8 -- No / Resolved --> Step9[Step 9: Implementation Readiness Test]
-    Step9 --> Loop9[goldfish_review_loop: implementation_readiness + codebase_details + style]
-    Loop9 --> Resolve9[goldfish_review_resolve]
+    Step9 --> Loop9[egm_review_loop: implementation_readiness + codebase_details + style]
+    Loop9 --> Resolve9[egm_resolve]
     Resolve9 --> Done([Ready for Human Peer Review])
 ```
 
@@ -153,7 +153,7 @@ Reviewers evaluate drafts against versioned markdown standards:
 
 --------------------------------------------------------------------------------
 
-## The Interactive Resolution Engine (`goldfish_review_resolve`)
+## The Interactive Resolution Engine (`egm_resolve`)
 
 When Goldfish reviewers complete their audit, the **Elephant Resolution Engine**
 ingests the flat findings list and manages interactive triage.
@@ -193,12 +193,12 @@ concludes when zero blocking findings remain or the engineer halts the loop.
 | `skills/egm_review/SKILL.md` | Skill Definition | Entry point orchestrating the multi-stage review pipeline (Zoom Out $\rightarrow$ Comprehension $\rightarrow$ Critic $\rightarrow$ Intermediate Zoom Out $\rightarrow$ Readiness). |
 | `skills/egm_review/TEST.md` | Unit Tests | Verification test scenarios testing `/egm-review` multi-stage flow and checkpoint gating. |
 | `skills/egm_review/test_scenarios.yaml` | Evaluation Benchmark | Benchmark test suite evaluating model review precision and recall. |
-| `skills/goldfish_review_loop/SKILL.md` | Skill Definition | Central review driver managing asynchronous subagent spawning and findings collection. |
-| `skills/goldfish_review_loop/TEST.md` | Unit Tests | Verification test scenarios testing goldfish review loop dispatch. |
-| `skills/goldfish_review_loop/test_scenarios.yaml` | Evaluation Benchmark | Benchmark test suite evaluating goldfish review loop dispatch. |
-| `skills/goldfish_review_resolve/SKILL.md` | Skill Definition | Elephant resolution engine managing `CONTEST` vs `PROPOSE FIX` triage and automated fixes. |
-| `skills/goldfish_review_resolve/TEST.md` | Unit Tests | Verification test scenarios validating the finding categorization and resolution loop. |
-| `skills/goldfish_review_resolve/test_scenarios.yaml` | Evaluation Benchmark | Benchmark test suite evaluating model resolution and fix proposal accuracy. |
+| `skills/egm_review_loop/SKILL.md` | Skill Definition | Central review driver managing asynchronous subagent spawning and findings collection. |
+| `skills/egm_review_loop/TEST.md` | Unit Tests | Verification test scenarios testing goldfish review loop dispatch. |
+| `skills/egm_review_loop/test_scenarios.yaml` | Evaluation Benchmark | Benchmark test suite evaluating goldfish review loop dispatch. |
+| `skills/egm_resolve/SKILL.md` | Skill Definition | Elephant resolution engine managing `CONTEST` vs `PROPOSE FIX` triage and automated fixes. |
+| `skills/egm_resolve/TEST.md` | Unit Tests | Verification test scenarios validating the finding categorization and resolution loop. |
+| `skills/egm_resolve/test_scenarios.yaml` | Evaluation Benchmark | Benchmark test suite evaluating model resolution and fix proposal accuracy. |
 | `personas/*.md` | Persona Prompts | System prompt instructions for all 7 Goldfish reviewers and the Synthesizer. |
 | `resources/document_standards/*.md` | Document Standards | Evaluation rubrics and standards for feature specs, implementation readiness, and simplicity. |
 
