@@ -18,6 +18,9 @@ import pathlib
 import re
 from typing import Set
 
+# Vendored trees whose markdown is not ours to validate.
+IGNORED_DIRS = ("node_modules",)
+
 IGNORED_SCHEMES = (
     "http://",
     "https://",
@@ -47,10 +50,15 @@ def test_relative_markdown_links_resolve_on_disk(
     repo_root: pathlib.Path,
 ) -> None:
   """Verifies that all local relative links resolve to existing files."""
+  # Filter on the path inside the repo, not the absolute path: a checkout under
+  # a dot-directory (~/.cache, ~/.local, ...) must not skip every file.
   markdown_files = [
       p
       for p in repo_root.rglob("*.md")
-      if not any(part.startswith(".") for part in p.parts)
+      if not any(
+          part.startswith(".") or part in IGNORED_DIRS
+          for part in p.relative_to(repo_root).parts
+      )
   ]
 
   for md_file in markdown_files:
