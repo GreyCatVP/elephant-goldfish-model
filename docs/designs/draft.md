@@ -211,7 +211,7 @@ The drafting capability is implemented across the following skill and reference 
 | `skills/egm_draft/TEST.md` | Unit Tests | Verification test scenarios validating the drafting and finalization workflow. |
 | `skills/egm_draft/test_scenarios.yaml` | Evaluation Benchmark | Co-located behavioral eval suite evaluating model adherence to the drafting protocol. |
 | `skills/egm_draft/references/design_doc.md` | Document Template | Canonical markdown design document template defining required sections and layout. |
-| `skills/egm_draft/references/instructions.md` | Execution Instructions | Core execution rules enforcing no-code guardrails, silent compliance, and one-question-at-a-time pacing. |
+| `resources/execution_instructions.md` | Execution Instructions | Core execution rules enforcing no-code guardrails, silent compliance, and one-question-at-a-time pacing. |
 
 --------------------------------------------------------------------------------
 
