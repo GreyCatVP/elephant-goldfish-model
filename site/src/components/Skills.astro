@@ -1,0 +1,105 @@
+---
+import List from './gb/List.astro';
+import ListItem from './gb/ListItem.astro';
+
+const repo = 'https://github.com/google/elephant-goldfish-model';
+
+// Mirrors "The Skills Catalog" table in the repository README. Commands are verbatim.
+const skills = [
+  {
+    name: 'Brainstorm',
+    command: '/egm-brainstorm',
+    dir: 'egm_brainstorm',
+    body: 'Ideate before any document exists. A six-lens goldfish swarm stress-tests the raw concept and returns a brief.',
+  },
+  {
+    name: 'Draft',
+    command: '/egm-draft',
+    dir: 'egm_draft',
+    body: 'Compile a markdown design specification section by section, with the elephant holding the full context.',
+  },
+  {
+    name: 'Review',
+    command: '/egm-review',
+    dir: 'egm_review',
+    body: 'Run the multi-stage verification pipeline: zoom out, comprehension, critic, readiness.',
+  },
+  {
+    name: 'Review Loop',
+    command: 'goldfish_review_loop',
+    dir: 'goldfish_review_loop',
+    body: 'Dispatch concurrent review subagents, directly or hierarchically. The engine behind Review.',
+  },
+  {
+    name: 'Review Resolve',
+    command: '/goldfish-review-resolve',
+    dir: 'goldfish_review_resolve',
+    body: 'Triage review findings interactively and apply the agreed patches to the specification.',
+  },
+  {
+    name: 'Drift Report',
+    command: '/egm-drift-report',
+    dir: 'egm_drift_report',
+    body: 'Scan the syntax tree and flag where the live code and the checked-in spec have diverged.',
+  },
+  {
+    name: 'Bootstrap',
+    command: '/egm-bootstrap',
+    dir: 'egm_bootstrap',
+    body: 'Generate bottom-up documentation for an existing codebase and keep it current in sentinel blocks.',
+  },
+];
+---
+
+<section class="section skills" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="headline">Seven skills. Plain markdown.</h2>
+      <p class="lead">
+        Each skill is a folder with a SKILL.md that your agent reads. No runtime, no SDK, no lock-in.
+        Open one to see exactly what the agent is told to do.
+      </p>
+    </div>
+    <List segmented label="Skills">
+      {
+        skills.map((skill) => (
+          <ListItem href={`${repo}/tree/HEAD/skills/${skill.dir}`} target="_blank">
+            <code slot="overline" class="cmd">
+              {skill.command}
+            </code>
+            {skill.name}
+            <Fragment slot="supporting-text">{skill.body}</Fragment>
+            <svg slot="trailing" viewBox="0 -960 960 960" aria-hidden="true">
+              <path d="m216-160-56-56 464-464H360v-80h400v400h-80v-264L216-160Z" />
+            </svg>
+          </ListItem>
+        ))
+      }
+    </List>
+  </div>
+</section>
+
+<style>
+  /* List item theming through the component's documented custom properties. */
+  .skills :global(.list-item) {
+    --container-color: var(--md-sys-color-surface-container-low);
+    --container-shape: var(--md-sys-shape-corner-lg);
+    --label-text: var(--md-sys-typescale-title-lg);
+    --supporting-text: var(--md-sys-typescale-body-md);
+    --top-space: 20px;
+    --bottom-space: 20px;
+    --leading-space: 24px;
+    --trailing-space: 20px;
+    --trailing-icon-size: 22px;
+    --trailing-icon-color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .skills :global(.list-segmented) {
+    --gap: 8px;
+  }
+
+  .cmd {
+    font-size: 0.8125rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+</style>

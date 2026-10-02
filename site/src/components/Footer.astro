@@ -1,0 +1,146 @@
+---
+import Divider from './gb/Divider.astro';
+
+const repo = 'https://github.com/google/elephant-goldfish-model';
+
+const columns = [
+  {
+    heading: 'Project',
+    links: [
+      { label: 'GitHub', href: repo },
+      { label: 'Getting started', href: `${repo}/blob/HEAD/docs/getting_started.md` },
+      { label: 'Contributing', href: `${repo}/blob/HEAD/CONTRIBUTING.md` },
+      { label: 'License', href: `${repo}/blob/HEAD/LICENSE` },
+    ],
+  },
+  {
+    heading: 'Related',
+    links: [
+      { label: 'Antigravity', href: 'https://antigravity.google' },
+      { label: 'Gemini CLI', href: 'https://geminicli.com' },
+      { label: 'Agent Development Kit', href: 'https://adk.dev' },
+      { label: 'A2A Protocol', href: 'https://a2a-protocol.org' },
+    ],
+  },
+  {
+    heading: 'Google',
+    links: [
+      { label: 'Privacy', href: 'https://policies.google.com/privacy' },
+      { label: 'Terms', href: 'https://policies.google.com/terms' },
+    ],
+  },
+];
+---
+
+<footer class="footer scheme-dark">
+  <div class="wrap">
+    <Divider />
+    <div class="cols">
+      <div class="brand">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+          <circle cx="11" cy="16" r="9" fill="currentColor"></circle>
+          <circle cx="26" cy="16" r="4" fill="currentColor"></circle>
+        </svg>
+        <p class="brand-name">Elephant &amp; Goldfish Model</p>
+        <p class="muted">Spec-driven development with AI coding agents.</p>
+      </div>
+      {
+        columns.map((col) => (
+          <nav aria-label={col.heading}>
+            <p class="col-heading">{col.heading}</p>
+            <ul>
+              {col.links.map((link) => (
+                <li>
+                  <a href={link.href} target="_blank" rel="noopener">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+    </div>
+    <div class="legal muted">
+      <p>
+        Copyright 2026 Google LLC. Licensed under the Apache License, Version 2.0. This is not an
+        officially supported Google product.
+      </p>
+      <p>No analytics, no cookies, no tracking.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: 0 48px;
+  }
+
+  .footer :global(.divider) {
+    --color: var(--md-sys-color-outline-variant);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 40px 24px;
+    padding-block: 56px 48px;
+  }
+
+  @media (max-width: 820px) {
+    .cols {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-inline-size: 32ch;
+  }
+
+  .brand-name {
+    font: var(--md-sys-typescale-title-lg);
+    letter-spacing: var(--md-sys-typescale-title-lg-tracking);
+  }
+
+  .col-heading {
+    font: var(--md-sys-typescale-label-lg);
+    margin-block-end: 14px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  li a {
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  li a:hover {
+    color: var(--md-sys-color-on-surface);
+    text-decoration: underline;
+  }
+
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 32px;
+    padding-block-start: 24px;
+    border-block-start: 1px solid var(--md-sys-color-outline-variant);
+    font: var(--md-sys-typescale-label-md);
+    letter-spacing: 0;
+  }
+</style>

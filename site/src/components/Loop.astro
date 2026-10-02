@@ -1,0 +1,114 @@
+---
+import Badge from './gb/Badge.astro';
+
+const steps = [
+  {
+    name: 'Brainstorm',
+    command: '/egm-brainstorm',
+    body: 'Clarify the concept, then let a six-lens goldfish swarm shoot it down. Out comes a concept brief.',
+  },
+  {
+    name: 'Draft',
+    command: '/egm-draft',
+    body: 'Turn the brief into a living design doc under docs/designs/, section by section.',
+  },
+  {
+    name: 'Review',
+    command: '/egm-review',
+    body: 'A fresh, zero-context session checks completeness, clarity, self-containment, and readiness. Expect a lot of feedback. That is the point.',
+  },
+  {
+    name: 'Resolve and build',
+    command: '/goldfish-review-resolve',
+    body: 'Triage the findings, send the design to a person for review, then build to the plan.',
+  },
+];
+---
+
+<section class="section loop">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="headline">From idea to verified spec to code.</h2>
+      <p class="lead">
+        Four skills carry a feature from a rough idea to a specification that survived adversarial
+        review. Use them in order, or reach for whichever one your bottleneck needs.
+      </p>
+    </div>
+    <ol class="steps">
+      {
+        steps.map((step, i) => (
+          <li class="step">
+            <Badge>{i + 1}</Badge>
+            <h3 class="title">{step.name}</h3>
+            <code class="cmd">{step.command}</code>
+            <p class="muted">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="drift">
+      Then weekly: <code class="cmd">/egm-drift-report</code> flags where the code and the spec have
+      drifted apart. You pick which one moves.
+    </p>
+  </div>
+</section>
+
+<style>
+  .loop {
+    background: var(--md-sys-color-surface-container-low);
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+
+  @media (max-width: 1000px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-block-start: 20px;
+    border-block-start: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  /* Badge theming through its documented custom properties. */
+  .step :global(.badge) {
+    --container-color: var(--md-sys-color-primary);
+    --label-text-color: var(--md-sys-color-on-primary);
+    --label-text: var(--md-sys-typescale-label-lg);
+    --size: 28px;
+    align-self: flex-start;
+    margin-block-end: 6px;
+  }
+
+  .cmd {
+    font-size: 0.875rem;
+    color: var(--md-sys-color-on-surface);
+    background: var(--md-sys-color-surface-container-high);
+    border-radius: 6px;
+    padding: 2px 8px;
+    inline-size: fit-content;
+  }
+
+  .drift {
+    margin-block-start: 40px;
+    font: var(--md-sys-typescale-body-lg);
+    max-inline-size: 62ch;
+  }
+</style>

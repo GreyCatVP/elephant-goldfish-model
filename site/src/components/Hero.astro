@@ -1,0 +1,54 @@
+---
+import Button from './gb/Button.astro';
+
+const repo = 'https://github.com/google/elephant-goldfish-model';
+---
+
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <h1 class="display">
+      Design with an elephant.<br />
+      Review with a goldfish.
+    </h1>
+    <p class="lead">
+      An open-source method and skill set for spec-driven development with AI coding agents.
+      Deep-context agents draft the design. Zero-context agents tear it apart before any code is
+      written. You own the outcome.
+    </p>
+    <div class="cta">
+      <Button color="filled" size="md" href="#install">Get started</Button>
+      <Button color="outlined" size="md" href={repo} target="_blank">View on GitHub</Button>
+    </div>
+    <p class="meta muted">Apache 2.0 &middot; Built for Antigravity</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(80px, 12vw, 160px) clamp(48px, 7vw, 96px);
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .lead {
+    max-inline-size: 58ch;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-block-start: 8px;
+  }
+
+  .meta {
+    font: var(--md-sys-typescale-label-lg);
+  }
+</style>

@@ -17,6 +17,7 @@ limitations under the License.
 # Elephant & Goldfish Model (EGM)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Website](https://img.shields.io/badge/Website-egm.dev-black.svg)](https://egm.dev)
 
 The **Elephant & Goldfish Model (EGM)** is an open-source framework and methodology for Spec-Driven Development (SDD) with autonomous AI coding agents.
 
