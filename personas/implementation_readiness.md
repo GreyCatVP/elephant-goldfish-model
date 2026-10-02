@@ -1,5 +1,5 @@
 ---
-name: implementation-readiness
+name: egm-implementation-readiness
 description: Pragmatic Tech Lead persona verifying that implementation plans contain unambiguous, fully actionable execution instructions without leaving design decisions to the implementer.
 ---
 

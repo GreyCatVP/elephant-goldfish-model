@@ -61,7 +61,7 @@ The caller or orchestration driver provides exactly these parameters:
         the user's response after each turn. Once all inputs are specified,
         display the final setup and verify the user is ready to continue.
 
-2.  Read `TargetFile` at `LineRange` using `view_file` and parse the `FindingsList`.
+2.  Read `TargetFile` at `LineRange` by reading it and parse the `FindingsList`.
 
 ### Step 2: Evaluate & Categorize
 
@@ -75,10 +75,9 @@ For each finding in the list, determine:
 
 ### Step 3: Report Fixes
 
-Construct the final report and save it as an interactive UI artifact named
-`goldfish_review_report.md` in the artifact directory (`<appDataDir>/brain/<conversation-id>/`)
-using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`,
-`RequestFeedback: true`). Use this layout:
+Construct the final report and save it named
+`goldfish_review_report.md` in the working directory (or your harness's artifact directory, if it has one)
+using your file-writing tool. Use this layout:
 
 ```markdown
 # Goldfish Annotated Review Report
@@ -103,12 +102,11 @@ using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`,
 ### Step 4: Interactive Resolution Gate
 
 Before proceeding, output a visible chat message to the user: *"I have compiled
-the audit findings into the `goldfish_review_report.md` artifact in your side
-panel. Please review the findings there and choose how you would like to
+the audit findings into `goldfish_review_report.md`. Please review the findings there and choose how you would like to
 proceed:
 
--   **Comment directly on the artifact**: Review `goldfish_review_report.md` in
-    the side panel and leave comments/edits to approve, reject, or contest
+-   **Comment directly on the file**: Review `goldfish_review_report.md` in
+    chat or the file and leave comments/edits to approve, reject, or contest
     specific items.
 -   **Auto accept**: Reply "auto accept" to batch-apply all proposed fixes
     (skipping contested items).
@@ -129,7 +127,7 @@ Interpret the user's action/response as follows:
 -   **"Auto accept" / "Accept all suggestions" / User clicks "Proceed" without
     contesting**: Apply all fixes where the AI suggestion was `PROPOSE FIX`
     directly to `TargetFile` at `LineRange` in a single batch using
-    `replace_file_content`. Any items categorized as `CONTEST` are explicitly
+    your file-editing tool. Any items categorized as `CONTEST` are explicitly
     bypassed. Then proceed to Step 5.
 -   **"Continue to next phase" / "No changes"**: Do not apply any automated
     fixes. Then proceed to Step 5.
@@ -161,7 +159,7 @@ Interpret the user's action/response as follows:
         file editing tools during this sequential loop.**
 
     3.  Once all items have been decided, summarize the accepted edits, execute
-        them using `replace_file_content`, and proceed to Step 5.
+        them using your file-editing tool, and proceed to Step 5.
 
 -   **Custom instruction / Out-of-band edit**: If the user provides targeted
     instructions, apply them and proceed.
@@ -170,9 +168,7 @@ Interpret the user's action/response as follows:
 
 1.  **Re-verify Lines**: If changes were made to `TargetFile`, verify that the
     file remains structurally coherent and valid markdown.
-2.  **Clear Artifact Feedback**: Update `ArtifactMetadata.RequestFeedback` to
-    `false` via `replace_file_content` or `write_to_file` to clear the pending
-    prompt.
+2.  Mark the report as resolved (add a `Status: resolved` line at the top).
 3.  **Handoff**: Exit cleanly back to the caller (such as `goldfish-review-loop`)
     with the count of accepted fixes, contested items, and remaining unaddressed
     issues.

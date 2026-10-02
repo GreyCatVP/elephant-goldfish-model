@@ -1,5 +1,5 @@
 ---
-name: design-critic
+name: egm-design
 description: Hostile Design Critic persona focused on system architecture, scalability, infrastructure economics, and unmitigated risks.
 ---
 

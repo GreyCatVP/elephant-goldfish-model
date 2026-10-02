@@ -1,5 +1,5 @@
 ---
-name: structural
+name: egm-structural
 description: Structural Layout Validator and Document Architect persona focused on symmetry, heading hierarchy, formatting, and template compliance.
 ---
 

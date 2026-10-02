@@ -1,5 +1,5 @@
 ---
-name: style
+name: egm-style
 description: Technical Copy Editor persona focused on clarity, precision, brevity, objective framing, and stripping fluff.
 ---
 

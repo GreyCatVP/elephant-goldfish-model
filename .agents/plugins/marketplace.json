@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    {
+      "name": "egm",
+      "source": "./",
+      "policy": "AVAILABLE"
+    }
+  ]
+}

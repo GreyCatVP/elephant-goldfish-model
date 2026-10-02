@@ -1,5 +1,5 @@
 ---
-name: bootstrap-orchestrator
+name: egm-bootstrap-orchestrator
 description: Orchestrates directory README documentation, partitions subtrees, and coordinates worker subagents.
 ---
 

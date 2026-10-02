@@ -36,10 +36,10 @@ on the problem and high-level architecture.
     [execution instructions](references/instructions.md).
 2.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, summaries, or plans directly in the chat
-    pane. You **MUST** write them directly to the conversation artifact
-    directory (`<appDataDir>/brain/<conversation-id>/discussion_summary.md` or `./discussion_summary.md`)
-    using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`)
-    and notify the user that the artifact is ready for review in their side panel.
+    pane. You **MUST** write them directly to the working directory (or your harness's artifact directory, if it has one)
+    (`discussion_summary.md` or `./discussion_summary.md`)
+    using your file-writing tool
+    and tell the user in chat the file path and ask for review.
     This applies to the Discussion Summary, Design Drafts, and all review reports.
 
 --------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ consensus from the user. Confirm with the user before proceeding between steps.
 1.  **Check for Context**: Verify if the user has provided documentation, code
     paths, or references to understand the system. If none are provided,
     explicitly ask the user for them.
-2.  **Analyze Context**: Read and synthesize the provided materials using `view_file`,
+2.  **Analyze Context**: Read and synthesize the provided materials,
     focusing on the system's purpose, main components, and architectural boundaries.
 3.  **Summarize & Verify**: Provide a concise, high-level summary of the system
     to the user. Explicitly ask the user to confirm or correct your
@@ -71,7 +71,7 @@ consensus from the user. Confirm with the user before proceeding between steps.
 1.  **Initiate discussion**: Ask the user to provide the feature they want to
     build if they haven't already done so.
 2.  **Act as a Partner**: Ask clarifying questions to understand the
-    requirements and intended behavior. Use `ask_question` to present structured
+    requirements and intended behavior. Use a structured question tool, if your harness has one, or plain chat to present structured
     options when clarifying user preferences or choosing between alternatives.
     If there is a preferred or recommended alternative based on best practices,
     prefix it with `(Recommended)` and list it first.
@@ -100,7 +100,7 @@ consensus from the user. Confirm with the user before proceeding between steps.
         to run? How will we measure success?
     8.  *Infer & Confirm & Ask One-by-One*: Proactively infer answers from
         context, present them, and ask the user to refine. For any unanswered
-        questions, you MUST ask them one-by-one using `ask_question`, providing
+        questions, you MUST ask them one-by-one using a structured question tool, if your harness has one, or plain chat, providing
         your inferred answers as selectable options. Prefix your best inferred answer
         option with `(Recommended)` and list it first. You are strictly forbidden
         from asking multiple grilling questions in a single turn. Wait for the user's
@@ -139,13 +139,12 @@ consensus from the user. Confirm with the user before proceeding between steps.
         codebase utilities. If you detect any potential violations, note them as
         warnings or open design risks in your summary.
     *   **Write Document (MANDATORY)**: You **MUST** immediately write this
-        draft summary to `discussion_summary.md` (e.g., `<appDataDir>/brain/<conversation-id>/discussion_summary.md`
-        or `./discussion_summary.md`) using `write_to_file` with `ArtifactMetadata`
-        (`UserFacing: true`, `RequestFeedback: true`).
+        draft summary to `discussion_summary.md` (e.g., in the working directory
+        or `./discussion_summary.md`) using your file-writing tool.
     *   **Notify User (No Chat Dumps)**: You are **STRICTLY FORBIDDEN** from
         printing the full summary in the chat. Output only a concise message
         notifying the user that the draft discussion summary is ready for their
-        review in the side panel.
+        review (give its path).
 
 3.  **Review Gate (CRITICAL)**: Ask the user to review `discussion_summary.md`
     for clarity and confirm its accuracy. Encourage them to provide comments,

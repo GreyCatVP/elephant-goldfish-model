@@ -47,7 +47,7 @@ python tools/eval_runner.py --skill egm_brainstorm --model gemini/gemini-2.5-fla
 When evaluating or exploring `egm_brainstorm` interactively in chat, verify:
 
 -   **Step 1 (Open-Ended Clarification & Gate):** Drills down into half-baked concepts
-    using open-ended chat questions (without `ask_question` modals or multiple-choice lists)
+    using open-ended chat questions (without structured question tools or multiple-choice lists)
     and enforces a user readiness checkpoint gate before subagent invocation.
 -   **Step 2 (Upstream Multi-Lens Ideation):** Evaluates feature concepts across the
     6 specialized Goldfish perspective lenses (Contrarian/YAGNI, Cost/Quota Economics,

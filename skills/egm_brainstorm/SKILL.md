@@ -35,22 +35,33 @@ questions** with an automated **Goldfish multi-lens shootdown swarm**. The
 outcome is an iteratively refined `concepts_brief.md` artifact that leads
 seamlessly into `/egm-discuss` or `/egm-draft`.
 
+## Delegation
+
+A Goldfish runs in a fresh context with no conversation history. Spawn each
+subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
+`spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
+`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
+where your harness registers named subagents. Otherwise spawn a general-purpose
+subagent and tell it to read that persona file first. Pass the prompt verbatim
+and wait for the report. If your harness cannot nest subagents,
+use direct dispatch instead of the synthesizer. See `docs/harnesses.md`.
+If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
+
 ## Execution Constraints (CRITICAL)
 
 1.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, brainstorm summaries, or briefs directly
     in the chat pane. You **MUST** write/update them directly to a file (e.g.,
     `./concepts_brief.md` in the project root or artifact directory) using your
-    environment's file-writing tool (if supported by your environment, set artifact
-    metadata `UserFacing: true, RequestFeedback: true`) and notify the user in
+    environment's file-writing tool and notify the user in
     the chat with a clean link to the file.
 2.  **Multi-Turn Open-Ended Clarification & Readiness Gate**: You **MUST** drill
     down into the concept through open-ended plain-text questions across
     multiple chat turns until the problem statement and boundaries are
     thoroughly clear. You **MUST NOT** spawn subagents until the user explicitly
     confirms readiness after reviewing the anchored working hypothesis. You are
-    **STRICTLY FORBIDDEN** from using structured question modals (`ask_question`
-    tool) or supplying pre-canned multiple-choice candidate answers.
+    **STRICTLY FORBIDDEN** from using structured question tools or supplying pre-canned multiple-choice candidate answers.
 3.  **Parallel Goldfish Swarm**: You **MUST** evaluate the feature
     concept across all 6 specialized Goldfish perspective lenses simultaneously
     via subagents to prevent sequential bias and maximize critique breadth.
@@ -114,7 +125,7 @@ seamlessly into `/egm-discuss` or `/egm-draft`.
     launching subagents after a single response. Continue asking targeted,
     open-ended clarifying questions across multiple turns as needed until the
     problem statement, constraints, and target behavior are thoroughly defined.
-    Do **NOT** use structured question modals (`ask_question` tool) and do
+    Do **NOT** use structured question tools and do
     **NOT** provide candidate multiple-choice options—ask open-ended questions
     directly in chat:
     *   *What specific problem, bottleneck, or pain point does this solve?*
@@ -137,21 +148,19 @@ seamlessly into `/egm-discuss` or `/egm-draft`.
 ### Step 2: Goldfish Swarm Shootdown & Synthesis
 
 1.  **Delegate to Subagent Swarm**:
-    Use `invoke_subagent` to spawn the intermediate
+    Spawn the intermediate
     **`egm-synthesizer`** (or parallel Goldfish subagents across the 6 specialized lenses):
-    *   `TypeName`: `egm-synthesizer` (or `self` / designated multi-lens reviewer)
-    *   `Role`: `Synthesizer`
+    *   Subagent: `egm-synthesizer` (`personas/synthesizer.md`) (or a general-purpose subagent)
     *   `Prompt`: >- Conduct multi-lens ideation brainstorm for feature concept:
         `[AnchoredFeatureHypothesis]`. Mode: `BRAINSTORM`. Reviewers:
         `[egm-design, egm-codebase-details, egm-zoom-out, egm-comprehension,
         egm-implementation-readiness, egm-structural]`.
-    *   `Workspace`: `inherit`
 2.  **Multi-Lens Risk Matrix & Deduplication**: Collect the raw findings across all
     6 Goldfish lenses, deduplicate overlapping points, and format them into a cohesive
     shootdown analysis.
 3.  **Write/Update Artifact**: Format and write the synthesized brief to
-    `<appDataDir>/brain/<conversation-id>/concepts_brief.md` (or `./concepts_brief.md`)
-    using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    the working directory (or your harness's artifact directory, if it has one) (`concepts_brief.md`)
+    using your file-writing tool.
 
 The `concepts_brief.md` artifact follows this structure:
 
@@ -185,7 +194,7 @@ The `concepts_brief.md` artifact follows this structure:
 ### Step 3: Interactive Iteration & Refinement Loop
 
 1.  **Notify & Highlight (No Chat Dumps)**: Notify the user in chat that
-    `concepts_brief.md` has been updated in their side panel (or workspace).
+    `concepts_brief.md` has been updated in the working directory (give its path).
     Highlight 2-3 key objections or open risks raised by the Goldfish swarm.
 2.  **Iterate**: Ask the user how they wish to address the Goldfish objections
     (e.g., pivoting the approach, narrowing scope, or adding constraints).
@@ -225,22 +234,33 @@ questions** with an automated **Goldfish multi-lens shootdown swarm**. The
 outcome is an iteratively refined `concepts_brief.md` artifact that leads
 seamlessly into `/egm-discuss` or `/egm-draft`.
 
+## Delegation
+
+A Goldfish runs in a fresh context with no conversation history. Spawn each
+subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
+`spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
+`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
+where your harness registers named subagents. Otherwise spawn a general-purpose
+subagent and tell it to read that persona file first. Pass the prompt verbatim
+and wait for the report. If your harness cannot nest subagents,
+use direct dispatch instead of the synthesizer. See `docs/harnesses.md`.
+If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
+
 ## Execution Constraints (CRITICAL)
 
 1.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, brainstorm summaries, or briefs directly
     in the chat pane. You **MUST** write/update them directly to a file (e.g.,
     `./concepts_brief.md` in the project root or artifact directory) using your
-    environment's file-writing tool (if supported by your environment, set artifact
-    metadata `UserFacing: true, RequestFeedback: true`) and notify the user in
+    environment's file-writing tool and notify the user in
     the chat with a clean link to the file.
 2.  **Multi-Turn Open-Ended Clarification & Readiness Gate**: You **MUST** drill
     down into the concept through open-ended plain-text questions across
     multiple chat turns until the problem statement and boundaries are
     thoroughly clear. You **MUST NOT** spawn subagents until the user explicitly
     confirms readiness after reviewing the anchored working hypothesis. You are
-    **STRICTLY FORBIDDEN** from using structured question modals (`ask_question`
-    tool) or supplying pre-canned multiple-choice candidate answers.
+    **STRICTLY FORBIDDEN** from using structured question tools or supplying pre-canned multiple-choice candidate answers.
 3.  **Parallel Goldfish Swarm**: You **MUST** evaluate the feature
     concept across all 6 specialized Goldfish perspective lenses simultaneously
     via subagents to prevent sequential bias and maximize critique breadth.
@@ -304,7 +324,7 @@ seamlessly into `/egm-discuss` or `/egm-draft`.
     launching subagents after a single response. Continue asking targeted,
     open-ended clarifying questions across multiple turns as needed until the
     problem statement, constraints, and target behavior are thoroughly defined.
-    Do **NOT** use structured question modals (`ask_question` tool) and do
+    Do **NOT** use structured question tools and do
     **NOT** provide candidate multiple-choice options—ask open-ended questions
     directly in chat:
     *   *What specific problem, bottleneck, or pain point does this solve?*
@@ -327,21 +347,19 @@ seamlessly into `/egm-discuss` or `/egm-draft`.
 ### Step 2: Goldfish Swarm Shootdown & Synthesis
 
 1.  **Delegate to Subagent Swarm**:
-    Use `invoke_subagent` to spawn the intermediate
+    Spawn the intermediate
     **`egm-synthesizer`** (or parallel Goldfish subagents across the 6 specialized lenses):
-    *   `TypeName`: `egm-synthesizer` (or `self` / designated multi-lens reviewer)
-    *   `Role`: `Synthesizer`
+    *   Subagent: `egm-synthesizer` (`personas/synthesizer.md`) (or a general-purpose subagent)
     *   `Prompt`: >- Conduct multi-lens ideation brainstorm for feature concept:
         `[AnchoredFeatureHypothesis]`. Mode: `BRAINSTORM`. Reviewers:
         `[egm-design, egm-codebase-details, egm-zoom-out, egm-comprehension,
         egm-implementation-readiness, egm-structural]`.
-    *   `Workspace`: `inherit`
 2.  **Multi-Lens Risk Matrix & Deduplication**: Collect the raw findings across all
     6 Goldfish lenses, deduplicate overlapping points, and format them into a cohesive
     shootdown analysis.
 3.  **Write/Update Artifact**: Format and write the synthesized brief to
-    `<appDataDir>/brain/<conversation-id>/concepts_brief.md` (or `./concepts_brief.md`)
-    using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    the working directory (or your harness's artifact directory, if it has one) (`concepts_brief.md`)
+    using your file-writing tool.
 
 The `concepts_brief.md` artifact follows this structure:
 
@@ -375,7 +393,7 @@ The `concepts_brief.md` artifact follows this structure:
 ### Step 3: Interactive Iteration & Refinement Loop
 
 1.  **Notify & Highlight (No Chat Dumps)**: Notify the user in chat that
-    `concepts_brief.md` has been updated in their side panel (or workspace).
+    `concepts_brief.md` has been updated in the working directory (give its path).
     Highlight 2-3 key objections or open risks raised by the Goldfish swarm.
 2.  **Iterate**: Ask the user how they wish to address the Goldfish objections
     (e.g., pivoting the approach, narrowing scope, or adding constraints).
