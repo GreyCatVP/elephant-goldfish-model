@@ -3,6 +3,19 @@
 Landing site for the Elephant & Goldfish Model, served at https://egm.dev from
 GitHub Pages.
 
+| Light | Dark |
+| --- | --- |
+| ![Hero, light scheme](screenshots/hero-light.png) | ![Hero, dark scheme](screenshots/hero-dark.png) |
+
+<details>
+<summary>Full page and mobile</summary>
+
+![Full page, light scheme](screenshots/full-light.png)
+
+![Mobile, 375px wide](screenshots/mobile.png)
+
+</details>
+
 ## Stack
 
 - [Astro](https://astro.build) static output, one page, no client framework.
