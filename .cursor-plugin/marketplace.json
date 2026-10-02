@@ -1,0 +1,12 @@
+{
+  "name": "elephant-goldfish-model",
+  "owner": {
+    "name": "Google LLC"
+  },
+  "plugins": [
+    {
+      "name": "egm",
+      "source": "./"
+    }
+  ]
+}

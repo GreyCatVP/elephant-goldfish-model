@@ -57,7 +57,7 @@ implement the specifications described by those designs or READMEs.
 4.  **Report**: Produce a single report listing all discrepancies found.
 
     *   Append the analysis for each file to `{YYYY-MM-DD}_DRIFT_REPORT.md`
-        using `write_to_file`.
+        using your file-writing tool.
     *   Strict Format:
 
         ```markdown
@@ -73,7 +73,7 @@ implement the specifications described by those designs or READMEs.
         name and the code doesn't have it, that is a reportable drift. Double
         check for coverage. If there is some part of the logic that is not
         referenced in a design or README, this is a reportable drift.
-    -   Use `view_file` liberally to ensure you are looking at the current state
+    -   Read files liberally to ensure you are looking at the current state
         of the code, not relying on memory.
     -   Process the files sequentially to ensure the tool output buffer doesn't
         overflow.

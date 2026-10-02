@@ -35,6 +35,19 @@ assistants.
 *   **Hay**: Parent-level Repository Blueprints that roll up child interface
     contracts into high-altitude indexes.
 
+## Delegation
+
+A Goldfish runs in a fresh context with no conversation history. Spawn each
+subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
+`spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
+`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
+where your harness registers named subagents. Otherwise spawn a general-purpose
+subagent and tell it to read that persona file first. Pass the prompt verbatim
+and wait for the report. If your harness cannot nest subagents,
+use direct dispatch instead of the synthesizer. See `docs/harnesses.md`.
+If your harness has no subagent tool, run the scout steps inline.
+
 ## Inputs
 
 *   **`path`**: The target root directory path to bootstrap (Required).
@@ -49,22 +62,19 @@ assistants.
     write or refactor any functional source code.
 2.  **VCS Isolation**: Do not perform any version control commits (`git commit`,
     `git add`). All filesystem changes must be written locally using standard
-    file-writing tools (`write_to_file` or `replace_file_content`). Tracking
+    file-writing tools. Tracking
     and submitting is deferred to the human user.
 3.  **Temporary File Isolation**: Parallel workers sharing the workspace must
     perform all status tracking, check-pointing, and log writing in independent,
     worker-specific directories outside the project repository workspace.
-4.  **Tool Usage (CRITICAL)**: Use `run_command` (e.g. `ls`, `find`), `view_file`,
-    `write_to_file`, and `replace_file_content` for directory discovery and README
+4.  **Tool Usage (CRITICAL)**: Use your shell, file-reading, file-writing, and file-editing tools for directory discovery and README
     generation. Adhere to clean Markdown formatting directly during generation
     (standard headers, tables, and fenced code blocks). If a project markdown
     formatter (e.g. `npx prettier --write`) is explicitly configured in the
     repository, it may optionally be invoked.
-5.  **Subagent Delegation**: Spawn sub-orchestrator workers in parallel using
-    `invoke_subagent`.
+5.  **Subagent Delegation**: Spawn sub-orchestrator workers in parallel.
 6.  **Mandatory Safety Gate (CRITICAL)**: If you discover more than 15
-    subdirectories, you MUST immediately request user approval (using `ask_question`
-    if available, or directly in chat) before proceeding with full-tree execution
+    subdirectories, you MUST immediately request user approval (using a structured question tool, if your harness has one, or plain chat) before proceeding with full-tree execution
     or unbounded subagent spawning.
 
 --------------------------------------------------------------------------------
@@ -98,8 +108,7 @@ assistants.
 ### Step 2: Incremental Scoping & Safety Gate (Root Orchestrator)
 
 1.  **Incremental BFS Discovery**: Map the target `path` tree level-by-level
-    (BFS) using a directory queue and `list_dir` tool calls. (CRITICAL: You must
-    use `list_dir`, never use `find_by_name` or `run_command` / `find`).
+    (BFS) using a directory queue, listing one directory level at a time. (CRITICAL: never run a recursive search such as `find` or `ls -R`.)
 
     *   Preserve intermediate folder nodes.
     *   Ignore symbolic links to prevent infinite recursion.
@@ -112,8 +121,7 @@ assistants.
 
 2.  **Safety Gate & Unbounded Spawning Approval (CRITICAL)**: During the BFS
     loop, if the total running count of discovered directories exceeds **15**,
-    immediately pause discovery and request user approval (using `ask_question`
-    if available, or directly in chat) to warn the user and request approval
+    immediately pause discovery and request user approval (using a structured question tool, if your harness has one, or plain chat) to warn the user and request approval
     for full-tree execution:
 
     *   `question`: "The target directory tree contains more than 15
@@ -188,13 +196,11 @@ assistants.
             immediate children of the root (or fall back to sequential
             execution).
     *   **Spawn Unbounded Sub-Orchestrators**: For each partition subtree root,
-        use your environment's delegation tool (e.g. `invoke_subagent` or `Task`)
+        use your harness's subagent tool
         to spawn a parallel worker:
-        *   `TypeName`: `egm-peanuts-hay-orchestrator`, `self`, or generic subagent
-        *   `Role`: `sub-orchestrator`
+        *   Subagent: `egm-bootstrap-orchestrator` (`personas/bootstrap_orchestrator.md`) (or a general-purpose subagent)
         *   `Prompt`: "Run egm-bootstrap with path=`[path]`,
-            is_worker=true, sub_tree_root=`[partition_root]`."
-        *   `Workspace`: `inherit`
+            is_worker=true, sub_tree_root=`[partition_root]`." 
     *   **Unbounded Execution**: Spawn all Sub-Orchestrators in parallel without
         artificial concurrency limits (as authorized by the user during the
         safety gate).
@@ -205,9 +211,7 @@ assistants.
 
 ### Step 4: Sub-Orchestrator Worker Flow
 
-1.  **Scout Registration**: If subagents are supported, dynamically declare or
-    use the read-only `goldfish-explorer` subagent type at startup using
-    `define_subagent` (if available):
+1.  **Scout Registration**: Use a read-only `goldfish-explorer` scout. Where your harness supports defining subagents at runtime, register it with:
 
     *   `name`: `goldfish-explorer`
     *   `description`: `Read-only codebase explorer scout.`
@@ -227,7 +231,7 @@ assistants.
         exists in `D`.
 
         *   If `README.md` exists, **do not overwrite it completely**. Instead,
-            read its existing content using `view_file`.
+            read its existing content.
         *   *Scout Scan Requirement*: Whether `README.md` exists or not,
             **always scan** the source code using the `goldfish-explorer` scout
             for `D` to compile the true code symbol boundary.
@@ -238,12 +242,11 @@ assistants.
             strictly as a JSON object matching the following schema: {
             \"interface\": string[], \"invariants\": string[], \"side_effects\":
             string[] }." Merge these extracted symbols with the scout's code
-            symbols. Use `replace_file_content` (or `write_to_file`) to correct
+            symbols. Use your file-editing tool (or your file-writing tool) to correct
             and update the existing README to be EGM compliant while preserving
             developer notes and descriptions.
 
-    *   **Scout Spawning & Constraints**: Call `invoke_subagent` to spawn
-        `goldfish-explorer` for `D`.
+    *   **Scout Spawning & Constraints**: Spawn `goldfish-explorer` for `D`.
 
         *   *Scout Constraints*: Cap total data read per directory at **50,000
             bytes**. Read implementation and schema files up to **300 lines**
@@ -287,7 +290,7 @@ assistants.
         *   If no verification command is identified, omit or use a placeholder.
 
     *   **Directory Classification & Template Generation**: Generate or correct
-        `README.md` using `write_to_file` or `replace_file_content` based on
+        `README.md` using your file-writing tool or your file-editing tool based on
         `D`'s classification.
 
         *   **Component Package (Peanut)**: `D` contains direct source code
@@ -361,14 +364,14 @@ assistants.
         Invariants` section.
     *   Compile the final root `README.md` using the **Repository Root README
         Template**, rolling up all top-level subdirectory boundaries.
-    *   Write the root `README.md` using `write_to_file`.
+    *   Write the root `README.md` using your file-writing tool.
 
 4.  **Final Correctness Verification (CRITICAL)**: You MUST perform a final
     verification pass across ALL created and modified READMEs in the
     `subtree_index` (including all child package READMEs like `pkg1/README.md`
     and `pkg2/README.md`) as a correctness check before concluding work. You
-    MUST explicitly call `view_file` on every single created or modified README
-    to read back and verify its content. Do not skip any child READMEs. Verify:
+    MUST explicitly read every single created or modified README
+    to verify its content. Do not skip any child READMEs. Verify:
 
     *   **EGM Compliance**: Ensure `Interface`, `Invariants`, and `Side Effects`
         sections exist and are populated.
@@ -381,7 +384,7 @@ assistants.
     *   **Valid Targets**: Verify verification targets match project test configuration.
 
 5.  **Optional Drift Review (CRITICAL)**: After verification, ask the user (using
-    `ask_question` if available, or directly in chat) to offer running a drift report
+    a structured question tool, if your harness has one, or plain chat) to offer running a drift report
     on the generated documentation updates:
 
     *   `question`: "Do you want to run the EGM Drift Report on the generated

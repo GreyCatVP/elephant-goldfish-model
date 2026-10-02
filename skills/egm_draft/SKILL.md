@@ -36,11 +36,11 @@ at each stage before saving it to disk.
     [execution instructions](references/instructions.md).
 2.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, summaries, or plans directly in the chat
-    pane. You **MUST** write them directly to the conversation artifact
-    directory (`<appDataDir>/brain/<conversation-id>/design_draft.md` or `./design_draft.md`)
-    using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`)
-    and notify the user in the chat that the draft is ready for their review in
-    the side panel. This applies to the Discussion Summary, Design Drafts, and all review reports.
+    pane. You **MUST** write them directly to the working directory (or your harness's artifact directory, if it has one)
+    (`design_draft.md` or `./design_draft.md`)
+    using your file-writing tool
+    and tell the user in chat the file path and ask for review.
+    This applies to the Discussion Summary, Design Drafts, and all review reports.
 
 --------------------------------------------------------------------------------
 
@@ -62,7 +62,7 @@ the document iteratively as the conversation progresses between sections.
     provide the path to their summary or notes from their discussion phase
     (`egm-discuss`).
 3.  **Verify State**: Parse the summary (Goals, Non-Goals, CUJs, Architecture
-    Outline, Risks) using `view_file` and present a quick confirmation to the user to ensure we
+    Outline, Risks) by reading it and present a quick confirmation to the user to ensure we
     are starting with the correct context.
 4.  **Consensus**: Get explicit approval to start drafting the document.
 
@@ -77,11 +77,11 @@ the document iteratively as the conversation progresses between sections.
 3.  **Focus**: Emphasize the *why* (the user need and business value) rather
     than the *how* (technical implementation).
 4.  **Write Draft (MANDATORY)**: Save this initial draft to `design_draft.md`
-    using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    using your file-writing tool.
 5.  **Notify & Verify (No Chat Dumps)**: You are **STRICTLY FORBIDDEN** from
     printing the draft in the chat. Output only a concise message notifying the
     user that the initial draft (Overview & Problem Statement) has been written
-    to `design_draft.md` in their side panel. Ask the user to review the file and provide feedback
+    to `design_draft.md` (give its path). Ask the user to review the file and provide feedback
     before proceeding to the technical plan.
 
 --------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ the document iteratively as the conversation progresses between sections.
 3.  **Visual Aids**: Include text-based block diagrams (e.g., Graphviz or simple
     ASCII/Mermaid) to illustrate data flow.
 4.  **Update Draft (MANDATORY)**: Update `design_draft.md` to append the
-    "Technical Plan" section using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    "Technical Plan" section using your file-writing tool.
 5.  **Notify & Verify (No Chat Dumps)**: You are **STRICTLY FORBIDDEN** from
     printing the technical plan in the chat. Notify the user that the Technical
     Plan has been added to `design_draft.md`. Ask the user to review the file
@@ -112,7 +112,7 @@ the document iteratively as the conversation progresses between sections.
 3.  **Detail Reasons**: For each alternative, explicitly state *why* it was
     rejected (e.g., higher latency, scaling limitations, team unfamiliarity).
 4.  **Update Draft (MANDATORY)**: Update `design_draft.md` to append the
-    "Alternatives Considered" section using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    "Alternatives Considered" section using your file-writing tool.
 5.  **Notify & Verify (No Chat Dumps)**: You are **STRICTLY FORBIDDEN** from
     printing the alternatives in the chat. Notify the user that the Alternatives
     section has been added to `design_draft.md`. Ask the user to review the file
@@ -139,7 +139,7 @@ any impactful decisions. Follow these guidelines:
 5.  **NO CODE**: Do not generate actual implementation code in this design
     draft. Pseudocode, APIs, or schemas are allowed.
 6.  **Update Draft (MANDATORY)**: Update `design_draft.md` to append this
-    "Detailed Implementation" section using `write_to_file` with `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    "Detailed Implementation" section using your file-writing tool.
 7.  **Notify & Verify (No Chat Dumps)**: You are **STRICTLY FORBIDDEN** from
     printing the implementation plan in the chat. Notify the user that the
     Detailed Implementation Plan has been added to `design_draft.md`. Ask the
@@ -166,7 +166,7 @@ strictly:
     the proposed improvements, and ask for confirmation before refining the
     draft.
 4.  **Write doc**: Once finalized, write the contents of `design_draft.md` to
-    the designated destination file at `<DESIGN_PATH>` (e.g., `./<FEATURE>.md`) using `write_to_file`.
+    the designated destination file at `<DESIGN_PATH>` (e.g., `./<FEATURE>.md`) using your file-writing tool.
     Follow the [template](references/design_doc.md) for final structure if any
     adjustments are needed.
 5.  **Clean Formatting**: Ensure clean standard Markdown formatting, valid table

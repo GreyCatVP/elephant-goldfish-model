@@ -34,7 +34,7 @@ This skill acts as the central orchestration engine driving the multi-agent
 review loop. It coordinates two distinct agent memory models:
 
 *   **The Goldfish (Adversarial Auditors)**: Subagents spawned in isolated,
-    fresh context windows via `invoke_subagent` to catch unstated assumptions without historical bias.
+    fresh context windows to catch unstated assumptions without historical bias.
 *   **The Elephant (Persistent Resolver)**: The primary agent context holding
     institutional knowledge to evaluate findings and apply approved repairs.
 
@@ -42,6 +42,19 @@ The driver manages argument intake, resolves paths for reviewers and standards,
 unconditionally re-parses target line ranges before every iteration, spawns
 concurrent specialized Goldfish auditors based on configuration, and coordinates
 with the Elephant context to resolve findings.
+
+## Delegation
+
+A Goldfish runs in a fresh context with no conversation history. Spawn each
+subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
+`spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
+`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
+where your harness registers named subagents. Otherwise spawn a general-purpose
+subagent and tell it to read that persona file first. Pass the prompt verbatim
+and wait for the report. If your harness cannot nest subagents,
+use direct dispatch instead of the synthesizer. See `docs/harnesses.md`.
+If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
 
 ## Inputs
 
@@ -100,8 +113,8 @@ Execute the following sequence in a continuous loop:
 
 #### 2.1 Unconditional Target Resolution
 
-Before every iteration, unconditionally re-scan `TargetFile` using `view_file`
-and the stable `SemanticTarget` string (e.g., locating the target header) to
+Before every iteration, unconditionally re-scan `TargetFile` by reading it
+and using the stable `SemanticTarget` string (e.g., locating the target header) to
 dynamically determine the updated absolute start and end line numbers. This
 ensures absolute accuracy even if the file was edited in prior rounds. (If `full
 file` mode is specified, confirm full-file line bounds).
@@ -109,15 +122,15 @@ file` mode is specified, confirm full-file line bounds).
 #### 2.2 Review Swarm Execution
 
 1.  **Launch Subagent Swarm**:
-    Use `invoke_subagent` to execute the review:
-    *   **Hierarchical Dispatch (Synthesizer)**: Launch the intermediate
-        synthesizer subagent (`personas/synthesizer.md` / `egm-synthesizer`) via
-        `invoke_subagent`. The synthesizer spawns the Goldfish review swarm in
+    Spawn subagents to execute the review:
+    *   **Hierarchical Dispatch (Synthesizer)**: Spawn the intermediate
+        synthesizer subagent (`personas/synthesizer.md` / `egm-synthesizer`).
+        The synthesizer spawns the Goldfish review swarm in
         parallel, deduplicates findings, writes the report artifact, and
         returns a single summary message to avoid context pollution in the root
         conversation.
-    *   **Direct Dispatch (Flat Swarm)**: Alternatively, launch each requested
-        reviewer subagent in `Reviewers` directly using `invoke_subagent`.
+    *   **Direct Dispatch (Flat Swarm)**: Alternatively, spawn each requested
+        reviewer subagent in `Reviewers` directly.
         Instruct each subagent to first read its persona definition in
         `personas/{name}.md`, then audit `TargetFile` at the resolved line range
         against its designated standard in `resources/document_standards/`,
@@ -133,11 +146,10 @@ file` mode is specified, confirm full-file line bounds).
     to the **`goldfish-review-resolve`** workflow.
 2.  Execute the resolution workflow in the primary Elephant context:
     *   Categorize findings into `CONTEST` vs. `PROPOSE FIX`.
-    *   Save `goldfish_review_report.md` artifact with `write_to_file` and
-        `ArtifactMetadata` (`UserFacing: true`, `RequestFeedback: true`).
+    *   Save `goldfish_review_report.md` with your file-writing tool.
     *   Present the interactive decision gate (Auto accept, Continue, Interactive
         breakdown).
-    *   Apply approved text repairs to `TargetFile` using `replace_file_content`.
+    *   Apply approved text repairs to `TargetFile` using your file-editing tool.
 
 #### 2.4 Iteration Check & Turn Boundary
 

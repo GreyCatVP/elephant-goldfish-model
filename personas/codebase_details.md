@@ -1,5 +1,5 @@
 ---
-name: codebase-details
+name: egm-codebase-details
 description: Pedantic Technical Quality Auditor verifying that documentation accurately and exhaustively matches actual codebase implementation and existing library reuse opportunities.
 ---
 

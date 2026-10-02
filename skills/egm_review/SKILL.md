@@ -34,14 +34,26 @@ Review (Step 5), Comprehension Test (Step 6), Critic Review (Step 7),
 Intermediate Zoom Out Review (Step 8), and Implementation Readiness Test
 (Step 9) either individually or as a sequential Full Flow.
 
+## Delegation
+
+A Goldfish runs in a fresh context with no conversation history. Spawn each
+subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
+`spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
+`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
+where your harness registers named subagents. Otherwise spawn a general-purpose
+subagent and tell it to read that persona file first. Pass the prompt verbatim
+and wait for the report. If your harness cannot nest subagents,
+use direct dispatch instead of the synthesizer. See `docs/harnesses.md`.
+If your harness has no subagent tool, stop and tell the user: a review in the same context is not a Goldfish review.
+
 ## Execution Constraints (CRITICAL)
 
 1.  **Artifact-First Delivery (MANDATORY)**: You are **STRICTLY FORBIDDEN** from
     presenting large proposals, drafts, summaries, or plans directly in the chat
-    pane. You **MUST** write them to the conversation's artifact directory using
-    the `write_to_file` tool with `ArtifactMetadata` (`UserFacing: true`,
-    `RequestFeedback: true`) and then notify the user in the chat that the
-    artifact is ready for their review in the side panel. This applies to the
+    pane. You **MUST** write them to the working directory (or your harness's artifact directory, if it has one) using
+    your file-writing tool and then tell the user in chat
+    the file path and ask for review. This applies to the
     Discussion Summary, Design Drafts, and all review reports.
 
 ## Inputs
@@ -61,7 +73,7 @@ Intermediate Zoom Out Review (Step 8), and Implementation Readiness Test
     *   Explain to the user that the target design document path is required to
         analyze its structure and discover the semantic split.
     *   Ask the user to provide the absolute path.
-    *   **CRITICAL**: Do NOT use the `ask_question` tool. Ask the question as a
+    *   **CRITICAL**: Do NOT use structured question tools. Ask the question as a
         regular text message and end your turn.
 2.  Once `TargetFile` is provided, verify if `GoldfishContext` is provided. If
     missing:
@@ -73,7 +85,7 @@ Intermediate Zoom Out Review (Step 8), and Implementation Readiness Test
         itself, so there is no need to manually list them.
     *   Ask if the user wants to provide any *additional* context files, or if
         they prefer to proceed with no additional context.
-    *   **CRITICAL**: Do NOT use the `ask_question` tool. Ask the question as a
+    *   **CRITICAL**: Do NOT use structured question tools. Ask the question as a
         regular text message and end your turn.
 
 ### Step 2: Semantic Split Discovery
@@ -170,39 +182,32 @@ Intermediate Zoom Out Review (Step 8), and Implementation Readiness Test
 
 ### Subflow: Zoom Out Review
 
-1.  **Spawn Zoom Out Subagent**: Use the `invoke_subagent` tool to launch the
-    specialized `egm-zoom-out` auditor:
-    *   `TypeName`: `egm-zoom-out`
-    *   `Role`: `goldfish-auditor`
+1.  **Spawn Zoom Out Subagent**: Spawn the specialized `egm-zoom-out` auditor:
+    *   Subagent: `egm-zoom-out` (`personas/zoom_out.md`)
     *   `Prompt`: >- Audit the file `[TargetFile]` at line range `full file`.
         Apply standard `resources/document_standards/zoom-out-standard.md`.
         Context documents: `[GoldfishContext]`.
-    *   `Workspace`: `inherit`
 2.  **Write Report Artifact**: Save findings to `zoom_out_report.md` (or
-    `intermediate_zoom_out_report.md` for Step 8) in the artifact directory
-    using `write_to_file` (`UserFacing: true`, `RequestFeedback: true`).
+    `intermediate_zoom_out_report.md` for Step 8) in the working directory
+    using your file-writing tool.
 3.  **Notify User (No Chat Dumps)**: Notify the user in chat that the Zoom Out
-    findings have been written to the report artifact in their side panel,
+    findings have been written to the report file (give its path),
     highlight 2-3 key risks, and prompt for review.
 4.  **Manual Checkpoint Gate**: Ask the user in chat whether to proceed to the next
     stage or pause to address Zoom Out findings.
 
 ### Subflow: Comprehension Test
 
-1.  **Spawn Comprehension Subagent**: Use the `invoke_subagent` tool to launch
-    the `egm-comprehension` reviewer:
-    *   `TypeName`: `egm-comprehension`
-    *   `Role`: `goldfish-auditor`
+1.  **Spawn Comprehension Subagent**: Spawn the `egm-comprehension` reviewer:
+    *   Subagent: `egm-comprehension` (`personas/comprehension.md`)
     *   `Prompt`: >- Audit the file `[TargetFile]` at line range `[FeatureRange]`
         and `[DetailedRange]`. Apply standard
         `resources/document_standards/re-implementation-standard.md`.
         Context documents: `[GoldfishContext]`.
-    *   `Workspace`: `inherit`
 2.  **Write Report Artifact**: Save findings to `comprehension_report.md` in
-    the artifact directory using `write_to_file` (`UserFacing: true`,
-    `RequestFeedback: true`).
+    the working directory using your file-writing tool.
 3.  **Notify User (No Chat Dumps)**: Notify the user in chat that the Comprehension
-    findings have been written to `comprehension_report.md` in their side panel.
+    findings have been written to `comprehension_report.md` (give its path).
 4.  **Manual Checkpoint Gate**: Prompt the user in chat:
     *   *Yes, I will update the doc/context* (pause to let user edit, then offer re-run).
     *   *No, these gaps are not significant* (proceed to next step).
