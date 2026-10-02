@@ -288,15 +288,15 @@ specified relative to the repository root directory housing the test framework.
 
 ````yaml
 # skills/<skill>/test_scenarios.yaml
-skill: "egm_discuss"
-description: "Behavioral eval scenarios for egm_discuss"
+skill: "egm_draft"
+description: "Behavioral eval scenarios for egm_draft"
 scenarios:
   # Deterministic Scenario Example
-  - scenario_id: "start_discussion_and_grill"
+  - scenario_id: "ingest_brief_and_draft"
     description: "Verifies agent does not output design drafts in turn 1; asks clarifying questions."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_discuss/SKILL.md"
+      skill_file: "skills/egm_draft/SKILL.md"
       rules:
         - "rules/anti_sycophancy.md"
         - "rules/google3_links.md"
@@ -339,7 +339,7 @@ isolation for Tier 1 static checks, `litellm` is loaded lazily inside
 
 ```bash
 # Run all scenarios for a specific skill against Gemini
-python tools/eval_runner.py --skill egm_discuss --model gemini/gemini-2.5-flash
+python tools/eval_runner.py --skill egm_draft --model gemini/gemini-2.5-flash
 
 # Run an LLM-judged scenario with a dedicated judge model
 python tools/eval_runner.py --skill egm_review --scenario comprehension_auditor_undefined_jargon --model ollama/llama3 --judge-model gemini/gemini-2.5-pro
@@ -378,9 +378,8 @@ section:
 
 *   **[brainstorm.md](brainstorm.md)**: `egm_brainstorm` divergence and decision
     matrix generation scenarios.
-*   **[discussion.md](discussion.md)**: `egm_discuss` and `egm_draft`
-    requirements grilling, single-question pacing, silent no-code enforcement,
-    and artifact-first delivery scenarios.
+*   **[draft.md](draft.md)**: `egm_draft` section drafting, single-question pacing,
+    silent no-code enforcement, and artifact-first delivery scenarios.
 *   **[drift_report.md](drift_report.md)**: `egm_drift_report` AST and spec
     divergence detection scenarios.
 *   **[egm_peanuts_hay_bootstrap.md](egm_peanuts_hay_bootstrap.md)**:

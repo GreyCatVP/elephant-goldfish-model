@@ -2,9 +2,9 @@
 name: egm-draft
 disable-model-invocation: true
 description: >-
-  Drafts a design document section-by-section using the discussion summary from
-  egm-discuss. This is the second step in the Elephant & Goldfish (EGM) feature
-  flow. Use when you are ready to write a design doc after aligning on
+  Drafts a design document section-by-section using the concepts brief from
+  egm-brainstorm (or user notes). This is the second step in the Elephant & Goldfish (EGM)
+  feature flow. Use when you are ready to write a design doc after aligning on
   requirements.
 ---
 
@@ -53,15 +53,15 @@ the document iteratively as the conversation progresses between sections.
 
 --------------------------------------------------------------------------------
 
-### Step 1: Ingest Discussion Summary
+### Step 1: Ingest Predecessor Context (Concepts Brief or Notes)
 
-1.  **Check for Summary**: Look for `discussion_summary.md` in the current
-    working directory (`./discussion_summary.md`) or the conversation artifact directory.
-2.  **Fallback**: If the file does not exist in the root, check any local scratch
+1.  **Check for Summary or Brief**: Look for `concepts_brief.md` (or `discussion_summary.md`)
+    in the current working directory (`./concepts_brief.md`, `./discussion_summary.md`) or the
+    conversation artifact directory.
+2.  **Fallback**: If neither file exists in the root, check any local scratch
     directory or active conversation artifacts. If still missing, ask the user to
-    provide the path to their summary or notes from their discussion phase
-    (`egm-discuss`).
-3.  **Verify State**: Parse the summary (Goals, Non-Goals, CUJs, Architecture
+    provide the path to their concepts brief (from `/egm-brainstorm`) or feature notes.
+3.  **Verify State**: Parse the context (Goals, Non-Goals, CUJs, Architecture
     Outline, Risks) by reading it and present a quick confirmation to the user to ensure we
     are starting with the correct context.
 4.  **Consensus**: Get explicit approval to start drafting the document.

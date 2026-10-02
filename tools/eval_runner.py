@@ -278,7 +278,7 @@ def main() -> None:
       description="EGM Behavioral Evaluation Runner"
   )
   parser.add_argument(
-      "--skill", type=str, help="Target skill name (e.g. egm_discuss)"
+      "--skill", type=str, help="Target skill name (e.g. egm_draft)"
   )
   parser.add_argument(
       "--scenario", type=str, help="Specific scenario ID to execute"
