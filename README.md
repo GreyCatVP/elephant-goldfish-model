@@ -78,8 +78,6 @@ EGM includes a set of modular behavioral and cognitive rules under `rules/` desi
 | Rule File | Objective & Constraint |
 | :-------- | :--------------------- |
 | [`rules/anti_sycophancy.md`](rules/anti_sycophancy.md) | **Critical Thinking & Anti-Sycophancy**: Eliminates hollow flattery and sycophantic agreement. Mandates stress-testing ideas first, highlighting edge cases, and providing constructive counter-arguments. |
-| [`rules/search_terms.md`](rules/search_terms.md) | **Symbolic Code Search**: Enforces robust symbol and identifier searches rather than fragile line numbers, ensuring links remain stable across code refactors. |
-| [`rules/pr_tagging.md`](rules/pr_tagging.md) | **Traceability & Categorization**: Standardizes `#egm` pull request metadata tags to connect feature implementations back to their governing design specifications. |
 
 ### Installing Rules in Antigravity
 
