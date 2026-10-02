@@ -56,15 +56,15 @@ const skills = [
     <div class="section-head">
       <h2 class="headline">Seven skills. Plain markdown.</h2>
       <p class="lead">
-        Each skill is a folder with a SKILL.md that your agent reads. No runtime, no SDK, no lock-in.
-        Open one to see exactly what the agent is told to do.
+        Each skill is a folder with a SKILL.md that your agent reads. No runtime, no SDK,
+        no <span class="nowrap">lock-in</span>. Open one to see exactly what the agent is told to do.
       </p>
     </div>
-    <List segmented label="Skills">
+    <List label="Skills">
       {
         skills.map((skill) => (
           <ListItem href={`${repo}/tree/HEAD/skills/${skill.dir}`} target="_blank">
-            <code slot="overline" class="cmd">
+            <code slot="leading" class="cmd">
               {skill.command}
             </code>
             {skill.name}
@@ -80,26 +80,69 @@ const skills = [
 </section>
 
 <style>
-  /* List item theming through the component's documented custom properties. */
-  .skills :global(.list-item) {
-    --container-color: var(--md-sys-color-surface-container-low);
-    --container-shape: var(--md-sys-shape-corner-lg);
-    --label-text: var(--md-sys-typescale-title-lg);
-    --supporting-text: var(--md-sys-typescale-body-md);
-    --top-space: 20px;
-    --bottom-space: 20px;
-    --leading-space: 24px;
-    --trailing-space: 20px;
-    --trailing-icon-size: 22px;
-    --trailing-icon-color: var(--md-sys-color-on-surface-variant);
+  /* An index, not a stack of cards: hairline rows, the command in its own column so the
+     seven commands read as one aligned list, name and description beside it. List item
+     theming goes through the component's documented custom properties. */
+  .skills :global(.list) {
+    border-radius: 0;
+    border-block-start: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .skills :global(.list-segmented) {
-    --gap: 8px;
+  .skills :global(.list > li) {
+    border-block-end: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .skills :global(.list-item) {
+    --container-color: transparent;
+    --container-shape: var(--md-sys-shape-corner-md);
+    --label-text: var(--md-sys-typescale-title-lg);
+    --supporting-text: var(--md-sys-typescale-body-md);
+    --top-space: 22px;
+    --bottom-space: 24px;
+    --leading-space: 8px;
+    --trailing-space: 8px;
+    --between-space: 24px;
+    --trailing-icon-size: 22px;
+    --trailing-icon-color: var(--md-sys-color-on-surface-variant);
+    align-items: baseline;
+  }
+
+  .skills :global(.list-item-leading) {
+    flex: none;
+    inline-size: 15rem;
+    min-height: 0;
+  }
+
+  .skills :global(.list-item-trailing) {
+    align-self: center;
+  }
+
+  .skills :global(.list-item-supporting-text) {
+    max-inline-size: 60ch;
+    margin-block-start: 2px;
   }
 
   .cmd {
     font-size: 0.8125rem;
     color: var(--md-sys-color-on-surface-variant);
+  }
+
+  @media (max-width: 760px) {
+    .skills :global(.list-item) {
+      flex-wrap: wrap;
+      --between-space: 16px;
+      --top-space: 18px;
+      --bottom-space: 20px;
+    }
+
+    .skills :global(.list-item-leading) {
+      inline-size: 100%;
+      line-height: 1.25rem;
+      margin-block-end: -6px;
+    }
+
+    .skills :global(.list-item-content) {
+      flex-basis: 0;
+    }
   }
 </style>
