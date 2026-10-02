@@ -80,8 +80,8 @@ Modular agent capabilities executable via slash commands or direct invocation:
 *   `egm_discuss`: Interactive requirements elicitation and Socratic questioning.
 *   `egm_draft`: Section-by-section specification compiler.
 *   `egm_review`: Orchestrator for the multi-stage review pipeline.
-*   `goldfish_review_loop`: Concurrent subagent review dispatcher.
-*   `goldfish_review_resolve`: Interactive resolution and patch application.
+*   `egm_review_loop`: Concurrent subagent review dispatcher.
+*   `egm_resolve`: Interactive resolution and patch application.
 *   `egm_drift_report`: AST drift scanner between specs and active code.
 *   `egm_bootstrap`: Recursive bottom-up codebase documentation generator.
 *   `egm_brainstorm`: 6-lens shootdown swarm for early concept exploration.
@@ -132,7 +132,7 @@ sequenceDiagram
     Human->>Reviewer: /egm-review docs/designs/FEATURE.md
     Note over Reviewer: Zoom Out -> Comprehension -> Critic -> Readiness
     Reviewer->>Artifact: Write review reports & findings
-    Human->>Reviewer: Triage & resolve findings (/goldfish-review-resolve)
+    Human->>Reviewer: Triage & resolve findings (/egm-resolve)
     Human->>VCS: Open Pull Request with FEATURE.md
     VCS-->>Human: Spec Approved & Merged
     Human->>Coder: Implement against FEATURE.md
@@ -174,7 +174,7 @@ sequenceDiagram
 ### Phase 4: Human Review & Submission
 
 *   The human engineer resolves or rejects Goldfish findings using
-    `/goldfish-review-resolve`, updates the design doc, and submits the
+    `/egm-resolve`, updates the design doc, and submits the
     specification via Pull Request for human peer review.
 
 ### Phase 5: Implementation & Drift Monitoring

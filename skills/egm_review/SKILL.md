@@ -214,7 +214,7 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 
 ### Subflow: Critic Review
 
-1.  **Invoke Antagonistic Review Loop**: Execute the local **`goldfish-review-loop`**
+1.  **Invoke Antagonistic Review Loop**: Execute the local **`egm-review-loop`**
     workflow directly in this conversation.
 2.  Pass parameters:
     *   `TargetFile`: Same.
@@ -222,12 +222,12 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
     *   `Reviewers`: `[egm-design, egm-structural, egm-style]`
     *   `Standards`: `{"egm-design": "feature-spec-standard", "egm-structural": "feature-spec-standard"}`
     *   `GoldfishContext`: Same.
-3.  Allow `goldfish-review-loop` to manage the iterative audit, findings resolution
-    via `goldfish-review-resolve`, and repair application.
+3.  Allow `egm-review-loop` to manage the iterative audit, findings resolution
+    via `egm-resolve`, and repair application.
 
 ### Subflow: Implementation Readiness Test
 
-1.  **Invoke Antagonistic Review Loop**: Execute the local **`goldfish-review-loop`**
+1.  **Invoke Antagonistic Review Loop**: Execute the local **`egm-review-loop`**
     workflow directly in this conversation.
 2.  Pass parameters:
     *   `TargetFile`: Same.
@@ -235,5 +235,5 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
     *   `Reviewers`: `[egm-implementation-readiness, egm-codebase-details, egm-style]`
     *   `Standards`: `{"egm-implementation-readiness": "implementation-readiness-standard", "egm-codebase-details": "implementation-readiness-standard"}`
     *   `GoldfishContext`: Same.
-3.  Allow `goldfish-review-loop` to manage the iterative audit, findings resolution
-    via `goldfish-review-resolve`, and repair application.
+3.  Allow `egm-review-loop` to manage the iterative audit, findings resolution
+    via `egm-resolve`, and repair application.

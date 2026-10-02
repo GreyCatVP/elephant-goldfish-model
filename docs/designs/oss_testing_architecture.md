@@ -272,7 +272,7 @@ verification**:
     `egm_zoom_out`): Evaluated by injecting a test document directly into the
     subagent's system prompt and asserting that its single-turn completion
     catches target defects.
-*   **Orchestrator Skills** (e.g., `egm_review`, `goldfish_review_loop`):
+*   **Orchestrator Skills** (e.g., `egm_review`, `egm_review_loop`):
     Evaluated by asserting that the orchestrator properly constructs review
     prompts, enforces single-question pacing, respects tool invocation
     boundaries, and generates structured report deliverables without attempting
@@ -387,8 +387,8 @@ section:
     `egm_peanuts_hay_bootstrap` tree initialization and safety gating scenarios.
 *   **[lite.md](lite.md)**: `egm_lite` 4-phase state transitions, critique pause
     gating, and checklist update scenarios.
-*   **[review.md](review.md)**: `egm_review`, `goldfish_review_loop`, and
-    `goldfish_review_resolve` multi-lens reviewer audits and resolution gating
+*   **[review.md](review.md)**: `egm_review`, `egm_review_loop`, and
+    `egm_resolve` multi-lens reviewer audits and resolution gating
     scenarios.
 *   **[zoom_out.md](zoom_out.md)**: `egm_zoom_out` YAGNI and overengineering
     catch scenarios.
