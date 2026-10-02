@@ -45,7 +45,7 @@ The EGM skills, personas, and rules are designed to run in **Antigravity**:
 1.  **Skills**: The skills in `skills/` can be registered in your Antigravity
     skill registry or invoked via slash commands (e.g. `/egm-brainstorm`,
     `/egm-draft`, `/egm-review`).
-2.  **Personas**: The prompts in `personas/` define isolated system instructions
+2.  **Personas**: The prompts in `agents/` define isolated system instructions
     for subagents.
 3.  **Rules**: The rules in `rules/` (such as `anti_sycophancy.md`,
     `search_terms.md`, `pr_tagging.md`) can be included in your agent's active

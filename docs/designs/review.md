@@ -81,27 +81,27 @@ flowchart TD
 
 1.  **Step 5: Zoom Out Review (Altitude Check)**:
     *   *Target*: Full Document.
-    *   *Persona*: [`zoom_out`](../../personas/zoom_out.md) (Skeptical Architect).
+    *   *Persona*: [`zoom_out`](../../agents/zoom_out.md) (Skeptical Architect).
     *   *Standard*: `zoom-out-standard.md`.
     *   *Focus*: Validates problem framing, rejects speculative features
         (YAGNI), and verifies reuse of existing infrastructure before investing in
         detailed review passes.
 2.  **Step 6: Comprehension Test (Self-Containment Check)**:
     *   *Target*: `FeatureRange` vs `DetailedRange`.
-    *   *Persona*: [`comprehension`](../../personas/comprehension.md) (Naive Reader).
+    *   *Persona*: [`comprehension`](../../agents/comprehension.md) (Naive Reader).
     *   *Standard*: Baseline Self-Containment.
     *   *Focus*: Reads the document with zero prior context. Identifies missing
         prerequisites, unexplained acronyms, and conceptual gaps.
 3.  **Step 7: Critic Review (Antagonistic Stress-Test)**:
     *   *Target*: `FeatureRange` (High-Level Architecture).
-    *   *Personas*: [`design_critic`](../../personas/design_critic.md),
-        [`structural`](../../personas/structural.md), [`style`](../../personas/style.md).
+    *   *Personas*: [`design_critic`](../../agents/design_critic.md),
+        [`structural`](../../agents/structural.md), [`style`](../../agents/style.md).
     *   *Standards*: `feature-spec-standard.md`, `heilmeier-standard.md`.
     *   *Focus*: Probes single points of failure (SPOFs), scaling limits,
         failure modes, and edge cases.
 4.  **Step 8: Intermediate Zoom Out Review (Post-Critic Pruning)**:
     *   *Target*: Full Document.
-    *   *Persona*: [`zoom_out`](../../personas/zoom_out.md) (Skeptical Architect).
+    *   *Persona*: [`zoom_out`](../../agents/zoom_out.md) (Skeptical Architect).
     *   *Standard*: `zoom-out-standard.md`.
     *   *Focus*: Incremental audit focusing on additions, modifications, and
         defensive mitigations introduced during Comprehension and Critic
@@ -109,8 +109,8 @@ flowchart TD
         planning, while avoiding re-flagging decisions accepted in Step 5.
 5.  **Step 9: Implementation Readiness Test (Actionability Check)**:
     *   *Target*: `DetailedRange` (`## Detailed Implementation Plan`).
-    *   *Personas*: [`implementation_readiness`](../../personas/implementation_readiness.md),
-        [`codebase_details`](../../personas/codebase_details.md), [`style`](../../personas/style.md).
+    *   *Personas*: [`implementation_readiness`](../../agents/implementation_readiness.md),
+        [`codebase_details`](../../agents/codebase_details.md), [`style`](../../agents/style.md).
     *   *Standards*: `implementation-readiness-standard.md`, `re-implementation-standard.md`.
     *   *Focus*: Verifies that every file touched is listed with rationale, API
         signatures match current codebase reality, and step-by-step test plans exist.
@@ -119,18 +119,18 @@ flowchart TD
 
 ## Reviewer Persona Catalog
 
-All reviewer persona prompts reside under [`personas/`](../../personas/):
+All reviewer persona prompts reside under [`agents/`](../../agents/):
 
 | Persona File | Role Title | Core Responsibilities |
 | :----------- | :--------- | :-------------------- |
-| [`personas/zoom_out.md`](../../personas/zoom_out.md) | Skeptical Architect | Audits for over-engineering, YAGNI, and unneeded complexity. Searches codebase for existing utilities to prevent reinvention. |
-| [`personas/comprehension.md`](../../personas/comprehension.md) | Naive Reader | Assumes no prior knowledge. Identifies undefined jargon, assumed system context, and missing architectural diagrams. |
-| [`personas/design_critic.md`](../../personas/design_critic.md) | Analytical Design Critic | Evaluates system reliability, scale limits, operational risks, failure recovery, and trade-off justification. |
-| [`personas/implementation_readiness.md`](../../personas/implementation_readiness.md) | Tech Lead Auditor | Ensures implementation plans contain unambiguous, deterministic instructions, complete file lists, and verification steps. |
-| [`personas/codebase_details.md`](../../personas/codebase_details.md) | Codebase Auditor | Cross-references referenced paths, classes, and function signatures against live source code to prevent drift and hallucinated APIs. |
-| [`personas/structural.md`](../../personas/structural.md) | Layout Validator | Enforces standard heading hierarchy, table formatting, and document template conformance. |
-| [`personas/style.md`](../../personas/style.md) | Technical Copy Editor | Strips conversational filler, enforces factual, objective tone, and ensures adherence to concise technical writing standards. |
-| [`personas/synthesizer.md`](../../personas/synthesizer.md) | Review Synthesizer | Spawns reviewers in parallel, deduplicates findings, formats file links, and writes consolidated report artifacts. |
+| [`agents/zoom_out.md`](../../agents/zoom_out.md) | Skeptical Architect | Audits for over-engineering, YAGNI, and unneeded complexity. Searches codebase for existing utilities to prevent reinvention. |
+| [`agents/comprehension.md`](../../agents/comprehension.md) | Naive Reader | Assumes no prior knowledge. Identifies undefined jargon, assumed system context, and missing architectural diagrams. |
+| [`agents/design_critic.md`](../../agents/design_critic.md) | Analytical Design Critic | Evaluates system reliability, scale limits, operational risks, failure recovery, and trade-off justification. |
+| [`agents/implementation_readiness.md`](../../agents/implementation_readiness.md) | Tech Lead Auditor | Ensures implementation plans contain unambiguous, deterministic instructions, complete file lists, and verification steps. |
+| [`agents/codebase_details.md`](../../agents/codebase_details.md) | Codebase Auditor | Cross-references referenced paths, classes, and function signatures against live source code to prevent drift and hallucinated APIs. |
+| [`agents/structural.md`](../../agents/structural.md) | Layout Validator | Enforces standard heading hierarchy, table formatting, and document template conformance. |
+| [`agents/style.md`](../../agents/style.md) | Technical Copy Editor | Strips conversational filler, enforces factual, objective tone, and ensures adherence to concise technical writing standards. |
+| [`agents/synthesizer.md`](../../agents/synthesizer.md) | Review Synthesizer | Spawns reviewers in parallel, deduplicates findings, formats file links, and writes consolidated report artifacts. |
 
 --------------------------------------------------------------------------------
 
@@ -199,7 +199,7 @@ concludes when zero blocking findings remain or the engineer halts the loop.
 | `skills/egm_resolve/SKILL.md` | Skill Definition | Elephant resolution engine managing `CONTEST` vs `PROPOSE FIX` triage and automated fixes. |
 | `skills/egm_resolve/TEST.md` | Unit Tests | Verification test scenarios validating the finding categorization and resolution loop. |
 | `skills/egm_resolve/test_scenarios.yaml` | Evaluation Benchmark | Benchmark test suite evaluating model resolution and fix proposal accuracy. |
-| `personas/*.md` | Persona Prompts | System prompt instructions for all 7 Goldfish reviewers and the Synthesizer. |
+| `agents/*.md` | Persona Prompts | System prompt instructions for all 7 Goldfish reviewers and the Synthesizer. |
 | `resources/document_standards/*.md` | Document Standards | Evaluation rubrics and standards for feature specs, implementation readiness, and simplicity. |
 
 ## References

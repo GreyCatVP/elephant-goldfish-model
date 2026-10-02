@@ -39,7 +39,7 @@ Intermediate Zoom Out Review (Step 8), and Implementation Readiness Test
 A Goldfish runs in a fresh context with no conversation history. Spawn each
 subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
 `spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
-`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+`invoke_subagent`). Each subagent is defined in `agents/<file>.md`, and its
 frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
 where your harness registers named subagents. Otherwise spawn a general-purpose
 subagent and tell it to read that persona file first. Pass the prompt verbatim
@@ -183,7 +183,7 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 ### Subflow: Zoom Out Review
 
 1.  **Spawn Zoom Out Subagent**: Spawn the specialized `egm-zoom-out` auditor:
-    *   Subagent: `egm-zoom-out` (`personas/zoom_out.md`)
+    *   Subagent: `egm-zoom-out` (`agents/zoom_out.md`)
     *   `Prompt`: >- Audit the file `[TargetFile]` at line range `full file`.
         Apply standard `resources/document_standards/zoom-out-standard.md`.
         Context documents: `[GoldfishContext]`.
@@ -199,7 +199,7 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 ### Subflow: Comprehension Test
 
 1.  **Spawn Comprehension Subagent**: Spawn the `egm-comprehension` reviewer:
-    *   Subagent: `egm-comprehension` (`personas/comprehension.md`)
+    *   Subagent: `egm-comprehension` (`agents/comprehension.md`)
     *   `Prompt`: >- Audit the file `[TargetFile]` at line range `[FeatureRange]`
         and `[DetailedRange]`. Apply standard
         `resources/document_standards/re-implementation-standard.md`.

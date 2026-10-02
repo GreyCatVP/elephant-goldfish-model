@@ -9,14 +9,14 @@
   "repository": "https://github.com/google/elephant-goldfish-model",
   "license": "Apache-2.0",
   "agents": [
-    "./personas/bootstrap_orchestrator.md",
-    "./personas/codebase_details.md",
-    "./personas/comprehension.md",
-    "./personas/design_critic.md",
-    "./personas/implementation_readiness.md",
-    "./personas/structural.md",
-    "./personas/style.md",
-    "./personas/synthesizer.md",
-    "./personas/zoom_out.md"
+    "./agents/bootstrap_orchestrator.md",
+    "./agents/codebase_details.md",
+    "./agents/comprehension.md",
+    "./agents/design_critic.md",
+    "./agents/implementation_readiness.md",
+    "./agents/structural.md",
+    "./agents/style.md",
+    "./agents/synthesizer.md",
+    "./agents/zoom_out.md"
   ]
 }

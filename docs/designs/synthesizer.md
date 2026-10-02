@@ -129,7 +129,7 @@ context:
 
 | File Path | Type | Purpose & Reason for Existence |
 | :-------- | :--- | :----------------------------- |
-| `personas/synthesizer.md` | Persona Prompt | System prompt, tool permissions, and operational logic for the `synthesizer` orchestration persona. |
+| `agents/synthesizer.md` | Persona Prompt | System prompt, tool permissions, and operational logic for the `synthesizer` orchestration persona. |
 
 ## References
 

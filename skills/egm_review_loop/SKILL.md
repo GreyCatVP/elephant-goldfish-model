@@ -48,7 +48,7 @@ with the Elephant context to resolve findings.
 A Goldfish runs in a fresh context with no conversation history. Spawn each
 subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
 `spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
-`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+`invoke_subagent`). Each subagent is defined in `agents/<file>.md`, and its
 frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
 where your harness registers named subagents. Otherwise spawn a general-purpose
 subagent and tell it to read that persona file first. Pass the prompt verbatim
@@ -75,7 +75,7 @@ When resolving names in `Reviewers` and `Standards`:
 
 *   **Reviewer Shortnames**: Map reviewer shortname (e.g., `design_critic`,
     `structural`, `style`, `implementation_readiness`,
-    `codebase_details`, `comprehension`, `zoom_out`) to `personas/{name}.md`.
+    `codebase_details`, `comprehension`, `zoom_out`) to `agents/{name}.md`.
     The persona file defines the reviewer's core mandates, audit vectors, and
     output format.
 *   **Standard Shortnames**: Map standard shortname (e.g., `feature-spec-standard`,
@@ -124,7 +124,7 @@ file` mode is specified, confirm full-file line bounds).
 1.  **Launch Subagent Swarm**:
     Spawn subagents to execute the review:
     *   **Hierarchical Dispatch (Synthesizer)**: Spawn the intermediate
-        synthesizer subagent (`personas/synthesizer.md` / `egm-synthesizer`).
+        synthesizer subagent (`agents/synthesizer.md` / `egm-synthesizer`).
         The synthesizer spawns the Goldfish review swarm in
         parallel, deduplicates findings, writes the report artifact, and
         returns a single summary message to avoid context pollution in the root
@@ -132,7 +132,7 @@ file` mode is specified, confirm full-file line bounds).
     *   **Direct Dispatch (Flat Swarm)**: Alternatively, spawn each requested
         reviewer subagent in `Reviewers` directly.
         Instruct each subagent to first read its persona definition in
-        `personas/{name}.md`, then audit `TargetFile` at the resolved line range
+        `agents/{name}.md`, then audit `TargetFile` at the resolved line range
         against its designated standard in `resources/document_standards/`,
         supplying `GoldfishContext`.
     *   Each reviewer produces findings with severity (🔴 Blocker, 🟡 Major, 🟢

@@ -40,7 +40,7 @@ seamlessly into `/egm-discuss` or `/egm-draft`.
 A Goldfish runs in a fresh context with no conversation history. Spawn each
 subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
 `spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
-`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+`invoke_subagent`). Each subagent is defined in `agents/<file>.md`, and its
 frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
 where your harness registers named subagents. Otherwise spawn a general-purpose
 subagent and tell it to read that persona file first. Pass the prompt verbatim
@@ -150,7 +150,7 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 1.  **Delegate to Subagent Swarm**:
     Spawn the intermediate
     **`egm-synthesizer`** (or parallel Goldfish subagents across the 6 specialized lenses):
-    *   Subagent: `egm-synthesizer` (`personas/synthesizer.md`) (or a general-purpose subagent)
+    *   Subagent: `egm-synthesizer` (`agents/synthesizer.md`) (or a general-purpose subagent)
     *   `Prompt`: >- Conduct multi-lens ideation brainstorm for feature concept:
         `[AnchoredFeatureHypothesis]`. Mode: `BRAINSTORM`. Reviewers:
         `[egm-design, egm-codebase-details, egm-zoom-out, egm-comprehension,
@@ -239,7 +239,7 @@ seamlessly into `/egm-discuss` or `/egm-draft`.
 A Goldfish runs in a fresh context with no conversation history. Spawn each
 subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
 `spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
-`invoke_subagent`). Each subagent is defined in `personas/<file>.md`, and its
+`invoke_subagent`). Each subagent is defined in `agents/<file>.md`, and its
 frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
 where your harness registers named subagents. Otherwise spawn a general-purpose
 subagent and tell it to read that persona file first. Pass the prompt verbatim
@@ -349,7 +349,7 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 1.  **Delegate to Subagent Swarm**:
     Spawn the intermediate
     **`egm-synthesizer`** (or parallel Goldfish subagents across the 6 specialized lenses):
-    *   Subagent: `egm-synthesizer` (`personas/synthesizer.md`) (or a general-purpose subagent)
+    *   Subagent: `egm-synthesizer` (`agents/synthesizer.md`) (or a general-purpose subagent)
     *   `Prompt`: >- Conduct multi-lens ideation brainstorm for feature concept:
         `[AnchoredFeatureHypothesis]`. Mode: `BRAINSTORM`. Reviewers:
         `[egm-design, egm-codebase-details, egm-zoom-out, egm-comprehension,

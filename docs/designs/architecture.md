@@ -86,7 +86,7 @@ Modular agent capabilities executable via slash commands or direct invocation:
 *   `egm_bootstrap`: Recursive bottom-up codebase documentation generator.
 *   `egm_brainstorm`: 6-lens shootdown swarm for early concept exploration.
 
-### 2. Personas Layer (`personas/`)
+### 2. Personas Layer (`agents/`)
 Stateless system prompt instructions for isolated Goldfish reviewer subagents
 (Comprehension, Design Critic, Implementation Readiness, Codebase Auditor,
 Structural Validator, Style Editor, and Synthesizer).
