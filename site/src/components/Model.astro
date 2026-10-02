@@ -14,9 +14,17 @@ import Divider from './gb/Divider.astro';
 
     <div class="pair">
       <article class="role">
-        <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true">
-          <circle cx="32" cy="32" r="28" fill="currentColor"></circle>
-        </svg>
+        <div class="spot-badge">
+          <img
+            src="/images/spot-elephant.webp"
+            alt="The Elephant agent holding blueprints and the Source of Truth scroll"
+            class="spot-img"
+            width="64"
+            height="64"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
         <h3 class="title">The Elephant</h3>
         <p class="role-sub">Remembers everything.</p>
         <p class="muted">
@@ -26,9 +34,17 @@ import Divider from './gb/Divider.astro';
         </p>
       </article>
       <article class="role">
-        <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true">
-          <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="4"></circle>
-        </svg>
+        <div class="spot-badge">
+          <img
+            src="/images/spot-goldfish.webp"
+            alt="The Goldfish swarm reviewing technical plans and files"
+            class="spot-img"
+            width="64"
+            height="64"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
         <h3 class="title">The Goldfish</h3>
         <p class="role-sub">Remembers nothing.</p>
         <p class="muted">
@@ -81,11 +97,23 @@ import Divider from './gb/Divider.astro';
     max-inline-size: 48ch;
   }
 
-  .glyph {
-    inline-size: 56px;
-    block-size: 56px;
-    color: var(--md-sys-color-on-surface);
-    margin-block-end: 28px;
+  .spot-badge {
+    inline-size: 64px;
+    block-size: 64px;
+    border-radius: var(--md-sys-shape-corner-md);
+    overflow: hidden;
+    background: #fdfcf7;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    margin-block-end: 24px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    flex-shrink: 0;
+  }
+
+  .spot-img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
   }
 
   .role-sub {
