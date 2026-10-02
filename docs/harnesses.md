@@ -31,7 +31,7 @@ skill text.
 | Antigravity | `/plugin`, then install from `https://github.com/google/elephant-goldfish-model` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
-break EGM, because the skills read `personas/`, `rules/`, and
+break EGM, because the skills read `agents/`, `rules/`, and
 `resources/document_standards/` at run time.
 
 ## Manifests
@@ -44,10 +44,10 @@ break EGM, because the skills read `personas/`, `rules/`, and
 | Gemini CLI | `gemini-extension.json` | `skills/` (default) | `agents/` (default) |
 | Antigravity | `plugin.json` | `skills/` (default) | `agents/` (default) |
 
-`agents` is a symlink to `personas/`. Each persona has `name` and
-`description` frontmatter, so harnesses that load `agents/*.md` register them
-as named subagents (`egm-design`, `egm-zoom-out`, and so on). On Windows,
-enable `core.symlinks` before you clone.
+Persona prompts live in `agents/`, the directory Gemini CLI and Antigravity
+scan for subagents. Each persona has `name` and `description` frontmatter, so
+harnesses that load `agents/*.md` register them as named subagents
+(`egm-design`, `egm-zoom-out`, and so on).
 
 When you add a persona, also add its path to `agents` in
 `.claude-plugin/plugin.json`. Claude Code does not scan a directory there.
@@ -66,7 +66,7 @@ phrase to its own tool:
 | Antigravity | `invoke_subagent` | Yes | Yes |
 
 Where a harness has no named persona, the skill spawns a general-purpose
-subagent and tells it to read `personas/<file>.md` first. If a harness cannot
+subagent and tells it to read `agents/<file>.md` first. If a harness cannot
 nest subagents, use direct dispatch instead of the synthesizer.
 
 A Goldfish review needs a fresh context. If a harness has no subagent tool,

@@ -14,7 +14,7 @@ You are assisting development in the EGM repository.
 * **Triage Taxonomy**: Ensure the human operator selects the appropriate track in
   [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md):
   * `Bug Fix / Minor Patch` (non-test diff `<= 100` lines and `< 3` core files in
-    `skills/`, `personas/`, or `rules/`; no design doc required).
+    `skills/`, `agents/`, or `rules/`; no design doc required).
   * `Feature / Architectural Change — Stage 1: Design Doc PR` (requires an aligned
     issue with `status: approved-for-design`, uses `Refs #<issue>`, and adds
     `docs/designs/<name>.md` + updates `docs/designs/README.md`).

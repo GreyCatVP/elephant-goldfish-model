@@ -704,7 +704,7 @@ All changes will be housed within the open-source repository structure:
     *   **Rationale**: Automated integration tests evaluating bootstrap scenarios
         (small tree sequential execution, parallel subtree partitioning, and safety gates).
 
-4.  **`personas/bootstrap_orchestrator.md`**
+4.  **`agents/bootstrap_orchestrator.md`**
 
     *   **Rationale**: Defines the system prompt and instructions for the
         `bootstrap-orchestrator` persona.

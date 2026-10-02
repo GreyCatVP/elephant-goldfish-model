@@ -129,18 +129,18 @@ delegates directly to the shared EGM subagent swarm and document standards:
 ### Referenced Personas & Infrastructure Components
 
 The ideation shootdown swarm relies on intermediate orchestration and
-specialized Goldfish personas defined in `personas/` and document standards:
+specialized Goldfish personas defined in `agents/` and document standards:
 
 *   **Intermediate Orchestration**:
-    [`personas/synthesizer.md`](../../personas/synthesizer.md) (`Mode: BRAINSTORM`)
+    [`agents/synthesizer.md`](../../agents/synthesizer.md) (`Mode: BRAINSTORM`)
     coordinates the parallel fan-out and compiles `concepts_brief.md`.
 *   **6-Lens Goldfish Personas**:
-    *   [`personas/zoom_out.md`](../../personas/zoom_out.md): Contrarian / YAGNI Lens.
-    *   [`personas/design_critic.md`](../../personas/design_critic.md): Cost, Quota & Resource Economics Lens.
-    *   [`personas/comprehension.md`](../../personas/comprehension.md): UX & Developer Ergonomics Lens.
-    *   [`personas/implementation_readiness.md`](../../personas/implementation_readiness.md): Migration & Compatibility Lens.
-    *   [`personas/codebase_details.md`](../../personas/codebase_details.md): Codebase Grounding & Existing Reuse Lens.
-    *   [`personas/structural.md`](../../personas/structural.md): Maintainability & Tech Debt Lens.
+    *   [`agents/zoom_out.md`](../../agents/zoom_out.md): Contrarian / YAGNI Lens.
+    *   [`agents/design_critic.md`](../../agents/design_critic.md): Cost, Quota & Resource Economics Lens.
+    *   [`agents/comprehension.md`](../../agents/comprehension.md): UX & Developer Ergonomics Lens.
+    *   [`agents/implementation_readiness.md`](../../agents/implementation_readiness.md): Migration & Compatibility Lens.
+    *   [`agents/codebase_details.md`](../../agents/codebase_details.md): Codebase Grounding & Existing Reuse Lens.
+    *   [`agents/structural.md`](../../agents/structural.md): Maintainability & Tech Debt Lens.
 *   **Referenced Standards**: Evaluates concepts against
     [`zoom-out-standard.md`](../../resources/document_standards/zoom-out-standard.md)
     and [`heilmeier-standard.md`](../../resources/document_standards/heilmeier-standard.md).

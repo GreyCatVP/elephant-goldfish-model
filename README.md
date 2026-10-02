@@ -43,10 +43,10 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 ## Repository Structure
 
 ```
+├── agents/                       # Stateless reviewer and orchestrator persona prompts
 ├── assets/                       # Branding assets and diagrams
 ├── docs/                         # Documentation, guides, and FAQ
 │   └── designs/                  # Living technical design specifications
-├── personas/                     # Stateless reviewer and orchestrator persona prompts
 ├── resources/
 │   └── document_standards/       # Quality evaluation rubrics and standards
 ├── rules/                        # Continuous behavioral and cognitive rules

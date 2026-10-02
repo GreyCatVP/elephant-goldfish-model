@@ -27,7 +27,7 @@ This design introduces a system of **good-faith speed bumps**: a non-punitive,
 advisory intake funnel that prompts contributors to self-select into the
 appropriate contribution track, affirms human accountability, and dogfoods the
 full EGM methodology. Contributors planning large changes (`> 100` non-test
-lines or `>= 3` core files in `skills/`, `personas/`, or `rules/`) are advised
+lines or `>= 3` core files in `skills/`, `agents/`, or `rules/`) are advised
 to reach out to maintainers first via a GitHub Issue
 (`.github/ISSUE_TEMPLATE/feature_proposal.md`). Once maintainers confirm
 alignment (`status: approved-for-design`), the contributor submits a Stage-1
@@ -75,7 +75,7 @@ punitive auto-close bots that discourage community engagement.
 *   **Structured Self-Selection**: Implement a clean intake taxonomy in
     [`.github/PULL_REQUEST_TEMPLATE.md`](../../.github/PULL_REQUEST_TEMPLATE.md):
     *   `Bug Fix / Minor Patch` (`<= 100` non-test lines and `< 3` core files in
-        `skills/`, `personas/`, `rules/`; no design document required).
+        `skills/`, `agents/`, `rules/`; no design document required).
     *   `Feature / Architectural Change -- Stage 1: Design Doc PR` (requires an
         aligned issue with `status: approved-for-design`, uses `Refs #<issue>`,
         and adds `docs/designs/<name>.md` + updates `docs/designs/README.md`).
@@ -259,11 +259,11 @@ The advisory engine operates as a non-blocking GitHub Actions workflow.
             `skills/<skill>/test_scenarios.yaml`) are excluded from non-test
             code and core file counts.
         *   **Exempts**: Core executable Markdown definitions in `skills/**`,
-            `personas/**`, and `rules/**` (such as `SKILL.md`) are explicitly
+            `agents/**`, and `rules/**` (such as `SKILL.md`) are explicitly
             treated as production logic.
     *   Sums non-test lines added and deleted (`file.changes`).
     *   Counts non-test core architectural definition files touched (`skills/`,
-        `personas/`, `rules/`).
+        `agents/`, `rules/`).
 *   **Evaluation Heuristics**:
     *   *Bug Fix Track*: Fires if author checked `Bug Fix / Minor Patch` AND
         (`nonTestChanges > 100` OR `coreFilesCount >= 3` OR `files.length >=
