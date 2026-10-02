@@ -22,16 +22,10 @@ const skills = [
     name: 'Review',
     command: '/egm-review',
     dir: 'egm_review',
-    body: 'Run the multi-stage verification pipeline: zoom out, comprehension, critic, readiness.',
+    body: 'Run the multi-stage verification pipeline with zero-context goldfish reviewers: zoom out, comprehension, critic, readiness.',
   },
   {
-    name: 'Review Loop',
-    command: 'egm_review_loop',
-    dir: 'egm_review_loop',
-    body: 'Dispatch concurrent review subagents, directly or hierarchically. The engine behind Review.',
-  },
-  {
-    name: 'Review Resolve',
+    name: 'Resolve',
     command: '/egm-resolve',
     dir: 'egm_resolve',
     body: 'Triage review findings interactively and apply the agreed patches to the specification.',
@@ -40,13 +34,13 @@ const skills = [
     name: 'Drift Report',
     command: '/egm-drift-report',
     dir: 'egm_drift_report',
-    body: 'Scan the syntax tree and flag where the live code and the checked-in spec have diverged.',
+    body: 'After you build: scan the syntax tree and flag where the live code and the committed spec have diverged.',
   },
   {
     name: 'Bootstrap',
     command: '/egm-bootstrap',
     dir: 'egm_bootstrap',
-    body: 'Generate bottom-up documentation for an existing codebase and keep it current in sentinel blocks.',
+    body: 'For an existing codebase: write a README for every directory, bottom up, so the elephant starts with context. Re-runs touch only the generated blocks.',
   },
 ];
 ---
@@ -54,9 +48,9 @@ const skills = [
 <section class="section skills" id="skills">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">Seven skills. Plain markdown.</h2>
+      <h2 class="headline">Six commands. Plain markdown.</h2>
       <p class="lead">
-        Each skill is a folder with a SKILL.md that your agent reads. No runtime, no SDK,
+        Each command runs a skill: a folder with a SKILL.md that your agent reads. No runtime, no SDK,
         no <span class="nowrap">lock-in</span>. Open one to see exactly what the agent is told to do.
       </p>
     </div>
@@ -81,7 +75,7 @@ const skills = [
 
 <style>
   /* An index, not a stack of cards: hairline rows, the command in its own column so the
-     seven commands read as one aligned list, name and description beside it. List item
+     six commands read as one aligned list, name and description beside it. List item
      theming goes through the component's documented custom properties. */
   .skills :global(.list) {
     border-radius: 0;
