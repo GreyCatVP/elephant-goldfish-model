@@ -1,6 +1,4 @@
 ---
-import Badge from './gb/Badge.astro';
-
 const steps = [
   {
     name: 'Brainstorm',
@@ -38,7 +36,7 @@ const steps = [
       {
         steps.map((step, i) => (
           <li class="step">
-            <Badge>{i + 1}</Badge>
+            <span class="badge badge-large">{i + 1}</span>
             <h3 class="title">{step.name}</h3>
             <code class="cmd">{step.command}</code>
             <p class="muted">{step.body}</p>
