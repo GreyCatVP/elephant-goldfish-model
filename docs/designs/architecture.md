@@ -77,14 +77,13 @@ The open-source EGM framework is organized into five decoupled subsystems:
 
 ### 1. Skills Layer (`skills/`)
 Modular agent capabilities executable via slash commands or direct invocation:
-*   `egm_discuss`: Interactive requirements elicitation and Socratic questioning.
+*   `egm_brainstorm`: 6-lens shootdown swarm for early concept exploration.
 *   `egm_draft`: Section-by-section specification compiler.
 *   `egm_review`: Orchestrator for the multi-stage review pipeline.
 *   `egm_review_loop`: Concurrent subagent review dispatcher.
 *   `egm_resolve`: Interactive resolution and patch application.
 *   `egm_drift_report`: AST drift scanner between specs and active code.
 *   `egm_bootstrap`: Recursive bottom-up codebase documentation generator.
-*   `egm_brainstorm`: 6-lens shootdown swarm for early concept exploration.
 
 ### 2. Personas Layer (`agents/`)
 Stateless system prompt instructions for isolated Goldfish reviewer subagents
@@ -119,14 +118,14 @@ phases:
 sequenceDiagram
     autonumber
     actor Human as Software Engineer
-    participant Elephant as Elephant (Discuss & Draft)
+    participant Elephant as Elephant (Brainstorm & Draft)
     participant Artifact as Side-Panel Artifact / File
     participant Reviewer as Goldfish Reviewers (Synthesizer)
     participant VCS as Version Control (PR)
     participant Coder as Implementation Agent
 
-    Human->>Elephant: /egm-discuss (Requirements & CUJs)
-    Elephant->>Artifact: Write discussion_summary.md
+    Human->>Elephant: /egm-brainstorm (Multi-Lens Ideation & Shootdown)
+    Elephant->>Artifact: Write concepts_brief.md
     Human->>Elephant: /egm-draft
     Elephant->>Artifact: Write docs/designs/FEATURE.md
     Human->>Reviewer: /egm-review docs/designs/FEATURE.md
@@ -138,17 +137,17 @@ sequenceDiagram
     Human->>Coder: Implement against FEATURE.md
 ```
 
-### Phase 1: Context & Elicitation (The Elephant)
+### Phase 1: Upstream Ideation & Multi-Lens Shootdown (The Elephant)
 
-*   **Command**: `/egm-discuss`
-*   **Mechanics**: The Elephant interviews the engineer, extracting core
-    objectives, failure modes, alternatives, and trade-offs.
-*   **Output**: A structured summary written to `discussion_summary.md`.
+*   **Command**: `/egm-brainstorm`
+*   **Mechanics**: The Elephant interviews the engineer to anchor a core hypothesis,
+    then spawns a 6-lens Goldfish swarm to shoot down flawed assumptions.
+*   **Output**: A structured brief written to `concepts_brief.md`.
 
 ### Phase 2: Spec Authoring & Semantic Boundaries
 
 *   **Command**: `/egm-draft`
-*   **Mechanics**: Converts the discussion summary into an EGM-compliant
+*   **Mechanics**: Converts the concepts brief (or discussion notes) into an EGM-compliant
     technical design document written to `docs/designs/<feature>.md`.
 *   **Semantic Boundary Discovery**: Establishes a clear boundary between the
     high-level architecture (`FeatureRange`) and the detailed implementation

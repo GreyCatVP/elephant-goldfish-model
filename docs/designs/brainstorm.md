@@ -65,7 +65,7 @@ sequenceDiagram
     Synth->>Artifact: write_to_file (concepts_brief.md)
     Synth-->>Brainstorm: send_message (Completion & artifact link)
     Brainstorm->>Human: Highlight top objections & invite iteration
-    Human->>Brainstorm: Refine or handoff to /egm-discuss / /egm-draft
+    Human->>Brainstorm: Refine or handoff to /egm-draft
 ```
 
 ### 1. Step 1: Open-Ended Problem Drilling
@@ -108,9 +108,8 @@ The engineer reviews the brief, addresses key objections, and decides whether
 to:
 
 *   Abandon the idea altogether.
-*   Transition into **`/egm-discuss`** (if requirements grilling and limits
-    still need deep exploration).
-*   Transition into **`/egm-draft`** (if the concept is concrete and ready for
+*   Continue refining the hypothesis with additional Goldfish shootdown passes.
+*   Transition into **`/egm-draft`** (when the concept is concrete and ready for
     formal design doc authoring).
 
 ## Implementation Files & Referenced Components

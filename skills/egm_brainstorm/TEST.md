@@ -54,4 +54,4 @@ When evaluating or exploring `egm_brainstorm` interactively in chat, verify:
     UX Ergonomics, Migration & Compatibility, Observability & SRE, Tech Debt & Maintenance).
 -   **Step 3 & 4 (Concepts Brief Deliverable & Handoff):** Compiles and saves the
     synthesized `concepts_brief.md` artifact for user review and handoff to
-    `/egm-discuss` or `/egm-draft`.
+    `/egm-draft`.

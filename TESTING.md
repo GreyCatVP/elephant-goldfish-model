@@ -89,15 +89,15 @@ using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
 4. **Run an Individual Skill**:
    ```bash
    python tools/eval_runner.py \
-     --skill egm_discuss \
+     --skill egm_draft \
      --model gemini/gemini-2.5-flash
    ```
 
 5. **Run a Single Targeted Scenario**:
    ```bash
    python tools/eval_runner.py \
-     --skill egm_discuss \
-     --scenario start_discussion_and_grill \
+     --skill egm_draft \
+     --scenario draft_and_write_design_doc \
      --model gemini/gemini-2.5-flash
    ```
 
@@ -130,7 +130,7 @@ Ollama:
    python tools/eval_runner.py --model ollama/llama3
 
    # Run a single skill against local model
-   python tools/eval_runner.py --skill egm_discuss --model ollama/llama3
+   python tools/eval_runner.py --skill egm_draft --model ollama/llama3
    ```
 
 ---
@@ -142,7 +142,7 @@ reports in `eval_results/`:
 
 ```bash
 # Inspect the latest run report
-cat eval_results/egm_discuss_results.json | python3 -m json.tool
+cat eval_results/egm_draft_results.json | python3 -m json.tool
 ```
 
 The report records:
@@ -158,8 +158,8 @@ The report records:
 
 | Flag | Description | Default | Example |
 | :--- | :--- | :--- | :--- |
-| `--skill` | Target skill directory name | All skills (all suites) | `--skill egm_discuss` |
-| `--scenario` | Specific scenario ID within the skill suite | All scenarios in skill | `--scenario start_discussion_and_grill` |
+| `--skill` | Target skill directory name | All skills (all suites) | `--skill egm_draft` |
+| `--scenario` | Specific scenario ID within the skill suite | All scenarios in skill | `--scenario draft_and_write_design_doc` |
 | `--model` | Model identifier string passed to LiteLLM | `gemini/gemini-2.5-flash` | `--model gemini/gemini-2.5-flash` |
 | `--judge-model`| Dedicated model for `llm_judge` rubrics | Same as `--model` | `--judge-model gemini/gemini-2.5-pro` |
 | `--temperature`| Sampling temperature (0.0 for deterministic eval) | `0.0` | `--temperature 0.0` |

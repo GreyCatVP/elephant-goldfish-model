@@ -24,8 +24,8 @@ limitations under the License.
 
 ## Overview
 
-The **EGM Design Drafting Skill** (`/egm-draft`) converts the discussion
-summary artifact (`discussion_summary.md`) generated during `/egm-discuss` into a
+The **EGM Design Drafting Skill** (`/egm-draft`) converts the ideation
+artifact (`concepts_brief.md` from `/egm-brainstorm` or discussion notes) into a
 formal, living design document under `docs/designs/`. It drafts the document
 iteratively section-by-section, gathering feedback at each stage before saving to
 disk.
@@ -74,15 +74,15 @@ sequenceDiagram
     autonumber
     actor Human as Software Engineer
     participant Draft as egm-draft Skill
-    participant Summary as Artifact: discussion_summary.md
+    participant Summary as Artifact: concepts_brief.md / notes
     participant DraftArtifact as Artifact: design_draft.md
     participant ZoomOut as zoom-out-standard.md
     participant Workspace as Workspace File: docs/designs/<FEATURE>.md
     participant Review as egm-review Skill
 
-    Note over Human,Draft: Step 1: Summary Ingestion
+    Note over Human,Draft: Step 1: Predecessor Context Ingestion
     Human->>Draft: /egm-draft
-    Draft->>Summary: Read discussion_summary.md & verify consensus
+    Draft->>Summary: Read concepts_brief.md & verify consensus
 
     Note over Human,Draft: Step 2, 3, 4: High-Level Sections (FeatureRange)
     Draft->>DraftArtifact: Draft Overview, Problem Statement & Goals
@@ -106,12 +106,12 @@ sequenceDiagram
 
 ## The Drafting Protocol (`/egm-draft`)
 
-The `/egm-draft` workflow converts the discussion artifact into a living
+The `/egm-draft` workflow converts the ideation artifact into a living
 markdown design doc:
 
-### Step 1: Summary Ingestion
+### Step 1: Predecessor Context Ingestion
 
-Parses `discussion_summary.md` from the artifact directory (falling back to the
+Parses `concepts_brief.md` (or `discussion_summary.md` / feature notes) from the artifact directory (falling back to the
 scratch directory or workspace root if needed) and verifies user consensus.
 
 ### Step 2: Overview, Problem & Goals
