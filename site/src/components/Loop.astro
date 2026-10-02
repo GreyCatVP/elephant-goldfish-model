@@ -45,11 +45,23 @@ const steps = [
           </li>
         ))
       }
+      <li class="step drift">
+        <span class="marker" aria-hidden="true">
+          <svg viewBox="0 -960 960 960">
+            <path
+              d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"
+            ></path>
+          </svg>
+        </span>
+        <div class="drift-head">
+          <h3 class="title">Then weekly</h3>
+          <code class="cmd">/egm-drift-report</code>
+        </div>
+        <p class="muted">
+          Flags where the code and the spec have drifted apart. You pick which one moves.
+        </p>
+      </li>
     </ol>
-    <p class="drift">
-      Then weekly: <code class="cmd">/egm-drift-report</code> flags where the code and the spec have
-      drifted apart. You pick which one moves.
-    </p>
   </div>
 </section>
 
@@ -58,43 +70,59 @@ const steps = [
     background: var(--md-sys-color-surface-container-low);
   }
 
+  /* One continuous rule carries the sequence; each step's number sits on the line. */
   .steps {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 32px 24px;
-  }
-
-  @media (max-width: 1000px) {
-    .steps {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 560px) {
-    .steps {
-      grid-template-columns: 1fr;
-    }
+    row-gap: 48px;
   }
 
   .step {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding-block-start: 20px;
+    padding-block-start: 32px;
+    padding-inline-end: 24px;
     border-block-start: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  /* Badge theming through its documented custom properties. */
-  .step :global(.badge) {
+  .step:nth-child(4n) {
+    padding-inline-end: 0;
+  }
+
+  /* Badge theming through its documented custom properties. The outline in the band
+     color lifts the number off the rule. */
+  .step :global(.badge),
+  .marker {
     --container-color: var(--md-sys-color-primary);
     --label-text-color: var(--md-sys-color-on-primary);
     --label-text: var(--md-sys-typescale-label-lg);
     --size: 28px;
-    align-self: flex-start;
-    margin-block-end: 6px;
+    position: absolute;
+    inset-block-start: -14px;
+    inset-inline-start: 0;
+    outline: 6px solid var(--md-sys-color-surface-container-low);
+  }
+
+  .marker {
+    display: grid;
+    place-items: center;
+    inline-size: 28px;
+    block-size: 28px;
+    border-radius: 50%;
+    background: var(--md-sys-color-surface-container-low);
+    border: 1px solid var(--md-sys-color-outline);
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .marker > svg {
+    inline-size: 16px;
+    block-size: 16px;
+    fill: currentColor;
   }
 
   .cmd {
@@ -106,9 +134,62 @@ const steps = [
     inline-size: fit-content;
   }
 
+  /* The weekly check is not a fifth step: same anatomy, laid across the whole rule. */
   .drift {
-    margin-block-start: 40px;
-    font: var(--md-sys-typescale-body-lg);
-    max-inline-size: 62ch;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+    column-gap: 0;
+    align-items: start;
+    padding-inline-end: 0;
+  }
+
+  /* Same column arithmetic as the steps, so the description starts under step two. */
+  .drift-head {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-inline-end: 24px;
+  }
+
+  .drift .muted {
+    max-inline-size: 60ch;
+    padding-block-start: 2px;
+  }
+
+  @media (max-width: 1000px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .step:nth-child(4n) {
+      padding-inline-end: 24px;
+    }
+
+    .step:nth-child(2n) {
+      padding-inline-end: 0;
+    }
+
+    .drift {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .steps {
+      grid-template-columns: 1fr;
+      row-gap: 40px;
+    }
+
+    .step,
+    .step:nth-child(2n),
+    .step:nth-child(4n) {
+      padding-inline-end: 0;
+    }
+
+    .drift {
+      grid-template-columns: 1fr;
+      row-gap: 10px;
+    }
   }
 </style>

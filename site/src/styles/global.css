@@ -94,6 +94,13 @@ svg {
 }
 
 /* Layout */
+:root {
+  /* Section rhythm: one scale, three steps. Tight for asides, loose before a change of register. */
+  --section-y-tight: clamp(48px, 6vw, 80px);
+  --section-y: clamp(72px, 9vw, 120px);
+  --section-y-loose: clamp(96px, 12vw, 160px);
+}
+
 .wrap {
   inline-size: min(100% - 48px, 1160px);
   margin-inline: auto;
@@ -106,7 +113,11 @@ svg {
 }
 
 .section {
-  padding-block: clamp(72px, 10vw, 128px);
+  padding-block: var(--section-y);
+}
+
+.section-tight {
+  padding-block: var(--section-y-tight);
 }
 
 .section-head {
@@ -132,6 +143,10 @@ svg {
   letter-spacing: var(--md-sys-typescale-title-lg-tracking);
 }
 
+p {
+  text-wrap: pretty;
+}
+
 .lead {
   font: var(--md-sys-typescale-body-lg);
   letter-spacing: var(--md-sys-typescale-body-lg-tracking);
@@ -141,6 +156,10 @@ svg {
 
 .muted {
   color: var(--md-sys-color-on-surface-variant);
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .skip-link {
