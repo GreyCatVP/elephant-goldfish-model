@@ -1,0 +1,37 @@
+---
+import Button from './gb/Button.astro';
+
+const essay =
+  'https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874';
+---
+
+<section class="section essay" id="essay">
+  <div class="wrap essay-inner">
+    <div class="section-head">
+      <h2 class="headline">Why an elephant, and why a goldfish.</h2>
+      <p class="lead">
+        The model comes from Dave Rensin&rsquo;s essay &ldquo;Elephants, Goldfish, and the New Golden
+        Age of Software Engineering.&rdquo; It explains the reasoning behind the split: context is an
+        asset when you design and a liability when you review.
+      </p>
+    </div>
+    <Button color="outlined" size="md" href={essay} target="_blank">
+      Read the essay on Medium
+      <svg viewBox="0 -960 960 960" aria-hidden="true">
+        <path d="m216-160-56-56 464-464H360v-80h400v400h-80v-264L216-160Z"></path>
+      </svg>
+    </Button>
+  </div>
+</section>
+
+<style>
+  .essay-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .essay .section-head {
+    margin-block-end: 24px;
+  }
+</style>

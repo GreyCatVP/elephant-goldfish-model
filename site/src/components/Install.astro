@@ -1,0 +1,153 @@
+---
+import Button from './gb/Button.astro';
+import IconButton from './gb/IconButton.astro';
+
+const repo = 'https://github.com/google/elephant-goldfish-model';
+const cloneCommand = `git clone ${repo}`;
+const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
+
+const steps = [
+  {
+    name: 'Register the skills',
+    body: 'Add the skills/ folder to your Antigravity skill registry, or invoke the skills directly as slash commands.',
+  },
+  {
+    name: 'Add the rules',
+    body: 'Include rules/ in your workspace rules or plugin rules. They keep the agent critical, grounded, and free of flattery.',
+  },
+  {
+    name: 'Start with a brainstorm',
+    body: 'Run /egm-brainstorm on a real feature and let the goldfish shoot down the first idea.',
+  },
+];
+---
+
+<section class="section scheme-dark install" id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="headline">Clone it. Point your agent at it.</h2>
+      <p class="lead">
+        Built for Antigravity. The skills are plain markdown and work with any agent that supports
+        skills and slash commands.
+      </p>
+    </div>
+
+    <div class="copybox">
+      <code class="command">{cloneCommand}</code>
+      <IconButton label="Copy command" color="tonal" size="sm" data-copy={cloneCommand}>
+        <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
+          <path
+            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+          ></path>
+        </svg>
+        <svg class="icon-check" viewBox="0 -960 960 960" aria-hidden="true">
+          <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
+        </svg>
+      </IconButton>
+    </div>
+
+    <ol class="steps">
+      {
+        steps.map((step, i) => (
+          <li class="step">
+            <span class="num" aria-hidden="true">
+              {i + 1}
+            </span>
+            <div>
+              <h3 class="title">{step.name}</h3>
+              <p class="muted">{step.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>
+  </div>
+</section>
+
+<script>
+  // Clipboard copy for the clone command. This is the only script on the page.
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    const label = button.getAttribute('aria-label') ?? '';
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+      } catch {
+        return; // No clipboard permission; the command is still selectable text.
+      }
+      button.classList.add('copied');
+      button.setAttribute('aria-label', 'Copied');
+      setTimeout(() => {
+        button.classList.remove('copied');
+        button.setAttribute('aria-label', label);
+      }, 1600);
+    });
+  }
+</script>
+
+<style>
+  .install {
+    padding-block: clamp(80px, 10vw, 128px);
+  }
+
+  .copybox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-inline-size: 640px;
+    padding: 8px 8px 8px 20px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-lg);
+    background: var(--md-sys-color-surface-container-low);
+  }
+
+  .command {
+    flex: 1;
+    font-size: 0.9375rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    user-select: all;
+  }
+
+  .icon-check,
+  :global(.copied) .icon-copy {
+    display: none;
+  }
+
+  :global(.copied) .icon-check {
+    display: block;
+  }
+
+  .steps {
+    list-style: none;
+    margin: clamp(40px, 6vw, 64px) 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+
+  @media (max-width: 820px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    padding-block-start: 20px;
+    border-block-start: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .step .title {
+    margin-block-end: 6px;
+  }
+
+  .num {
+    font: var(--md-sys-typescale-label-lg);
+    line-height: 1.75rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+</style>
