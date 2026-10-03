@@ -9,9 +9,9 @@ import Button from './gb/Button.astro';
       Review with a goldfish.
     </h1>
     <p class="lead">
-      <span class="nowrap">Spec-driven</span> development with AI coding agents.<br class="wide" />
-      <span class="nowrap">Deep-context</span> agents draft the design.
-      <span class="nowrap">Zero-context</span> agents tear it apart<br class="wide" />
+      {/* Explicit spaces: compressHTML drops newline whitespace next to elements. */}
+      <span class="nowrap">Spec-driven</span> development with AI coding agents.<br class="wide" />{' '}
+      <span class="nowrap">Deep-context</span> agents draft the design. <span class="nowrap">Zero-context</span> agents tear it apart<br class="wide" />{' '}
       before any code is written. You own the outcome.
     </p>
     <div class="cta">
