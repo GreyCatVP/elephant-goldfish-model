@@ -9,14 +9,16 @@ import Button from './gb/Button.astro';
       Review with a goldfish.
     </h1>
     <p class="lead">
-      Spec-driven development with AI coding agents. Deep-context agents draft the design.
-      Zero-context agents tear it apart before any code is written. You own the outcome.
+      <span class="nowrap">Spec-driven</span> development with AI coding agents.<br class="wide" />
+      <span class="nowrap">Deep-context</span> agents draft the design.
+      <span class="nowrap">Zero-context</span> agents tear it apart<br class="wide" />
+      before any code is written. You own the outcome.
     </p>
     <div class="cta">
       <Button color="filled" size="md" href="#install">Get started</Button>
     </div>
     <p class="meta muted">
-      An open-source project by Google &middot; Used by thousands of Google engineers every month &middot; Apache&nbsp;2.0
+      An open-source project by Google &middot; Used by thousands of Google engineers every month
     </p>
   </div>
 </section>
@@ -36,8 +38,18 @@ import Button from './gb/Button.astro';
 
   .lead {
     max-inline-size: 58ch;
-    /* Balanced so the last line is not a two-word widow; pretty only guards single words. */
-    text-wrap: balance;
+  }
+
+  /* Authored breaks once the lead is at full width: first sentence alone, then a clause break.
+     Below that the browser wraps; the nowrap spans keep the hyphenated words whole. */
+  .wide {
+    display: none;
+  }
+
+  @media (min-width: 720px) {
+    .wide {
+      display: inline;
+    }
   }
 
   .cta {
