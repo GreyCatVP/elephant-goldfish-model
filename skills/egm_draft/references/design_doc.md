@@ -53,6 +53,19 @@ and to define strict boundaries for the implementation agent.
 *   Non-Goal 1
 *   Non-Goal 2
 
+## Open Questions
+
+<!--
+List unresolved design questions, technical unknowns, or dependencies requiring
+investigation. Unanswered questions are retained here across drafting sessions
+to preserve conversational memory and prevent future sessions from re-asking
+questions that were already discussed. Remove answered questions as they are
+resolved.
+-->
+
+*   **Question 1**: [Description of technical unknown or open question]
+*   **Question 2**: [Description of technical unknown or open question]
+
 ## Critical User Journeys (CUJs)
 
 <!--
@@ -121,6 +134,24 @@ this section can be omitted or stated as "None".]
 
 --------------------------------------------------------------------------------
 
+### Additional Resources
+
+<!-- Specify the external resources and context that were used during the design
+discussion. Optional. If none were provided omit this section.-->
+
+*   Important project docs referenced
+*   Important docs/ referenced
+*   Related work
+
+### Future Improvements
+
+<!-- Specify areas that have room for future improvement here. If none were
+provided omit this section.-->
+
+*   **The idea**: What could be improved?
+
+--------------------------------------------------------------------------------
+
 ## Detailed Implementation Plan
 
 <!-- Specify exactly which files must be created or modified. Do not use vague
@@ -155,32 +186,8 @@ implementation. What metrics should be measured to verify success?
 *   **Test Coverage Requirement**: [e.g., 85%+ branch coverage]
 *   **E2E/Integration**: [e.g., Integration test command or automated eval runner]
 
-### Additional Resources
-
-<!-- Specify the external resources and context that were used during the design
-discussion. Optional. If none were provided omit this section.-->
-
-*   Important project docs referenced
-*   Important docs/ referenced
-*   Related work
-
-### Future Improvements
-
-<!-- Specify areas that have room for future improvement here. If none were
-provided omit this section.-->
-
-*   **The idea**: What could be improved?
-
-### Open Questions
-
-<!-- Specify any open questions or room for future improvement here. If none
-were provided omit this section.-->
-
-*   **The question**: What do we still need to answer? Who should we talk to?
-
 --------------------------------------------------------------------------------
 
 <!-- Provenance: Indicates initial structural drafting via EGM. -->
 
 *Drafted with Elephant & Goldfish Model (EGM)*
-

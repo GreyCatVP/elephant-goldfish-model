@@ -16,6 +16,42 @@ skill: "egm_review"
 description: "Behavioral evaluation scenario suite for egm_review skill."
 
 scenarios:
+  - scenario_id: "intake_preset_selection_before_split_discovery"
+    description: "Asserts that Step 2 Curated Pipeline Preset selection precedes Step 3 Semantic Split Discovery."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_review/SKILL.md"
+    turns:
+      - user_input: "Run EGM Review on docs/feature_spec_and_plan.md."
+        assertions:
+          - type: "required_pattern"
+            pattern: "Select the review execution mode for this document"
+            message: "Review must present curated presets modal first."
+          - type: "required_pattern"
+            pattern: "Interactive review with all review rubrics"
+            message: "Preset modal must include Interactive review with all review rubrics."
+          - type: "required_pattern"
+            pattern: "Feature [sS]pec only"
+            message: "Preset modal must include Feature spec only."
+          - type: "forbidden_pattern"
+            pattern: "\\(Recommended\\)"
+            message: "Preset modal must not contain (Recommended) prefix."
+
+  - scenario_id: "feature_spec_gates_only_bypass_flow"
+    description: "Asserts that selecting Feature Spec Gates Only bypasses split discovery and halts before Stage 9."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_review/SKILL.md"
+    turns:
+      - user_input: "Run EGM Review on early-stage feature spec with Preset: Feature Spec Gates Only."
+        assertions:
+          - type: "required_pattern"
+            pattern: "(FeatureRange|1\\.\\.End|Stage 5|Initial Zoom Out)"
+            message: "Review must set FeatureRange to 1..End and execute Feature Spec stages."
+          - type: "forbidden_pattern"
+            pattern: "(Stage 9|Implementation Readiness Test)"
+            message: "Review must not execute Stage 9 when Feature Spec Gates Only is selected."
+
   - scenario_id: "comprehension_auditor_undefined_jargon"
     description: "Verifies comprehension critique flags undefined terminology."
     eval_type: "deterministic"
