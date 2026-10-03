@@ -1,7 +1,5 @@
 ---
 import Button from './gb/Button.astro';
-
-const repo = 'https://github.com/google/elephant-goldfish-model';
 ---
 
 <section class="hero" id="top">
@@ -11,15 +9,15 @@ const repo = 'https://github.com/google/elephant-goldfish-model';
       Review with a goldfish.
     </h1>
     <p class="lead">
-      An open-source method and skill set for spec-driven development with AI coding agents.
-      Deep-context agents draft the design. Zero-context agents tear it apart before any code is
-      written. You own the outcome.
+      Spec-driven development with AI coding agents. Deep-context agents draft the design.
+      Zero-context agents tear it apart before any code is written. You own the outcome.
     </p>
     <div class="cta">
       <Button color="filled" size="md" href="#install">Get started</Button>
-      <Button color="outlined" size="md" href={repo} target="_blank">View on GitHub</Button>
     </div>
-    <p class="meta muted">An open-source project by Google &middot; Apache&nbsp;2.0 &middot; Built for Antigravity</p>
+    <p class="meta muted">
+      An open-source project by Google &middot; Used by thousands of Google engineers every month &middot; Apache&nbsp;2.0
+    </p>
   </div>
 </section>
 
@@ -38,13 +36,11 @@ const repo = 'https://github.com/google/elephant-goldfish-model';
 
   .lead {
     max-inline-size: 58ch;
+    /* Balanced so the last line is not a two-word widow; pretty only guards single words. */
+    text-wrap: balance;
   }
 
   .cta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
     margin-block-start: 8px;
   }
 
