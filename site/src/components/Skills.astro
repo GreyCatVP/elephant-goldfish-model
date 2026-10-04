@@ -4,7 +4,7 @@ import ListItem from './gb/ListItem.astro';
 
 const repo = 'https://github.com/google/elephant-goldfish-model';
 
-// Mirrors "The Skills Catalog" table in the repository README. Commands are verbatim.
+// User-facing slash-command entry points from the repository Skills Catalog.
 const skills = [
   {
     name: 'Brainstorm',
@@ -25,16 +25,10 @@ const skills = [
     body: 'Run the multi-stage verification pipeline: zoom out, comprehension, critic, readiness.',
   },
   {
-    name: 'Review Loop',
-    command: 'egm_review_loop',
-    dir: 'egm_review_loop',
-    body: 'Dispatch concurrent review subagents, directly or hierarchically. The engine behind Review.',
-  },
-  {
-    name: 'Review Resolve',
-    command: '/egm-resolve',
-    dir: 'egm_resolve',
-    body: 'Triage review findings interactively and apply the agreed patches to the specification.',
+    name: 'Bootstrap',
+    command: '/egm-bootstrap',
+    dir: 'egm_bootstrap',
+    body: 'Generate bottom-up documentation for an existing codebase and keep it current in sentinel blocks.',
   },
   {
     name: 'Drift Report',
@@ -42,19 +36,13 @@ const skills = [
     dir: 'egm_drift_report',
     body: 'Scan the syntax tree and flag where the live code and the checked-in spec have diverged.',
   },
-  {
-    name: 'Bootstrap',
-    command: '/egm-bootstrap',
-    dir: 'egm_bootstrap',
-    body: 'Generate bottom-up documentation for an existing codebase and keep it current in sentinel blocks.',
-  },
 ];
 ---
 
 <section class="section skills" id="skills">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">Seven skills. Plain markdown.</h2>
+      <h2 class="headline">Five skills. Plain markdown.</h2>
       <p class="lead">
         Each skill is a folder with a SKILL.md that your agent reads. No runtime, no SDK,
         no <span class="nowrap">lock-in</span>. Open one to see exactly what the agent is told to do.
@@ -81,7 +69,7 @@ const skills = [
 
 <style>
   /* An index, not a stack of cards: hairline rows, the command in its own column so the
-     seven commands read as one aligned list, name and description beside it. List item
+     five commands read as one aligned list, name and description beside it. List item
      theming goes through the component's documented custom properties. */
   .skills :global(.list) {
     border-radius: 0;

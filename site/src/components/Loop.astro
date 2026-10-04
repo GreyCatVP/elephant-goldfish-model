@@ -15,11 +15,6 @@ const steps = [
     command: '/egm-review',
     body: 'A fresh, zero-context session checks completeness, clarity, self-containment, and readiness. Expect a lot of feedback. That is the point.',
   },
-  {
-    name: 'Resolve and build',
-    command: '/egm-resolve',
-    body: 'Triage the findings, send the design to a person for review, then build to the plan.',
-  },
 ];
 ---
 
@@ -28,8 +23,8 @@ const steps = [
     <div class="section-head">
       <h2 class="headline">From idea to verified spec to code.</h2>
       <p class="lead">
-        Four skills carry a feature from a rough idea to a specification that survived adversarial
-        review. Use them in order, or reach for whichever one your bottleneck needs.
+        Three skills take a feature from a rough idea to a verified spec. After that, any coding
+        agent can build it.
       </p>
     </div>
     <ol class="steps">
@@ -43,6 +38,14 @@ const steps = [
           </li>
         ))
       }
+      <li class="step">
+        <span class="badge badge-large" aria-hidden="true">&rarr;</span>
+        <h3 class="title">Build the code</h3>
+        <span class="no-skill">No skill needed</span>
+        <p class="muted">
+          The verified spec is complete enough to hand directly to your LLM to execute.
+        </p>
+      </li>
       <li class="step drift">
         <span class="marker" aria-hidden="true">
           <svg viewBox="0 -960 960 960">
@@ -127,6 +130,17 @@ const steps = [
     font-size: 0.875rem;
     color: var(--md-sys-color-on-surface);
     background: var(--md-sys-color-surface-container-high);
+    border-radius: 6px;
+    padding: 2px 8px;
+    inline-size: fit-content;
+  }
+
+  .no-skill {
+    font: var(--md-sys-typescale-label-md);
+    font-size: 0.875rem;
+    letter-spacing: 0;
+    color: var(--md-sys-color-on-surface-variant);
+    border: 1px dashed var(--md-sys-color-outline);
     border-radius: 6px;
     padding: 2px 8px;
     inline-size: fit-content;
