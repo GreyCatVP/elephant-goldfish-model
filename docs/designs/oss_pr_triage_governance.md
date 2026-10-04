@@ -25,7 +25,7 @@ and maintaining those changes.
 
 This design introduces a system of **good-faith speed bumps**: a non-punitive,
 advisory intake funnel that prompts contributors to self-select into the
-appropriate contribution track, affirms human accountability, and dogfoods the
+appropriate contribution track, affirms human accountability, and exercises the
 full EGM methodology. Contributors planning large changes (`> 100` non-test
 lines or `>= 3` core files in `skills/`, `agents/`, or `rules/`) are advised
 to reach out to maintainers first via a GitHub Issue
@@ -347,9 +347,9 @@ The advisory engine operates as a non-blocking GitHub Actions workflow.
 *   **Pros**: Slightly lower initial writing overhead for external contributors.
 *   **Cons**: Causes the repository's `docs/designs/` directory to drift out of
     sync with the codebase as new capabilities land without checked-in design
-    specs; fails to dogfood the full EGM workflow (`/egm-brainstorm` ->
+    specs; fails to exercise the full EGM workflow (`/egm-brainstorm` ->
     `/egm-draft` -> `/egm-review`).
-*   **Reason for Rejection**: The EGM repository must dogfood its own
+*   **Reason for Rejection**: The EGM repository must exercise its own
     methodology and keep `docs/designs/` accurate. Rather than offering a
     half-measure compromise, we encourage contributors to reach out to
     maintainers first (`status: approved-for-design`) to confirm interest before
