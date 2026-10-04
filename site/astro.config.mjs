@@ -8,6 +8,23 @@ export default defineConfig({
   output: 'static',
   fonts: [
     {
+      // Bricolage Grotesque (OFL), self-hosted for display, headline, and title type scales.
+      provider: fontProviders.local(),
+      name: 'Bricolage Grotesque',
+      cssVariable: '--font-heading',
+      fallbacks: ['system-ui', 'sans-serif'],
+      options: {
+        variants: [
+          {
+            weight: '600',
+            style: 'normal',
+            display: 'swap',
+            src: ['./src/assets/fonts/bricolage-grotesque.woff2'],
+          },
+        ],
+      },
+    },
+    {
       // Google Sans Flex (OFL), self-hosted so the page never calls fonts.googleapis.com.
       provider: fontProviders.local(),
       name: 'Google Sans Flex',

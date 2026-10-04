@@ -28,7 +28,6 @@ body {
   background: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
   font: var(--md-sys-typescale-body-md);
-  font-family: var(--font-display);
   letter-spacing: var(--md-sys-typescale-body-md-tracking);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -121,7 +120,7 @@ svg {
 }
 
 .section-head {
-  max-inline-size: 760px;
+  max-inline-size: 840px;
   margin-block-end: clamp(32px, 5vw, 56px);
 }
 
