@@ -1,3 +1,8 @@
+<!--
+Copyright 2026 Google LLC.
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # egm.dev
 
 Landing site for the Elephant & Goldfish Model, served at https://egm.dev from
