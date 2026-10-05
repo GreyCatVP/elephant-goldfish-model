@@ -12,6 +12,8 @@ The **Elephant & Goldfish Model (EGM)** is an open-source framework and methodol
 
 It anchors development in context-rich system descriptions and adversarial multi-agent reviews, making complex codebases easier for both humans and AI to navigate, verify, and evolve.
 
+![Elephant & Goldfish Model Overview](assets/heroes.png)
+
 ---
 
 ## The Philosophy

@@ -13,6 +13,8 @@ SPDX-License-Identifier: Apache-2.0
 
 ## Overview
 
+![EGM Goldfish Review Protocol & Resolution Engine](../../assets/egm-review.png)
+
 The **Goldfish Review Protocol** is the verification engine of the Elephant &
 Goldfish Model (EGM). It stress-tests draft design specifications using
 isolated, zero-context AI subagents ("Goldfish") evaluating the document against
