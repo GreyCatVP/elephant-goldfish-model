@@ -96,3 +96,5 @@ We welcome community contributions! Please review our [Contribution Guidelines](
 ## License
 
 This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+
+This is not an officially supported Google product.
