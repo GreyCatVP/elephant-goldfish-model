@@ -8,7 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Website](https://img.shields.io/badge/Website-egm.dev-black.svg)](https://egm.dev)
 
-The **Elephant & Goldfish Model (EGM)** is an open-source framework and methodology for Spec-Driven Development (SDD) with autonomous AI coding agents.
+Elephant & Goldfish Model is an open-source framework and methodology for Spec-Driven Development (SDD) with autonomous AI coding agents.
 
 It anchors development in context-rich system descriptions and adversarial multi-agent reviews, making complex codebases easier for both humans and AI to navigate, verify, and evolve.
 
@@ -16,7 +16,7 @@ It anchors development in context-rich system descriptions and adversarial multi
 
 ---
 
-## The Philosophy
+## Philosophy
 
 EGM uses two animal metaphors to describe how to prompt, constrain, and structure AI agents at different stages of the software development lifecycle:
 
@@ -31,7 +31,7 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 ---
 
-## Repository Structure
+## Repo Structure
 
 ```
 ├── agents/                       # Stateless reviewer and orchestrator persona prompts
@@ -48,7 +48,7 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 ---
 
-## The Skills Catalog
+## Skills
 
 | Skill | Command | Description |
 | :---- | :------ | :---------- |
@@ -62,7 +62,7 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 ---
 
-## Behavioral Rules (`rules/`)
+## Rules
 
 EGM includes a set of modular behavioral and cognitive rules under `rules/` designed to keep AI coding assistants grounded, critical, and robust:
 
@@ -70,13 +70,11 @@ EGM includes a set of modular behavioral and cognitive rules under `rules/` desi
 | :-------- | :--------------------- |
 | [`rules/anti_sycophancy.md`](rules/anti_sycophancy.md) | **Critical Thinking & Anti-Sycophancy**: Eliminates hollow flattery and sycophantic agreement. Mandates stress-testing ideas first, highlighting edge cases, and providing constructive counter-arguments. |
 
-### Installing Rules in Antigravity
-
-EGM behavioral rules are natively supported in Antigravity. Place or symlink the `rules/` directory into your Antigravity workspace or plugin configuration to have them automatically injected into context prompts.
+These rules are natively supported in Antigravity. Place or symlink the `rules/` directory into your Antigravity workspace or plugin configuration to have them automatically injected into context prompts.
 
 ---
 
-## Quickstart & Core Workflow
+## Quickstart
 
 1.  **Ideate & Stress-Test**:
     Run `/egm-brainstorm` to explore problem boundaries and subject raw concepts to a multi-lens Goldfish shootdown swarm.
