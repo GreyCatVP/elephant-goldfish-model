@@ -5,22 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 
 # Verification and Evaluation Commands for `egm-bootstrap`
 
-## Skill Syntax & Frontmatter Validation
-
-Validate YAML frontmatter and markdown structure:
-
-```bash
-# Verify YAML frontmatter syntax
-python3 -c '
-import yaml
-with open("skills/egm_bootstrap/SKILL.md") as f:
-    content = f.read().split("---")[1]
-    data = yaml.safe_load(content)
-    assert data["name"] == "egm-bootstrap"
-    assert "description" in data
-print("✓ SKILL.md frontmatter valid")
-'
-```
+Frontmatter and link checks run in `pytest tests/unit`; behavioral evaluations run with `python tools/eval_runner.py --skill egm_bootstrap --model <model>` (see [TESTING.md](../../TESTING.md)).
 
 ## Manual Verification Scenarios
 
@@ -34,11 +19,3 @@ print("✓ SKILL.md frontmatter valid")
 3. **Subagent Halting Gate**:
    - Run in an environment without task delegation tools.
    - Verify that the prominent halting banner is displayed and execution stops immediately.
-
-## Automated Evaluation Suite
-
-Run the evaluation suite using the open-source evaluation runner:
-
-```bash
-python tools/eval_runner.py --skill egm_bootstrap --model gemini/gemini-2.5-flash
-```
