@@ -63,8 +63,6 @@ scenarios:
     eval_type: "deterministic"
     system_prompt:
       skill_file: "skills/egm_draft/SKILL.md"
-      rules:
-        - "rules/anti_sycophancy.md"
     turns:
       - user_input: "Draft an initial design doc for adding rate limiting to the ingress API."
         assertions:

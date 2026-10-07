@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 
 # Harnesses
 
-EGM is one set of skills, personas, and rules. This repository is also the
+EGM is one set of skills and personas. This repository is also the
 plugin marketplace for each supported harness. No harness gets a fork of the
 skill text.
 
@@ -20,7 +20,7 @@ skill text.
 | Antigravity | `/plugin`, then install from `https://github.com/google/elephant-goldfish-model` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
-break EGM, because the skills read `agents/`, `rules/`, and
+break EGM, because the skills read `agents/` and
 `resources/document_standards/` at run time.
 
 ## Manifests

@@ -30,12 +30,12 @@ Contributions follow a two-track intake model defined in
 
 ### Track 1: Bug Fix / Minor Patch (`<= 100` Non-Test Lines, `< 3` Core Files)
 Targeted fixes, typo corrections, and test additions that do not alter core
-agent behavior or touch 3+ core files (`skills/`, `agents/`, `rules/`) can be
+agent behavior or touch 3+ core files (`skills/`, `agents/`) can be
 submitted directly as a Pull Request without a prior issue or design document.
 
 ### Track 2: Feature / Architectural Change (Two-Stage Alignment)
-Any new skill, persona, behavioral rule, or change exceeding `100` non-test
-lines (or touching `>= 3` core files in `skills/`, `agents/`, `rules/`)
+Any new skill, persona, or change exceeding `100` non-test
+lines (or touching `>= 3` core files in `skills/` or `agents/`)
 follows the EGM Spec-Driven Development process:
 
 1.  **Reach Out & Align (`status: approved-for-design`)**:

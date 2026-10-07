@@ -10,15 +10,14 @@ SPDX-License-Identifier: Apache-2.0
 ### 1.1 The Problem
 
 Without an accessible, automated testing suite, contributors and CI/CD
-environments cannot deterministically verify whether changes to skills, rules,
-or system prompts break core behavioral invariants (such as the silent no-code
+environments cannot deterministically verify whether changes to skills or
+system prompts break core behavioral invariants (such as the silent no-code
 rule, single-question pacing, artifact-first delivery, and review gating) or
 introduce syntax and schema defects.
 
 ### 1.2 Architectural Concepts & Terminology
 
-To understand the multi-agent EGM flow, see [architecture.md](architecture.md).
-To understand the system invariants, see [rules.md](rules.md).
+To understand the multi-agent EGM flow and system invariants, see [architecture.md](architecture.md).
 
 ### 1.3 Overview
 
@@ -66,7 +65,7 @@ open-source EGM repository:
     individual skill and subagent prompts at unit boundaries, not as a live
     virtual swarm runtime.
 *   **Core Skill Modifications**: Infrastructure-only scope; no operational
-    changes to EGM skill prompts or behavioral rules.
+    changes to EGM skill or persona prompts.
 
 ### 2.3 Alternatives Considered
 
@@ -167,7 +166,7 @@ egm/
 │   └── workflows/
 │       ├── test-unit.yaml             # Tier 1 CI check on every PR (hermetic, no keys)
 │       └── eval-behavioral.yaml       # Tier 2 manual / scheduled dispatch
-├── rules/                             # Core behavioral & structural rules
+├── agents/                            # Stateless reviewer & orchestrator personas
 ├── skills/                            # EGM skill packages
 │   └── <skill>/
 │       ├── SKILL.md                   # Skill prompt & instructions
@@ -272,7 +271,7 @@ requiring a distributed multi-agent swarm runtime.
 
 #### 3.3.2 Canonical `test_scenarios.yaml` Schema
 
-All paths in `test_scenarios.yaml` (e.g., `skill_file` and `rules`) are
+All paths in `test_scenarios.yaml` (e.g., `skill_file`) are
 specified relative to the repository root directory housing the test framework.
 
 ````yaml
@@ -286,9 +285,6 @@ scenarios:
     eval_type: "deterministic"
     system_prompt:
       skill_file: "skills/egm_draft/SKILL.md"
-      rules:
-        - "rules/anti_sycophancy.md"
-        - "rules/google3_links.md"
     turns:
       - user_input: "Help me design a new user caching service."
         assertions:

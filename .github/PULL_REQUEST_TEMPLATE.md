@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 
 Please select the track that matches this pull request:
 
-- [ ] **Bug Fix / Minor Patch** (Targeted fix, non-test diff <= 100 lines and < 3 core files in `skills/`, `agents/`, `rules/`; no design doc required)
+- [ ] **Bug Fix / Minor Patch** (Targeted fix, non-test diff <= 100 lines and < 3 core files in `skills/` or `agents/`; no design doc required)
 - [ ] **Feature / Architectural Change -- Stage 1: Design Doc PR** (`Refs #___` with `status: approved-for-design` | Adds `docs/designs/<name>.md` and updates `docs/designs/README.md`; use `Refs` instead of `Closes` so the issue stays open for Stage 2)
 - [ ] **Feature / Architectural Change -- Stage 2: Implementation PR** (`Closes #___` with `status: approved-for-pr` | Implements merged `docs/designs/<name>.md`)
 
