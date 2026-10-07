@@ -284,8 +284,12 @@ strictly:
 5.  **Clean Formatting**: Ensure clean standard Markdown formatting, valid table
     syntax, and proper code block fences.
 
-6.  **Handoff**: Provide a clickable link to the finalized design and recommend
-    that the user review the document with:
+6.  **Handoff**: Provide a clickable link to the finalized design and explicitly ask the user to read the document and verify the technical strategy before invoking the `/egm-review` skill. Include three brief sign-off notes in your handoff summary to focus human review:
+    - **Hardest trade-off**: The single most consequential architectural decision made in this draft.
+    - **Closest rejected alternative**: Which alternative came closest, and the concrete constraint that ruled it out.
+    - **Lowest-confidence area**: Which section or assumption carries the highest uncertainty and warrants the closest scrutiny during `/egm-review`.
+
+    Recommend that the user review the document with:
 
     ```markdown
     `egm-review` <DESIGN_PATH>
