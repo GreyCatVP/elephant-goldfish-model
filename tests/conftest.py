@@ -36,7 +36,7 @@ def repo_root() -> pathlib.Path:
   for candidate in [current] + list(current.parents):
     if (candidate / "plugins" / "egm").exists():
       return candidate / "plugins" / "egm"
-    if (candidate / "skills").exists() and (candidate / "rules").exists():
+    if (candidate / "skills").exists() and (candidate / "agents").exists():
       return candidate
   return current.parent
 

@@ -88,20 +88,13 @@ def evaluate_assertions(
 def assemble_system_prompt(
     repo_root: pathlib.Path, prompt_config: Dict[str, Any]
 ) -> str:
-  """Assembles the system prompt by resolving relative skill and rule files."""
+  """Assembles the system prompt by resolving relative skill files."""
   parts = []
   if "skill_file" in prompt_config:
     skill_path = repo_root / prompt_config["skill_file"]
     if not skill_path.exists():
       raise FileNotFoundError(f"Configured skill file not found: {skill_path}")
     parts.append(skill_path.read_text(encoding="utf-8"))
-
-  if "rules" in prompt_config:
-    for rule_file in prompt_config["rules"]:
-      rule_path = repo_root / rule_file
-      if not rule_path.exists():
-        raise FileNotFoundError(f"Configured rule file not found: {rule_path}")
-      parts.append(rule_path.read_text(encoding="utf-8"))
 
   return "\n\n".join(parts)
 
@@ -240,12 +233,12 @@ def run_scenario(
 
 
 def find_repo_root() -> pathlib.Path:
-  """Finds repository root path containing skills and rules."""
+  """Finds repository root path containing skills and agents."""
   current = pathlib.Path(__file__).resolve().parent
   for candidate in [current] + list(current.parents):
     if (candidate / "plugins" / "egm" / "skills").exists():
       return candidate / "plugins" / "egm"
-    if (candidate / "skills").exists() and (candidate / "rules").exists():
+    if (candidate / "skills").exists() and (candidate / "agents").exists():
       return candidate
     if (candidate / "corp" / "agent" / "plugins" / "egm" / "skills").exists():
       return candidate / "corp" / "agent" / "plugins" / "egm"

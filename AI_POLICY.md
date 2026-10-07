@@ -17,8 +17,8 @@ review, understand, and explain every submitted change.
    in review. Copying maintainer review comments into an LLM and pasting
    unverified model responses back into review threads is prohibited.
 3. **EGM Design Requirement & Two-Stage Alignment**: Contributors planning features
-   or large changes (`> 100` non-test lines or `>= 3` core files in `skills/`,
-   `agents/`, or `rules/`) should:
+   or large changes (`> 100` non-test lines or `>= 3` core files in `skills/` or
+   `agents/`) should:
    * **a)** Reach out to maintainers first via a
      [Feature Inquiry Issue](https://github.com/google/elephant-goldfish-model/issues/new?template=feature_proposal.md)
      (`.github/ISSUE_TEMPLATE/feature_proposal.md`) to receive

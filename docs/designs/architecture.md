@@ -62,7 +62,7 @@ failure modes:
 
 ## System Architecture & Component Model
 
-The open-source EGM framework is organized into five decoupled subsystems:
+The open-source EGM framework is organized into four decoupled subsystems:
 
 ### 1. Skills Layer (`skills/`)
 Modular agent capabilities executable via slash commands or direct invocation:
@@ -79,14 +79,7 @@ Stateless system prompt instructions for isolated Goldfish reviewer subagents
 (Comprehension, Design Critic, Implementation Readiness, Codebase Auditor,
 Structural Validator, Style Editor, and Synthesizer).
 
-### 3. Rules Layer (`rules/`)
-Continuous cognitive and operational constraints injected into agent sessions:
-*   `anti_sycophancy.md`: Eliminates hollow praise and mandates adversarial
-    stress-testing of user ideas.
-*   `search_terms.md`: Enforces symbol-based references over brittle line numbers.
-*   `pr_tagging.md`: Standardizes pull request categorization.
-
-### 4. Document Standards (`resources/document_standards/`)
+### 3. Document Standards (`resources/document_standards/`)
 Objective evaluation rubrics used by Goldfish reviewers to grade specifications:
 *   `heilmeier-standard.md`: Problem clarity and value proposition.
 *   `zoom-out-standard.md`: Simplicity, YAGNI, and codebase reuse.
@@ -94,7 +87,7 @@ Objective evaluation rubrics used by Goldfish reviewers to grade specifications:
 *   `implementation-readiness-standard.md`: Path verification and test readiness.
 *   `re-implementation-standard.md`: Codebase state documentation bar.
 
-### 5. Living Documentation (`docs/`)
+### 4. Living Documentation (`docs/`)
 User guides (`getting_started.md`, `faq.md`) and technical design specifications
 (`docs/designs/`).
 

@@ -40,7 +40,6 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 │   └── designs/                  # Living technical design specifications
 ├── resources/
 │   └── document_standards/       # Quality evaluation rubrics and standards
-├── rules/                        # Continuous behavioral and cognitive rules
 ├── skills/                       # Modular agent skills (Brainstorm, Draft, Review, etc.)
 └── tests/
     └── evals/                    # Automated YAML evaluation benchmarks
@@ -59,18 +58,6 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 | **Review Resolve** | `/egm-resolve` | Interactive triage and automated patch application engine for review findings. |
 | **Drift Report** | `/egm-drift-report` | Sequential AST scanner detecting divergence between checked-in specs and live code. |
 | **Bootstrap** | `/egm-bootstrap` | Recursive bottom-up codebase documentation generator and sentinel-block upserting engine. |
-
----
-
-## Rules
-
-EGM includes a set of modular behavioral and cognitive rules under `rules/` designed to keep AI coding assistants grounded, critical, and robust:
-
-| Rule File | Objective & Constraint |
-| :-------- | :--------------------- |
-| [`rules/anti_sycophancy.md`](rules/anti_sycophancy.md) | **Critical Thinking & Anti-Sycophancy**: Eliminates hollow flattery and sycophantic agreement. Mandates stress-testing ideas first, highlighting edge cases, and providing constructive counter-arguments. |
-
-These rules are natively supported in Antigravity. Place or symlink the `rules/` directory into your Antigravity workspace or plugin configuration to have them automatically injected into context prompts.
 
 ---
 
