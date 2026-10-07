@@ -123,8 +123,8 @@ its execution model based on the size of the target codebase:
     subdirectories either lack a `README.md` file or contain incomplete legacy
     READMEs.
 *   **When**: The user runs the `egm-bootstrap` skill via the slash
-    command `/egm-bootstrap <path>` specifying the target root
-    directory.
+    command `/egm-bootstrap <path>` (or harness-equivalent command / prompt)
+    specifying the target root directory.
 *   **Then**:
     1.  The Root Orchestrator maps the tree incrementally.
     2.  If directory count <= 5, it processes them sequentially.
@@ -283,7 +283,7 @@ selected, we enforce the following rules during directory discovery:
     in Phase A.
     *   *Source Code Files*: Defined as files containing executable code,
         schemas, and contracts (e.g., `.c`, `.cc`, `.cpp`, `.cxx`, `.h`, `.hh`,
-        `.hpp`, `.rs`, `.go`, `.zig`, `.java`, `.kt`, `.scala`, `.cs`, `.fs`,
+        `.hpp`, `.rs`, `.go`, `.zig`, `.lean`, `.java`, `.kt`, `.scala`, `.cs`, `.fs`,
         `.py`, `.rb`, `.php`, `.lua`, `.sh`, `.bash`, `.ts`, `.tsx`, `.js`,
         `.jsx`, `.mjs`, `.cjs`, `.swift`, `.m`, `.dart`, `.sql`, `.proto`,
         `.graphql`, `.gql`, `.thrift`, `.prisma`, `.tf`, `.hcl`, `.cue`).
