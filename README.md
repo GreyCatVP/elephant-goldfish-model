@@ -23,7 +23,7 @@ EGM uses two animal metaphors to describe how to prompt, constrain, and structur
 *   🐘 **The Elephant (Remembers Everything)**:
     Deep-context agents loaded with system history, architecture diagrams, component boundaries, and user journeys. The Elephant conducts structured brainstorming, probes operational limits, and drafts comprehensive specifications.
 *   🐠 **The Goldfish (Zero-Context Memory)**:
-    Stateless, isolated subagents that read only the draft design specification and live source code without access to conversational bias. The Goldfish swarm subjects designs to adversarial stress-testing across multiple conflicting perspectives (Design Critic, Naive Reader, Tech Lead, Codebase Auditor, Structural Validator, and Style Editor).
+    Stateless, isolated subagents that read only the draft design specification and live source code without access to conversational bias. The Goldfish swarm subjects designs to adversarial stress-testing across multiple conflicting perspectives (Design Critic, Naive Reader, Tech Lead, Codebase Auditor, Structural Validator, Style Editor, and Zoom Out Architect; defined under `agents/`).
 *   🧑‍💻 **The Human (Owns the Outcomes)**:
     AI is an exploration partner and automated auditor, but human engineers own architectural decisions, trade-offs, and final outcomes.
 
@@ -52,10 +52,10 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 | Skill | Command | Description |
 | :---- | :------ | :---------- |
-| **Brainstorm** | `/egm-brainstorm` | Zero-doc ideation tool using a 6-lens Goldfish shootdown swarm to stress-test early concepts. |
+| **Brainstorm** | `/egm-brainstorm` | Zero-doc ideation tool using a multi-lens Goldfish shootdown swarm to stress-test early concepts. |
 | **Draft** | `/egm-draft` | Iterative, section-by-section markdown design specification compiler. |
 | **Review** | `/egm-review` | Multi-stage verification pipeline orchestrator (Zoom Out → Comprehension → Critic → Readiness). |
-| **Review Loop** | `egm_review_loop` | Concurrent review subagent dispatch engine supporting direct and hierarchical dispatch. |
+| **Review Loop** | `/egm-review-loop` | Concurrent review subagent dispatch engine supporting direct and hierarchical dispatch. |
 | **Review Resolve** | `/egm-resolve` | Interactive triage and automated patch application engine for review findings. |
 | **Drift Report** | `/egm-drift-report` | Sequential AST scanner detecting divergence between checked-in specs and live code. |
 | **Bootstrap** | `/egm-bootstrap` | Recursive bottom-up codebase documentation generator and sentinel-block upserting engine. |
@@ -79,11 +79,11 @@ These rules are natively supported in Antigravity. Place or symlink the `rules/`
 1.  **Ideate & Stress-Test**:
     Run `/egm-brainstorm` to explore problem boundaries and subject raw concepts to a multi-lens Goldfish shootdown swarm.
 2.  **Draft**:
-    Run `/egm-draft` to convert the concept brief into a living design document under `docs/designs/<feature>.md`.
-3.  **Review**:
-    Run `/egm-review docs/designs/<feature>.md` to launch the multi-stage Goldfish reviewer swarm.
-4.  **Resolve & Merge**:
-    Triage findings using `/egm-resolve`, submit the design doc via Pull Request, and implement code against the verified specification.
+    Run `/egm-draft` to convert the egm-brainstorm output (a concept brief) into a living design document under `docs/designs/<feature>.md` (or user designated directory).
+3.  **Review & Resolve**:
+    Run `/egm-review docs/designs/<feature>.md` to launch the multi-stage Goldfish reviewer swarm on the design document produced by egm-draft (interactive resolution via `/egm-resolve` is integrated directly into the review loop).
+4.  **Submit & Implement**:
+    Submit the verified design doc via Pull Request, and implement code against the approved specification.
 
 For detailed setup and walkthroughs, see [Getting Started](docs/getting_started.md) and the [Framework Architecture](docs/designs/architecture.md).
 

@@ -26,7 +26,7 @@ review, understand, and explain every submitted change.
    * **b)** Submit and merge a full EGM design document PR
      (`docs/designs/<name>.md` authored via `/egm-brainstorm`, `/egm-draft`,
      and `/egm-review`, referencing the issue with `Refs #<issue>`) so
-     maintainers can apply `status: approved-for-pr`.
+     maintainers can apply `status: approved-for-pr` to the Feature Inquiry Issue.
    * **c)** Submit and merge an implementation PR of the approved design into
      the codebase (`Closes #<issue>`).
 4. **No Artificial PR Splitting**: Do not artificially split a single logical

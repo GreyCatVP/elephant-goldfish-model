@@ -114,7 +114,7 @@ If your harness has no subagent tool, run the scout steps inline.
     *   `question`: "The target directory tree contains more than 15
         subdirectories. This is a large execution scope. Do you want to proceed
         with full-tree bootstrapping?"
-    *   `options`: `["(Recommended) Yes, proceed with full tree bootstrapping",
+    *   `options`: `["Yes, proceed with full tree bootstrapping",
         "No, abort execution"]`
     *   (CRITICAL: After requesting approval, you MUST wait for the user's
         response before continuing or spawning any workers).
@@ -127,7 +127,7 @@ If your harness has no subagent tool, run the scout steps inline.
     *   *Source Code Files*: Files matching recognized source code, schema, and
         contract extensions:
         - Systems & Compiled: `.c`, `.cc`, `.cpp`, `.cxx`, `.h`, `.hh`, `.hpp`,
-          `.rs`, `.go`, `.zig`
+          `.rs`, `.go`, `.zig`, `.lean`
         - Managed & Enterprise: `.java`, `.kt`, `.scala`, `.cs`, `.fs`
         - Scripting & Dynamic: `.py`, `.rb`, `.php`, `.lua`, `.sh`, `.bash`
         - Web & Mobile: `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.swift`,
