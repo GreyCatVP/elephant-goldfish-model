@@ -99,8 +99,6 @@ const steps = [
      color lifts the number off the rule. */
   .step :global(.badge),
   .marker {
-    --container-color: var(--md-sys-color-primary);
-    --label-text-color: var(--md-sys-color-on-primary);
     --label-text: var(--md-sys-typescale-label-lg);
     --size: 28px;
     position: absolute;
@@ -115,9 +113,9 @@ const steps = [
     --label-text-color: var(--md-sys-color-on-secondary);
   }
 
-  .step:nth-child(3) :global(.badge) {
-    --container-color: var(--md-sys-color-error);
-    --label-text-color: var(--md-sys-color-on-error);
+  .step:nth-child(4) :global(.badge) {
+    --container-color: var(--md-sys-color-primary);
+    --label-text-color: var(--md-sys-color-on-primary);
   }
 
   .marker {

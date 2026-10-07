@@ -1,5 +1,4 @@
 ---
-import Divider from './gb/Divider.astro';
 
 const repo = 'https://github.com/google/elephant-goldfish-model';
 
@@ -13,7 +12,7 @@ const links = [
 
 <footer class="footer scheme-dark">
   <div class="wrap">
-    <Divider />
+    <hr class="divider" />
     <div class="bar">
       <p class="legal muted">
         <svg class="g" viewBox="0 0 24 24" aria-hidden="true">
@@ -54,9 +53,6 @@ const links = [
     padding-block: 0 40px;
   }
 
-  .footer :global(.divider) {
-    --color: var(--md-sys-color-outline-variant);
-  }
 
   /* One row: legal on the left, links on the right. When the row cannot hold both,
      the links wrap under the legal line, both flush left. */

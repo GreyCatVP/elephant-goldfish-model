@@ -1,8 +1,6 @@
 ---
-import List from './gb/List.astro';
-import ListItem from './gb/ListItem.astro';
-
 const repo = 'https://github.com/google/elephant-goldfish-model';
+const repoUrl = repo;
 
 // User-facing slash-command entry points from the repository Skills Catalog.
 const skills = [
@@ -48,22 +46,33 @@ const skills = [
         no <span class="nowrap">lock-in</span>. Open one to see exactly what the agent is told to do.
       </p>
     </div>
-    <List label="Skills">
+    <ul class="list" aria-label="Skills">
       {
         skills.map((skill) => (
-          <ListItem href={`${repo}/tree/HEAD/skills/${skill.dir}`} target="_blank">
-            <code slot="leading" class="cmd">
-              {skill.command}
-            </code>
-            {skill.name}
-            <Fragment slot="supporting-text">{skill.body}</Fragment>
-            <svg slot="trailing" viewBox="0 -960 960 960" aria-hidden="true">
-              <path d="m216-160-56-56 464-464H360v-80h400v400h-80v-264L216-160Z" />
-            </svg>
-          </ListItem>
+          <li>
+            <a
+              class="ripple focus-ring-outer list-item"
+              href={`${repoUrl}/blob/main/skills/${skill.dir}/SKILL.md`}
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="list-item-leading">
+                <code class="cmd">{skill.command}</code>
+              </span>
+              <span class="list-item-content">
+                {skill.name}
+                <span class="list-item-supporting-text">{skill.body}</span>
+              </span>
+              <span class="list-item-trailing">
+                <svg viewBox="0 -960 960 960" aria-hidden="true">
+                  <path d="m216-160-56-56 464-464H360v-80h400v400h-80v-264L216-160Z" />
+                </svg>
+              </span>
+            </a>
+          </li>
         ))
       }
-    </List>
+    </ul>
   </div>
 </section>
 
@@ -71,27 +80,25 @@ const skills = [
   /* An index, not a stack of cards: hairline rows, the command in its own column so the
      five commands read as one aligned list, name and description beside it. List item
      theming goes through the component's documented custom properties. */
-  .skills :global(.list) {
+  .skills .list {
     border-radius: 0;
     border-block-start: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .skills :global(.list > li) {
+  .skills .list > li {
     border-block-end: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .skills :global(.list-item) {
-    --container-color: transparent;
+  .skills .list-item {
+    text-decoration: none;
     --container-shape: var(--md-sys-shape-corner-md);
     --label-text: var(--md-sys-typescale-title-lg);
-    --supporting-text: var(--md-sys-typescale-body-md);
     --top-space: 22px;
     --bottom-space: 24px;
     --leading-space: 8px;
     --trailing-space: 8px;
     --between-space: 24px;
     --trailing-icon-size: 22px;
-    --trailing-icon-color: var(--md-sys-color-on-surface-variant);
     align-items: baseline;
     /* The package rounds a list's first and last rows by inheriting the list's own corners.
        With the straight hairline above (list radius 0) that left the end rows half-square on
@@ -99,17 +106,17 @@ const skills = [
     border-radius: var(--container-shape);
   }
 
-  .skills :global(.list-item-leading) {
+  .skills .list-item-leading {
     flex: none;
     inline-size: 15rem;
     min-height: 0;
   }
 
-  .skills :global(.list-item-trailing) {
+  .skills .list-item-trailing {
     align-self: center;
   }
 
-  .skills :global(.list-item-supporting-text) {
+  .skills .list-item-supporting-text {
     max-inline-size: 60ch;
     margin-block-start: 2px;
   }
@@ -120,20 +127,20 @@ const skills = [
   }
 
   @media (max-width: 760px) {
-    .skills :global(.list-item) {
+    .skills .list-item {
       flex-wrap: wrap;
       --between-space: 16px;
       --top-space: 18px;
       --bottom-space: 20px;
     }
 
-    .skills :global(.list-item-leading) {
+    .skills .list-item-leading {
       inline-size: 100%;
       line-height: 1.25rem;
       margin-block-end: -6px;
     }
 
-    .skills :global(.list-item-content) {
+    .skills .list-item-content {
       flex-basis: 0;
     }
   }
