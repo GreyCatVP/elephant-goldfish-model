@@ -1,10 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <style>
-    circle { fill: #1f1f1f; }
+    .e { fill: #0b57d0; }
+    .g { fill: #b3261e; }
     @media (prefers-color-scheme: dark) {
-      circle { fill: #ffffff; }
+      .e { fill: #a8c7fa; }
+      .g { fill: #f2b8b5; }
     }
   </style>
-  <circle cx="11" cy="16" r="9"/>
-  <circle cx="26" cy="16" r="4"/>
+  <circle class="e" cx="11" cy="16" r="9"/>
+  <circle class="g" cx="26" cy="16" r="4"/>
 </svg>

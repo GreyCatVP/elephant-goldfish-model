@@ -109,6 +109,17 @@ const steps = [
     outline: 6px solid var(--md-sys-color-surface-container-low);
   }
 
+  .step:nth-child(1) :global(.badge),
+  .step:nth-child(2) :global(.badge) {
+    --container-color: var(--md-sys-color-secondary);
+    --label-text-color: var(--md-sys-color-on-secondary);
+  }
+
+  .step:nth-child(3) :global(.badge) {
+    --container-color: var(--md-sys-color-error);
+    --label-text-color: var(--md-sys-color-on-error);
+  }
+
   .marker {
     display: grid;
     place-items: center;
