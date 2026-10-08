@@ -29,7 +29,7 @@ const steps = [
           <li class="step">
             <span class="badge badge-large">{i + 1}</span>
             <h3 class="title">{step.name}</h3>
-            <code class="cmd">{step.command}</code>
+            <span class="cmd">{step.command}</span>
             <p class="muted">{step.body}</p>
           </li>
         ))
@@ -48,7 +48,7 @@ const steps = [
       <li class="step drift">
         <div class="drift-head">
           <h3 class="title">Weekly</h3>
-          <code class="cmd">/egm-drift-report</code>
+          <span class="cmd">/egm-drift-report</span>
         </div>
         <p class="muted">
           Flags where the codebase and spec have diverged so you can update whichever changed.
