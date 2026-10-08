@@ -23,16 +23,8 @@ def test_native_reviewer_isolation(tmp_path: Path) -> None:
   plugin = tmp_path / "plugin"
   workspace = tmp_path / "workspace"
   workspace.mkdir()
-  files = subprocess.check_output(
-      ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-      cwd=root, text=True,
-  ).split("\0")
-  for relative in set(files) - {""}:
-    source = root / relative
-    if source.is_file():
-      target = plugin / relative
-      target.parent.mkdir(parents=True, exist_ok=True)
-      shutil.copy2(source, target)
+  shutil.copytree(root, plugin, ignore=shutil.ignore_patterns(
+      ".git", "__pycache__", "node_modules", ".pytest_cache"))
   name = "egm-test-" + uuid.uuid4().hex[:8]
   manifest_path = plugin / ".claude-plugin/plugin.json"
   manifest = json.loads(manifest_path.read_text())
@@ -66,8 +58,6 @@ Do not read other plugins or logs, use MCP, or modify files.
        "--", prompt],
       cwd=workspace, capture_output=True, text=True, timeout=600,
   )
-  (tmp_path / "result.json").write_text(result.stdout)
-  (tmp_path / "stderr.txt").write_text(result.stderr)
   assert result.returncode == 0, result.stderr
   assert not json.loads(result.stdout).get("is_error")
   project = "".join(c if c.isalnum() else "-" for c in str(workspace.resolve()))

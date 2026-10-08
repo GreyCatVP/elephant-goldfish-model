@@ -14,8 +14,7 @@ description: >-
 # Design Drafting (Document Construction)
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
-When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`
-and resolve bundled personas and standards under `${CLAUDE_PLUGIN_ROOT}`.
+In Claude Code, read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md` first.
 
 This skill guides the user through drafting a technical design document based on
 the aligned problem and requirements from the brainstorm phase.

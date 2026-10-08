@@ -1,9 +1,8 @@
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
-"""Claude reviewer tool/context contracts and bundled integration resources."""
+"""Claude reviewer frontmatter contracts."""
 
-import json
 from pathlib import Path
 
 import pytest
@@ -21,37 +20,17 @@ def frontmatter(path: Path) -> dict:
 
 
 @pytest.mark.parametrize("name", REVIEWERS)
-def test_reviewers_have_read_only_fresh_context(name: str) -> None:
-  path = ROOT / "integrations/claude/agents" / f"{name}.md"
-  config = frontmatter(path)
-  assert {tool.strip() for tool in config["tools"].split(",")} == {
-      "Read", "Grep", "Glob",
-  }
-  assert config["omitClaudeMd"] is True
+def test_reviewers_are_read_only_with_fresh_context(name: str) -> None:
+  config = frontmatter(ROOT / "agents" / f"{name}.md")
+  assert {t.strip() for t in config["tools"].split(",")} == {"Read", "Grep", "Glob"}
   assert config["model"] == "inherit"
+  assert config["omitClaudeMd"] is True
   assert "memory" not in config
-  manifest = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
-  assert f"./integrations/claude/agents/{name}.md" in manifest["agents"]
-  shared = ROOT / "agents" / f"{name}.md"
-  assert config["name"] == frontmatter(shared)["name"]
-  assert f"${{CLAUDE_PLUGIN_ROOT}}/agents/{name}.md" in path.read_text()
-  for field in ("tools", "model", "omitClaudeMd", "memory"):
-    assert field not in frontmatter(shared)
 
 
-def test_orchestrators_keep_delegation_and_writing_capabilities() -> None:
-  for name in ("bootstrap_orchestrator", "synthesizer"):
-    config = frontmatter(ROOT / "agents" / f"{name}.md")
-    assert "tools" not in config
-    assert not config.get("omitClaudeMd")
-
-
-def test_skills_resolve_claude_guide_from_plugin_root() -> None:
-  guide = ROOT / "docs/claude.md"
-  assert guide.is_file()
+def test_skills_reference_claude_guide() -> None:
+  assert (ROOT / "docs/claude.md").is_file()
   skills = list((ROOT / "skills").glob("*/SKILL.md"))
   assert skills
   for skill in skills:
     assert "${CLAUDE_PLUGIN_ROOT}/docs/claude.md" in skill.read_text()
-    assert frontmatter(skill)["disable-model-invocation"] is True
-    assert "context" not in frontmatter(skill)

@@ -15,8 +15,7 @@ description: >-
 # EGM Brainstorm: Interactive Multi-Lens Ideation & Refinement
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
-When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`
-and resolve bundled personas and standards under `${CLAUDE_PLUGIN_ROOT}`.
+In Claude Code, read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md` first.
 
 ## Overview
 

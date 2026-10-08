@@ -30,13 +30,11 @@ independent review, for example `egm:egm-zoom-out`. Do not fork the conversation
 or resume a previous reviewer. Provide only the task, target, persona/standard
 paths, and explicitly supplied Goldfish context; do not copy parent deliberation.
 
-The Claude-only adapters in `integrations/claude/agents/` declare
-`tools: Read, Grep, Glob`, `model: inherit`, and `omitClaudeMd: true`.
-The Claude manifest points to these adapters, which read the canonical shared
-personas in `agents/`. Shared persona frontmatter stays unchanged for other hosts.
-The adapters cannot edit files or execute shell commands through
-their tool set. No persistent `memory` is configured. Bootstrap and synthesis
-orchestrators retain their existing capabilities. The parent handles fixes.
+Reviewer personas in `agents/` declare `tools: Read, Grep, Glob`,
+`model: inherit`, and `omitClaudeMd: true`; other hosts ignore these keys.
+Reviewers cannot edit files or run shell commands, and no persistent `memory`
+is configured. Bootstrap and synthesis orchestrators keep their capabilities.
+The parent handles fixes.
 
 Normal subagents exclude parent conversation history. `omitClaudeMd` additionally
 excludes user/project/local instruction files, but managed policies still apply.
