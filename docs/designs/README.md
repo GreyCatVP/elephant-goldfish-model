@@ -11,6 +11,7 @@ operational guardrails.
 
 | Document | Author | Primary Component |
 | :------- | :----- | :---------------- |
+| [codex_support.md](codex_support.md)<br>Installed-resource resolution, fresh-context reviewers, and native Codex workflow verification. | [@n3wth](https://github.com/n3wth) | [Codex integration](../codex.md) |
 | [architecture.md](architecture.md)<br>System architecture of the EGM framework covering component models, end-to-end dataflow, and agent lifecycle. | [@quinnjim](https://github.com/quinnjim), [@eewing314](https://github.com/eewing314) | [EGM Framework Architecture](../../README.md) |
 | [brainstorm.md](brainstorm.md)<br>Fast zero-doc ideation tool using a 6-lens Goldfish swarm to audit and stress-test early concepts before drafting. | [@briansuchy](https://github.com/briansuchy) | [`egm_brainstorm`](../../skills/egm_brainstorm/SKILL.md) |
 | [draft.md](draft.md)<br>Iterative section-by-section specification drafting protocol and semantic boundary definitions. | [@quinnjim](https://github.com/quinnjim), [@eewing314](https://github.com/eewing314) | [`egm_draft`](../../skills/egm_draft/SKILL.md) |

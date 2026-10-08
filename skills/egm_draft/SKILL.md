@@ -13,6 +13,8 @@ description: >-
 
 # Design Drafting (Document Construction)
 
+When running in Codex, first read [Codex integration](../../docs/codex.md).
+
 This skill guides the user through drafting a technical design document based on
 the aligned problem and requirements from the brainstorm phase.
 
@@ -83,7 +85,7 @@ this strict generation order:
 1.  **Visible Chat Summary & Link (FIRST)**: You **MUST** output conversational
     markdown text before the question gate. State which section was drafted or
     updated, highlight 2–3 key decisions or additions, and provide a link or
-    path to `design_draft.md` (e.g., `[design_draft.md](file://<path>/design_draft.md)`).
+    path to `design_draft.md` (e.g., `[design draft](/absolute/project/design_draft.md)` in Codex).
 2.  **Approval Gate (SECOND)**: In the same turn, present the single-select
     approval choice (using a structured question tool such as `ask_question`
     with `len(questions) == 1` and `is_multi_select: false` if your harness has

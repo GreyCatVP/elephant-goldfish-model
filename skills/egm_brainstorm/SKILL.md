@@ -14,6 +14,8 @@ description: >-
 
 # EGM Brainstorm: Interactive Multi-Lens Ideation & Refinement
 
+When running in Codex, first read [Codex integration](../../docs/codex.md).
+
 ## Overview
 
 This skill acts as the upstream conversational brainstorming engine for the

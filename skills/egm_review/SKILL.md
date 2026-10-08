@@ -13,6 +13,8 @@ description: >-
 
 # Review, Validation & Automated Remediation
 
+When running in Codex, first read [Codex integration](../../docs/codex.md).
+
 Reviews and validates a design document through specialized reviewer personas.
 
 ## Delegation

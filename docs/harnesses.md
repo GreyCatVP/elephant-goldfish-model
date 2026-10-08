@@ -60,7 +60,7 @@ phrase to its own tool:
 | Harness | Subagent tool | Named personas | Nesting |
 | --- | --- | --- | --- |
 | Claude Code | Agent (Task) tool | Yes | Up to 3 levels by default |
-| OpenAI Codex | `spawn_agent`, `wait_agent` | No | Not verified |
+| OpenAI Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
 | Cursor | Subagents | No | Not verified |
 | Gemini CLI | Subagents | Yes | Not verified |
 | Antigravity | `invoke_subagent` | Yes | Yes |
@@ -93,6 +93,9 @@ Skills fall into this category, so EGM does not support ChatGPT web.
 - **Task constraints:** Pass offline, read-only, and resource-scope requirements
   explicitly to each delegated reviewer. Check its tool use; parent instructions
   alone do not establish that a child followed those restrictions.
+
+For Codex, read [Codex integration](codex.md) for installed-resource paths,
+explicit fresh-context delegation, question-tool fallbacks, and artifact links.
 
 ## Support status
 
