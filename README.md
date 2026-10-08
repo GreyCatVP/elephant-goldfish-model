@@ -14,22 +14,18 @@ It anchors development in context-rich system descriptions and adversarial multi
 
 ![Elephant & Goldfish Model Overview](assets/heroes.png)
 
----
-
 ## Philosophy
 
 EGM uses two animal metaphors to describe how to prompt, constrain, and structure AI agents at different stages of the software development lifecycle:
 
-*   🐘 **The Elephant (Remembers Everything)**:
+*   **The Elephant (Remembers Everything)**:
     Deep-context agents loaded with system history, architecture diagrams, component boundaries, and user journeys. The Elephant conducts structured brainstorming, probes operational limits, and drafts comprehensive specifications.
-*   🐠 **The Goldfish (Zero-Context Memory)**:
+*   **The Goldfish (Zero-Context Memory)**:
     Stateless, isolated subagents that read only the draft design specification and live source code without access to conversational bias. The Goldfish swarm subjects designs to adversarial stress-testing across multiple conflicting perspectives (Design Critic, Naive Reader, Tech Lead, Codebase Auditor, Structural Validator, Style Editor, and Zoom Out Architect; defined under `agents/`).
-*   🧑‍💻 **The Human (Owns the Outcomes)**:
+*   **The Human (Owns the Outcomes)**:
     AI is an exploration partner and automated auditor, but human engineers own architectural decisions, trade-offs, and final outcomes.
 
 For the foundational essay introducing this methodology, see Dave Rensin's article: [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874).
-
----
 
 ## Repo Structure
 
@@ -45,21 +41,17 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
     └── evals/                    # Automated YAML evaluation benchmarks
 ```
 
----
-
 ## Skills
 
 | Skill | Command | Description |
 | :---- | :------ | :---------- |
 | **Brainstorm** | `/egm-brainstorm` | Zero-doc ideation tool using a multi-lens Goldfish shootdown swarm to stress-test early concepts. |
 | **Draft** | `/egm-draft` | Iterative, section-by-section markdown design specification compiler. |
-| **Review** | `/egm-review` | Multi-stage verification pipeline orchestrator (Zoom Out → Comprehension → Critic → Readiness). |
+| **Review** | `/egm-review` | Multi-stage verification pipeline orchestrator (Zoom Out, Comprehension, Critic, Readiness). |
 | **Review Loop** | `/egm-review-loop` | Concurrent review subagent dispatch engine supporting direct and hierarchical dispatch. |
 | **Review Resolve** | `/egm-resolve` | Interactive triage and automated patch application engine for review findings. |
 | **Drift Report** | `/egm-drift-report` | Sequential AST scanner detecting divergence between checked-in specs and live code. |
 | **Bootstrap** | `/egm-bootstrap` | Recursive bottom-up codebase documentation generator and sentinel-block upserting engine. |
-
----
 
 ## Quickstart
 
@@ -73,8 +65,6 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
     Submit the verified design doc via Pull Request, and implement code against the approved specification.
 
 For detailed setup and walkthroughs, see [Getting Started](docs/getting_started.md) and the [Framework Architecture](docs/designs/architecture.md).
-
----
 
 ## Contributing
 
