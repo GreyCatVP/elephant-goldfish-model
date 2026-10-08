@@ -68,13 +68,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: "Verify Vertex AI rawPredict & Claude Code"
+      - name: "Verify Claude Code on Vertex AI"
         env:
           CLAUDE_CODE_USE_VERTEX: "1"
           CLOUD_ML_REGION: "global"
           ANTHROPIC_VERTEX_PROJECT_ID: "airrt-team"
           ANTHROPIC_MODEL: "claude-sonnet-5-5@default"
         run: |
-          TOKEN=$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token" | jq -r .access_token)
-          curl -sS --fail-with-body -X POST "https://aiplatform.googleapis.com/v1/projects/airrt-team/locations/global/publishers/anthropic/models/claude-sonnet-5-5:rawPredict"             -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"anthropic_version":"vertex-2023-10-16","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
           claude -p "ping"

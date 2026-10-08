@@ -93,12 +93,10 @@ def test_plugin_and_marketplace_manifests() -> None:
   repo_root = pathlib.Path(__file__).resolve().parents[2]
 
   codex_plugin = repo_root / ".codex-plugin" / "plugin.json"
-  assert codex_plugin.exists(), ".codex-plugin/plugin.json missing"
   codex_data = json.loads(codex_plugin.read_text(encoding="utf-8"))
   assert codex_data.get("name") == "egm"
 
   marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
-  assert marketplace.exists(), ".agents/plugins/marketplace.json missing"
   market_data = json.loads(marketplace.read_text(encoding="utf-8"))
   assert market_data.get("name") == "elephant-goldfish-model"
   assert any(p.get("name") == "egm" for p in market_data.get("plugins", []))
