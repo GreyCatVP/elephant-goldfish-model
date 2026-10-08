@@ -19,10 +19,8 @@ please remember: *You own the outcomes.*
 
 *   **Design Document**: A peer-reviewed technical specification that captures
     intent, system invariants, and strategic direction.
-*   **Implementation Checklist**: Each document must benchmark every file it is
-    going to create or modify. These act as breadcrumbs for LLMs to explore the
-    codebase later. This explains why it is a useful strategy:
-    https://docs.claude-mem.ai/progressive-disclosure.
+*   **Implementation checklist**: Identifies the files to create or modify,
+    the planned changes, and how to verify them.
 *   **Enriched Context Loops**: Colocated Markdown documentation (such as README
     hierarchies) that provides high-quality context for future development
     loops.
@@ -63,7 +61,7 @@ engineer. If it is making a minor mistake, adjust it. If it is wildly off base,
 maybe you need to go back to the drawing board and correct your design. This is
 part of the process and gets easier the more you use it.
 
-#### Q: Should I open big Pull Requests?
+#### Q: Should I open big pull requests?
 
 **A**: No. Generally, the answer for this (and many other questions) is "The
 answer is the same as when you built things without AI."
