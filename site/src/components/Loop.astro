@@ -51,13 +51,6 @@ const steps = [
         </p>
       </li>
       <li class="step drift">
-        <span class="marker" aria-hidden="true">
-          <svg viewBox="0 -960 960 960">
-            <path
-              d="M204-318q-22-38-33-78t-11-82q0-134 93-228t227-94h7l-64-64 56-56 160 160-160 160-56-56 64-64h-7q-100 0-170 70.5T240-478q0 26 6 51t18 49l-60 60ZM481-40 321-200l160-160 56 56-64 64h7q100 0 170-70.5T720-482q0-26-6-51t-18-49l60-60q22 38 33 78t11 82q0 134-93 228t-227 94h-7l64 64-56 56Z"
-            ></path>
-          </svg>
-        </span>
         <div class="drift-head">
           <h3 class="title">Then weekly</h3>
           <code class="cmd">/egm-drift-report</code>
@@ -102,8 +95,7 @@ const steps = [
 
   /* Badge theming through its documented custom properties. The outline in the band
      color lifts the number off the rule. */
-  .step :global(.badge),
-  .marker {
+  .step :global(.badge) {
     --container-color: var(--md-sys-color-primary);
     --label-text-color: var(--md-sys-color-on-primary);
     --label-text: var(--md-sys-typescale-label-lg);
@@ -125,19 +117,7 @@ const steps = [
     --label-text-color: var(--md-sys-color-on-error);
   }
 
-  .marker {
-    display: grid;
-    place-items: center;
-    inline-size: 28px;
-    block-size: 28px;
-    border-radius: 50%;
-    background: var(--md-sys-color-surface-container-low);
-    border: 1px solid var(--md-sys-color-outline);
-    color: var(--md-sys-color-on-surface);
-  }
-
-  .step :global(.badge) > svg,
-  .marker > svg {
+  .step :global(.badge) > svg {
     inline-size: 16px;
     block-size: 16px;
     fill: currentColor;
