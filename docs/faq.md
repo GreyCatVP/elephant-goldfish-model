@@ -3,7 +3,7 @@ Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
 -->
 
-# EGM Frequently Asked Questions (FAQ)
+# FAQ
 
 #### Q: Are there alternatives?
 
@@ -19,10 +19,8 @@ please remember: *You own the outcomes.*
 
 *   **Design Document**: A peer-reviewed technical specification that captures
     intent, system invariants, and strategic direction.
-*   **Implementation Checklist**: Each document must benchmark every file it is
-    going to create or modify. These act as breadcrumbs for LLMs to explore the
-    codebase later. This explains why it is a useful strategy:
-    https://docs.claude-mem.ai/progressive-disclosure.
+*   **Implementation checklist**: Identifies the files to create or modify,
+    the planned changes, and how to verify them.
 *   **Enriched Context Loops**: Colocated Markdown documentation (such as README
     hierarchies) that provides high-quality context for future development
     loops.
@@ -35,9 +33,9 @@ intent and reviewing architectural decisions captured in design documents.
 
 #### Q: Will the increased volume of design documentation create a human review bottleneck?
 
-**A**: Migrating validation and alignment to the design phase is an efficient
-"shift-left" strategy, catching architectural flaws early and reducing
-late-stage rework.
+**A**: It can. Reviewing designs adds work, and excessive documentation can
+become a bottleneck. The aim is to catch important problems before implementation;
+whether that saves time depends on the change and the quality of the review.
 
 We recommend putting an emphasis on prioritization, at least for now. Use EGM
 for "What's important now?", instead of everything, to avoid overloading your
@@ -45,10 +43,12 @@ reviewing and release pipelines.
 
 #### Q: Does this workflow degrade developer velocity?
 
-**A**: No. If anything, it's the opposite. There are a growing number of case
-studies and metrics associated with improvements across traditional SDLC
-metrics. Front-loading complexity (at least for now) is helping humans deal with
-the complex problems sooner, and letting LLMs handle the easier (coding) parts.
+**A**: It depends. Design and review take time and may not pay off for a small,
+well-understood change. For uncertain or consequential changes, they may reduce
+rework by exposing missing decisions earlier.
+
+Compare total time, useful findings, and rework on your own tasks. Completing
+the EGM workflow alone does not demonstrate a productivity improvement.
 
 #### Q: Is expecting design documentation to be complete enough for a zero-context agent realistic?
 
@@ -61,7 +61,7 @@ engineer. If it is making a minor mistake, adjust it. If it is wildly off base,
 maybe you need to go back to the drawing board and correct your design. This is
 part of the process and gets easier the more you use it.
 
-#### Q: Should I open big Pull Requests?
+#### Q: Should I open big pull requests?
 
 **A**: No. Generally, the answer for this (and many other questions) is "The
 answer is the same as when you built things without AI."
