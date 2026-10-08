@@ -82,12 +82,8 @@ their strengths and weaknesses.
 
 ## Documentation & Guides
 
-*   [Getting Started](getting_started.md): Installation and core workflow.
-*   [Frequently Asked Questions (FAQ)](faq.md): Common questions and answers.
-*   [Framework Architecture](designs/architecture.md): Detailed component
-    design and lifecycle.
-*   [Contributing Guidelines](../CONTRIBUTING.md): How to contribute new skills,
-    personas, and standards.
+See the [documentation guide](README.md) for getting started, host integrations,
+design documents, testing, and contribution guidance.
 
 [^not-really]: It's a
     [myth](https://www.biology.ox.ac.uk/article/goldfish-show-a-keen-ability-to-estimate-distances)
