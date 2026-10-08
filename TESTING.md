@@ -6,12 +6,11 @@ SPDX-License-Identifier: Apache-2.0
 # EGM Testing & Behavioral Evaluation Playbook
 
 This document provides a step-by-step developer playbook for running both
-Tier 1 static unit tests and Tier 2 LiteLLM-driven behavioral evaluations across
-the Elephant & Goldfish Model (EGM) skill suite.
+unit tests and LiteLLM-driven evals evaluations across the EGM skill suite.
 
 ---
 
-## 1. Environment Prerequisites & Setup
+## Setup
 
 ### A. Python Environment Setup
 Create and activate an isolated Python 3.10+ virtual environment:
@@ -32,9 +31,9 @@ pip install -r requirements-dev.txt
 
 ---
 
-## 2. Tier 1: Offline Static Unit Tests
+## Unit Tests
 
-Tier 1 tests run offline without network access, API keys, or model
+Unit tests run offline without network access, API keys, or model
 dependencies. They validate YAML frontmatter schemas and relative link
 integrity.
 
@@ -52,12 +51,12 @@ pytest tests/unit/test_link_integrity.py -v
 
 ---
 
-## 3. Tier 2: LiteLLM Behavioral Evaluation Flow
+## LiteLLM Evals
 
-Tier 2 evaluations execute conversational scenarios against real model endpoints
+Evaluations execute conversational scenarios against model endpoints
 using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
 
-### Option A: Testing with Google Gemini (Recommended)
+### Testing with Gemini
 
 1. **Obtain API Key**:
    - Go to [Google AI Studio](https://aistudio.google.com/apikey).
@@ -103,7 +102,7 @@ using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
 
 ---
 
-### Option B: Testing with Local Models (Zero Credentials via Ollama)
+### Testing with Local Models
 
 If you want to test without cloud API keys, you can run a local model using
 Ollama:
