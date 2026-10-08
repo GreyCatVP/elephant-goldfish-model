@@ -173,6 +173,8 @@ def run_scenario(
         temperature=temperature,
     )
     model_response = response_obj.choices[0].message.content or ""
+    print(f"DEBUG RESPONSE: {repr(model_response)}")
+    print(f"DEBUG CHOICES[0]: {response_obj.choices[0]}")
     messages.append({"role": "assistant", "content": model_response})
 
     if eval_type == "deterministic":
