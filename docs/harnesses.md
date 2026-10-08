@@ -13,7 +13,7 @@ text.
 
 | Harness | Install |
 | --- | --- |
-| Antigravity | `/plugin`, then install from `https://github.com/google/elephant-goldfish-model` |
+| Antigravity | Build and install the [Antigravity bundle](antigravity.md) for reviewer tool restrictions |
 | Gemini CLI | `gemini extensions install https://github.com/google/elephant-goldfish-model` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone

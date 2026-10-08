@@ -83,6 +83,7 @@ their strengths and weaknesses.
 ## Documentation & Guides
 
 *   [Getting Started](getting_started.md): Installation and core workflow.
+*   [Antigravity](antigravity.md): Plugin installation and reviewer permissions.
 *   [Frequently Asked Questions (FAQ)](faq.md): Common questions and answers.
 *   [Framework Architecture](designs/architecture.md): Detailed component
     design and lifecycle.
