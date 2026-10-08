@@ -3,12 +3,7 @@ Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
 -->
 
-<!--
-Thanks for contributing. Fill in every section below; a CI check compares the
-description with this template and fails until it matches. Guidelines are in
-CONTRIBUTING.md. Keep the pull request small and focused, and review your own
-diff before requesting review.
--->
+<!-- Fill in every section; CI fails until the description matches this template. -->
 
 ## Related issue
 
@@ -29,11 +24,7 @@ None
 
 ## Summary of Key Changes
 
-<!--
-What changed and why, one bullet per change. Point reviewers at the files to read
-first. Add before and after screenshots for changes under site/. Call out any
-change to workflows, permissions, or dependencies.
--->
+<!-- What changed and why, one bullet per change; name the files to read first. -->
 
 -
 
