@@ -18,10 +18,10 @@ on:
     inputs:
       scenario:
         type: string
-        default: "decision_matrix_generation"
+        default: "bootstrap_small_tree"
       model:
         type: string
-        default: "gemini/gemini-3.5-flash"
+        default: "gemini/gemini-2.5-flash-lite"
       judge_model:
         type: string
         default: "gemini/gemini-3.1-pro-preview"
@@ -52,8 +52,8 @@ jobs:
       - name: "Run LiteLLM eval runner"
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          EVAL_SCENARIO: ${{ inputs.scenario || 'decision_matrix_generation' }}
-          EVAL_MODEL: ${{ inputs.model || 'gemini/gemini-3.5-flash' }}
+          EVAL_SCENARIO: ${{ inputs.scenario || 'bootstrap_small_tree' }}
+          EVAL_MODEL: ${{ inputs.model || 'gemini/gemini-2.5-flash-lite' }}
           EVAL_JUDGE_MODEL: ${{ inputs.judge_model || 'gemini/gemini-3.1-pro-preview' }}
         run: |
           ARGS=(--model "$EVAL_MODEL" --judge-model "$EVAL_JUDGE_MODEL")
