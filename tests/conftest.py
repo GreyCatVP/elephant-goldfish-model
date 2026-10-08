@@ -15,21 +15,12 @@
 """Shared pytest configuration and root discovery fixtures."""
 
 import pathlib
-from typing import Any, Callable, List
+from typing import List
 
-try:
-  import pytest
-  fixture = pytest.fixture
-except ImportError:
-  def fixture(*args: Any, **unused_kwargs: Any) -> Any:
-    def decorator(fn: Callable[..., Any]) -> Callable[..., Any]:
-      return fn
-    if len(args) == 1 and callable(args[0]):
-      return args[0]
-    return decorator
+import pytest
 
 
-@fixture(scope="session")
+@pytest.fixture(scope="session")
 def repo_root() -> pathlib.Path:
   """Resolves the repository root directory across repository layouts."""
   current = pathlib.Path(__file__).resolve().parent
@@ -41,7 +32,7 @@ def repo_root() -> pathlib.Path:
   return current.parent
 
 
-@fixture(scope="session")
+@pytest.fixture(scope="session")
 def skills_dir(repo_root: pathlib.Path) -> pathlib.Path:
   """Locates the skills directory dynamically."""
   direct_path = repo_root / "skills"
@@ -55,7 +46,7 @@ def skills_dir(repo_root: pathlib.Path) -> pathlib.Path:
   raise FileNotFoundError(f"Skills directory not found relative to {repo_root}")
 
 
-@fixture(scope="session")
+@pytest.fixture(scope="session")
 def discovered_skills(skills_dir: pathlib.Path) -> List[pathlib.Path]:
   """Returns all skill directory paths under the skills root."""
   skills = [

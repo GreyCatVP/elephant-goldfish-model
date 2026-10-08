@@ -24,6 +24,10 @@
 name: Deploy site
 
 on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - '.github/workflows/deploy-site.yml'
   push:
     branches: [main, feat/egm-open-source-release]
     paths:
@@ -35,7 +39,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: pages-${{ github.event.pull_request.number || 'deploy' }}
   cancel-in-progress: false
 
 defaults:
@@ -58,10 +62,12 @@ jobs:
       - run: npm run check
       - run: npm run build
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        if: github.event_name != 'pull_request'
         with:
           path: site/dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-24.04
     permissions:

@@ -355,10 +355,13 @@ def main() -> None:
         json.dumps(suite_results, indent=2), encoding="utf-8"
     )
 
+  if total_executed == 0:
+    print("Error: No scenarios matched the requested selection.", file=sys.stderr)
+    sys.exit(1)
+
   print(f"\nCompleted: {total_passed}/{total_executed} scenarios passed.")
   sys.exit(0 if all_passed else 1)
 
 
 if __name__ == "__main__":
   main()
-
