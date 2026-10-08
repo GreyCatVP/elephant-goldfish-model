@@ -14,8 +14,8 @@ description: >-
 # Review, Validation & Automated Remediation
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
-When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`.
-Bundled personas and standards resolve under `${CLAUDE_PLUGIN_ROOT}`, not the workspace.
+When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`
+and resolve bundled personas and standards under `${CLAUDE_PLUGIN_ROOT}`.
 
 Reviews and validates a design document through specialized reviewer personas.
 

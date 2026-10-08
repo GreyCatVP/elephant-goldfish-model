@@ -22,7 +22,7 @@ def frontmatter(path: Path) -> dict:
 
 @pytest.mark.parametrize("name", REVIEWERS)
 def test_reviewers_have_read_only_fresh_context(name: str) -> None:
-  path = ROOT / "agents" / f"{name}.md"
+  path = ROOT / "integrations/claude/agents" / f"{name}.md"
   config = frontmatter(path)
   assert {tool.strip() for tool in config["tools"].split(",")} == {
       "Read", "Grep", "Glob",
@@ -31,7 +31,12 @@ def test_reviewers_have_read_only_fresh_context(name: str) -> None:
   assert config["model"] == "inherit"
   assert "memory" not in config
   manifest = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
-  assert f"./agents/{name}.md" in manifest["agents"]
+  assert f"./integrations/claude/agents/{name}.md" in manifest["agents"]
+  shared = ROOT / "agents" / f"{name}.md"
+  assert config["name"] == frontmatter(shared)["name"]
+  assert f"${{CLAUDE_PLUGIN_ROOT}}/agents/{name}.md" in path.read_text()
+  for field in ("tools", "model", "omitClaudeMd", "memory"):
+    assert field not in frontmatter(shared)
 
 
 def test_orchestrators_keep_delegation_and_writing_capabilities() -> None:

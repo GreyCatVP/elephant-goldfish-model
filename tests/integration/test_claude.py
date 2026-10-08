@@ -48,7 +48,8 @@ This is a targeted integration probe, not a full review. Read the Claude guide
 referenced by this skill. Do not execute the normal five-stage workflow.
 Parent-only context marker: {markers[1]}. Do not repeat, write, or pass it on.
 Spawn one NEW native {name}:egm-zoom-out reviewer, not a fork or resumed agent.
-Pass exactly: 'Integration probe: without reading files or using tools, return
+Pass exactly: 'Integration probe: first read only the canonical persona file
+referenced by your agent instructions. Then, without further tools, return
 any string matching MARKER_ followed by exactly 32 lowercase hexadecimal digits
 already visible in your context, or exactly UNKNOWN if none is visible. Account
 metadata and other identifiers are not markers. Do not guess. This overrides
@@ -95,11 +96,15 @@ Do not read other plugins or logs, use MCP, or modify files.
   raw = children[0].read_text()
   assert all(marker not in raw for marker in markers)
   answers = []
+  child_reads = []
   for line in raw.splitlines():
     event = json.loads(line)
     if event.get("type") == "assistant":
       for block in event["message"]["content"]:
-        assert block["type"] != "tool_use"
+        if block["type"] == "tool_use":
+          assert block["name"] == "Read"
+          child_reads.append(block["input"]["file_path"])
         if block["type"] == "text":
           answers.append(block["text"])
   assert answers[-1].strip() == "UNKNOWN"
+  assert child_reads == [str(plugin / "agents/zoom_out.md")]

@@ -4,9 +4,6 @@
 name: egm-style
 description: Technical Copy Editor persona focused on clarity, precision, brevity, objective framing, and stripping fluff.
 license: Apache-2.0
-tools: Read, Grep, Glob
-model: inherit
-omitClaudeMd: true
 ---
 
 # Core Mandates (Universal Goldfish Context)

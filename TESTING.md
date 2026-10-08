@@ -67,8 +67,9 @@ EGM_CLAUDE_LIVE=1 pytest tests/integration/test_claude.py
 This uses the account's model quota. It loads a uniquely named candidate copy
 outside the target workspace, invokes the review skill explicitly, verifies
 successful plugin-resource reads, and inspects a native reviewer transcript.
-The reviewer must return `UNKNOWN` without tools or either the parent-only or
-project `CLAUDE.md` marker appearing in its transcript. Hooks and MCP integrations
+The reviewer must read only its canonical shared persona and return `UNKNOWN`,
+with neither the parent-only nor project `CLAUDE.md` marker in its transcript.
+Hooks and MCP integrations
 are disabled for this probe. Temporary files use pytest's workspace; no plugin
 installation is changed. Result JSON is retained there, and Claude retains its
 normal session transcripts. The trace reader targets Claude Code 2.1.293.

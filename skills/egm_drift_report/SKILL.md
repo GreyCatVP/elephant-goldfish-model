@@ -14,8 +14,8 @@ description: >-
 # Detect Drift In Designs and Code
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
-When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`.
-Bundled personas and standards resolve under `${CLAUDE_PLUGIN_ROOT}`, not the workspace.
+When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`
+and resolve bundled personas and standards under `${CLAUDE_PLUGIN_ROOT}`.
 
 When the user asks to detect drift across all designs or a set of READMEs, the
 goal is to identify all instances where the codebase has diverged or failed to
