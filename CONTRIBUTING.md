@@ -19,14 +19,25 @@ These general principles guide development of the EGM framework:
 *   **Living Specifications**: Code and design specifications must evolve
     together.
 
-## Contribution Tracks & Workflow
+## AI-assisted contributions
 
-All contributions must comply with our [AI & Automated Contribution Policy](AI_POLICY.md):
-every pull request requires a human author who has personally reviewed, tested,
-and can explain every line of changed code.
+We encourage using AI tools when developing changes. Purely autonomous
+contributions are not accepted.
+
+- **Human accountability**: Every pull request must have a human author who has
+  personally reviewed, tested, and verified every line of changed code, and can
+  explain the submitted change.
+- **Interactive review**: Contributors must directly defend their changes in
+  review. Copying maintainer comments into an LLM and pasting unverified model
+  responses back into review threads is prohibited.
+
+## Contribution Tracks & Workflow
 
 Contributions follow a two-track intake model defined in
 [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md):
+
+Do not artificially split a single logical feature or refactoring into smaller
+pull requests to bypass the scope limits below.
 
 ### Track 1: Bug Fix / Minor Patch (`<= 100` Non-Test Lines, `< 3` Core Files)
 Targeted fixes, typo corrections, and test additions that do not alter core

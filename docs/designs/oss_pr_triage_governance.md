@@ -69,7 +69,7 @@ punitive auto-close bots that discourage community engagement.
 ## Goals
 
 *   **Human Accountability**: Codify an explicit policy in
-    [`AI_POLICY.md`](../../AI_POLICY.md) and [`AGENTS.md`](../../AGENTS.md)
+    [`CONTRIBUTING.md`](../../CONTRIBUTING.md#ai-assisted-contributions) and [`AGENTS.md`](../../AGENTS.md)
     requiring human understanding and review of all submitted code while
     encouraging responsible AI usage.
 *   **Structured Self-Selection**: Implement a clean intake taxonomy in
@@ -208,12 +208,12 @@ The contribution architecture comprises four integrated subsystems: Governance
 Policies, Ingestion Templates, Automated Advisory Engine, and Platform Perimeter
 Hardening.
 
-### 1. Governance Policies (`AI_POLICY.md` & `AGENTS.md`)
+### 1. Governance Policies (`CONTRIBUTING.md` & `AGENTS.md`)
 
 The repository's policy layer establishes enforceable boundaries for both human
 contributors and AI coding agents:
 
-*   **[`AI_POLICY.md`](../../AI_POLICY.md)**: Establishes human-in-the-loop
+*   **[`CONTRIBUTING.md`](../../CONTRIBUTING.md#ai-assisted-contributions)**: Establishes human-in-the-loop
     accountability for AI-assisted contributions (prohibiting unreviewed
     autonomous PR creation, requiring interactive defense in review threads,
     and enforcing two-stage EGM alignment for features).
@@ -412,8 +412,8 @@ The advisory engine operates as a non-blocking GitHub Actions workflow.
 
 ### Rollout & Rollback
 
-*   **Rollout**: Land contributor policies (`AI_POLICY.md`, `AGENTS.md`,
-    `CONTRIBUTING.md`), ingestion templates (`.github/PULL_REQUEST_TEMPLATE.md`,
+*   **Rollout**: Land contributor policies (`CONTRIBUTING.md`, `AGENTS.md`),
+    ingestion templates (`.github/PULL_REQUEST_TEMPLATE.md`,
     `.github/ISSUE_TEMPLATE/feature_proposal.md`), and the non-blocking scope
     advisory workflow (`.github/workflows/pr-scope-advisory.yml`) together,
     alongside creating the repository triage labels and enabling outside
