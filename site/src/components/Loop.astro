@@ -39,7 +39,11 @@ const steps = [
         ))
       }
       <li class="step">
-        <span class="badge badge-large" aria-hidden="true">&rarr;</span>
+        <span class="badge badge-large" aria-hidden="true">
+          <svg viewBox="0 -960 960 960">
+            <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"></path>
+          </svg>
+        </span>
         <h3 class="title">Build the code</h3>
         <span class="no-skill">No skill needed</span>
         <p class="muted">
@@ -132,6 +136,7 @@ const steps = [
     color: var(--md-sys-color-on-surface);
   }
 
+  .step :global(.badge) > svg,
   .marker > svg {
     inline-size: 16px;
     block-size: 16px;
