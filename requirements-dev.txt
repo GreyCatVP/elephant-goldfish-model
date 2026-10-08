@@ -15,4 +15,5 @@
 # Development and testing dependencies for EGM Open Source
 pytest>=7.4.0
 pyyaml>=6.0.1
+jsonschema>=4.18.0
 litellm>=1.0.0
