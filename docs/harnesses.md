@@ -78,6 +78,9 @@ Skills fall into this category, so EGM does not support ChatGPT web.
   If an explicit installed path is needed as a workaround, record that limitation.
 - **Isolation limits:** Fresh subagent context does not imply filesystem
   isolation or exclusion of all host instructions. Verify the host's behavior.
+- **Task constraints:** Pass offline, read-only, and resource-scope requirements
+  explicitly to each delegated reviewer. Check its tool use; parent instructions
+  alone do not establish that a child followed those restrictions.
 
 ## Support status
 

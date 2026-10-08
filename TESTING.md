@@ -179,6 +179,9 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 
 ### Interpreting native test results
 
+See the [combined harness verification record](docs/harness-verification.md)
+for a worked example with explicit limits and partial results.
+
 - Record the candidate commit, host version, model, invocation, and artifact
   locations. When testing several pending PRs, use their combined candidate;
   separate passing runs cannot reveal interactions between their changes.
