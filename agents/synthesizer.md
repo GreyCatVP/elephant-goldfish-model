@@ -31,6 +31,7 @@ Inspect the `Mode` parameter specified by the caller (`Mode: BRAINSTORM` vs `Mod
 ### IF Mode: BRAINSTORM (Upstream Concept Ideation)
 1. **Subagent Spawning**: Launch the parallel Goldfish swarm across the 6 specialized lenses (`design_critic`, `codebase_details`, `zoom_out`, `comprehension`, `implementation_readiness`, `structural`), passing `Mode: BRAINSTORM` and `FeatureConcept: [FeatureConcept]`. Set role titles ending in `-Brainstormer` (e.g., `Skeptical Architect Brainstormer`, `UX & Ergonomics Brainstormer`).
 2. **Aggregate & Synthesize Concept Brief**: Collect findings from all 6 Goldfish, deduplicate overlapping points, and compile them into `concepts_brief.md`.
+   End the brief with a `## Dropped Findings` section: every Goldfish point you merged, down-ranked, or left out, one line each, with the reason. The human decides what was safe to drop, not the compiler.
 3. **Write Deliverable**: Write the synthesized brief to `concepts_brief.md` using your file-writing tool.
 4. **Notify Elephant**: Send a completion message to the Elephant with the `concepts_brief.md` path.
 
@@ -54,7 +55,12 @@ Inspect the `Mode` parameter specified by the caller (`Mode: BRAINSTORM` vs `Mod
    * **Affected Scope:** `[Lines Start-End]` (or section header)
    * **Discrepancy Description**: [Precise technical, structural, or clarity gap.]
    * **Rationale & Recommendation**: [Concise, objective reason and guidance.]
+
+   ## Dropped Findings
+   * `[agent-shortname]`: [One-line finding] - [why it was merged, down-ranked, or excluded]
    ```
+
+   The `Dropped Findings` section is mandatory. Write `None` if nothing was dropped. Compression hides the most dangerous mistakes, so the owner reviews what you left out before reading what you kept.
 
 4. **Write Artifact**: Write findings to `goldfish_review_report.md` using your file-writing tool.
 5. **Notify Elephant**: Send a completion message to the Elephant summarizing severity breakdown and artifact link.

@@ -40,12 +40,14 @@ Audit the target document file and line range specified by the caller:
 2. **Compare against Blueprint**: Compare the extracted structure of the target scope against the mandatory headers and structure defined in the Target Standard.
 3. **Verify Hierarchy**: Ensure that heading levels are nested logically and sequentially (e.g., do not skip from H1 directly to H3; ensure H2s are used for main sections under H1).
 4. **Audit Formatting Rules**: Verify that lists, tables, code blocks, and links within the target scope adhere to the formatting rules defined in the standard.
+5. **Check Cross-Section Consistency**: Read the whole target scope once more and list every place it contradicts itself (a goal the non-goals exclude, a number that differs between sections, a component the architecture names but the plan never builds). Cite both locations for each contradiction.
 
 ### Audit Vectors:
 * **Missing Required Headers**: Mandatory sections defined in the Target Standard that are missing or misspelled in the target scope.
 * **Header Hierarchy Violations**: Skipped heading levels (e.g., `# Header` followed immediately by `### Sub-header`) or out-of-order sections.
 * **Formatting Violations**: Malformed Markdown syntax, such as broken table borders, inconsistent bullet points, or unclosed code blocks.
 * **Link Compliance Gaps**: Ensuring all links conform to the expected pattern (e.g., valid URLs or required link text styles).
+* **Internal Contradictions**: Two sections of the document that cannot both be true. Unedited AI drafts almost always contain some; report each as Major with both locations cited.
 
 ---
 
