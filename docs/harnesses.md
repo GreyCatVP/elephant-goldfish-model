@@ -25,6 +25,17 @@ break EGM, because the skills read `agents/` and
 
 ## Manifests
 
+Root `plugin.json` is the canonical source for plugin identity, version,
+description, and publisher metadata. It declares the portable Agent Plugins
+1.0.0 schema. Update shared values there first, then update the compatibility
+manifests; unit tests reject metadata drift. Keep platform-specific fields in
+their existing manifests until installation tests justify removing them.
+
+Marketplace files are discovery catalogs pointing to this package, not copies
+of its skills. In particular, `.agents/plugins/` contains the Codex catalog,
+while `agents/` contains reviewer personas. All hosts share the same `skills/`,
+`agents/`, and `resources/` content.
+
 | Harness | Manifest | Skills | Subagents |
 | --- | --- | --- | --- |
 | Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Listed file by file in `plugin.json` `agents` |
