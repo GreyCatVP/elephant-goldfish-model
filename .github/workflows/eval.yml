@@ -13,41 +13,33 @@
 # limitations under the License.
 
 name: "Harness & LLM Evaluation"
-
 on:
-  schedule:
-    - cron: "0 9 * * *"
-  pull_request:
-    paths:
-      - ".github/workflows/eval.yml"
-      - "tools/eval_runner.py"
-      - "skills/**"
-      - "agents/**"
-      - "tests/evals/**"
   workflow_dispatch:
     inputs:
       scenario:
         type: string
-        default: "polymorphic_intake_concepts_brief"
-        description: "Scenario ID to run (e.g. polymorphic_intake_concepts_brief, or all)"
+        default: "bootstrap_small_tree"
       model:
         type: string
         default: "gemini/gemini-3.5-flash"
-        description: "LiteLLM model identifier"
       judge_model:
         type: string
         default: "gemini/gemini-3.1-pro-preview"
-        description: "LiteLLM judge model identifier"
       run_claude_vertex:
         type: boolean
-        default: false
-        description: "Run Claude Sonnet 5.5 Vertex AI job on self-hosted runner"
+        default: true
+  pull_request:
+    paths:
+      - ".github/workflows/eval.yml"
+      - "tools/eval_runner.py"
+      - "tests/evals/**"
+
 permissions:
   contents: read
 jobs:
   eval-gemini:
     name: "Evaluate Gemini (LiteLLM)"
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -60,7 +52,7 @@ jobs:
       - name: "Run LiteLLM eval runner"
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          EVAL_SCENARIO: ${{ inputs.scenario || 'polymorphic_intake_concepts_brief' }}
+          EVAL_SCENARIO: ${{ inputs.scenario || 'bootstrap_small_tree' }}
           EVAL_MODEL: ${{ inputs.model || 'gemini/gemini-3.5-flash' }}
           EVAL_JUDGE_MODEL: ${{ inputs.judge_model || 'gemini/gemini-3.1-pro-preview' }}
         run: |
@@ -70,7 +62,7 @@ jobs:
 
   smoke-openai-compat:
     name: "Smoke Test OpenAI Compatibility"
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -82,9 +74,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           BASE_URL="${OPENAI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai}"
-          curl -sS --fail-with-body -X POST "${BASE_URL%/}/chat/completions" \
-            -H "Authorization: Bearer $OPENAI_API_KEY" -H "Content-Type: application/json" \
-            -d '{"model":"gemini-3.5-flash","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
+          curl -sS --fail-with-body -X POST "${BASE_URL%/}/chat/completions" -H "Authorization: Bearer $OPENAI_API_KEY"             -H "Content-Type: application/json" -d '{"model":"gemini-3.5-flash","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
           jq -e '.name == "egm"' .codex-plugin/plugin.json
           jq -e '.name == "elephant-goldfish-model" and any(.plugins[]; .name == "egm")' .agents/plugins/marketplace.json
 
@@ -104,7 +94,5 @@ jobs:
           ANTHROPIC_MODEL: "claude-sonnet-5-5@default"
         run: |
           TOKEN=$(curl -sf -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token" | jq -r .access_token)
-          curl -sS --fail-with-body -X POST "https://aiplatform.googleapis.com/v1/projects/airrt-team/locations/global/publishers/anthropic/models/claude-sonnet-5-5:rawPredict" \
-            -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
-            -d '{"anthropic_version":"vertex-2023-10-16","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
+          curl -sS --fail-with-body -X POST "https://aiplatform.googleapis.com/v1/projects/airrt-team/locations/global/publishers/anthropic/models/claude-sonnet-5-5:rawPredict"             -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"anthropic_version":"vertex-2023-10-16","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
           claude -p "ping"
