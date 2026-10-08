@@ -13,8 +13,6 @@ SPDX-License-Identifier: Apache-2.0
 
 ## Overview
 
-![EGM Drift Detection Protocol](../../assets/egm-drift-report.png)
-
 The **EGM Drift Detection Skill** (`/egm-drift-report`) audits checked-in design
 documents under `docs/designs/` and package `README.md` hierarchies against
 source code to identify and report architectural divergence.
@@ -128,5 +126,4 @@ The drift detection skill is implemented across the following files:
 ## References
 
 *   Dave Rensin, [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874) (Medium, 2026).
-
 

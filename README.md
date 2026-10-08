@@ -12,8 +12,6 @@ Elephant & Goldfish Model is an open-source framework and methodology for Spec-D
 
 It anchors development in context-rich system descriptions and adversarial multi-agent reviews, making complex codebases easier for both humans and AI to navigate, verify, and evolve.
 
-![Elephant & Goldfish Model Overview](assets/heroes.png)
-
 ---
 
 ## Philosophy
@@ -35,7 +33,6 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 ```
 ├── agents/                       # Stateless reviewer and orchestrator persona prompts
-├── assets/                       # Branding assets and diagrams
 ├── docs/                         # Documentation, guides, and FAQ
 │   └── designs/                  # Living technical design specifications
 ├── resources/
