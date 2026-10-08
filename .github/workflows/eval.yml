@@ -15,12 +15,21 @@
 name: "Harness & LLM Evaluation"
 
 on:
+  schedule:
+    - cron: "0 9 * * *"
+  pull_request:
+    paths:
+      - ".github/workflows/eval.yml"
+      - "tools/eval_runner.py"
+      - "skills/**"
+      - "agents/**"
+      - "tests/evals/**"
   workflow_dispatch:
     inputs:
       scenario:
         type: string
-        default: "s1"
-        description: "Scenario ID to run (e.g. s1, or all)"
+        default: "polymorphic_intake_concepts_brief"
+        description: "Scenario ID to run (e.g. polymorphic_intake_concepts_brief, or all)"
       model:
         type: string
         default: "gemini/gemini-3.5-flash"
@@ -31,13 +40,14 @@ on:
         description: "LiteLLM judge model identifier"
       run_claude_vertex:
         type: boolean
-        default: true
+        default: false
         description: "Run Claude Sonnet 5.5 Vertex AI job on self-hosted runner"
 permissions:
   contents: read
 jobs:
   eval-gemini:
     name: "Evaluate Gemini (LiteLLM)"
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -50,9 +60,9 @@ jobs:
       - name: "Run LiteLLM eval runner"
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          EVAL_SCENARIO: ${{ inputs.scenario }}
-          EVAL_MODEL: ${{ inputs.model }}
-          EVAL_JUDGE_MODEL: ${{ inputs.judge_model }}
+          EVAL_SCENARIO: ${{ inputs.scenario || 'polymorphic_intake_concepts_brief' }}
+          EVAL_MODEL: ${{ inputs.model || 'gemini/gemini-3.5-flash' }}
+          EVAL_JUDGE_MODEL: ${{ inputs.judge_model || 'gemini/gemini-3.1-pro-preview' }}
         run: |
           ARGS=(--model "$EVAL_MODEL" --judge-model "$EVAL_JUDGE_MODEL")
           [ -n "$EVAL_SCENARIO" ] && [ "$EVAL_SCENARIO" != "all" ] && ARGS+=(--scenario "$EVAL_SCENARIO")
@@ -60,6 +70,7 @@ jobs:
 
   smoke-openai-compat:
     name: "Smoke Test OpenAI Compatibility"
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -79,7 +90,7 @@ jobs:
 
   eval-claude-vertex:
     name: "Evaluate Claude Sonnet 5.5 on Vertex AI"
-    if: ${{ inputs.run_claude_vertex }}
+    if: github.event_name == 'workflow_dispatch' && inputs.run_claude_vertex
     runs-on: [self-hosted, airrt-vertex]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
