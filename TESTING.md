@@ -34,10 +34,11 @@ pip install -r requirements-dev.txt
 
 ## 2. Tier 1: Offline Static Unit Tests
 
-Tier 1 tests run offline without network access, API keys, or model
-dependencies. They validate YAML frontmatter schemas and relative link
-integrity, the portable plugin manifest, shared metadata consistency, and
-marketplace/component paths.
+After installing the development dependencies, Tier 1 tests run offline without
+network access, API keys, or model downloads. They validate YAML frontmatter
+schemas and relative link integrity, the portable plugin manifest, shared
+metadata consistency, marketplace/component paths, and evaluation behavior.
+Retry tests exercise LiteLLM with simulated provider responses.
 
 ```bash
 # Run all unit tests
