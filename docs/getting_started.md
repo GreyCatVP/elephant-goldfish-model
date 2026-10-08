@@ -90,12 +90,11 @@ The "core" workflow looks like:
 
 ## Drift Detection
 
-To ensure that your design specifications and active codebase remain
-synchronized over time, EGM provides a drift detection skill:
+Use the drift detection skill to keep design specifications and the active codebase synchronized:
 
 *   **`/egm-drift-report`**: Scan your design directory and referenced code for
-    drift. Any detected divergence should be reconciled. Either update the doc,
-    or the code. Human picks which.
+    drift. Reconcile any detected divergence by updating either the document or
+    the code.
 
 We recommend running this once per week. If you have a regular maintenance
 rotation, incorporating this as a weekly ritual is useful.
@@ -150,5 +149,5 @@ This skill can be a handy way to give LLMs references to code paths, documents,
 and important designs quickly.
 
 As your codebase grows and more design documents are archived, this context
-loader allows the Elephant to retrieve relevant architectural history, enabling
-more informed design discussions and precise feature implementations.
+loader gives the Elephant direct access to architectural history during design
+and implementation.
