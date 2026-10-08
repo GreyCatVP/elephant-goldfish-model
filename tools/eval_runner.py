@@ -120,7 +120,9 @@ def parse_judge_response(judge_text: Optional[str]) -> Tuple[bool, List[str]]:
     judge_json = json.loads(json_str)
     if not isinstance(judge_json, dict):
       return False, [f"Judge JSON did not parse as a dictionary: {json_str}"]
-    passed = bool(judge_json.get("passed", False))
+    passed = judge_json.get("passed")
+    if not isinstance(passed, bool):
+      return False, ["Judge 'passed' field must be a JSON boolean."]
     reason = judge_json.get("reason")
     if not reason:
       reason = (
@@ -361,4 +363,3 @@ def main() -> None:
 
 if __name__ == "__main__":
   main()
-

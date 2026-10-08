@@ -14,8 +14,11 @@
 
 """Unit tests for evaluation runner assertion and parsing utilities."""
 
+import json
 import pathlib
 import sys
+
+import pytest
 
 # Add tools to sys.path
 sys.path.insert(
@@ -117,6 +120,31 @@ def test_parse_judge_response_clean_json() -> None:
   assert not passed
   assert len(errors) == 1
   assert "Failed invariant." in errors[0]
+
+
+@pytest.mark.parametrize("value", ["false", "true", "", 0, 1, None, [], [1]])
+@pytest.mark.parametrize("fenced", [False, True])
+def test_parse_judge_response_rejects_non_boolean_verdicts(
+    value: object, fenced: bool,
+) -> None:
+  """Malformed verdicts must not be coerced to passing evaluations."""
+  response = json.dumps({"passed": value, "reason": "Judge explanation."})
+  if fenced:
+    response = f"```json\n{response}\n```"
+  passed, errors = parse_judge_response(response)
+  assert passed is False
+  assert errors == ["Judge 'passed' field must be a JSON boolean."]
+
+
+@pytest.mark.parametrize("fenced", [False, True])
+def test_parse_judge_response_requires_verdict(fenced: bool) -> None:
+  """A missing verdict is a schema error, not a valid negative verdict."""
+  response = '{"reason": "No verdict supplied."}'
+  if fenced:
+    response = f"```json\n{response}\n```"
+  passed, errors = parse_judge_response(response)
+  assert passed is False
+  assert errors == ["Judge 'passed' field must be a JSON boolean."]
 
 
 def test_parse_judge_response_markdown_code_blocks() -> None:
