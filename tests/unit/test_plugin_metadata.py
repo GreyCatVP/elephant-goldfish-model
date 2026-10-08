@@ -4,6 +4,7 @@
 """Offline packaging contracts for the shared plugin and host manifests."""
 
 import json
+import re
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -65,5 +66,18 @@ def test_compatibility_agents_resolve_shared_personas() -> None:
   paths = read_json(".claude-plugin/plugin.json")["agents"]
   resolved = [(ROOT / path).resolve() for path in paths]
   assert len(resolved) == len(set(resolved))
-  assert set(resolved) == set((ROOT / "agents").glob("*.md"))
   assert all(path.is_file() for path in resolved)
+  canonical = []
+  for path in resolved:
+    if path.parent == ROOT / "agents":
+      canonical.append(path)
+    else:
+      assert path.parent == ROOT / "integrations/claude/agents"
+      references = re.findall(
+          r"\$\{CLAUDE_PLUGIN_ROOT\}/(agents/[\w-]+\.md)",
+          path.read_text(encoding="utf-8"),
+      )
+      assert len(references) == 1
+      canonical.append(ROOT / references[0])
+  assert len(canonical) == len(set(canonical))
+  assert set(canonical) == set((ROOT / "agents").glob("*.md"))
