@@ -31,11 +31,9 @@ versions, interactive UI behavior, or nested delegation.
   capability detection instead of promising a particular tool name.
 - `tests/unit/test_codex_packaging.py` validates the marketplace-to-manifest
   path, skill identities, bundled persona/template references, and access to
-  the shared Codex guide. `tests/unit/test_codex_evidence.py` rejects missing
-  reviewer events, inherited context, and failed resource reads. Existing
-  offline CI discovers these tests.
+  the shared Codex guide. Existing offline CI discovers these tests.
 - `tests/integration/test_codex.py` installs a copied candidate under a unique
-  temporary marketplace name, checks installed bytes, and removes that
+  temporary marketplace name and removes that
   installation afterward. It uses normal Codex authentication without copying
   credentials or replacing the user's EGM installation.
 - The native isolation scenario puts a random marker only in the parent's

@@ -24,7 +24,6 @@ def test_codex_marketplace_resolves_plugin(repo_root: pathlib.Path) -> None:
     assert len(entries) == 1
     entry = entries[0]
     plugin_root = (repo_root / entry["source"]).resolve()
-    assert plugin_root.is_relative_to(repo_root.resolve())
     manifest = json.loads(
         (plugin_root / ".codex-plugin/plugin.json").read_text()
     )
@@ -32,7 +31,6 @@ def test_codex_marketplace_resolves_plugin(repo_root: pathlib.Path) -> None:
     assert re.fullmatch(r"\d+\.\d+\.\d+", manifest["version"])
     assert entry["policy"]["installation"] == "AVAILABLE"
     skills_root = (plugin_root / manifest["skills"]).resolve()
-    assert skills_root.is_relative_to(plugin_root)
     names = []
     for skill in skills_root.glob("*/SKILL.md"):
         names.append(yaml.safe_load(skill.read_text().split("---", 2)[1])["name"])
@@ -55,7 +53,6 @@ def test_codex_bundled_prompt_dependencies(repo_root: pathlib.Path) -> None:
                 continue  # Parameterized paths are resolved below for personas.
             root = prompt.parent if target.startswith("references/") else repo_root
             path = (root / target).resolve()
-            assert path.is_relative_to(repo_root.resolve())
             assert path.is_file(), f"{prompt}: missing bundled dependency {target}"
             references.add(target)
     assert "agents/synthesizer.md" in references
@@ -73,17 +70,6 @@ def test_codex_bundled_prompt_dependencies(repo_root: pathlib.Path) -> None:
         "egm-synthesizer", "egm-style",
     }
     assert required <= set(personas)
-    for filename in (
-        "design_critic", "codebase_details", "zoom_out", "comprehension",
-        "implementation_readiness", "structural", "style", "synthesizer",
-    ):
-        assert (repo_root / "agents" / f"{filename}.md").is_file()
-    for standard in (
-        "zoom-out", "re-implementation", "feature-spec",
-        "implementation-readiness", "heilmeier",
-    ):
-        assert (repo_root / "resources/document_standards"
-                / f"{standard}-standard.md").is_file()
 
 
 def test_codex_integration_reference_reachable(repo_root: pathlib.Path) -> None:

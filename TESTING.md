@@ -178,12 +178,11 @@ several minutes:
 EGM_CODEX_LIVE=1 pytest tests/integration/test_codex.py -v
 ```
 
-Set `EGM_CODEX_MODEL` to select a model available to your account; otherwise
-the CLI default is used. Each scenario has a 20-minute timeout. Without
-`EGM_CODEX_LIVE=1`, integration tests skip before installing or invoking Codex.
+Each scenario has a 20-minute timeout. Without `EGM_CODEX_LIVE=1`, integration
+tests skip before installing or invoking Codex.
 
 The fixture installs the current candidate through a uniquely named local
-marketplace, checks the installed copy, and removes that temporary plugin and
+marketplace and removes that temporary plugin and
 marketplace afterward. It leaves existing EGM installations intact. It ignores
 user configuration and disables unrelated remote plugins, hooks, and memories
 for the model run, while using normal CLI authentication. Do not run concurrent
@@ -195,18 +194,8 @@ brainstorm and draft artifacts, five review reports, and native reviewer
 completion. Its synthetic user explicitly approves all fixture gates; it does
 not verify interactive question UI or human approval behavior.
 
-JSONL traces and stderr are retained in pytest's temporary directory, beside
-the scenario workspace. Codex also retains its normal session trace. These
-contain synthetic project content and should not be committed. If a run is
-forcibly killed before teardown, remove only its `egm@egm-test-...` plugin and
-matching marketplace using `codex plugin remove` and
-`codex plugin marketplace remove`.
-
-The native evidence reader targets the retained `SubAgentActivity` and
-`CommandExecution` trace schema observed in Codex CLI 0.161.0. It checks
-explicit no-inheritance spawn arguments, completed child turns, and successful
-reads of installed skills, personas, standards, and the target design. Unknown
-trace layouts fail rather than accepting a parent's completion claim.
+Traces stay in pytest's tmp dir; see `tests/integration/test_codex.py` for what
+is checked.
 
 ## 8. Harness Test Record
 
