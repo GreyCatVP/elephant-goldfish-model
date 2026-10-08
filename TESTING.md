@@ -3,14 +3,15 @@ Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
 -->
 
-# EGM Testing & Behavioral Evaluation Playbook
+# Testing
 
 This document provides a step-by-step developer playbook for running both
-unit tests and LiteLLM-driven evals evaluations across the EGM skill suite.
+Tier 1 static unit tests and Tier 2 LiteLLM-driven behavioral evaluations across
+the Elephant & Goldfish Model (EGM) skill suite.
 
 ---
 
-## Setup
+## 1. Environment Prerequisites & Setup
 
 ### A. Python Environment Setup
 Create and activate an isolated Python 3.10+ virtual environment:
@@ -31,9 +32,9 @@ pip install -r requirements-dev.txt
 
 ---
 
-## Unit Tests
+## 2. Tier 1: Offline Static Unit Tests
 
-Unit tests run offline without network access, API keys, or model
+Tier 1 tests run offline without network access, API keys, or model
 dependencies. They validate YAML frontmatter schemas and relative link
 integrity.
 
@@ -51,12 +52,12 @@ pytest tests/unit/test_link_integrity.py -v
 
 ---
 
-## LiteLLM Evals
+## 3. Tier 2: LiteLLM Behavioral Evaluation Flow
 
-Evaluations execute conversational scenarios against model endpoints
+Tier 2 evaluations execute conversational scenarios against real model endpoints
 using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
 
-### Testing with Gemini
+### Option A: Testing with Google Gemini (Recommended)
 
 1. **Obtain API Key**:
    - Go to [Google AI Studio](https://aistudio.google.com/apikey).
@@ -71,14 +72,14 @@ using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
 3. **Run the Full Behavioral Suite (All Skills)**:
    ```bash
    # Discovers and runs all test_scenarios.yaml suites across all skill packages
-   python tools/eval_runner.py --model gemini/gemini-2.5-flash
+   python tools/eval_runner.py --model gemini/gemini-3.8-flash
    ```
 
 4. **Run an Individual Skill**:
    ```bash
    python tools/eval_runner.py \
      --skill egm_draft \
-     --model gemini/gemini-2.5-flash
+     --model gemini/gemini-3.8-flash
    ```
 
 5. **Run a Single Targeted Scenario**:
@@ -86,7 +87,7 @@ using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
    python tools/eval_runner.py \
      --skill egm_draft \
      --scenario draft_and_write_design_doc \
-     --model gemini/gemini-2.5-flash
+     --model gemini/gemini-3.8-flash
    ```
 
 6. **Run with a Dedicated LLM Judge**:
@@ -96,30 +97,37 @@ using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
    python tools/eval_runner.py \
      --skill egm_review \
      --scenario comprehension_auditor_undefined_jargon \
-     --model gemini/gemini-2.5-flash \
-     --judge-model gemini/gemini-2.5-pro
+     --model gemini/gemini-3.8-flash \
+     --judge-model gemini/gemini-3.1-pro-preview
    ```
 
 ---
 
-### Testing with Local Models
+### Testing with Local Gemma
 
-If you want to test without cloud API keys, you can run a local model using
-Ollama:
+Use Gemma 4 12B locally without cloud API keys.
 
-1. **Start Ollama** (in a separate terminal):
+1. **Start Ollama** (in a separate terminal, unless the Ollama app is already running):
    ```bash
-   ollama run llama3
+   ollama serve
    ```
 
-2. **Execute Evaluation Across All Skills or a Single Skill**:
+2. **Download the Model**:
+   ```bash
+   ollama pull gemma4:12b
+   ```
+
+3. **Execute Evaluation Across All Skills or a Single Skill**:
    ```bash
    # Run all skills against local model
-   python tools/eval_runner.py --model ollama/llama3
+   python tools/eval_runner.py --model ollama_chat/gemma4:12b
 
    # Run a single skill against local model
-   python tools/eval_runner.py --skill egm_draft --model ollama/llama3
+   python tools/eval_runner.py --skill egm_draft --model ollama_chat/gemma4:12b
    ```
+
+   The `ollama_chat/` prefix uses LiteLLM's
+   [Ollama chat integration](https://docs.litellm.ai/docs/providers/ollama).
 
 ---
 
@@ -166,10 +174,12 @@ The report records:
 
 A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 `/egm-review` run end to end through its plugin install (see
-[Harnesses](docs/harnesses.md)). Contributors adding support for other
-harnesses should add a row for each verification run.
+[Harnesses](docs/harnesses.md)). Add a row for each run.
 
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Antigravity | | | Not run | | | | |
+| Claude Code | | | Not run | | | | |
+| OpenAI Codex | | | Not run | | | | |
+| Cursor | | | Not run | | | | |
 | Gemini CLI | | | Not run | | | | |
+| Antigravity | | | Not run | | | | |
