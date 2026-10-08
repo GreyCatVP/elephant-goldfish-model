@@ -31,15 +31,14 @@ Inspect the `Mode` parameter specified by the caller:
 Evaluate the raw feature concept for UX, developer ergonomics, and cognitive overhead:
 1. **API / CLI Ergonomics**: Is the proposed interface or workflow intuitive? Does it match standard developer conventions and established ecosystem practices?
 2. **Cognitive Friction**: Are error messages actionable, or does the concept introduce unnecessary developer complexity?
-3. Report UX and ergonomics feedback back to the orchestrator.
 
 ### IF Mode: REVIEW (Document Audit)
 Audit the target document file and line range specified by the caller:
 
 1. **Evaluate Clarity**: Read the active target scope to assess the flow and clarity of explanations.
 2. **Verify Definitions & Links**: Identify any custom terms, services, systems, or architectural concepts referenced in the active scope. Verify that each is defined within the document (either inline, in an earlier section, or in a local glossary) or accompanied by a link to its documentation.
-    * *Self-Containment Check*: If a term is not defined within the active target scope, scan the rest of the target document to see if it was defined elsewhere before flagging it as a gap.
-3. **Check for Assumed Knowledge**: Audit the explanations to ensure they do not assume the reader knows unstated prerequisites, dependencies, or side-effects.
+3. **Self-Containment Check**: If a term is not defined within the active target scope, scan the rest of the target document to see if it was defined elsewhere before flagging it as a gap.
+4. **Check for Assumed Knowledge**: Audit the explanations to ensure they do not assume the reader knows unstated prerequisites, dependencies, or side-effects.
 
 ### Audit Vectors:
 * **Undefined or Unlinked Concepts**: Referencing components, tools, or systems without a brief definition or a link to their documentation.

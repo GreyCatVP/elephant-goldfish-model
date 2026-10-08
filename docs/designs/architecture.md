@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 
 *   **Authors:** Jim Quinn ([@quinnjim](https://github.com/quinnjim)), Elise Ewing ([@eewing314](https://github.com/eewing314)), Dave Rensin ([@drensin](https://github.com/drensin))
 *   **Status:** Current
-*   **Date:** 2026-08-20
+*   **Date:** 2026-06-06
 
 --------------------------------------------------------------------------------
 
@@ -161,7 +161,8 @@ sequenceDiagram
 ### Phase 5: Implementation & Drift Monitoring
 
 *   **Execution**: Coding agents implement code strictly adhering to the
-    approved design document.
+    approved design document. (No Skill.md is required here because the design 
+    document is complete and detailed.)
 *   **Maintenance**: `/egm-drift-report` is run periodically (e.g. weekly) to
     detect divergence between codebase implementations and checked-in design docs.
 

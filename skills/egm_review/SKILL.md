@@ -18,9 +18,8 @@ Reviews and validates a design document through specialized reviewer personas.
 ## Delegation
 
 A Goldfish runs in a fresh context with no conversation history. Spawn each
-subagent with your harness's subagent tool (Claude Code: Task tool; Codex:
-`spawn_agent`; Cursor and Gemini CLI: subagents; Antigravity:
-`invoke_subagent`). Each subagent is defined in `agents/<file>.md`, and its
+subagent with your harness's subagent tool (Antigravity: `invoke_subagent`;
+Gemini CLI: subagents). Each subagent is defined in `agents/<file>.md`, and its
 frontmatter `name` (for example `egm-zoom-out`) is the subagent type to request
 where your harness registers named subagents. Otherwise spawn a general-purpose
 subagent and tell it to read that persona file first. Pass the prompt verbatim
@@ -144,13 +143,13 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 
 3.  **Action Dispatch Based on Preset**:
 
-    *   **Preset 0: `Interactive review with all review rubrics`**: Proceed to
+    *   **Preset 0: `Consolidated report with all review rubrics`**: Proceed to
+        Step 3 to discover the semantic split, then execute Stages 5, 6, 
+        7, 8, and 9 without pausing for checkpoints, consolidating findings into
+        `consolidated_review_report.md`.
+    *   **Preset 1: `Interactive review with all review rubrics`**: Proceed to
         Step 3 to discover the semantic split, then execute Stages 5, 6, 7, 8,
         and 9 sequentially with interactive checkpoint gates between stages.
-    *   **Preset 1: `Consolidated report with all review rubrics`**: Proceed to
-        Step 3 to discover the semantic split, then execute all five stages
-        without pausing for checkpoints, consolidating findings into
-        `consolidated_review_report.md`.
     *   **Preset 2: `Feature spec only`**: **Bypass Step 3 semantic split
         discovery entirely**. Set `FeatureRange = 1..End`, set `DetailedRange =
         N/A`, and execute Stages 5, 6, 7, and 8 with checkpoints. Cleanly halt

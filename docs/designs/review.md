@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 
 *   **Authors:** Brandon Tearse ([@tearseb](https://github.com/tearseb)), Brian Suchy ([@briansuchy](https://github.com/briansuchy)), Sean Stappas ([@seanstappas](https://github.com/seanstappas))
 *   **Status:** Current
-*   **Date:** 2026-08-25
+*   **Date:** 2026-06-10
 
 --------------------------------------------------------------------------------
 

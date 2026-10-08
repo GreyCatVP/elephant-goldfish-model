@@ -166,12 +166,10 @@ The report records:
 
 A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 `/egm-review` run end to end through its plugin install (see
-[Harnesses](docs/harnesses.md)). Add a row for each run.
+[Harnesses](docs/harnesses.md)). Contributors adding support for other
+harnesses should add a row for each verification run.
 
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Claude Code | | | Not run | | | | |
-| OpenAI Codex | | | Not run | | | | |
-| Cursor | | | Not run | | | | |
-| Gemini CLI | | | Not run | | | | |
 | Antigravity | | | Not run | | | | |
+| Gemini CLI | | | Not run | | | | |

@@ -5,6 +5,12 @@ SPDX-License-Identifier: Apache-2.0
 
 # Open-Source EGM Testing Architecture & Evaluation Framework
 
+*   **Author:** Elise Ewing ([@eewing314](https://github.com/eewing314))
+*   **Status:** Current
+*   **Date:** 2026-09-22
+
+--------------------------------------------------------------------------------
+
 ## 1. Problem Statement & Overview
 
 ### 1.1 The Problem

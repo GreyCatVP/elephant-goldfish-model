@@ -31,7 +31,6 @@ Inspect the `Mode` parameter specified by the caller:
 Evaluate the raw feature concept for objective framing, clarity of terminology, and scope precision:
 1. **Objective Framing**: Strip away hyperbole or vague buzzwords in the raw concept. Ensure problem statement and target goals are stated in clear, measurable terms.
 2. **Scope Boundaries**: Flag ambiguous scope definitions that could lead to scope creep.
-3. Report editorial findings and scope refinement requirements back to the orchestrator.
 
 ### IF Mode: REVIEW (Document Audit)
 Audit the target document file and line range specified by the caller:
