@@ -62,6 +62,23 @@ A Goldfish review needs a fresh context. If a harness has no subagent tool,
 the review skills stop instead of running in the same context. ChatGPT web
 Skills fall into this category, so EGM does not support ChatGPT web.
 
+## Common pitfalls
+
+- **Testing the wrong copy:** An existing installation can take precedence over
+  a local candidate. Use a uniquely named test plugin where supported and
+  verify the paths actually read by the agent.
+- **Incomplete installation:** Keep the whole bundle together. Skills need
+  personas, reference files, and document standards; copying only skill files
+  is insufficient.
+- **Discovery versus invocation:** Skills with `disable-model-invocation: true`
+  may be absent from automatic discovery. Invoke them explicitly using the
+  host's command syntax before concluding that installation failed.
+- **Resource lookup:** Resolve bundled files from the installed plugin, and
+  keep generated artifacts in the user's project. Do not guess cache versions.
+  If an explicit installed path is needed as a workaround, record that limitation.
+- **Isolation limits:** Fresh subagent context does not imply filesystem
+  isolation or exclusion of all host instructions. Verify the host's behavior.
+
 ## Support status
 
 A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
