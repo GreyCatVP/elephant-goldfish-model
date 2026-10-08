@@ -23,7 +23,7 @@ In your project's agent session, run one step at a time:
 3. Run `/egm-review docs/designs/csv-export.md`, using the actual draft path. Review the findings and work through proposed changes with `/egm-resolve`.
 4. Have a person review the design before implementing it. AI review findings are input to that decision, not proof that the design is correct.
 
-Command names can vary by tool. In Claude Code, use the plugin prefix, for example `/egm:egm-brainstorm` and `/egm:egm-review docs/designs/csv-export.md`.
+Command names can vary by tool; check your harness's plugin documentation for its prefix.
 
 See [Getting started](docs/getting_started.md) for the full workflow. Installation alone does not establish support: the [harness guide](docs/harnesses.md#support-status) defines the required end-to-end checks, and [Testing](TESTING.md) explains how to run evaluations.
 

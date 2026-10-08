@@ -35,8 +35,8 @@ depend on the bundled personas and document standards. Review workflows need
 a tool that can start fresh subagents; see [delegation](harnesses.md#delegation).
 
 Open your project in the tool and invoke a skill explicitly. Examples below
-use `/egm-brainstorm`, `/egm-draft`, and `/egm-review`; Claude Code uses the
-plugin prefix, such as `/egm:egm-brainstorm`. Check the harness guide's
+use `/egm-brainstorm`, `/egm-draft`, and `/egm-review`; some harnesses add a
+plugin prefix to command names. Check the harness guide's
 [support requirements](harnesses.md#support-status) before assuming that an
 installed plugin has been verified end to end.
 
