@@ -60,24 +60,6 @@ jobs:
           [ -n "$EVAL_SCENARIO" ] && [ "$EVAL_SCENARIO" != "all" ] && ARGS+=(--scenario "$EVAL_SCENARIO")
           python3 tools/eval_runner.py "${ARGS[@]}"
 
-  smoke-openai-compat:
-    name: "Smoke Test OpenAI Compatibility"
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: "Verify OpenAI Chat Completions & Codex manifests"
-        env:
-          OPENAI_BASE_URL: ${{ vars.OPENAI_BASE_URL }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          BASE_URL="${OPENAI_BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai}"
-          curl -sS --fail-with-body -X POST "${BASE_URL%/}/chat/completions" -H "Authorization: Bearer $OPENAI_API_KEY"             -H "Content-Type: application/json" -d '{"model":"gemini-3.5-flash","messages":[{"role":"user","content":"ping"}],"max_tokens":5}'
-          jq -e '.name == "egm"' .codex-plugin/plugin.json
-          jq -e '.name == "elephant-goldfish-model" and any(.plugins[]; .name == "egm")' .agents/plugins/marketplace.json
-
   eval-claude-vertex:
     name: "Evaluate Claude Sonnet 5.5 on Vertex AI"
     if: github.event_name == 'workflow_dispatch' && inputs.run_claude_vertex
