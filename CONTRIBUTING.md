@@ -22,7 +22,7 @@ These general principles guide development of the EGM framework:
 ## Contribution Tracks & Workflow
 
 All contributions must comply with our [AI & Automated Contribution Policy](AI_POLICY.md):
-every pull request requires a human author who has reviewed, tested, the change. They
+every pull request requires a human author who has reviewed and tested the change. They
 should be able to explain it themselves.
 
 Contributions follow a two-track intake model defined in
