@@ -173,6 +173,7 @@ def run_scenario(
         model=model,
         messages=messages,
         temperature=temperature,
+        num_retries=3,
     )
     model_response = response_obj.choices[0].message.content or ""
     messages.append({"role": "assistant", "content": model_response})
@@ -206,6 +207,7 @@ def run_scenario(
           model=judge_target_model,
           messages=[{"role": "user", "content": judge_prompt}],
           temperature=0.0,
+          num_retries=3,
       )
       judge_text = judge_res.choices[0].message.content or ""
       passed, errors = parse_judge_response(judge_text)
