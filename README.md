@@ -54,19 +54,26 @@ The approach comes from Dave Rensin's [Elephants, Goldfish, and the New Golden A
 
 ## Agents
 
-Skills delegate work to these personas. The first seven review documents; the last two coordinate work.
+Skills delegate work to these personas. Each group is listed alphabetically; the skill determines which agents run and in what order.
+
+### Reviewers
 
 | Agent | Role |
 | :---- | :--- |
-| [Zoom out](agents/zoom_out.md) | Question complexity and look for simpler approaches or existing code to reuse. |
+| [Codebase details](agents/codebase_details.md) | Check documentation against the implementation and available libraries. |
 | [Comprehension](agents/comprehension.md) | Find undefined terms and gaps that would confuse a new reader. |
 | [Design critic](agents/design_critic.md) | Challenge architecture, scalability, costs, and unresolved risks. |
-| [Codebase details](agents/codebase_details.md) | Check documentation against the implementation and available libraries. |
 | [Implementation readiness](agents/implementation_readiness.md) | Check that an implementer can proceed without making missing design decisions. |
 | [Structural](agents/structural.md) | Check document organization, headings, and template compliance. |
 | [Style](agents/style.md) | Edit for clarity, precision, and brevity. |
-| [Synthesizer](agents/synthesizer.md) | Coordinate reviewers and combine findings without duplicates. |
+| [Zoom out](agents/zoom_out.md) | Question complexity and look for simpler approaches or existing code to reuse. |
+
+### Coordinators
+
+| Agent | Role |
+| :---- | :--- |
 | [Bootstrap orchestrator](agents/bootstrap_orchestrator.md) | Divide a codebase into subtrees and coordinate documentation workers. |
+| [Synthesizer](agents/synthesizer.md) | Coordinate reviewers and combine findings without duplicates. |
 
 ## Documentation and help
 
