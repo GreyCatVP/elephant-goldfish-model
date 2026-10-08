@@ -8,80 +8,64 @@ SPDX-License-Identifier: Apache-2.0
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Website](https://img.shields.io/badge/Website-egm.dev-black.svg)](https://egm.dev)
 
-Elephant & Goldfish Model is an open-source framework and methodology for Spec-Driven Development (SDD) with autonomous AI coding agents.
+EGM helps you draft software designs and review them with fresh-context AI agents before implementation. It packages reusable skills, reviewer prompts, and document standards for AI coding tools.
 
-It anchors development in context-rich system descriptions and adversarial multi-agent reviews, making complex codebases easier for both humans and AI to navigate, verify, and evolve.
-
-![Elephant & Goldfish Model Overview](assets/heroes.png)
-
----
-
-## Philosophy
-
-EGM uses two animal metaphors to describe how to prompt, constrain, and structure AI agents at different stages of the software development lifecycle:
-
-*   🐘 **The Elephant (Remembers Everything)**:
-    Deep-context agents loaded with system history, architecture diagrams, component boundaries, and user journeys. The Elephant conducts structured brainstorming, probes operational limits, and drafts comprehensive specifications.
-*   🐠 **The Goldfish (Zero-Context Memory)**:
-    Stateless, isolated subagents that read only the draft design specification and live source code without access to conversational bias. The Goldfish swarm subjects designs to adversarial stress-testing across multiple conflicting perspectives (Design Critic, Naive Reader, Tech Lead, Codebase Auditor, Structural Validator, Style Editor, and Zoom Out Architect; defined under `agents/`).
-*   🧑‍💻 **The Human (Owns the Outcomes)**:
-    AI is an exploration partner and automated auditor, but human engineers own architectural decisions, trade-offs, and final outcomes.
-
-For the foundational essay introducing this methodology, see Dave Rensin's article: [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874).
-
----
-
-## Repo Structure
-
-```
-├── agents/                       # Stateless reviewer and orchestrator persona prompts
-├── assets/                       # Branding assets and diagrams
-├── docs/                         # Documentation, guides, and FAQ
-│   └── designs/                  # Living technical design specifications
-├── resources/
-│   └── document_standards/       # Quality evaluation rubrics and standards
-├── skills/                       # Modular agent skills (Brainstorm, Draft, Review, etc.)
-└── tests/
-    └── evals/                    # Automated YAML evaluation benchmarks
-```
-
----
-
-## Skills
-
-| Skill | Command | Description |
-| :---- | :------ | :---------- |
-| **Brainstorm** | `/egm-brainstorm` | Zero-doc ideation tool using a multi-lens Goldfish shootdown swarm to stress-test early concepts. |
-| **Draft** | `/egm-draft` | Iterative, section-by-section markdown design specification compiler. |
-| **Review** | `/egm-review` | Multi-stage verification pipeline orchestrator (Zoom Out → Comprehension → Critic → Readiness). |
-| **Review Loop** | `/egm-review-loop` | Concurrent review subagent dispatch engine supporting direct and hierarchical dispatch. |
-| **Review Resolve** | `/egm-resolve` | Interactive triage and automated patch application engine for review findings. |
-| **Drift Report** | `/egm-drift-report` | Sequential AST scanner detecting divergence between checked-in specs and live code. |
-| **Bootstrap** | `/egm-bootstrap` | Recursive bottom-up codebase documentation generator and sentinel-block upserting engine. |
-
----
+Use it when a change needs discussion of requirements, trade-offs, or architecture. You can also review an existing design or check whether code still matches it. A small bug fix may not need the full workflow.
 
 ## Quickstart
 
-1.  **Ideate & Stress-Test**:
-    Run `/egm-brainstorm` to explore problem boundaries and subject raw concepts to a multi-lens Goldfish shootdown swarm.
-2.  **Draft**:
-    Run `/egm-draft` to convert the egm-brainstorm output (a concept brief) into a living design document under `docs/designs/<feature>.md` (or user designated directory).
-3.  **Review & Resolve**:
-    Run `/egm-review docs/designs/<feature>.md` to launch the multi-stage Goldfish reviewer swarm on the design document produced by egm-draft (interactive resolution via `/egm-resolve` is integrated directly into the review loop).
-4.  **Submit & Implement**:
-    Submit the verified design doc via Pull Request, and implement code against the approved specification.
+You need an AI coding tool with subagent support, access to a model, and a project to work on. Follow the [installation instructions for your tool](docs/harnesses.md#install) and install the whole plugin, including its personas and standards. Model access may require a subscription or API charges.
 
-For detailed setup and walkthroughs, see [Getting Started](docs/getting_started.md) and the [Framework Architecture](docs/designs/architecture.md).
+In your project's agent session, run one step at a time:
 
----
+1. Run `/egm-brainstorm` and describe a change, such as adding CSV export to a report. Answer the clarification questions; the session produces a `concepts_brief.md`.
+2. Run `/egm-draft` with that brief to write a design under `docs/designs/` or your chosen directory.
+3. Run `/egm-review docs/designs/csv-export.md`, using the actual draft path. Review the findings and work through proposed changes with `/egm-resolve`.
+4. Have a person review the design before implementing it. AI review findings are input to that decision, not proof that the design is correct.
+
+Command names can vary by tool. In Claude Code, use the plugin prefix, for example `/egm:egm-brainstorm` and `/egm:egm-review docs/designs/csv-export.md`.
+
+See [Getting started](docs/getting_started.md) for the full workflow. Installation alone does not establish support: the [harness guide](docs/harnesses.md#support-status) defines the required end-to-end checks, and [Testing](TESTING.md) explains how to run evaluations.
+
+## How it works
+
+The names describe two roles:
+
+- **Elephant:** drafts with the project history, requirements, and architectural context you provide.
+- **Goldfish:** reviews in a fresh subagent context, without the drafting conversation. Reviewers examine the design, relevant code, and supplied standards from different perspectives.
+
+Fresh context depends on the host tool's delegation and instruction handling; it does not mean the reviewer has no instructions or cannot access files. People choose which findings to act on and remain responsible for the outcome.
+
+![Elephant & Goldfish Model Overview](assets/heroes.png)
+
+The approach comes from Dave Rensin's [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874).
+
+## Skills
+
+| Command | Use it to |
+| :------ | :-------- |
+| `/egm-brainstorm` | Explore an idea and test its assumptions before drafting. |
+| `/egm-draft` | Write a design document section by section. |
+| `/egm-review` | Review a design for clarity, consistency, and implementation readiness. |
+| `/egm-review-loop` | Coordinate several reviewers for a review task. |
+| `/egm-resolve` | Work through review findings and apply agreed changes. |
+| `/egm-drift-report` | Compare design documents with the code they describe. |
+| `/egm-bootstrap` | Generate initial documentation for an existing codebase. |
+
+## Documentation and help
+
+- [Getting started](docs/getting_started.md): setup and workflow examples.
+- [Harnesses](docs/harnesses.md): installation, delegation, and support requirements.
+- [Architecture](docs/designs/architecture.md): how the framework fits together.
+- [Testing](TESTING.md): static checks and behavioral evaluations.
+- [Issues](https://github.com/google/elephant-goldfish-model/issues): report a problem or ask a question. Include your tool, version, command, and relevant output.
+
+The repository keeps skill instructions in `skills/`, reviewer personas in `agents/`, and review standards in `resources/document_standards/`. Guides and design documents live in `docs/`; validation code lives in `tests/` and `tools/`.
 
 ## Contributing
 
-We welcome community contributions! Please review our [Contribution Guidelines](CONTRIBUTING.md) before submitting pull requests.
+Read the [contribution guidelines](CONTRIBUTING.md) for review requirements, contribution tracks, and the contributor license agreement. Documentation fixes, bug reports, and reviewer improvements are welcome.
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
-
-This is not an officially supported Google product.
+Licensed under [Apache 2.0](LICENSE). This is not an officially supported Google product.

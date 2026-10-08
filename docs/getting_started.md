@@ -3,7 +3,7 @@ Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
 -->
 
-# EGM Setup & Workflow Guide
+# Getting started
 
 ## Background
 
@@ -18,8 +18,8 @@ intuition for using them.
 
 If you do nothing else with EGM, do that a few times to see if you're getting
 better responses out of the LLMs than you were before. Other than your time,
-it's free, you don't have to install anything, and the instructions are labeled
-1 to N.
+you can try the prompts without installing the plugin. Your model provider's
+normal usage charges or subscription requirements still apply.
 
 If you like what that's doing for you, you'll start to notice some things. You
 won't like copy-pasting your prompts all the time. You'll see some repetition
@@ -29,13 +29,16 @@ emerging patterns and tried to make it easier to get started with fewer steps.
 
 ## Runtime Setup
 
-The EGM skills and personas are designed to run in **Antigravity**:
+Choose your AI coding tool from the [harness guide](harnesses.md#install)
+and follow its installation instructions. Install the whole plugin: skills
+depend on the bundled personas and document standards. Review workflows need
+a tool that can start fresh subagents; see [delegation](harnesses.md#delegation).
 
-1.  **Skills**: The skills in `skills/` can be registered in your Antigravity
-    skill registry or invoked via slash commands (e.g. `/egm-brainstorm`,
-    `/egm-draft`, `/egm-review`).
-2.  **Personas**: The prompts in `agents/` define isolated system instructions
-    for subagents.
+Open your project in the tool and invoke a skill explicitly. Examples below
+use `/egm-brainstorm`, `/egm-draft`, and `/egm-review`; Claude Code uses the
+plugin prefix, such as `/egm:egm-brainstorm`. Check the harness guide's
+[support requirements](harnesses.md#support-status) before assuming that an
+installed plugin has been verified end to end.
 
 ## Main Workflow
 
@@ -68,7 +71,7 @@ The "core" workflow looks like:
     by section.
 
 3.  **`/egm-review`**: Reviews a design with **Goldfish**. Performs a
-    multi-stage review of a design doc in a fresh, zero-context session to
+    multi-stage review of a design doc using fresh subagent contexts to
     validate its completeness, clarity, self-containment, and readiness.
 
     This will provide *a lot* of feedback by design. Take what you think is
