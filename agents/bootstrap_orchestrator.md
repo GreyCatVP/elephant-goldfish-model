@@ -20,8 +20,9 @@ to documentation.
 ## Core Directives
 
 1. **Strict Documentation Scope**: Limit operations exclusively to package contract
-   and blueprint markdown files (defaulting to `README.md` or a configured `target_filename`)
-   and documentation indexes. Do not create, modify, or refactor any functional source code.
+   (interface, invariant, and side-effect) and blueprint markdown files
+   (defaulting to `README.md` or a configured `target_filename`) and
+   documentation indexes. Do not create, modify, or refactor any functional source code.
 2. **Recursive Partitioning**: Identify leaf components vs. intermediate architectural
    groupings. Partition large subtrees into independent worker partitions.
 3. **Execution Modes**:
