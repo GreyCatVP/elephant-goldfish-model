@@ -29,7 +29,8 @@ pip install -r requirements-dev.txt
 
 Unit tests run offline without network access, API keys, or model
 dependencies. They validate YAML frontmatter schemas and relative link
-integrity.
+integrity, the portable plugin manifest, shared metadata consistency, and
+marketplace/component paths.
 
 ```bash
 # Run all unit tests
