@@ -164,7 +164,40 @@ The report records:
 - `2`: Configuration, CLI argument, or runtime execution error (e.g., missing
   API key or `litellm` library).
 
-## 7. Harness Test Record
+## 7. Native Codex Integration Tests (Opt-in)
+
+Tier 1 includes Codex manifest, discovery, and bundled-resource checks. The
+LiteLLM suite tests response behavior; it does not execute the native Codex
+plugin, filesystem tools, or subagents.
+
+To test those boundaries, run from a Git checkout with an authenticated Codex
+CLI and native subagent support. These tests consume model usage and can take
+several minutes:
+
+```sh
+EGM_CODEX_LIVE=1 pytest tests/integration/test_codex.py -v
+```
+
+Each scenario has a 20-minute timeout. Without `EGM_CODEX_LIVE=1`, integration
+tests skip before installing or invoking Codex.
+
+The fixture installs the current candidate through a uniquely named local
+marketplace and removes that temporary plugin and
+marketplace afterward. It leaves existing EGM installations intact. It ignores
+user configuration and disables unrelated remote plugins, hooks, and memories
+for the model run, while using normal CLI authentication. Do not run concurrent
+plugin configuration edits while this fixture is installing or cleaning up.
+
+Tests run outside the source checkout. The isolation probe checks the actual
+child response for a random parent-only marker. The workflow test checks
+brainstorm and draft artifacts, five review reports, and native reviewer
+completion. Its synthetic user explicitly approves all fixture gates; it does
+not verify interactive question UI or human approval behavior.
+
+Traces stay in pytest's tmp dir; see `tests/integration/test_codex.py` for what
+is checked.
+
+## 8. Harness Test Record
 
 A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 `/egm-review` run end to end through its plugin install (see
@@ -173,7 +206,7 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Claude Code | | | Not run | | | | |
-| OpenAI Codex | | | Not run | | | | |
+| OpenAI Codex | 0.161.0 | 2026-10-07 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | 15 native reviewers; isolation probe passed. Interactive gates and nesting not tested. |
 | Cursor | | | Not run | | | | |
 | Gemini CLI | | | Not run | | | | |
 | Antigravity | | | Not run | | | | |
