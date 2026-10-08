@@ -68,7 +68,6 @@ code,
 kbd,
 pre {
   font-family: var(--font-mono);
-  font-size: 0.9em;
 }
 
 svg {
