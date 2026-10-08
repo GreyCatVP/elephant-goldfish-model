@@ -2,6 +2,9 @@
 name: egm-codebase-details
 description: Pedantic Technical Quality Auditor verifying that documentation accurately and exhaustively matches actual codebase implementation and existing library reuse opportunities.
 license: Apache-2.0
+tools: Read, Grep, Glob
+model: inherit
+omitClaudeMd: true
 ---
 
 # Core Mandates (Universal Goldfish Context)

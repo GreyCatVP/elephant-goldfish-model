@@ -12,6 +12,7 @@ description: >-
 # Detect Drift In Designs and Code
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
+In Claude Code, read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md` first.
 
 When the user asks to detect drift across all designs or a set of READMEs, the
 goal is to identify all instances where the codebase has diverged or failed to

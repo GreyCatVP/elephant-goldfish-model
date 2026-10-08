@@ -45,6 +45,19 @@ pytest tests/unit/test_link_integrity.py -v
 ```
 ---
 
+## Native Claude Reviewer Probe (Opt-in)
+
+With an authenticated Claude Code 2.1.271+ installation, run:
+
+```bash
+EGM_CLAUDE_LIVE=1 pytest tests/integration/test_claude.py
+```
+
+This uses the account's model quota. It loads a copy of the plugin, invokes
+the review skill, and checks that a native reviewer reads only its persona and
+sees no parent or project `CLAUDE.md` context. See [Claude integration](docs/claude.md).
+---
+
 ## Native Codex Integration Tests (Opt-in)
 
 Unit tests include Codex manifest, discovery, and bundled-resource checks; they

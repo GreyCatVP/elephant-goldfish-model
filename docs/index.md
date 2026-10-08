@@ -78,8 +78,8 @@ their strengths and weaknesses.
 ## Documentation & Guides
 
 *   [Getting Started](getting_started.md): Installation and core workflow.
-*   [Harness Verification](harness-verification.md): Cross-host test results and limitations.
 *   [Codex](codex.md): Plugin installation and native workflow verification.
+*   [Claude Code](claude.md): Plugin resources and isolated reviewers.
 *   [Frequently Asked Questions (FAQ)](faq.md): Common questions and answers.
 *   [Framework Architecture](designs/architecture.md): Detailed component
     design and lifecycle.

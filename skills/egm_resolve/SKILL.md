@@ -12,6 +12,7 @@ description: >-
 # Goldfish Review: Resolve
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
+In Claude Code, read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md` first.
 
 ## Overview
 
