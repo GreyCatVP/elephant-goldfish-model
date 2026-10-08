@@ -7,6 +7,8 @@ description: Bootstrap directory README.md files across a repository subtree.
 
 # EGM Peanuts and Hay Bootstrap (`egm-bootstrap`)
 
+When running in Codex, first read [Codex integration](../../docs/codex.md).
+
 ## Overview
 
 This skill automates the creation, correction, formatting, and correctness

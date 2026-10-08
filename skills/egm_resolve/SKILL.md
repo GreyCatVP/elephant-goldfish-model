@@ -11,6 +11,8 @@ description: >-
 
 # Goldfish Review: Resolve
 
+When running in Codex, first read [Codex integration](../../docs/codex.md).
+
 ## Overview
 
 This skill instructs the agent on how to operate within the primary Elephant

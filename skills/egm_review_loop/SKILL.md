@@ -13,6 +13,8 @@ description: >-
 
 # Goldfish Review: Loop (Orchestration Driver)
 
+When running in Codex, first read [Codex integration](../../docs/codex.md).
+
 ## Overview
 
 This skill acts as the central orchestration engine driving the multi-agent

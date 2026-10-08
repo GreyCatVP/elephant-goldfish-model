@@ -10,6 +10,8 @@ text.
 | --- | --- |
 | Antigravity | `/plugin`, then install from `https://github.com/google/elephant-goldfish-model` |
 | Gemini CLI | `gemini extensions install https://github.com/google/elephant-goldfish-model` |
+| Claude Code | `/plugin marketplace add google/elephant-goldfish-model`, then `/plugin install egm@elephant-goldfish-model` |
+| OpenAI Codex | `codex plugin marketplace add google/elephant-goldfish-model`, then install `egm` from `/plugins` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
 break EGM, because the skills read `agents/` and
@@ -32,11 +34,16 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 | --- | --- | --- | --- |
 | Antigravity | `plugin.json` | `skills/` (default) | `agents/` (default) |
 | Gemini CLI | `gemini-extension.json` | `skills/` (default) | `agents/` (default) |
+| Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Listed file by file in `plugin.json` `agents` |
+| OpenAI Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
 
 Persona prompts live in `agents/`, the directory Antigravity and Gemini CLI
 scan for subagents. Each persona has `name` and `description` frontmatter, so
 harnesses that load `agents/*.md` register them as named subagents
 (`egm-design`, `egm-zoom-out`, and so on).
+
+When you add a persona, also add its path to `agents` in
+`.claude-plugin/plugin.json`. Claude Code does not scan a directory there.
 
 ## Delegation
 
@@ -47,6 +54,8 @@ phrase to its own tool:
 | --- | --- | --- | --- |
 | Antigravity | `invoke_subagent` | Yes | Yes |
 | Gemini CLI | Subagents | Yes | Not verified |
+| Claude Code | Agent (Task) tool | Yes | Up to 3 levels by default |
+| OpenAI Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
 
 Where a harness has no named persona, the skill spawns a general-purpose
 subagent and tells it to read `agents/<file>.md` first. If a harness cannot
@@ -75,6 +84,9 @@ the review skills stop instead of running in the same context.
 - **Task constraints:** Pass offline, read-only, and resource-scope requirements
   explicitly to each delegated reviewer. Check its tool use; parent instructions
   alone do not establish that a child followed those restrictions.
+
+For Codex, read [Codex integration](codex.md) for installed-resource paths,
+explicit fresh-context delegation, question-tool fallbacks, and artifact links.
 
 ## Support Status & Contributing Other Harnesses
 
