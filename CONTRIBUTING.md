@@ -22,8 +22,8 @@ These general principles guide development of the EGM framework:
 ## Contribution Tracks & Workflow
 
 All contributions must comply with our [AI & Automated Contribution Policy](AI_POLICY.md):
-every pull request requires a human author who has personally reviewed, tested,
-and can explain every line of changed code.
+every pull request requires a human author who has reviewed and tested the change. They
+should be able to explain it themselves.
 
 Contributions follow a two-track intake model defined in
 [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md):
@@ -42,18 +42,17 @@ follows the EGM Spec-Driven Development process:
     Before investing in a large implementation or full specification, open a
     [Feature / Architectural Inquiry Issue](https://github.com/google/elephant-goldfish-model/issues/new?template=feature_proposal.md)
     (`.github/ISSUE_TEMPLATE/feature_proposal.md`) outlining the problem
-    statement and proposed `Goals` vs. `Non-Goals` (e.g., using
-    `/egm-brainstorm`). Maintainers will review and apply
+    statement and proposed `Goals` vs. `Non-Goals`. We recommend using
+    `/egm-brainstorm` to complete this section. Maintainers will review and apply
     `status: approved-for-design` once aligned on direction.
 
 2.  **Draft & Review Design Specification**:
-    Draft a technical design specification under `docs/designs/<name>.md`
-    using `/egm-draft`, and register it in [`docs/designs/README.md`](docs/designs/README.md).
-    Run `/egm-review docs/designs/<name>.md` to stress-test your proposal
-    against the EGM document standards and resolve findings with
-    `/egm-resolve`.
+    Draft a technical design specification under `docs/designs/<name>.md`. We
+    recommend using `/egm-draft`, and registering it in [`docs/designs/README.md`](docs/designs/README.md).
+    We also recommend running `/egm-review docs/designs/<name>.md` to stress-test
+    the proposal.
 
-3.  **Submit a Stage-1 Design Doc PR (`status: approved-for-pr`)**:
+4.  **Submit a Design Doc PR (`status: approved-for-pr`)**:
     Open a dedicated **Design Doc PR** containing `docs/designs/<name>.md`
     and `docs/designs/README.md` (referencing your aligned issue with
     `Refs #<issue>` rather than `Closes #<issue>` so the issue stays open).
@@ -61,7 +60,7 @@ follows the EGM Spec-Driven Development process:
     the codebase and maintainers manually transition the issue label to
     `status: approved-for-pr`.
 
-4.  **Submit the Stage-2 Implementation PR**:
+5.  **Submit the Implementation PR**:
     Once the specification is merged and your issue is labeled
     `status: approved-for-pr`, open the implementation PR (`Closes #<issue>`)
     referencing `docs/designs/<name>.md`.
@@ -70,7 +69,7 @@ follows the EGM Spec-Driven Development process:
 
 *   **Skill Definitions**: Ensure all `SKILL.md` files contain valid YAML
     frontmatter (`name`, `description`, and optional `disable-model-invocation`).
-*   **Evaluation Suites**: New skills must include a co-located behavioral
+*   **Evaluation Suites**: Skills must include a co-located behavioral
     evaluation suite in `skills/<skill_name>/test_scenarios.yaml` and
     verification instructions in `skills/<skill_name>/TEST.md`. See
     [TESTING.md](TESTING.md) for running Tier 1 static checks (`pytest tests/unit`)
