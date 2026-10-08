@@ -1,0 +1,17 @@
+<!--
+Copyright 2026 Google LLC.
+SPDX-License-Identifier: Apache-2.0
+-->
+
+# Test Plan: Goldfish Review Loop Skill
+
+Frontmatter and link checks run in `pytest tests/unit`; behavioral evaluations run with `python tools/eval_runner.py --skill egm_review_loop --model <model>` (see [TESTING.md](../../TESTING.md)).
+
+## Protocol Verification Checklist
+
+When evaluating or exploring `egm_review_loop` interactively in chat, verify:
+
+-   **Step 1 (Intake & Config):** Validates required inputs and resolves standard paths.
+-   **Step 2.1 (Target Resolution):** Unconditionally re-scans line numbers before auditing.
+-   **Step 2.2 (Review Swarm):** Spawns subagents (or sequentially iterates personas in degraded mode) across requested standards.
+-   **Step 2.3 & 2.4 (Resolve Handoff & Turn Boundary):** Hands findings to `egm-resolve` and respects human decision gates.
