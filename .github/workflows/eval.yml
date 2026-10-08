@@ -1,0 +1,78 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: "Harness & LLM Evaluation"
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        type: string
+        default: "open_ended_discovery_divergence"
+      model:
+        type: string
+        default: "gemini/gemini-3.8-flash"
+      judge_model:
+        type: string
+        default: "gemini/gemini-3.1-pro-preview"
+      run_claude_vertex:
+        type: boolean
+        default: true
+  pull_request:
+    paths:
+      - ".github/workflows/eval.yml"
+      - "tools/eval_runner.py"
+      - "tests/evals/**"
+
+permissions:
+  contents: read
+jobs:
+  eval-gemini:
+    name: "Evaluate Gemini (LiteLLM)"
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: "Run LiteLLM eval runner"
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          EVAL_SCENARIO: ${{ inputs.scenario || 'open_ended_discovery_divergence' }}
+          EVAL_MODEL: ${{ inputs.model || 'gemini/gemini-3.8-flash' }}
+          EVAL_JUDGE_MODEL: ${{ inputs.judge_model || 'gemini/gemini-3.1-pro-preview' }}
+        run: |
+          ARGS=(--model "$EVAL_MODEL" --judge-model "$EVAL_JUDGE_MODEL")
+          [ -n "$EVAL_SCENARIO" ] && [ "$EVAL_SCENARIO" != "all" ] && ARGS+=(--scenario "$EVAL_SCENARIO")
+          python3 tools/eval_runner.py "${ARGS[@]}"
+
+  eval-claude-vertex:
+    name: "Evaluate Claude Sonnet 5.5 on Vertex AI"
+    if: github.event_name == 'workflow_dispatch' && inputs.run_claude_vertex
+    runs-on: [self-hosted, airrt-vertex]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: "Verify Claude Code on Vertex AI"
+        env:
+          CLAUDE_CODE_USE_VERTEX: "1"
+          CLOUD_ML_REGION: "global"
+          ANTHROPIC_VERTEX_PROJECT_ID: "airrt-team"
+          ANTHROPIC_MODEL: "claude-sonnet-5-5@default"
+        run: |
+          claude -p "ping"
