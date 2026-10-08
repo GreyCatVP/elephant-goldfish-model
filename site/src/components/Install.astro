@@ -56,16 +56,16 @@ const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 </script>
 
 <style>
-  .install {
-    /* Loose on entry (change of register from light to dark), standard before the footer. */
-    padding-block: var(--section-y-loose) var(--section-y);
+  .install .section-head {
+    margin-block-end: 28px;
   }
 
   .copybox {
     display: flex;
     align-items: center;
-    gap: 12px;
-    max-inline-size: 640px;
+    gap: 16px;
+    inline-size: fit-content;
+    max-inline-size: 100%;
     margin-block-end: 24px;
     padding: 8px 8px 8px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
