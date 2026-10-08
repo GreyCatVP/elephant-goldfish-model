@@ -14,8 +14,11 @@
 
 """Unit tests for evaluation runner assertion and parsing utilities."""
 
+import json
 import pathlib
 import sys
+
+import pytest
 
 # Add tools to sys.path
 sys.path.insert(
@@ -117,6 +120,20 @@ def test_parse_judge_response_clean_json() -> None:
   assert not passed
   assert len(errors) == 1
   assert "Failed invariant." in errors[0]
+
+
+@pytest.mark.parametrize(
+    "judge_json",
+    [{"passed": v, "reason": "x"} for v in ["false", "true", "", 0, 1, None, [], [1]]]
+    + [{"reason": "x"}],
+)
+def test_parse_judge_response_rejects_non_boolean_verdicts(
+    judge_json: dict,
+) -> None:
+  """Malformed or missing verdicts must not be coerced to passing."""
+  passed, errors = parse_judge_response(json.dumps(judge_json))
+  assert passed is False
+  assert errors == ["Judge 'passed' field must be a JSON boolean."]
 
 
 def test_parse_judge_response_markdown_code_blocks() -> None:
