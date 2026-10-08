@@ -27,7 +27,3 @@ Compatibility fixes retain the host manifests in #42 and allow Claude-only
 adapters to resolve canonical shared personas in #49. The integration merge
 also retains both Codex and Claude skill guidance and installs the full
 development requirements in CI.
-
-Auto-merge remains disabled pending review of combined results. A completed
-workflow can still find defects in its design; those findings are distinct
-from host or plugin failures.

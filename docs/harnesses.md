@@ -75,7 +75,8 @@ Skills fall into this category, so EGM does not support ChatGPT web.
   host's command syntax before concluding that installation failed.
 - **Resource lookup:** Resolve bundled files from the installed plugin, and
   keep generated artifacts in the user's project. Do not guess cache versions.
-  If an explicit installed path is needed as a workaround, record that limitation.
+  See [TESTING.md](../TESTING.md#interpreting-native-test-results) for how to
+  record an explicit-path workaround.
 - **Isolation limits:** Fresh subagent context does not imply filesystem
   isolation or exclusion of all host instructions. Verify the host's behavior.
 - **Task constraints:** Pass offline, read-only, and resource-scope requirements
