@@ -19,7 +19,7 @@ const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 
     <div class="copybox">
       <code class="command">{cloneCommand}</code>
-      <IconButton label="Copy command" color="tonal" size="sm" data-copy={cloneCommand}>
+      <IconButton label="Copy command" size="sm" data-copy={cloneCommand}>
         <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
           <path
             d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
@@ -63,11 +63,11 @@ const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
   .copybox {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
     inline-size: fit-content;
     max-inline-size: 100%;
     margin-block-end: 24px;
-    padding: 8px 8px 8px 20px;
+    padding: 8px 10px 8px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
     border-radius: var(--md-sys-shape-corner-lg);
     background: var(--md-sys-color-surface-container-low);
