@@ -5,22 +5,10 @@ const essay =
   'https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874';
 ---
 
-<section class="section section-tight essay" id="essay">
+<section class="section-tight essay" id="essay">
   <div class="wrap">
-    <div class="section-head">
-      <h2 class="headline">Why an elephant, and why a goldfish.</h2>
-    </div>
     <div class="essay-grid">
-      <figure class="essay-figure">
-        <img
-          src="/main-graphic.png"
-          width="1400"
-          height="781"
-          loading="lazy"
-          decoding="async"
-          alt="Illustration of an elephant at a drafting desk holding a blueprint, a human engineer orchestrating the handoff, and a goldfish inspector with a magnifying glass"
-        />
-      </figure>
+      <h2 class="headline">Why an elephant, and why a goldfish.</h2>
       <div class="essay-body">
         <p class="lead">
           The model comes from Dave Rensin&rsquo;s essay &ldquo;Elephants, Goldfish, and the New
@@ -39,26 +27,21 @@ const essay =
 </section>
 
 <style>
+  .essay {
+    padding-block: 0 var(--section-y);
+  }
+
   .essay-grid {
     display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    column-gap: clamp(32px, 5vw, 64px);
-    row-gap: 28px;
-    align-items: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px clamp(32px, 6vw, 96px);
+    align-items: start;
+    padding-block-start: clamp(40px, 6vw, 64px);
+    border-block-start: 1px solid var(--md-sys-color-outline-variant);
   }
 
-  .essay-figure {
-    margin: 0;
-    border-radius: var(--md-sys-shape-corner-lg);
-    overflow: hidden;
-    border: 1px solid var(--md-sys-color-outline-variant);
-    background: var(--md-sys-color-surface-container-low);
-  }
-
-  .essay-figure img {
-    display: block;
-    inline-size: 100%;
-    block-size: auto;
+  .essay-grid .headline {
+    margin-block: 0;
   }
 
   .essay-body {
@@ -68,9 +51,9 @@ const essay =
     gap: 24px;
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 820px) {
     .essay-grid {
-      grid-template-columns: minmax(0, 1fr);
+      grid-template-columns: 1fr;
     }
   }
 </style>
