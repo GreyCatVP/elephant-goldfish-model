@@ -42,6 +42,10 @@ If your harness has no subagent tool, run the scout steps inline.
     Sub-Orchestrator (Optional, default: `false`).
 *   **`sub_tree_root`**: Internal parameter. The root path of the assigned
     subtree partition (Optional).
+*   **`target_filename`**: Target contract filename to generate or update
+    (Optional, default: `"README.md"`). Supports alternate blueprint filenames
+    such as `"EGM.md"` when pre-existing human-maintained READMEs must not be
+    modified.
 
 ## Execution Constraints (CRITICAL)
 
@@ -54,7 +58,7 @@ If your harness has no subagent tool, run the scout steps inline.
 3.  **Temporary File Isolation**: Parallel workers sharing the workspace must
     perform all status tracking, check-pointing, and log writing in independent,
     worker-specific directories outside the project repository workspace.
-4.  **Tool Usage (CRITICAL)**: Use your shell, file-reading, file-writing, and file-editing tools for directory discovery and README
+4.  **Tool Usage (CRITICAL)**: Use your shell, file-reading, file-writing, and file-editing tools for directory discovery and contract/README
     generation. Adhere to clean Markdown formatting directly during generation
     (standard headers, tables, and fenced code blocks). If a project markdown
     formatter (e.g. `npx prettier --write`) is explicitly configured in the
@@ -187,7 +191,8 @@ If your harness has no subagent tool, run the scout steps inline.
         to spawn a parallel worker:
         *   Subagent: `egm-bootstrap-orchestrator` (`agents/bootstrap_orchestrator.md`) (or a general-purpose subagent)
         *   `Prompt`: "Run egm-bootstrap with path=`[path]`,
-            is_worker=true, sub_tree_root=`[partition_root]`." 
+            is_worker=true, sub_tree_root=`[partition_root]`,
+            target_filename=`[target_filename]`." 
     *   **Unbounded Execution**: Spawn all Sub-Orchestrators in parallel without
         artificial concurrency limits (as authorized by the user during the
         safety gate).
@@ -214,23 +219,23 @@ If your harness has no subagent tool, run the scout steps inline.
 2.  **Post-Order Traversal**: Walk the assigned `sub_tree_root` (or `path`) in
     post-order (deepest leaves first). For each directory `D`:
 
-    *   **Correction & Modification Policy**: Check if `README.md` already
-        exists in `D`.
+    *   **Correction & Modification Policy**: Check if `target_filename` (default:
+        `README.md`) already exists in `D`.
 
-        *   If `README.md` exists, **do not overwrite it completely**. Instead,
+        *   If `target_filename` exists, **do not overwrite it completely**. Instead,
             read its existing content.
-        *   *Scout Scan Requirement*: Whether `README.md` exists or not,
+        *   *Scout Scan Requirement*: Whether `target_filename` exists or not,
             **always scan** the source code using the `goldfish-explorer` scout
             for `D` to compile the true code symbol boundary.
-        *   *Legacy Extraction & Correction*: If `README.md` exists, call the
+        *   *Legacy Extraction & Correction*: If `target_filename` exists, call the
             reasoning LLM with prompt: > "Analyze the following unstructured
-            README.md content. Extract all public symbol names, classes,
+            documentation content. Extract all public symbol names, classes,
             interfaces, invariants, and side effects. Format your response
             strictly as a JSON object matching the following schema: {
             \"interface\": string[], \"invariants\": string[], \"side_effects\":
             string[] }." Merge these extracted symbols with the scout's code
             symbols. Use your file-editing tool (or your file-writing tool) to correct
-            and update the existing README to be EGM compliant while preserving
+            and update the existing contract file to be EGM compliant while preserving
             developer notes and descriptions.
 
     *   **Scout Spawning & Constraints**: Spawn `goldfish-explorer` for `D`.
@@ -277,7 +282,7 @@ If your harness has no subagent tool, run the scout steps inline.
         *   If no verification command is identified, omit or use a placeholder.
 
     *   **Directory Classification & Template Generation**: Generate or correct
-        `README.md` using your file-writing tool or your file-editing tool based on
+        `target_filename` using your file-writing tool or your file-editing tool based on
         `D`'s classification.
 
         *   **Component Package (Peanut)**: `D` contains direct source code
@@ -287,26 +292,26 @@ If your harness has no subagent tool, run the scout steps inline.
         *   **Repository Blueprint (Hay)**: `D` contains no direct source code
             files, but contains subdirectories with code contracts. Use the
             **Intermediate Blueprint README Template**.
-        *   **Link Formatting Policy (CRITICAL)**: Package READMEs must use a
+        *   **Link Formatting Policy (CRITICAL)**: Package contract files must use a
             hybrid link formatting approach to balance portability and clarity:
             1.  **Relative Links to Existing Files Only**: Use relative paths
-                (e.g., `./child/README.md` or `../sibling/README.md`) for child
+                (e.g., `./child/${target_filename}` or `../sibling/${target_filename}`) for child
                 contracts and sibling file references within the same codebase
-                subsystem. (CRITICAL: Only generate `[Child](./child/README.md)`
+                subsystem. (CRITICAL: Only generate `[Child](./child/${target_filename})`
                 links for child directories that exist in the pruned
-                `subtree_index` and contain an actual `README.md`. If a child
-                directory contains a `SKILL.md` or other non-README asset, link
+                `subtree_index` and contain an actual `${target_filename}`. If a child
+                directory contains a `SKILL.md` or other non-contract asset, link
                 directly to `./child/SKILL.md` or format it as an unlinked
                 bullet point. Never output speculative links to non-existent
-                `README.md` files).
+                contract files).
             2.  **Absolute Links**: Use standard URLs or repository paths
                 for referencing files outside the package subsystem (e.g.,
                 cross-package dependencies).
 
     *   **Markdown Formatting**: Immediately after writing or correcting
-        `README.md` in `D`, ensure clean markdown formatting (valid headers,
+        `target_filename` in `D`, ensure clean markdown formatting (valid headers,
         tables, and code fences). If a project markdown formatter (e.g. `npx prettier --write`)
-        is configured in the repository, you may execute it on `README.md`.
+        is configured in the repository, you may execute it on `target_filename`.
 
 3.  **Worker Reporting**: Once the assigned subtree is fully traversed, compile
     the `subtree_index` array containing the `path`, `summary`, `interface`,
@@ -337,34 +342,38 @@ If your harness has no subagent tool, run the scout steps inline.
     roots.
 
     *   Process these intermediate directories sequentially bottom-up.
-    *   Generate Intermediate Blueprint READMEs using the compiled summaries
+    *   Generate Intermediate Blueprint contract files using the compiled summaries
         returned by the workers.
     *   Ensure clean formatting and valid relative links for each Intermediate
-        Blueprint README.
+        Blueprint contract file.
 
 3.  **Root Directory Documentation**: The target root `path` of the execution is
     *always* classified as the **Repository Root (Blueprint / Hay)**.
 
+    *   Check if `target_filename` already exists in `path`. If present, apply the
+        **Correction & Modification Policy** to read and retain the existing
+        title, metadata, and architectural overview at the top of the root
+        contract file.
     *   Check if `path` itself contains any direct source files. If present,
         spawn a `goldfish-explorer` scout for `path` to extract local symbols
         and invariants, appending them under the optional `## Local Interface &
         Invariants` section.
-    *   Compile the final root `README.md` using the **Repository Root README
+    *   Compile the final root `target_filename` using the **Repository Root Blueprint
         Template**, rolling up all top-level subdirectory boundaries.
-    *   Write the root `README.md` using your file-writing tool.
+    *   Write the root `target_filename` using your file-writing tool.
 
 4.  **Final Correctness Verification (CRITICAL)**: You MUST perform a final
-    verification pass across ALL created and modified READMEs in the
-    `subtree_index` (including all child package READMEs like `pkg1/README.md`
-    and `pkg2/README.md`) as a correctness check before concluding work. You
-    MUST explicitly read every single created or modified README
-    to verify its content. Do not skip any child READMEs. Verify:
+    verification pass across ALL created and modified contract files in the
+    `subtree_index` (including all child package contracts like `pkg1/${target_filename}`
+    and `pkg2/${target_filename}`) as a correctness check before concluding work. You
+    MUST explicitly read every single created or modified contract file
+    to verify its content. Do not skip any child contract files. Verify:
 
     *   **EGM Compliance**: Ensure `Interface`, `Invariants`, and `Side Effects`
         sections exist and are populated.
     *   **Markdown Syntax**: Ensure clean headers, valid tables, and proper code block fences.
     *   **Valid & Resolvable Links (CRITICAL)**: Ensure all subdirectory and
-        sibling links use valid relative paths (`./subdir/README.md` or
+        sibling links use valid relative paths (`./subdir/${target_filename}` or
         `./subdir/SKILL.md`), and explicitly verify that every referenced target
         file actually exists on the filesystem. Remove or correct any broken
         relative references.
@@ -375,14 +384,14 @@ If your harness has no subagent tool, run the scout steps inline.
     on the generated documentation updates:
 
     *   `question`: "Do you want to run the EGM Drift Report on the generated
-        README updates to check for consistency with the codebase?"
-    *   `options`: `["(Recommended) Yes, run drift report on modified READMEs",
+        contract updates to check for consistency with the codebase?"
+    *   `options`: `["(Recommended) Yes, run drift report on modified contracts",
         "No, skip drift review"]`
     *   If the user selects "Yes", run the `egm-drift-report` skill targeting
-        the modified READMEs to verify that the documentation accurately
+        the modified contracts to verify that the documentation accurately
         reflects the current codebase state. (Note: While `egm-drift-report` is
         often used for design documents, it can be applied to EGM-compliant
-        READMEs as a variant).
+        contracts as a variant).
 
 6.  Terminate execution successfully.
 
@@ -400,7 +409,7 @@ If your harness has no subagent tool, run the scout steps inline.
 
 ## Interface
 - [Public classes, functions, and symbols]
-- [Subdirectories list and relative links to their contracts (e.g., `./subdir/README.md`)]
+- [Subdirectories list and relative links to their contracts (e.g., `./subdir/README.md` or `./subdir/${target_filename}`)]
 
 ## Invariants
 - [State and call invariants that must be preserved by developers/agents]
@@ -425,7 +434,7 @@ If your harness has no subagent tool, run the scout steps inline.
 - [Direct symbols, invariants, and side effects of files in the root folder]
 
 ## Subdirectories & System Boundaries
-- [Subdirectory Name]: [Relative link to existing child README.md (e.g., `./subdir/README.md`) or `./subdir/SKILL.md`] - [Summary of child contract/role]
+- [Subdirectory Name]: [Relative link to existing child contract file (e.g., `./subdir/README.md` or `./subdir/${target_filename}`) or `./subdir/SKILL.md`] - [Summary of child contract/role]
 
 ## Global Invariants
 - [System-wide constraints that cross component boundaries]
@@ -446,7 +455,7 @@ If your harness has no subagent tool, run the scout steps inline.
 [Factual overview of the subdirectories and systems grouped under this directory path]
 
 ## Subdirectories & Boundaries
-- [Subdirectory Name]: [Relative link to existing child README.md (e.g., `./subdir/README.md`) or `./subdir/SKILL.md`] - [Summary of child contract/role]
+- [Subdirectory Name]: [Relative link to existing child contract file (e.g., `./subdir/README.md` or `./subdir/${target_filename}`) or `./subdir/SKILL.md`] - [Summary of child contract/role]
 ```
 
 --------------------------------------------------------------------------------
