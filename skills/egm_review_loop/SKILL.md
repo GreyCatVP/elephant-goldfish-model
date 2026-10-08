@@ -16,6 +16,8 @@ description: >-
 # Goldfish Review: Loop (Orchestration Driver)
 
 When running in Codex, first read [Codex integration](../../docs/codex.md).
+When running in Claude Code, first read `${CLAUDE_PLUGIN_ROOT}/docs/claude.md`.
+Bundled personas and standards resolve under `${CLAUDE_PLUGIN_ROOT}`, not the workspace.
 
 ## Overview
 

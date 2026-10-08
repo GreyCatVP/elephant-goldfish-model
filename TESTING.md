@@ -56,6 +56,27 @@ pytest tests/unit/test_link_integrity.py -v
 
 ## 3. Tier 2: LiteLLM Behavioral Evaluation Flow
 
+### Native Claude reviewer probe (opt-in)
+
+With an authenticated Claude Code 2.1.271+ installation, run:
+
+```bash
+EGM_CLAUDE_LIVE=1 pytest tests/integration/test_claude.py
+```
+
+This uses the account's model quota. It loads a uniquely named candidate copy
+outside the target workspace, invokes the review skill explicitly, verifies
+successful plugin-resource reads, and inspects a native reviewer transcript.
+The reviewer must return `UNKNOWN` without tools or either the parent-only or
+project `CLAUDE.md` marker appearing in its transcript. Hooks and MCP integrations
+are disabled for this probe. Temporary files use pytest's workspace; no plugin
+installation is changed. Result JSON is retained there, and Claude retains its
+normal session transcripts. The trace reader targets Claude Code 2.1.293.
+
+This checks resource resolution and reviewer isolation, not the full interactive
+brainstorm/draft/review workflow, managed-policy exclusion, or filesystem isolation.
+See [Claude integration](docs/claude.md) for the supported configuration.
+
 Tier 2 evaluations execute conversational scenarios against real model endpoints
 using `tools/eval_runner.py` and [LiteLLM](https://docs.litellm.ai/).
 
