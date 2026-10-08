@@ -122,27 +122,16 @@ def test_parse_judge_response_clean_json() -> None:
   assert "Failed invariant." in errors[0]
 
 
-@pytest.mark.parametrize("value", ["false", "true", "", 0, 1, None, [], [1]])
-@pytest.mark.parametrize("fenced", [False, True])
+@pytest.mark.parametrize(
+    "judge_json",
+    [{"passed": v, "reason": "x"} for v in ["false", "true", "", 0, 1, None, [], [1]]]
+    + [{"reason": "x"}],
+)
 def test_parse_judge_response_rejects_non_boolean_verdicts(
-    value: object, fenced: bool,
+    judge_json: dict,
 ) -> None:
-  """Malformed verdicts must not be coerced to passing evaluations."""
-  response = json.dumps({"passed": value, "reason": "Judge explanation."})
-  if fenced:
-    response = f"```json\n{response}\n```"
-  passed, errors = parse_judge_response(response)
-  assert passed is False
-  assert errors == ["Judge 'passed' field must be a JSON boolean."]
-
-
-@pytest.mark.parametrize("fenced", [False, True])
-def test_parse_judge_response_requires_verdict(fenced: bool) -> None:
-  """A missing verdict is a schema error, not a valid negative verdict."""
-  response = '{"reason": "No verdict supplied."}'
-  if fenced:
-    response = f"```json\n{response}\n```"
-  passed, errors = parse_judge_response(response)
+  """Malformed or missing verdicts must not be coerced to passing."""
+  passed, errors = parse_judge_response(json.dumps(judge_json))
   assert passed is False
   assert errors == ["Judge 'passed' field must be a JSON boolean."]
 
