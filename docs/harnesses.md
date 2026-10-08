@@ -36,14 +36,6 @@ of its skills. In particular, `.agents/plugins/` contains the Codex catalog,
 while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 `agents/`, and `resources/` content.
 
-Portable clients discover `skills/` from the package root. The existing
-`.codex-plugin/plugin.json` retains OpenAI-specific metadata as a compatibility
-overlay; root `plugin.json` intentionally does not define `extensions.com.openai`,
-which would replace that overlay rather than merge with it. See the
-[OpenAI packaging reference](https://developers.openai.com/plugins/build/plugins).
-This metadata layout does not establish end-to-end support for a new host;
-the support verification requirement below still applies.
-
 | Harness | Manifest | Skills | Subagents |
 | --- | --- | --- | --- |
 | Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Listed file by file in `plugin.json` `agents` |

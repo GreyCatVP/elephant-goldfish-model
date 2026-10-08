@@ -36,9 +36,8 @@ pip install -r requirements-dev.txt
 
 Tier 1 tests run offline without network access, API keys, or model
 dependencies. They validate YAML frontmatter schemas and relative link
-integrity, the portable plugin manifest schema, shared metadata consistency,
-and marketplace/component paths. The versioned plugin schema is vendored under
-`tests/fixtures/` so validation requires no network access.
+integrity, the portable plugin manifest, shared metadata consistency, and
+marketplace/component paths.
 
 ```bash
 # Run all unit tests
