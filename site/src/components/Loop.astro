@@ -45,7 +45,6 @@ const steps = [
           </svg>
         </span>
         <h3 class="title">Build the code</h3>
-        <span class="no-skill">No skill needed</span>
         <p class="muted">
           The verified spec is complete enough to hand directly to your LLM to execute.
         </p>
@@ -125,6 +124,7 @@ const steps = [
 
   .cmd {
     font-size: 0.875rem;
+    line-height: 1.25rem;
     color: var(--md-sys-color-on-surface);
     background: var(--md-sys-color-surface-container-high);
     border-radius: 6px;
@@ -132,15 +132,9 @@ const steps = [
     inline-size: fit-content;
   }
 
-  .no-skill {
-    font: var(--md-sys-typescale-label-md);
-    font-size: 0.875rem;
-    letter-spacing: 0;
-    color: var(--md-sys-color-on-surface-variant);
-    border: 1px dashed var(--md-sys-color-outline);
-    border-radius: 6px;
-    padding: 2px 8px;
-    inline-size: fit-content;
+  /* Step 4 has no command chip; reserve the chip height + gap so its paragraph aligns with steps 1-3. */
+  .step:nth-child(4) .muted {
+    margin-block-start: calc(1.25rem + 4px + 10px);
   }
 
   /* The weekly check is not a fifth step: same anatomy, laid across the whole rule. */
@@ -194,6 +188,10 @@ const steps = [
     .step:nth-child(2n),
     .step:nth-child(4n) {
       padding-inline-end: 0;
+    }
+
+    .step:nth-child(4) .muted {
+      margin-block-start: 0;
     }
 
     .drift {
