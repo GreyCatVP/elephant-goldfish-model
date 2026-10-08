@@ -143,13 +143,13 @@ If your harness has no subagent tool, stop and tell the user: a review in the sa
 
 3.  **Action Dispatch Based on Preset**:
 
-    *   **Preset 0: `Consolidated report with all review rubrics`**: Proceed to
-        Step 3 to discover the semantic split, then execute Stages 5, 6, 
-        7, 8, and 9 without pausing for checkpoints, consolidating findings into
-        `consolidated_review_report.md`.
-    *   **Preset 1: `Interactive review with all review rubrics`**: Proceed to
+    *   **Preset 0: `Interactive review with all review rubrics`**: Proceed to
         Step 3 to discover the semantic split, then execute Stages 5, 6, 7, 8,
         and 9 sequentially with interactive checkpoint gates between stages.
+    *   **Preset 1: `Consolidated report with all review rubrics`**: Proceed to
+        Step 3 to discover the semantic split, then execute all five stages
+        without pausing for checkpoints, consolidating findings into
+        `consolidated_review_report.md`.
     *   **Preset 2: `Feature spec only`**: **Bypass Step 3 semantic split
         discovery entirely**. Set `FeatureRange = 1..End`, set `DetailedRange =
         N/A`, and execute Stages 5, 6, 7, and 8 with checkpoints. Cleanly halt

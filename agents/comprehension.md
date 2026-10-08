@@ -31,6 +31,7 @@ Inspect the `Mode` parameter specified by the caller:
 Evaluate the raw feature concept for UX, developer ergonomics, and cognitive overhead:
 1. **API / CLI Ergonomics**: Is the proposed interface or workflow intuitive? Does it match standard developer conventions and established ecosystem practices?
 2. **Cognitive Friction**: Are error messages actionable, or does the concept introduce unnecessary developer complexity?
+3. Report UX and ergonomics feedback back to the orchestrator.
 
 ### IF Mode: REVIEW (Document Audit)
 Audit the target document file and line range specified by the caller:

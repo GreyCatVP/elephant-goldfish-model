@@ -78,7 +78,7 @@ For detailed setup, supported harnesses (**Antigravity** and **Gemini CLI**), an
 
 ## Contributing
 
-We welcome community contributions—including contributors who want to help add and verify support for additional agent harnesses beyond Antigravity and Gemini CLI! Please review [Harnesses](docs/harnesses.md) and our [Contribution Guidelines](CONTRIBUTING.md) before submitting pull requests.
+We welcome community contributions! Please review [Harnesses](docs/harnesses.md) and our [Contribution Guidelines](CONTRIBUTING.md) before submitting pull requests.
 
 ## License
 
