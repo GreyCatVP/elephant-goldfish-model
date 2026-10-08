@@ -41,6 +41,7 @@ const steps = [
           </svg>
         </span>
         <h3 class="title">Build</h3>
+        <span class="cmd" style="visibility: hidden">&nbsp;</span>
         <p class="muted">
           The spec is complete enough to hand directly to your LLM to execute.
         </p>
@@ -117,11 +118,6 @@ const steps = [
     fill: currentColor;
   }
 
-  /* Step 4 has no command chip; reserve the chip height + gap so its paragraph aligns with steps 1-3. */
-  .step:nth-child(4) .muted {
-    margin-block-start: calc(1.5rem + 4px + 10px);
-  }
-
   /* The weekly check is not a fifth step: same anatomy, laid across the whole rule. */
   .drift {
     grid-column: 1 / -1;
@@ -173,10 +169,6 @@ const steps = [
     .step:nth-child(2n),
     .step:nth-child(4n) {
       padding-inline-end: 0;
-    }
-
-    .step:nth-child(4) .muted {
-      margin-block-start: 0;
     }
 
     .drift {

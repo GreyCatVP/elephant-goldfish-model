@@ -170,7 +170,6 @@ p {
   background: var(--md-sys-color-surface-container-high);
   border-radius: 6px;
   padding: 2px 8px;
-  inline-size: fit-content;
 }
 
 .nowrap {
