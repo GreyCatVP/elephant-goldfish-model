@@ -5,21 +5,6 @@ import IconButton from './gb/IconButton.astro';
 const repo = 'https://github.com/google/elephant-goldfish-model';
 const cloneCommand = `git clone ${repo}`;
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
-
-const steps = [
-  {
-    name: 'Register the skills',
-    body: 'Add the skills/ folder to your Antigravity skill registry, or invoke the skills directly as slash commands.',
-  },
-  {
-    name: 'Register the personas',
-    body: 'Include agents/ in your harness configuration so isolated Goldfish reviewers spawn in fresh contexts without conversational bias.',
-  },
-  {
-    name: 'Start with a brainstorm',
-    body: 'Run /egm-brainstorm on a real feature and let the goldfish shoot down the first idea.',
-  },
-];
 ---
 
 <section class="section scheme-dark install" id="install">
@@ -45,22 +30,6 @@ const steps = [
         </svg>
       </IconButton>
     </div>
-
-    <ol class="steps">
-      {
-        steps.map((step, i) => (
-          <li class="step">
-            <span class="num" aria-hidden="true">
-              {i + 1}
-            </span>
-            <div>
-              <h3 class="title">{step.name}</h3>
-              <p class="muted">{step.body}</p>
-            </div>
-          </li>
-        ))
-      }
-    </ol>
 
     <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>
   </div>
@@ -97,6 +66,7 @@ const steps = [
     align-items: center;
     gap: 12px;
     max-inline-size: 640px;
+    margin-block-end: 24px;
     padding: 8px 8px 8px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
     border-radius: var(--md-sys-shape-corner-lg);
@@ -117,36 +87,5 @@ const steps = [
 
   :global(.copied) .icon-check {
     display: block;
-  }
-
-  .steps {
-    list-style: none;
-    margin: clamp(40px, 6vw, 64px) 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px 24px;
-  }
-
-  @media (max-width: 820px) {
-    .steps {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .step {
-    display: flex;
-    gap: 16px;
-    padding-block-start: 20px;
-    border-block-start: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .step .title {
-    margin-block-end: 6px;
-  }
-
-  .num {
-    font: var(--md-sys-typescale-title-lg);
-    color: var(--md-sys-color-on-surface-variant);
   }
 </style>
