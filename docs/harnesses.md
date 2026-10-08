@@ -55,6 +55,27 @@ nest subagents, use direct dispatch instead of the synthesizer.
 A Goldfish review needs a fresh context. If a harness has no subagent tool,
 the review skills stop instead of running in the same context.
 
+## Common pitfalls
+
+- **Testing the wrong copy:** An existing installation can take precedence over
+  a local candidate. Use a uniquely named test plugin where supported and
+  verify the paths actually read by the agent.
+- **Incomplete installation:** Keep the whole bundle together. Skills need
+  personas, reference files, and document standards; copying only skill files
+  is insufficient.
+- **Discovery versus invocation:** Skills with `disable-model-invocation: true`
+  may be absent from automatic discovery. Invoke them explicitly using the
+  host's command syntax before concluding that installation failed.
+- **Resource lookup:** Resolve bundled files from the installed plugin, and
+  keep generated artifacts in the user's project. Do not guess cache versions.
+  See [TESTING.md](../TESTING.md#interpreting-native-test-results) for how to
+  record an explicit-path workaround.
+- **Isolation limits:** Fresh subagent context does not imply filesystem
+  isolation or exclusion of all host instructions. Verify the host's behavior.
+- **Task constraints:** Pass offline, read-only, and resource-scope requirements
+  explicitly to each delegated reviewer. Check its tool use; parent instructions
+  alone do not establish that a child followed those restrictions.
+
 ## Support Status & Contributing Other Harnesses
 
 Our initial release officially supports **Antigravity** and **Gemini CLI**. We welcome
