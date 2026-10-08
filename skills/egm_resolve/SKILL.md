@@ -154,11 +154,9 @@ Interpret the user's action/response as follows:
 ### Step 5: Post-Resolution Synchronization & Exit
 
 1.  **Re-verify Lines**: If changes were made to `TargetFile`, verify that the
-    file remains structurally coherent and valid markdown.
+    file remains structurally coherent and valid markdown, and that relative
+    links and anchors remain intact.
 2.  Mark the report as resolved (add a `Status: resolved` line at the top).
-3.  **Verify Cross-References**: Ensure relative links and internal anchor references remain intact after edits.
-4.  **Clean Up Execution State**: Remove any temporary files or scratchpads created during the resolution pass.
-5.  **Compound the Learning**: Review the accepted `PROPOSE FIX` findings from this resolution pass. If any finding revealed a recurring architectural constraint, codebase convention, or systemic blind spot that applies beyond this single document, propose a concise rule addition (1–2 lines) for `AGENTS.md` or `rules/` so future drafting and review sessions enforce it automatically.
-6.  **Handoff**: Exit cleanly back to the caller (such as `egm-review-loop`)
+3.  **Handoff**: Exit cleanly back to the caller (such as `egm-review-loop`)
     with the count of accepted fixes, contested items, and remaining unaddressed
     issues.

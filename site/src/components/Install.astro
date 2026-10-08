@@ -3,13 +3,12 @@ import Button from './gb/Button.astro';
 import IconButton from './gb/IconButton.astro';
 
 const repo = 'https://github.com/google/elephant-goldfish-model';
-const cloneCmd = `# Option A: Install as a plugin (Claude Code / Cursor / Codex)
+const cloneCommand = `# Option A: Install as a plugin (Claude Code / Cursor / Codex)
 /plugin marketplace add google/elephant-goldfish-model
 /plugin install elephant-goldfish-model
 
 # Option B: Clone directly into your skills directory
 git clone https://github.com/google/elephant-goldfish-model.git`;
-const cloneCommand = cloneCmd;
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 
 const steps = [
