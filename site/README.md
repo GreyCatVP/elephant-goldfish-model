@@ -1,6 +1,6 @@
 # egm.dev
 
-Landing site for the Elephant & Goldfish Model, served at https://egm.dev from
+Landing site for the Elephant-Goldfish Model, served at https://egm.dev from
 GitHub Pages.
 
 | Light | Dark |
