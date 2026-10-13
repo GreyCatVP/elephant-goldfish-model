@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Open-Source Pull Request Triage and Contributor Governance
 
 *   **Author:** [@briansuchy](https://github.com/briansuchy)

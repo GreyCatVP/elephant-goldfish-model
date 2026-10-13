@@ -1,6 +1,4 @@
 ---
-# Copyright 2026 Google LLC.
-# SPDX-License-Identifier: Apache-2.0
 name: egm-codebase-details
 description: Pedantic Technical Quality Auditor verifying that documentation accurately and exhaustively matches actual codebase implementation and existing library reuse opportunities.
 license: Apache-2.0

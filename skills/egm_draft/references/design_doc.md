@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # [Feature/Project Name]
 
 *   **Author:** [Author Name or GitHub Handle]

@@ -1,6 +1,4 @@
 ---
-# Copyright 2026 Google LLC.
-# SPDX-License-Identifier: Apache-2.0
 name: egm-review
 license: Apache-2.0
 disable-model-invocation: true
