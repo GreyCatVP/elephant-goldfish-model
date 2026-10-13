@@ -174,4 +174,4 @@ implementation. What metrics should be measured to verify success?
 
 <!-- Provenance: Indicates initial structural drafting via EGM. -->
 
-*Drafted with Elephant & Goldfish Model (EGM)*
+*Drafted with Elephant-Goldfish Model (EGM)*

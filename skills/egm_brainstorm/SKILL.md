@@ -15,7 +15,7 @@ description: >-
 ## Overview
 
 This skill acts as the upstream conversational brainstorming engine for the
-Elephant & Goldfish Model (EGM). It turns "half-baked" or raw concepts into
+Elephant-Goldfish Model (EGM). It turns "half-baked" or raw concepts into
 hypotheses by combining **interactive clarifying questions** with an automated
 **Goldfish review**. The outcome is an iteratively refined RFC summary
 (`concepts_brief.md`) that leads directly into `/egm-draft` or review with

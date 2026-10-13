@@ -1,4 +1,4 @@
-# Contributing to the Elephant & Goldfish Model (EGM)
+# Contributing to the Elephant-Goldfish Model (EGM)
 
 We welcome contributions! We all benefit when new ideas, skills, and reviewer
 perspectives are shared across the open-source community.

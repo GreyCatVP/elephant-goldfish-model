@@ -1,13 +1,13 @@
-# Elephant & Goldfish Model (EGM)
+# Elephant-Goldfish Model (EGM)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Website](https://img.shields.io/badge/Website-egm.dev-black.svg)](https://egm.dev)
 
-Elephant & Goldfish Model is an open-source framework and methodology for Spec-Driven Development (SDD) with autonomous AI coding agents.
+Elephant-Goldfish Model is an open-source framework and methodology for Spec-Driven Development (SDD) with autonomous AI coding agents.
 
 It anchors development in context-rich system descriptions and adversarial multi-agent reviews, making complex codebases easier for both humans and AI to navigate, verify, and evolve.
 
-![Elephant & Goldfish Model Overview](assets/heroes.png)
+![Elephant-Goldfish Model Overview](assets/heroes.png)
 
 ---
 

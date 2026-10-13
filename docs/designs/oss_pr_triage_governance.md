@@ -9,7 +9,7 @@
 ## Overview
 
 This document specifies the contribution intake and triage architecture for the
-Elephant & Goldfish Model (EGM) open-source repository
+Elephant-Goldfish Model (EGM) open-source repository
 (`github.com/google/elephant-goldfish-model`).
 
 As AI coding assistants and autonomous agents proliferate, open-source projects
