@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Design Doc: EGM Repository & Package Bootstrap (egm-bootstrap)
 
 *   **Author:** Brian Suchy ([@briansuchy](https://github.com/briansuchy))

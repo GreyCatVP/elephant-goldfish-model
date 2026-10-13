@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Elephant & Goldfish Model (EGM)
 
 AI has changed software development. Everything is different now and we all know

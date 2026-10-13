@@ -1,6 +1,4 @@
 ---
-# Copyright 2026 Google LLC.
-# SPDX-License-Identifier: Apache-2.0
 name: egm-synthesizer
 description: Intermediate Swarm Compiler and Aggregator coordinating parallel Goldfish reviewers, deduplicating findings, and compiling deliverable reports.
 license: Apache-2.0

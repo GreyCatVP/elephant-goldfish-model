@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # EGM Testing & Behavioral Evaluation Playbook
 
 This document provides a step-by-step developer playbook for running both
