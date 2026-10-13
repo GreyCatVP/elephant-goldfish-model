@@ -32,6 +32,12 @@
   --md-sys-color-primary-container: light-dark(#e8f0fe, #0b57d0);
   --md-sys-color-on-primary-container: light-dark(#041e49, #d3e3fd);
 
+  /* Brand: Google Blue 500 and Google Red 500 for the Elephant and Goldfish marks.
+     Decorative only; text and focus use secondary for contrast.
+     Keep in sync with public/favicon.svg. */
+  --egm-brand-elephant: #4285f4;
+  --egm-brand-goldfish: #ea4335;
+
   /* Secondary: focus ring and links */
   --md-sys-color-secondary: light-dark(#0b57d0, #a8c7fa);
   --md-sys-color-on-secondary: light-dark(#ffffff, #062e6f);
