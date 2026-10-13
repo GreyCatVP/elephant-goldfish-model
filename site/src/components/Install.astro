@@ -77,16 +77,7 @@ const paths = [
 
 <style>
   .install {
-    /* Loose on entry (change of register from light to dark), standard before the footer. */
-    padding-block: var(--section-y-loose) var(--section-y);
-  }
-
-  /* In dark mode the page is already dark, so there is no register change to mark.
-     The Essay section's bottom padding already separates the two; keep the entry tight. */
-  @media (prefers-color-scheme: dark) {
-    .install {
-      padding-block-start: var(--section-y-tight);
-    }
+    padding-block: var(--section-y);
   }
 
   .paths {
