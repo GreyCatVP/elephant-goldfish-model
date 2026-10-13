@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # EGM Drift Detection Protocol (Living Specifications & Code Synchronization)
 
 *   **Author:** Jim Quinn ([@quinnjim](https://github.com/quinnjim))

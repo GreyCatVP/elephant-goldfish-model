@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Artificial Intelligence & Automated Contribution Policy
 
 We encourage using AI tools when developing changes for our codebase. However,

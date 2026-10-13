@@ -1,6 +1,4 @@
 ---
-# Copyright 2026 Google LLC.
-# SPDX-License-Identifier: Apache-2.0
 name: egm-bootstrap-orchestrator
 description: Orchestrates directory README documentation, partitions subtrees, and coordinates worker subagents.
 license: Apache-2.0

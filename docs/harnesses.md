@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Harnesses
 
 EGM is one set of skills and personas. This repository serves as the

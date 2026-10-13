@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # EGM Goldfish Review Protocol & Resolution Engine
 
 *   **Authors:** Brandon Tearse ([@tearseb](https://github.com/tearseb)), Brian Suchy ([@briansuchy](https://github.com/briansuchy)), Sean Stappas ([@seanstappas](https://github.com/seanstappas))

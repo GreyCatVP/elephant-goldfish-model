@@ -1,6 +1,4 @@
 ---
-# Copyright 2026 Google LLC.
-# SPDX-License-Identifier: Apache-2.0
 name: egm-design
 description: Hostile Design Critic persona focused on system architecture, scalability, infrastructure economics, and unmitigated risks.
 license: Apache-2.0

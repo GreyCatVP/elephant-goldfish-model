@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # EGM Brainstorm: Zero-Doc Upstream Ideation & Multi-Lens Shootdown
 
 *   **Author:** Brian Suchy ([@briansuchy](https://github.com/briansuchy))

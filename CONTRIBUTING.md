@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Contributing to the Elephant & Goldfish Model (EGM)
 
 We welcome contributions! We all benefit when new ideas, skills, and reviewer
