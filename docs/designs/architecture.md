@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # EGM Architecture & System Lifecycle
 
 *   **Authors:** Jim Quinn ([@quinnjim](https://github.com/quinnjim)), Elise Ewing ([@eewing314](https://github.com/eewing314)), Dave Rensin ([@drensin](https://github.com/drensin))

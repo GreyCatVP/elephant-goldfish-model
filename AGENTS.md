@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Agent Guidelines for Elephant & Goldfish Model (EGM)
 
 You are assisting development in the EGM repository.

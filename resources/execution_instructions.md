@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 ## Execution Instructions
 
 *   **NO CODE (SILENT GUARD - CRITICAL)**: You are strictly forbidden from

@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Verification and Evaluation Commands for `egm-bootstrap`
 
 Frontmatter and link checks run in `pytest tests/unit`; behavioral evaluations run with `python tools/eval_runner.py --skill egm_bootstrap --model <model>` (see [TESTING.md](../../TESTING.md)).

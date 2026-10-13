@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Feature Specification Standard
 
 This standard defines the quality bar for high-level feature specifications

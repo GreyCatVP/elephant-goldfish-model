@@ -1,8 +1,3 @@
-<!--
-Copyright 2026 Google LLC.
-SPDX-License-Identifier: Apache-2.0
--->
-
 # Implementation Readiness Standard
 
 This standard defines the quality bar for implementation plans and task lists.
