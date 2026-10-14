@@ -37,7 +37,7 @@ failure modes:
 
 ## Design Principles
 
-*   **Elephant-Goldfish**:
+*   **The Elephant & The Goldfish**:
 
     *   **The Elephant**: A deep-context agent loaded with system history, CUJs,
         and codebase maps to explore requirements and draft designs.

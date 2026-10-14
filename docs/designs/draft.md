@@ -127,7 +127,7 @@ Drafts the execution section:
 
 *   Performs a final self-evaluation against
     [`zoom-out-standard.md`](../../resources/document_standards/zoom-out-standard.md).
-*   Appends a standardized provenance watermark footer (*`*Drafted with Elephant-Goldfish Model*`*)
+*   Appends a standardized provenance watermark footer (*`*Drafted with EGM*`*)
     separated by a horizontal rule delimiter (`--------------------------------------------------------------------------------`)
     after trailing open questions.
 *   Writes the document to `docs/designs/<FEATURE>.md`.
@@ -153,7 +153,7 @@ Goldfish review engine to parse the document into two semantic zones:
 
 Standardizing on the `## Detailed Implementation Plan` header allows automated
 boundary discovery without requiring manual line range configuration. Terminal
-footer watermarks (`*Drafted with Elephant-Goldfish Model*`) residing at EOF are treated
+footer watermarks (`*Drafted with EGM*`) residing at EOF are treated
 as inert structural metadata and excluded from requirement audits during review
 and drift analysis.
 
@@ -165,7 +165,7 @@ To support lightweight provenance tracking and human inspection, all design
 ```markdown
 --------------------------------------------------------------------------------
 
-*Drafted with Elephant-Goldfish Model*
+*Drafted with EGM*
 ```
 
 *   **Delimited EOF Placement**: Appended at the absolute end of the document,
