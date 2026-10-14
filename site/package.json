@@ -2,7 +2,7 @@
   "name": "egm-site",
   "private": true,
   "type": "module",
-  "description": "Landing site for the Elephant & Goldfish Model, served at https://egm.dev",
+  "description": "Landing site for the Elephant-Goldfish Model, served at https://egm.dev",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=22.12"

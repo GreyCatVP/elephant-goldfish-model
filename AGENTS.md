@@ -1,4 +1,4 @@
-# Agent Guidelines for Elephant & Goldfish Model (EGM)
+# Agent Guidelines for Elephant-Goldfish Model (EGM)
 
 You are assisting development in the EGM repository.
 

@@ -1,15 +1,15 @@
-# Elephant & Goldfish Model (EGM)
+# Elephant-Goldfish Model (EGM)
 
 AI has changed software development. Everything is different now and we all know
 it.
 
-The **Elephant & Goldfish Model** (EGM) is one way teams are adapting to the
+The **Elephant-Goldfish Model** (EGM) is one way teams are adapting to the
 change. It is a protocol for shipping high quality software quickly, wrapped in
 a metaphor to make it easy to remember. Dave Rensin's article,
 [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874),
 goes into this in depth. If you haven't read that, start there!
 
-## Elephant & Goldfish Philosophy
+## Elephant-Goldfish Philosophy
 
 ### The Elephant
 

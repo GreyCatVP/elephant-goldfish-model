@@ -4,7 +4,7 @@ license: Apache-2.0
 disable-model-invocation: true
 description: >-
   Drafts a design document section-by-section using the concepts brief from
-  egm-brainstorm (or user notes). This is the second step in the Elephant & Goldfish (EGM)
+  egm-brainstorm (or user notes). This is the second step in the Elephant-Goldfish (EGM)
   feature flow. Use when you are ready to write a design doc after aligning on
   requirements + solution.
 ---

@@ -8,7 +8,7 @@
 
 ## Overview
 
-The **Elephant & Goldfish Model (EGM)** is an implementation of Spec-Driven
+The **Elephant-Goldfish Model (EGM)** is an implementation of Spec-Driven
 Development (SDD) based on [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874).
 It emphasizes collaborative use of AI for design and review, maintaining verified
 technical specifications checked directly into the codebase.
@@ -37,7 +37,7 @@ failure modes:
 
 ## Design Principles
 
-*   **Elephant & Goldfish**:
+*   **The Elephant & The Goldfish**:
 
     *   **The Elephant**: A deep-context agent loaded with system history, CUJs,
         and codebase maps to explore requirements and draft designs.

@@ -1,7 +1,7 @@
 # EGM Design Specifications
 
 This directory contains the canonical technical design specifications defining
-the Elephant & Goldfish Model (EGM) framework, skills, reviewer personas, and
+the Elephant-Goldfish Model (EGM) framework, skills, reviewer personas, and
 operational guardrails.
 
 | Document | Author | Primary Component |
