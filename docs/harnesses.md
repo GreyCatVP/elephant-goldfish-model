@@ -46,10 +46,19 @@ the review skills stop instead of running in the same context.
 
 ## Support Status & Contributing Other Harnesses
 
-Our initial release supports **Antigravity** and **Gemini CLI**. We welcome
+Our initial release officially supports **Antigravity** and **Gemini CLI**. We welcome
 contributors who want to help add and verify support for other agent harnesses!
 
+### Contributing Support for New Harnesses
+
 A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
-`/egm-review` run end to end on it. To contribute support for another harness,
-see [CONTRIBUTING.md](../CONTRIBUTING.md) and record each run in
-[TESTING.md](../TESTING.md).
+`/egm-review` run end to end through its plugin install. When contributing
+support for another harness:
+
+1. Add the appropriate manifest or configuration file to the repository root
+   (e.g., matching the harness's plugin/extension standard).
+2. Document install steps, manifest mapping, and delegation mechanics in this guide
+   (`docs/harnesses.md`).
+3. Verify that `/egm-brainstorm`, `/egm-draft`, and `/egm-review` run end to end,
+   and attach verification notes or execution transcripts in your Pull Request description
+   (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
