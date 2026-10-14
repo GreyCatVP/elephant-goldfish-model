@@ -3,71 +3,60 @@ import Button from './gb/Button.astro';
 import IconButton from './gb/IconButton.astro';
 
 const repo = 'https://github.com/google/elephant-goldfish-model';
-const cloneCommand = `git clone ${repo}`;
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
+const harnesses = `${repo}/blob/HEAD/docs/harnesses.md`;
 
-const steps = [
-  {
-    name: 'Register the skills',
-    body: 'Add the skills/ folder to your Antigravity skill registry, or invoke the skills directly as slash commands.',
-  },
-  {
-    name: 'Register the personas',
-    body: 'Include agents/ in your harness configuration so isolated Goldfish reviewers spawn in fresh contexts without conversational bias.',
-  },
-  {
-    name: 'Start with a brainstorm',
-    body: 'Run /egm-brainstorm on a real feature and let the goldfish shoot down the first idea.',
-  },
+// The two install paths agreed by the EGM OSS Squad: the Antigravity CLI, or a prompt.
+const paths = [
+  { label: 'Run in your terminal', text: `agy plugin install ${repo}`, copyLabel: 'Copy command' },
+  { label: 'Or ask Antigravity', text: `Please install this plugin: ${repo}`, copyLabel: 'Copy prompt' },
 ];
 ---
 
 <section class="section scheme-dark install" id="install">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">Clone it. Point your agent at it.</h2>
+      <h2 class="headline">Install the plugin.</h2>
       <p class="lead">
-        Built for <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>. The
-        skills are plain markdown and work with any agent that supports skills and slash commands.
+        Built for <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>, Google's agentic
+        development platform.
       </p>
     </div>
 
-    <div class="copybox">
-      <code class="command">{cloneCommand}</code>
-      <IconButton label="Copy command" color="tonal" size="sm" data-copy={cloneCommand}>
-        <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
-          <path
-            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-          ></path>
-        </svg>
-        <svg class="icon-check" viewBox="0 -960 960 960" aria-hidden="true">
-          <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
-        </svg>
-      </IconButton>
-    </div>
-
-    <ol class="steps">
+    <div class="paths">
       {
-        steps.map((step, i) => (
-          <li class="step">
-            <span class="num" aria-hidden="true">
-              {i + 1}
-            </span>
-            <div>
-              <h3 class="title">{step.name}</h3>
-              <p class="muted">{step.body}</p>
+        paths.map((path) => (
+          <div class="path">
+            <p class="path-label">{path.label}</p>
+            <div class="copybox">
+              <code class="command">{path.text}</code>
+              <IconButton label={path.copyLabel} color="tonal" size="sm" data-copy={path.text}>
+                <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
+                  <path
+                    d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                  ></path>
+                </svg>
+                <svg class="icon-check" viewBox="0 -960 960 960" aria-hidden="true">
+                  <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
+                </svg>
+              </IconButton>
             </div>
-          </li>
+          </div>
         ))
       }
-    </ol>
+    </div>
+
+    <p class="muted then">
+      Then run <code>/egm-brainstorm</code> on a real feature and let the goldfish shoot down the first idea.
+      Using another agent? <a href={harnesses} target="_blank" rel="noopener">See the harness guide</a>.
+    </p>
 
     <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>
   </div>
 </section>
 
 <script>
-  // Clipboard copy for the clone command. This is the only script on the page.
+  // Clipboard copy for the install command and prompt. This is the only script on the page.
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
     const label = button.getAttribute('aria-label') ?? '';
     button.addEventListener('click', async () => {
@@ -88,15 +77,26 @@ const steps = [
 
 <style>
   .install {
-    /* Loose on entry (change of register from light to dark), standard before the footer. */
-    padding-block: var(--section-y-loose) var(--section-y);
+    padding-block: var(--section-y-tight) var(--section-y);
+  }
+
+  .paths {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    max-inline-size: 640px;
+  }
+
+  .path-label {
+    margin: 0 0 8px;
+    font: var(--md-sys-typescale-label-lg);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   .copybox {
     display: flex;
     align-items: center;
     gap: 12px;
-    max-inline-size: 640px;
     padding: 8px 8px 8px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
     border-radius: var(--md-sys-shape-corner-lg);
@@ -105,6 +105,7 @@ const steps = [
 
   .command {
     flex: 1;
+    min-inline-size: 0;
     font-size: 0.9375rem;
     overflow-x: auto;
     white-space: nowrap;
@@ -120,35 +121,8 @@ const steps = [
     display: block;
   }
 
-  .steps {
-    list-style: none;
-    margin: clamp(40px, 6vw, 64px) 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px 24px;
-  }
-
-  @media (max-width: 820px) {
-    .steps {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .step {
-    display: flex;
-    gap: 16px;
-    padding-block-start: 20px;
-    border-block-start: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .step .title {
-    margin-block-end: 6px;
-  }
-
-  .num {
-    font: var(--md-sys-typescale-label-lg);
-    line-height: 1.75rem;
-    color: var(--md-sys-color-on-surface-variant);
+  .then {
+    max-inline-size: 640px;
+    margin: clamp(32px, 5vw, 48px) 0;
   }
 </style>
