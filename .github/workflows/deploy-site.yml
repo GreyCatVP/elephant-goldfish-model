@@ -25,7 +25,7 @@ name: Deploy site
 
 on:
   push:
-    branches: [main, feat/egm-open-source-release]
+    branches: [main]
     paths:
       - 'site/**'
       - '.github/workflows/deploy-site.yml'
