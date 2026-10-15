@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="1.6 2.0 20.0 20.0" width="32" height="32">
   <style>
-    :root { --e: var(--egm-color-elephant, light-dark(#0842a0, #4c8df6)); --g: var(--egm-color-goldfish, light-dark(#4c8df6, #a8c7fa)); color-scheme: light dark; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+    :root { --e: var(--egm-color-elephant, light-dark(#1b6ef3, #7cacf8)); --g: var(--egm-color-goldfish, light-dark(#e86e00, #ff8d41)); color-scheme: light dark; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
     #e { fill: var(--e); stroke: var(--e); } #g { fill: var(--g); stroke: var(--g); } .d { stroke: none; } .t { fill: none; }
   </style>
   <g id="e">
