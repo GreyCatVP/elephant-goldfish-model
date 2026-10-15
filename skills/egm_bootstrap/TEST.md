@@ -1,6 +1,6 @@
 # Verification and Evaluation Commands for `egm-bootstrap`
 
-Frontmatter and link checks run in `pytest tests/unit`; behavioral evaluations run with `python tools/eval_runner.py --skill egm_bootstrap --model <model>` (see [TESTING.md](../../TESTING.md)).
+Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../TESTING.md)).
 
 ## Manual Verification Scenarios
 
