@@ -18,6 +18,8 @@ updates:
     directory: /site
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       site:
         patterns: ["*"]
@@ -25,6 +27,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       actions:
         patterns: ["*"]
