@@ -35,7 +35,10 @@ const steps = [
         steps.map((step, i) => (
           <li class="step">
             <span class="badge badge-large">{i + 1}</span>
-            <h3 class="title">{step.name} <span class="role">{step.role}</span></h3>
+            <div class="title-row">
+              <h3 class="title">{step.name}</h3>
+              <span class="role">{step.role}</span>
+            </div>
             <code class="cmd">{step.command}</code>
             <p class="muted">{step.body}</p>
           </li>
@@ -47,7 +50,10 @@ const steps = [
             <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"></path>
           </svg>
         </span>
-        <h3 class="title">Build the code <span class="role">You</span></h3>
+        <div class="title-row">
+          <h3 class="title">Build the code</h3>
+          <span class="role">You</span>
+        </div>
         <span class="no-skill">No skill needed</span>
         <p class="muted">
           The verified spec is complete enough to hand directly to your LLM to execute.
@@ -158,10 +164,16 @@ const steps = [
     inline-size: fit-content;
   }
 
+  /* Role sits beside the heading, not inside it, so screen readers announce the heading as just the step name. */
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
   .role {
     font: var(--md-sys-typescale-label-lg);
     color: var(--md-sys-color-on-surface-variant);
-    margin-inline-start: 6px;
   }
 
   .no-skill {
