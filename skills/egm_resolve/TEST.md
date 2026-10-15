@@ -1,6 +1,6 @@
 # Test Plan: Goldfish Review Resolve Skill
 
-Frontmatter and link checks run in `pytest tests/unit`; behavioral evaluations run with `python tools/eval_runner.py --skill egm_resolve --model <model>` (see [TESTING.md](../../TESTING.md)).
+Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../TESTING.md)).
 
 ## Protocol Verification Checklist
 

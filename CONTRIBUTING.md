@@ -67,8 +67,7 @@ follows the EGM Spec-Driven Development process:
 *   **Evaluation Suites**: Skills must include a co-located behavioral
     evaluation suite in `skills/<skill_name>/test_scenarios.yaml` and
     verification instructions in `skills/<skill_name>/TEST.md`. See
-    [TESTING.md](TESTING.md) for running Tier 1 static checks (`pytest tests/unit`)
-    and Tier 2 behavioral evaluations (`python tools/eval_runner.py`).
+    [TESTING.md](TESTING.md) for running static checks (`pytest tests/unit`).
 *   **Formatting**: Format markdown files cleanly using standard formatters
     (e.g., Prettier or markdownlint).
 
