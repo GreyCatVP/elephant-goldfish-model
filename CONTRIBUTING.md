@@ -27,6 +27,8 @@ Contributions follow a two-track intake model defined in
 Targeted fixes, typo corrections, and test additions that do not alter core
 agent behavior or touch 3+ core files (`skills/`, `agents/`) can be
 submitted directly as a Pull Request without a prior issue or design document.
+PRs exceeding these limits without an approved design doc receive an advisory label
+(`advisory: design-doc-suggested`) recommending two-stage alignment.
 
 ### Track 2: Feature / Architectural Change (Two-Stage Alignment)
 Any new skill, persona, or change exceeding `100` non-test
