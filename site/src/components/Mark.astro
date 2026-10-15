@@ -1,0 +1,67 @@
+---
+interface Props {
+  variant?: 'split' | 'elephant' | 'goldfish';
+  size?: number | string;
+  width?: number | string;
+  height?: number | string;
+  class?: string;
+  'aria-hidden'?: boolean | 'true' | 'false';
+}
+
+const {
+  variant = 'split',
+  size,
+  width = size ?? (variant === 'split' ? 28 : 56),
+  height = size ?? (variant === 'split' ? 28 : 56),
+  class: className,
+  'aria-hidden': ariaHidden = true,
+} = Astro.props;
+
+const viewBox =
+  variant === 'elephant'
+    ? '1.60 6.8 10.4 10.4'
+    : variant === 'goldfish'
+      ? '12.5 6.8 10.4 10.4'
+      : '1.6 2.0 20.0 20.0';
+---
+
+<svg
+  viewBox={viewBox}
+  width={width}
+  height={height}
+  class={className}
+  aria-hidden={ariaHidden ? 'true' : undefined}
+>
+  {(variant === 'split' || variant === 'elephant') && (
+    <g class="elephant-mark">
+      <path
+        d="M10.30,6.80 A5.20,5.20 0 0 0 10.30,17.20 A1.20,1.20 0 0 0 11.50,16.00 L11.50,8.00 A1.20,1.20 0 0 0 10.30,6.80Z"
+        fill="var(--egm-color-elephant)"
+      />
+      <path
+        d="M7.20,12.20 C6.80,15.05 3.15,15.15 2.95,12.85 C2.85,11.25 3.10,10.20 3.45,9.40"
+        fill="none"
+        stroke="var(--egm-color-elephant)"
+        stroke-width="2.40"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+  )}
+  {(variant === 'split' || variant === 'goldfish') && (
+    <g class="goldfish-mark">
+      <path
+        d="M13.70,6.80 A5.20,5.20 0 0 1 13.70,17.20 A1.20,1.20 0 0 1 12.50,16.00 L12.50,8.00 A1.20,1.20 0 0 1 13.70,6.80Z"
+        fill="var(--egm-color-goldfish)"
+      />
+      <path
+        d="M16.80,12.00 L20.40,9.40 Q18.70,12.00 20.40,14.60Z"
+        fill="var(--egm-color-goldfish)"
+        stroke="var(--egm-color-goldfish)"
+        stroke-width="2.40"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </g>
+  )}
+</svg>

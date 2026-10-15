@@ -1,4 +1,5 @@
 ---
+import Mark from './Mark.astro';
 ---
 
 <section class="section" id="model">
@@ -13,10 +14,8 @@
 
     <div class="pair">
       <article class="role">
-        <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true">
-          <circle cx="32" cy="32" r="28" fill="var(--egm-color-elephant)"></circle>
-        </svg>
-        <h3 class="title">The Elephant</h3>
+        <Mark variant="elephant" class="glyph" />
+        <h3 class="title">Elephant</h3>
         <p class="role-sub">Remembers everything.</p>
         <p class="muted">
           Deep-context agents loaded with system history, architecture, component boundaries, and
@@ -25,10 +24,8 @@
         </p>
       </article>
       <article class="role">
-        <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true">
-          <circle cx="32" cy="32" r="26" fill="none" stroke="var(--egm-color-goldfish)" stroke-width="4"></circle>
-        </svg>
-        <h3 class="title">The Goldfish</h3>
+        <Mark variant="goldfish" class="glyph" />
+        <h3 class="title">Goldfish</h3>
         <p class="role-sub">Remembers nothing.</p>
         <p class="muted">
           Stateless, isolated subagents that read only the draft spec and the live source, with none
@@ -80,10 +77,10 @@
     max-inline-size: 48ch;
   }
 
-  .glyph {
+  .pair :global(.glyph) {
     inline-size: 56px;
     block-size: 56px;
-    margin-block-end: 28px;
+    margin-block-end: 20px;
   }
 
   .role-sub {
