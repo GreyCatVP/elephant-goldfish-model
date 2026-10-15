@@ -61,4 +61,4 @@ support for another harness:
    (`docs/harnesses.md`).
 3. Verify that `/egm-brainstorm`, `/egm-draft`, and `/egm-review` run end to end,
    and attach verification notes or execution transcripts in your Pull Request description
-   (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
+   (as outlined in the [Pull Request Template](../.github/PULL_REQUEST_TEMPLATE.md)).
