@@ -2,16 +2,19 @@
 const steps = [
   {
     name: 'Brainstorm',
+    role: 'Elephant',
     command: '/egm-brainstorm',
     body: 'Clarify a rough idea through open-ended questioning and stress-test the hypothesis into a concept brief.',
   },
   {
     name: 'Draft',
+    role: 'Elephant',
     command: '/egm-draft',
     body: 'Turn the brief into a living design doc under docs/designs/, section by section.',
   },
   {
     name: 'Review',
+    role: 'Goldfish',
     command: '/egm-review',
     body: 'A fresh, zero-context Goldfish session checks completeness, clarity, self-containment, and readiness. Expect a lot of feedback. That is the point.',
   },
@@ -32,7 +35,7 @@ const steps = [
         steps.map((step, i) => (
           <li class="step">
             <span class="badge badge-large">{i + 1}</span>
-            <h3 class="title">{step.name}</h3>
+            <h3 class="title">{step.name} <span class="role">{step.role}</span></h3>
             <code class="cmd">{step.command}</code>
             <p class="muted">{step.body}</p>
           </li>
@@ -44,7 +47,7 @@ const steps = [
             <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"></path>
           </svg>
         </span>
-        <h3 class="title">Build the code</h3>
+        <h3 class="title">Build the code <span class="role">You</span></h3>
         <span class="no-skill">No skill needed</span>
         <p class="muted">
           The verified spec is complete enough to hand directly to your LLM to execute.
@@ -153,6 +156,12 @@ const steps = [
     border-radius: 6px;
     padding: 2px 8px;
     inline-size: fit-content;
+  }
+
+  .role {
+    font: var(--md-sys-typescale-label-lg);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-inline-start: 6px;
   }
 
   .no-skill {
