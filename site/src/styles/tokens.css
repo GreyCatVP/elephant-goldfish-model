@@ -32,13 +32,15 @@
   --md-sys-color-primary-container: light-dark(#e8f0fe, #0b57d0);
   --md-sys-color-on-primary-container: light-dark(#041e49, #d3e3fd);
 
-  /* Brand: Google Blue 500 (Elephant) and Google Red 500 (Goldfish) with on-colors,
-     mirroring the md-sys role/on-role pairs. Links and focus use secondary for contrast.
+  /* Brand Semantic Roles: GM3 Primary Tonal Duo (P1-H)
+     Elephant (Primary 30/60) and Goldfish (Primary 60/80) with AAA on-colors.
      Keep in sync with public/favicon.svg. */
-  --egm-color-elephant: #4285f4;
-  --egm-color-on-elephant: #ffffff;
-  --egm-color-goldfish: #ea4335;
-  --egm-color-on-goldfish: #ffffff;
+  --egm-color-elephant: light-dark(#0842a0, #4c8df6);
+  --egm-color-on-elephant: light-dark(#ffffff, #041e49);
+  --egm-color-elephant-container: light-dark(#d3e3fd, #041e49);
+  --egm-color-goldfish: light-dark(#4c8df6, #a8c7fa);
+  --egm-color-on-goldfish: light-dark(#041e49, #041e49);
+  --egm-color-goldfish-container: light-dark(#ecf3fe, #083278);
 
   /* Secondary: focus ring and links */
   --md-sys-color-secondary: light-dark(#0b57d0, #a8c7fa);
@@ -65,12 +67,4 @@
   /* Shape */
   --md-sys-shape-corner-lg: 20px;
   --md-sys-shape-corner-md: 14px;
-}
-
-/* Forced-dark regions (install, footer). light-dark() resolves per element, so every
-   gBreeze component inside picks up the dark values with no extra selectors. */
-.scheme-dark {
-  color-scheme: dark;
-  background: var(--md-sys-color-surface);
-  color: var(--md-sys-color-on-surface);
 }
