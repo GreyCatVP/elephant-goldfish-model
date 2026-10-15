@@ -20,3 +20,4 @@ List all key changes made in this pull request and why:
 
 - [ ] **For Design Doc PRs (Stage 1)**: Executed `/egm-review docs/designs/<name>.md`, resolved findings via `/egm-resolve`, and verified relative links (`pytest tests/unit/test_link_integrity.py`).
 - [ ] **For Bug Fix / Implementation PRs (Stage 2)**: Unit tests or `test_scenarios.yaml` added/updated and `pytest tests/unit` executed.
+- [ ] **For Harness Support PRs**: Verified plugin installation and end-to-end execution of `/egm-brainstorm`, `/egm-draft`, and `/egm-review` on the target harness; attached execution summary or transcript.

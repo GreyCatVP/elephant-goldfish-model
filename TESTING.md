@@ -156,15 +156,3 @@ The report records:
 - `1`: One or more scenario assertions or rubric criteria failed.
 - `2`: Configuration, CLI argument, or runtime execution error (e.g., missing
   API key or `litellm` library).
-
-## 7. Harness Test Record
-
-A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
-`/egm-review` run end to end through its plugin install (see
-[Harnesses](docs/harnesses.md)). Contributors adding support for other
-harnesses should add a row for each verification run.
-
-| Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Antigravity | | | Not run | | | | |
-| Gemini CLI | | | Not run | | | | |
