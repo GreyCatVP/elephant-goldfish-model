@@ -8,8 +8,6 @@
 
 ## Overview
 
-![EGM Design Drafting: Specification Authoring & Semantic Boundaries](../../assets/egm-draft.png)
-
 The **EGM Design Drafting Skill** (`/egm-draft`) converts the ideation
 artifact (`concepts_brief.md` from `/egm-brainstorm` or discussion notes) into a
 formal, living design document under `docs/designs/`. It drafts the document

@@ -8,8 +8,6 @@
 
 ## Overview
 
-![EGM Brainstorm: Zero-Doc Upstream Ideation & Multi-Lens Shootdown](../../assets/egm-brainstorm.png)
-
 The **EGM Brainstorm Skill** (`/egm-brainstorm`) is a fast way to validate
 ideas. It is intended to be run early when a human doesn't know what solution
 they want yet. It gives early access to a Goldfish swarm for "half-baked"

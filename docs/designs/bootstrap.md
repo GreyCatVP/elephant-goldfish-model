@@ -8,8 +8,6 @@
 
 ## 1. Overview & Problem Statement
 
-![EGM Repository & Package Bootstrap](../../assets/egm-bootstrap.png)
-
 ### 1.1 The Problem
 
 In large-scale codebases (monoliths), establishing and maintaining a clear

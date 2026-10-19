@@ -28,7 +28,6 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 ```
 ├── agents/                       # Stateless reviewer and orchestrator persona prompts
-├── assets/                       # Branding assets and diagrams
 ├── docs/                         # Documentation, guides, and FAQ
 │   └── designs/                  # Living technical design specifications
 ├── resources/
