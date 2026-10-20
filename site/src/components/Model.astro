@@ -1,0 +1,97 @@
+---
+import Mark from './Mark.astro';
+---
+
+<section class="section" id="model">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="headline">Two kinds of agent. One owner.</h2>
+      <p class="lead">
+        Give the agent that designs all the context it can hold. Give the agent that reviews none of
+        it. The gap between the two is where design flaws surface, before they become code.
+      </p>
+    </div>
+
+    <div class="pair">
+      <article class="role">
+        <Mark variant="elephant" class="glyph" />
+        <h3 class="title">Elephant</h3>
+        <p class="role-sub">Remembers everything.</p>
+        <p class="muted">
+          Deep-context agents loaded with system history, architecture, component boundaries, and
+          user journeys. The Elephant runs structured brainstorming, probes operational limits, and
+          drafts the specification.
+        </p>
+      </article>
+      <article class="role">
+        <Mark variant="goldfish" class="glyph" />
+        <h3 class="title">Goldfish</h3>
+        <p class="role-sub">Remembers nothing.</p>
+        <p class="muted">
+          Stateless, isolated subagents that read only the draft spec and the live source, with none
+          of the conversation&rsquo;s bias. A swarm of goldfish stress-tests the design from
+          conflicting perspectives before any code exists.
+        </p>
+      </article>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="human">
+      <div>
+        <h3 class="title">You</h3>
+        <p class="role-sub">Owns the outcome.</p>
+      </div>
+      <p class="muted">
+        AI is an exploration partner and an automated auditor. Engineers own the architectural
+        decisions, the trade-offs, and the result. Every design still goes to a person for review.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pair,
+  .human {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px clamp(32px, 6vw, 96px);
+  }
+
+  .pair {
+    padding-block-end: clamp(40px, 6vw, 64px);
+  }
+
+  .human {
+    padding-block-start: clamp(32px, 5vw, 48px);
+  }
+
+  @media (max-width: 820px) {
+    .pair,
+    .human {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .role {
+    max-inline-size: 48ch;
+  }
+
+  .pair :global(.glyph) {
+    inline-size: 56px;
+    block-size: 56px;
+    margin-block-end: 20px;
+  }
+
+  .role-sub {
+    font: var(--md-sys-typescale-title-lg);
+    letter-spacing: var(--md-sys-typescale-title-lg-tracking);
+    color: var(--md-sys-color-on-surface-variant);
+    margin-block: 2px 14px;
+  }
+
+  .human .muted {
+    font: var(--md-sys-typescale-body-lg);
+    max-inline-size: 56ch;
+  }
+</style>

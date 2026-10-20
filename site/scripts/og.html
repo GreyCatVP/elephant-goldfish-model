@@ -1,0 +1,148 @@
+<!doctype html>
+<!--
+Copyright 2026 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!-- Template for public/og.png (1200x630). Rendered by scripts/capture.mjs; edit here, not the PNG. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../src/styles/tokens.css" />
+    <style>
+      @font-face {
+        font-family: 'Google Sans Flex';
+        src: url('../src/assets/fonts/google-sans-flex.woff2') format('woff2');
+        font-weight: 100 1000;
+      }
+      :root {
+        color-scheme: light;
+        --font-display: 'Google Sans Flex', system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        inline-size: 1200px;
+        block-size: 630px;
+        padding: 44px 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        font-family: var(--font-display);
+        color: var(--md-sys-color-on-surface);
+        background: var(--md-sys-color-surface);
+      }
+      .header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 0 4px;
+      }
+      .brand {
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--md-sys-color-on-surface);
+      }
+      .domain {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--md-sys-color-on-surface-variant);
+        letter-spacing: -0.01em;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        block-size: 472px;
+      }
+      .card {
+        border-radius: 28px;
+        padding: 36px 44px 38px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid rgba(8, 66, 160, 0.08);
+      }
+      .card-el {
+        background: #e8f0fe;
+      }
+      .card-gf {
+        background: #fff3e8;
+        border: 1px solid rgba(232, 110, 0, 0.12);
+      }
+      .stage {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 4px;
+      }
+      .card-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .name {
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #041e49;
+        line-height: 1.1;
+      }
+      .desc {
+        font-size: 20px;
+        font-weight: 400;
+        color: var(--egm-color-elephant);
+      }
+      .desc-gf {
+        color: #a04c00;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <span class="brand">Elephant-Goldfish Model</span>
+      <div class="domain">egm.dev</div>
+    </div>
+    <div class="cards">
+      <div class="card card-el">
+        <div class="stage">
+          <svg viewBox="1.60 6.8 10.4 10.4" width="232" height="232" aria-hidden="true">
+            <path d="M10.30,6.80 A5.20,5.20 0 0 0 10.30,17.20 A1.20,1.20 0 0 0 11.50,16.00 L11.50,8.00 A1.20,1.20 0 0 0 10.30,6.80Z" fill="var(--egm-color-elephant)" />
+            <path d="M7.20,12.20 C6.80,15.05 3.15,15.15 2.95,12.85 C2.85,11.25 3.10,10.20 3.45,9.40" fill="none" stroke="var(--egm-color-elephant)" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="card-bottom">
+          <div class="name">Elephant</div>
+          <div class="desc">Remembers everything.</div>
+        </div>
+      </div>
+      <div class="card card-gf">
+        <div class="stage">
+          <svg viewBox="12.5 6.8 10.4 10.4" width="232" height="232" aria-hidden="true">
+            <path d="M13.70,6.80 A5.20,5.20 0 0 1 13.70,17.20 A1.20,1.20 0 0 1 12.50,16.00 L12.50,8.00 A1.20,1.20 0 0 1 13.70,6.80Z" fill="var(--egm-color-goldfish)" />
+            <path d="M16.80,12.00 L20.40,9.40 Q18.70,12.00 20.40,14.60Z" fill="var(--egm-color-goldfish)" stroke="var(--egm-color-goldfish)" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="card-bottom">
+          <div class="name">Goldfish</div>
+          <div class="desc desc-gf">Remembers nothing.</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

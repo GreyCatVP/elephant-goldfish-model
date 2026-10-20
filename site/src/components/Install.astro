@@ -1,0 +1,128 @@
+---
+import Button from './gb/Button.astro';
+import IconButton from './gb/IconButton.astro';
+
+const repo = 'https://github.com/google/elephant-goldfish-model';
+const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
+const harnesses = `${repo}/blob/HEAD/docs/harnesses.md`;
+
+// The two install paths agreed by the EGM OSS Squad: the Antigravity CLI, or a prompt.
+const paths = [
+  { label: 'Run in your terminal', text: `agy plugin install ${repo}`, copyLabel: 'Copy command' },
+  { label: 'Or ask Antigravity', text: `Please install this plugin: ${repo}`, copyLabel: 'Copy prompt' },
+];
+---
+
+<section class="section install" id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="headline">Install the plugin.</h2>
+      <p class="lead">
+        Built for <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>, Google's agentic
+        development platform.
+      </p>
+    </div>
+
+    <div class="paths">
+      {
+        paths.map((path) => (
+          <div class="path">
+            <p class="path-label">{path.label}</p>
+            <div class="copybox">
+              <code class="command">{path.text}</code>
+              <IconButton label={path.copyLabel} color="tonal" size="sm" data-copy={path.text}>
+                <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
+                  <path
+                    d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                  ></path>
+                </svg>
+                <svg class="icon-check" viewBox="0 -960 960 960" aria-hidden="true">
+                  <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
+                </svg>
+              </IconButton>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="muted then">
+      Then run <code>/egm-brainstorm</code> on a real feature and let the goldfish shoot down the first idea.
+      Using another agent? <a href={harnesses} target="_blank" rel="noopener">See the harness guide</a>.
+    </p>
+
+    <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>
+  </div>
+</section>
+
+<script>
+  // Clipboard copy for the install command and prompt. This is the only script on the page.
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
+    const label = button.getAttribute('aria-label') ?? '';
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+      } catch {
+        return; // No clipboard permission; the command is still selectable text.
+      }
+      button.classList.add('copied');
+      button.setAttribute('aria-label', 'Copied');
+      setTimeout(() => {
+        button.classList.remove('copied');
+        button.setAttribute('aria-label', label);
+      }, 1600);
+    });
+  }
+</script>
+
+<style>
+  .install {
+    padding-block: var(--section-y-tight) var(--section-y);
+  }
+
+  .paths {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    max-inline-size: 640px;
+  }
+
+  .path-label {
+    margin: 0 0 8px;
+    font: var(--md-sys-typescale-label-lg);
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .copybox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px 8px 20px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-lg);
+    background: var(--md-sys-color-surface-container-low);
+  }
+
+  .command {
+    flex: 1;
+    min-inline-size: 0;
+    font-size: 0.9375rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    user-select: all;
+  }
+
+  .icon-check,
+  :global(.copied) .icon-copy {
+    display: none;
+  }
+
+  :global(.copied) .icon-check {
+    display: block;
+  }
+
+  .then {
+    max-inline-size: 640px;
+    margin: clamp(32px, 5vw, 48px) 0;
+  }
+</style>
