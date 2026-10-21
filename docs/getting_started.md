@@ -24,9 +24,9 @@ emerging patterns and tried to make it easier to get started with fewer steps.
 
 ## Runtime Setup
 
-In our first release, the EGM skills and personas are packaged for
-**Antigravity** and **Gemini CLI** (see [Harnesses](harnesses.md) for
-installation instructions). We welcome contributors who want to help add
+The EGM skills and personas are packaged for **Antigravity**, **Gemini CLI**,
+and **Claude Code** (see [Harnesses](harnesses.md) for installation
+instructions). We welcome contributors who want to help add
 support for other agent harnesses!
 
 1.  **Skills**: The skills in `skills/` can be installed via the plugin/extension

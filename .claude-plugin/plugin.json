@@ -1,0 +1,34 @@
+{
+  "name": "egm",
+  "version": "0.1.0",
+  "description": "Elephant-Goldfish Model: spec-driven development with deep-context drafting and zero-context Goldfish reviews.",
+  "author": {
+    "name": "Google LLC"
+  },
+  "homepage": "https://egm.dev/",
+  "repository": "https://github.com/google/elephant-goldfish-model",
+  "license": "Apache-2.0",
+  "agents": [
+    "./.claude-plugin/agents/bootstrap_orchestrator.md",
+    "./.claude-plugin/agents/codebase_details.md",
+    "./.claude-plugin/agents/comprehension.md",
+    "./.claude-plugin/agents/design_critic.md",
+    "./.claude-plugin/agents/implementation_readiness.md",
+    "./.claude-plugin/agents/structural.md",
+    "./.claude-plugin/agents/style.md",
+    "./.claude-plugin/agents/synthesizer.md",
+    "./.claude-plugin/agents/zoom_out.md"
+  ],
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "grep -Eq '\"prompt\"[[:space:]]*:[[:space:]]*\"[[:space:]]*/egm:' && echo \"EGM plugin root: ${CLAUDE_PLUGIN_ROOT}. Read agents/, resources/, and skills/ from there. Everything else, including docs/designs/ and every file you write, is in the working directory. Before you start, read the Claude Code section of ${CLAUDE_PLUGIN_ROOT}/docs/harnesses.md unless you already have in this session.\" || true"
+          }
+        ]
+      }
+    ]
+  }
+}

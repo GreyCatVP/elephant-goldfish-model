@@ -64,7 +64,7 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 4.  **Submit & Implement**:
     Submit the verified design doc via Pull Request, and implement code against the approved specification.
 
-For detailed setup, supported harnesses (**Antigravity** and **Gemini CLI**), and walkthroughs, see [Getting Started](docs/getting_started.md), [Harnesses](docs/harnesses.md), and the [Framework Architecture](docs/designs/architecture.md).
+For detailed setup, supported harnesses (**Antigravity**, **Gemini CLI**, and **Claude Code**), and walkthroughs, see [Getting Started](docs/getting_started.md), [Harnesses](docs/harnesses.md), and the [Framework Architecture](docs/designs/architecture.md).
 
 ---
 

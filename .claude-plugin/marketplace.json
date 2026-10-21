@@ -1,0 +1,14 @@
+{
+  "name": "elephant-goldfish-model",
+  "description": "Elephant-Goldfish Model (EGM) skills and Goldfish reviewer personas.",
+  "owner": {
+    "name": "Google LLC"
+  },
+  "plugins": [
+    {
+      "name": "egm",
+      "source": "./",
+      "description": "Elephant-Goldfish Model: spec-driven development with deep-context drafting and zero-context Goldfish reviews."
+    }
+  ]
+}
