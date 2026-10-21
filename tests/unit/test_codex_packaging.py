@@ -18,11 +18,8 @@ EXPECTED_SKILLS = {
 
 
 def test_codex_marketplace_resolves_plugin(repo_root: pathlib.Path) -> None:
-    marketplace_file = repo_root / ".agents/plugins/marketplace.json"
-    if not marketplace_file.is_file():
-        pytest.skip(".agents/plugins/marketplace.json not present in repository")
     marketplace = json.loads(
-        marketplace_file.read_text()
+        (repo_root / ".agents/plugins/marketplace.json").read_text()
     )
     entries = [p for p in marketplace["plugins"] if p["name"] == "egm"]
     assert len(entries) == 1

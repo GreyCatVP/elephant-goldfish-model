@@ -56,8 +56,7 @@ def test_compatibility_metadata_matches_root(path: str) -> None:
     assert (ROOT / manifest["skills"]).resolve() == ROOT / "skills"
 
 
-@pytest.mark.skipif(not MARKETPLACES, reason="No compatibility marketplaces present in repository")
-@pytest.mark.parametrize("path", MARKETPLACES or ["dummy"])
+@pytest.mark.parametrize("path", MARKETPLACES)
 def test_marketplace_resolves_shared_package(path: str) -> None:
   canonical = read_json("plugin.json")
   marketplace = read_json(path)
@@ -71,8 +70,5 @@ def test_marketplace_resolves_shared_package(path: str) -> None:
 
 
 def test_compatibility_agents_resolve_shared_personas() -> None:
-  manifest_path = ROOT / ".claude-plugin/plugin.json"
-  if not manifest_path.is_file():
-    pytest.skip(".claude-plugin/plugin.json not present in repository")
   paths = read_json(".claude-plugin/plugin.json")["agents"]
   assert all((ROOT / path).is_file() for path in paths)
