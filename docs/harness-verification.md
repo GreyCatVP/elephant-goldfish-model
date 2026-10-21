@@ -7,7 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 
 Date: 2026-10-07. This records a synthetic test, not a blanket support guarantee.
 
-The candidate combined PRs #42, #43, and #46–#54 on
+The candidate combined PRs #42, #43, and #46 to #54 on
 `test/combined-pr-validation`. Native runs loaded candidate `a9fd6d7`.
 Commit `c1e6991` incorporates the compatibility fixes pushed to #42 and #49;
 its unit suite passes all 61 tests. The combined site passes check and build.
