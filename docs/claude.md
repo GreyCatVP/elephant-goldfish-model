@@ -46,6 +46,13 @@ For local testing, load a uniquely named copy with `claude --plugin-dir <copy>`
 to avoid confusion with an already installed `egm` plugin. Validate it with
 `claude plugin validate <copy>/.claude-plugin/plugin.json`.
 
+## Claude Cowork
+
+Claude Cowork uses the same `.claude-plugin` package as Claude Code.
+Install the plugin from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model`.
+Reviewer subagents run inside Cowork with identical `${CLAUDE_PLUGIN_ROOT}` resource resolution.
+Local testing with `claude --plugin-dir` is supported in Claude Code only.
+
 References: [plugin paths](https://code.claude.com/docs/en/plugins-reference),
 [skill invocation](https://code.claude.com/docs/en/skills), and
 [subagent context and tools](https://code.claude.com/docs/en/sub-agents).

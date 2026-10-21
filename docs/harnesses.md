@@ -11,7 +11,9 @@ text.
 | Antigravity | `/plugin`, then install from `https://github.com/google/elephant-goldfish-model` |
 | Gemini CLI | `gemini extensions install https://github.com/google/elephant-goldfish-model` |
 | Claude Code | `/plugin marketplace add google/elephant-goldfish-model`, then `/plugin install egm@elephant-goldfish-model` |
+| Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
 | OpenAI Codex | `codex plugin marketplace add google/elephant-goldfish-model`, then install `egm` from `/plugins` |
+| ChatGPT | Business/Enterprise/Edu: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
 break EGM, because the skills read `agents/` and
@@ -35,7 +37,9 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 | Antigravity | `plugin.json` | `skills/` (default) | `agents/` (default) |
 | Gemini CLI | `gemini-extension.json` | `skills/` (default) | `agents/` (default) |
 | Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Listed file by file in `plugin.json` `agents` |
+| Claude Cowork | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Subagents run inside Cowork; hooks n/a |
 | OpenAI Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
+| ChatGPT | `.agents/plugins/marketplace.json` | `skills` path | Not available; no subagent tool |
 
 Persona prompts live in `agents/`, the directory Antigravity and Gemini CLI
 scan for subagents. Each persona has `name` and `description` frontmatter, so
@@ -55,14 +59,18 @@ phrase to its own tool:
 | Antigravity | `invoke_subagent` | Yes | Yes |
 | Gemini CLI | Subagents | Yes | Not verified |
 | Claude Code | Agent (Task) tool | Yes | Up to 3 levels by default |
+| Claude Cowork | Cowork subagents | Yes | Subagents run inside Cowork |
 | OpenAI Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
+| ChatGPT | Not available | No | Not available |
 
 Where a harness has no named persona, the skill spawns a general-purpose
 subagent and tells it to read `agents/<file>.md` first. If a harness cannot
 nest subagents, use direct dispatch instead of the synthesizer.
 
 A Goldfish review needs a fresh context. If a harness has no subagent tool,
-the review skills stop instead of running in the same context.
+the review skills stop instead of running in the same context. ChatGPT falls
+into this category. Its skills run via `@egm`, but Goldfish reviews stop and
+report this limitation.
 
 ## Common pitfalls
 
@@ -90,8 +98,13 @@ explicit fresh-context delegation, question-tool fallbacks, and artifact links.
 
 ## Support Status & Contributing Other Harnesses
 
-Our initial release officially supports **Antigravity** and **Gemini CLI**. We welcome
-contributors who want to help add and verify support for other agent harnesses!
+Our initial release officially supports **Antigravity** and **Gemini CLI**.
+
+Community support verified or in progress includes **Claude Code**, **Claude Cowork**, and **OpenAI Codex**.
+
+**ChatGPT** is supported for skills only via `@egm` without reviewer delegation. Its status is skills only, unverified.
+
+We welcome contributors who want to help verify and expand harness support.
 
 ### Contributing Support for New Harnesses
 

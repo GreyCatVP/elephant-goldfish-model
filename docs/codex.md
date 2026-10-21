@@ -66,3 +66,11 @@ Run the offline packaging checks with `pytest tests/unit`. The opt-in native
 workflow tests are documented in [TESTING.md](../TESTING.md). They require
 an authenticated Codex CLI and consume model usage. Installing or discovering
 the plugin alone does not establish end-to-end workflow support.
+
+## ChatGPT
+
+Enterprise, Business, and Edu workspaces can import the plugin via Admin > Plugins > Add > Import marketplace.
+Set the repository URL to `https://github.com/google/elephant-goldfish-model` and marketplace path to `.agents/plugins`.
+Skills are accessible via `@egm` for direct interaction.
+ChatGPT lacks subagent tools, so Goldfish reviewer isolation is not available.
+Do not claim verified support for ChatGPT workflows.
