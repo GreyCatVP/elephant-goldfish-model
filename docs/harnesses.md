@@ -11,7 +11,7 @@ text.
 | Antigravity | `agy plugin install https://github.com/google/elephant-goldfish-model` (or `/plugin` in the IDE) |
 | Claude Code | `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm` |
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
-| OpenAI Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm` |
+| Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm` |
 | ChatGPT | Personal testing: Plugins > Add > Upload plugin archive; see [packaging](codex.md#chatgpt). Workspace import: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
@@ -36,7 +36,7 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 | Antigravity | `plugin.json` | `skills/` (default) | `agents/` (default) |
 | Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Claude adapters and orchestrators listed in `plugin.json` `agents` |
 | Claude Cowork | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Subagents run inside Cowork; hooks n/a |
-| OpenAI Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
+| Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
 | ChatGPT | `plugin.json`, `.codex-plugin/plugin.json`; `.agents/plugins/marketplace.json` for workspace import | `skills` path | Detect native tools in the current session; general-purpose agent reads the persona |
 
 Persona prompts live in `agents/`, the directory Antigravity
@@ -59,7 +59,7 @@ phrase to its own tool:
 | Antigravity | `invoke_subagent` | Yes | Yes |
 | Claude Code | Agent (Task) tool | Yes | Up to 3 levels by default |
 | Claude Cowork | Cowork subagents | Yes | Subagents run inside Cowork |
-| OpenAI Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
+| Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
 | ChatGPT | Native spawn/wait tools when exposed by the current Work session | No | Detect at runtime; direct dispatch fallback |
 
 Where a harness has no named persona, the skill spawns a general-purpose
@@ -73,7 +73,7 @@ to ChatGPT modes that do not expose native fresh-context delegation.
 
 ## Support Status & Contributing Other Harnesses
 
-**Antigravity**, **Claude Code**, and **OpenAI Codex** pass automated installation, reviewer isolation, and end-to-end workflow fixtures.
+**Antigravity**, **Claude Code**, and **Codex** pass automated installation, reviewer isolation, and end-to-end workflow fixtures.
 
 **Claude Cowork** ([#105](https://github.com/google/elephant-goldfish-model/issues/105)) and **ChatGPT Work** ([#106](https://github.com/google/elephant-goldfish-model/issues/106)) have working installation paths with open cloud trace verification gaps.
 
