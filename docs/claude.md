@@ -22,6 +22,10 @@ skill discovery is expected. Keep drafting and orchestration in the main context
 Dispatch reviewers directly from the main context. Native Claude subagents
 cannot spawn further subagents, so do not launch a synthesizer child to manage
 the review swarm. The main context collects findings and writes the report.
+Keep review stages 5, 6, 7, 8, and 9 sequential. Parallelize only reviewers
+within the current stage. Wait for every reviewer in that stage, write its
+report, and complete required remediation before dispatching the next stage.
+Uninterrupted mode skips human checkpoints, not these stage dependencies.
 
 Claude substitutes `${CLAUDE_PLUGIN_ROOT}` in plugin skill and agent bodies. Use that
 resolved absolute root for `agents/`, `resources/`, and `docs/`; use the invoked
