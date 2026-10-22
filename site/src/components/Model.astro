@@ -1,14 +1,22 @@
 ---
 import Mark from './Mark.astro';
+
+const essay =
+  'https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874';
 ---
 
 <section class="section" id="model">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">Two kinds of agent. One owner.</h2>
+      <h2 class="headline">How the model works</h2>
       <p class="lead">
-        Give the agent that designs all the context it can hold. Give the agent that reviews none of
-        it. The gap between the two is where design flaws surface, before they become code.
+        <a href="https://dkr.bio" target="_blank" rel="noopener">Dave Rensin</a> introduces this
+        approach in{' '}
+        <a href={essay} target="_blank" rel="noopener">
+          Elephants, Goldfish, and the New Golden Age of Software Engineering
+        </a>
+        . Drafting agents hold full repository context while reviewing subagents start with a blank
+        slate to expose blind spots early.
       </p>
     </div>
 
@@ -16,21 +24,21 @@ import Mark from './Mark.astro';
       <article class="role">
         <Mark variant="elephant" class="glyph" />
         <h3 class="title">Elephant</h3>
-        <p class="role-sub">Remembers everything.</p>
+        <p class="role-sub">Full context</p>
         <p class="muted">
-          Deep-context agents loaded with system history, architecture, component boundaries, and
-          user journeys. The Elephant runs structured brainstorming, probes operational limits, and
+          Deep-context agents load system history, architecture, component boundaries, and user
+          journeys. The Elephant runs structured brainstorming, probes operational limits, and
           drafts the specification.
         </p>
       </article>
       <article class="role">
         <Mark variant="goldfish" class="glyph" />
         <h3 class="title">Goldfish</h3>
-        <p class="role-sub">Remembers nothing.</p>
+        <p class="role-sub">Zero context</p>
         <p class="muted">
-          Stateless, isolated subagents that read only the draft spec and the live source, with none
-          of the conversation&rsquo;s bias. A swarm of goldfish stress-tests the design from
-          conflicting perspectives before any code exists.
+          Stateless, isolated subagents read only the draft spec and live source code, without
+          conversation bias. A Goldfish swarm stress-tests the design from conflicting perspectives
+          before you write code.
         </p>
       </article>
     </div>
@@ -40,11 +48,11 @@ import Mark from './Mark.astro';
     <div class="human">
       <div>
         <h3 class="title">You</h3>
-        <p class="role-sub">Owns the outcome.</p>
+        <p class="role-sub">Final decision</p>
       </div>
       <p class="muted">
-        AI is an exploration partner and an automated auditor. Engineers own the architectural
-        decisions, the trade-offs, and the result. Every design still goes to a person for review.
+        Agents explore options and audit drafts, while engineers make the architectural trade-offs
+        and approve every specification before implementation.
       </p>
     </div>
   </div>
@@ -74,7 +82,11 @@ import Mark from './Mark.astro';
   }
 
   .role {
-    max-inline-size: 48ch;
+    max-inline-size: 46ch;
+  }
+
+  .role .muted {
+    text-wrap: balance;
   }
 
   .pair :global(.glyph) {
@@ -92,6 +104,7 @@ import Mark from './Mark.astro';
 
   .human .muted {
     font: var(--md-sys-typescale-body-lg);
-    max-inline-size: 56ch;
+    max-inline-size: 50ch;
+    text-wrap: balance;
   }
 </style>

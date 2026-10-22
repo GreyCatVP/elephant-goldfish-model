@@ -31,7 +31,7 @@ const skills = [
     name: 'Drift Report',
     command: '/egm-drift-report',
     dir: 'egm_drift_report',
-    body: 'Scan the syntax tree and flag where the live code and the checked-in spec have diverged.',
+    body: 'Scan the syntax tree to flag where live code diverges from checked-in specs.',
   },
 ];
 ---
@@ -39,11 +39,7 @@ const skills = [
 <section class="section skills" id="skills">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">Five skills. Plain markdown.</h2>
-      <p class="lead">
-        Each skill is a folder with a SKILL.md that your agent reads. No runtime, no SDK,
-        no <span class="nowrap">lock-in</span>. Open one to see exactly what the agent is told to do.
-      </p>
+      <h2 class="headline">Included skills</h2>
     </div>
     <ul class="list" aria-label="Skills">
       {
@@ -116,8 +112,9 @@ const skills = [
   }
 
   .skills .list-item-supporting-text {
-    max-inline-size: 60ch;
+    max-inline-size: 56ch;
     margin-block-start: 2px;
+    text-wrap: balance;
   }
 
   .cmd {
