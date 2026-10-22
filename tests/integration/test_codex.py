@@ -7,6 +7,7 @@ import json
 import os
 import pathlib
 import shutil
+import shlex
 import subprocess
 import uuid
 from collections.abc import Iterator
@@ -112,12 +113,23 @@ def successful_reads(trace: list[dict]) -> set[pathlib.Path]:
         item = event.get("payload", {}).get("item", {})
         if (item.get("type") != "CommandExecution"
                 or item.get("status") != "completed"
-                or item.get("exit_code") != 0 or not item.get("stdout")):
+                or item.get("exit_code") != 0
+                or not (item.get("aggregated_output") or item.get("stdout"))):
             continue
         cwd = pathlib.Path(unquote(urlparse(item["cwd"]).path))
         for command in item.get("parsed_cmd", []):
             if command.get("type") == "read" and command.get("path"):
                 paths.add((cwd / command["path"]).resolve())
+            elif command.get("type") == "unknown":
+                # Codex labels a multi-file cat as unknown. Accept only literal
+                # absolute operands, never shell expansion or composed commands.
+                raw = command.get("cmd", "")
+                if any(char in raw for char in "$`|;&<>*?{}()\n"):
+                    continue
+                args = shlex.split(raw)
+                if (len(args) > 1 and args[0] == "cat"
+                        and all(pathlib.Path(arg).is_absolute() for arg in args[1:])):
+                    paths.update(pathlib.Path(arg).resolve() for arg in args[1:])
     return paths
 
 

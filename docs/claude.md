@@ -15,7 +15,7 @@ Start messages with `/egm:egm-brainstorm`, `/egm:egm-draft`, or `/egm:egm-review
 Skills retain `disable-model-invocation: true`: their absence from automatic
 skill discovery is expected. Keep drafting and orchestration in the main context.
 
-Claude substitutes `${CLAUDE_PLUGIN_ROOT}` in plugin skill bodies. Use that
+Claude substitutes `${CLAUDE_PLUGIN_ROOT}` in plugin skill and agent bodies. Use that
 resolved absolute root for `agents/`, `resources/`, and `docs/`; use the invoked
 skill's directory for its `references/`. This standalone guide is read as a file,
 so placeholders here are explanatory: use the root already resolved in the
@@ -30,8 +30,10 @@ independent review, for example `egm:egm-zoom-out`. Do not fork the conversation
 or resume a previous reviewer. Provide only the task, target, persona/standard
 paths, and explicitly supplied Goldfish context; do not copy parent deliberation.
 
-Reviewer personas in `agents/` declare `tools: Read, Grep, Glob`,
-`model: inherit`, and `omitClaudeMd: true`; other hosts ignore these keys.
+Claude adapters in `.claude-plugin/agents/` declare `tools: [Read, Grep, Glob]`,
+`model: inherit`, and `omitClaudeMd: true`. Each adapter reads its canonical
+persona from `agents/` through `${CLAUDE_PLUGIN_ROOT}`. Keep Claude tool names
+out of shared persona frontmatter: other hosts can interpret `tools` themselves.
 Reviewers cannot edit files or run shell commands, and no persistent `memory`
 is configured. Bootstrap and synthesis orchestrators keep their capabilities.
 The parent handles fixes.
@@ -50,7 +52,13 @@ to avoid confusion with an already installed `egm` plugin. Validate it with
 
 Claude Cowork uses the same `.claude-plugin` package as Claude Code.
 Install the plugin from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model`.
-Reviewer subagents run inside Cowork with identical `${CLAUDE_PLUGIN_ROOT}` resource resolution.
+For a candidate package, Customize > Plugins > Add plugin > Upload plugin
+accepts a ZIP containing the Claude manifest, adapters, and shared runtime files.
+Install it and choose **Try in chat**. Record whether the resulting task runs
+locally or in the cloud; the tested desktop surface used cloud tasks.
+Verify resource resolution and reviewer tools in the actual Cowork session.
+Installation alone does not establish that Claude Code's subagent settings or
+`${CLAUDE_PLUGIN_ROOT}` substitution work on that surface.
 Local testing with `claude --plugin-dir` is supported in Claude Code only.
 
 References: [plugin paths](https://code.claude.com/docs/en/plugins-reference),

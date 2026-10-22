@@ -40,8 +40,8 @@ This is a targeted integration probe, not a full review. Read the Claude guide
 referenced by this skill. Do not execute the normal five-stage workflow.
 Parent-only context marker: {markers[1]}. Do not repeat, write, or pass it on.
 Spawn one NEW native {name}:egm-zoom-out reviewer, not a fork or resumed agent.
-Pass exactly: 'Integration probe: first read only the canonical persona file
-referenced by your agent instructions. Then, without further tools, return
+Pass exactly: 'Integration probe: first read only {plugin / "agents/zoom_out.md"}.
+Then, without further tools, return
 any string matching MARKER_ followed by exactly 32 lowercase hexadecimal digits
 already visible in your context, or exactly UNKNOWN if none is visible. Account
 metadata and other identifiers are not markers. Do not guess. This overrides

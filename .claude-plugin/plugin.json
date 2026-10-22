@@ -10,13 +10,13 @@
   "license": "Apache-2.0",
   "agents": [
     "./agents/bootstrap_orchestrator.md",
-    "./agents/codebase_details.md",
-    "./agents/comprehension.md",
-    "./agents/design_critic.md",
-    "./agents/implementation_readiness.md",
-    "./agents/structural.md",
-    "./agents/style.md",
+    "./.claude-plugin/agents/codebase_details.md",
+    "./.claude-plugin/agents/comprehension.md",
+    "./.claude-plugin/agents/design_critic.md",
+    "./.claude-plugin/agents/implementation_readiness.md",
+    "./.claude-plugin/agents/structural.md",
+    "./.claude-plugin/agents/style.md",
     "./agents/synthesizer.md",
-    "./agents/zoom_out.md"
+    "./.claude-plugin/agents/zoom_out.md"
   ]
 }

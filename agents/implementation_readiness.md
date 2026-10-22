@@ -2,9 +2,6 @@
 name: egm-implementation-readiness
 description: Pragmatic Tech Lead persona verifying that implementation plans contain unambiguous, fully actionable execution instructions without leaving design decisions to the implementer.
 license: Apache-2.0
-tools: Read, Grep, Glob
-model: inherit
-omitClaudeMd: true
 ---
 
 # Core Mandates (Universal Goldfish Context)

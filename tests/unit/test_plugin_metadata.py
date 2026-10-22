@@ -67,6 +67,9 @@ def test_marketplace_resolves_shared_package(path: str) -> None:
   assert (ROOT / entry["source"]).resolve() == ROOT
   if "description" in entry:
     assert entry["description"] == canonical["description"]
+  if path == ".agents/plugins/marketplace.json":
+    assert entry["policy"]["authentication"] == "ON_INSTALL"
+    assert entry["category"] == "Productivity"
 
 
 def test_compatibility_agents_resolve_shared_personas() -> None:

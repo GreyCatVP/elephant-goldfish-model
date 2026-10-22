@@ -13,7 +13,7 @@ text.
 | Claude Code | `/plugin marketplace add google/elephant-goldfish-model`, then `/plugin install egm@elephant-goldfish-model` |
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
 | OpenAI Codex | `codex plugin marketplace add google/elephant-goldfish-model`, then install `egm` from `/plugins` |
-| ChatGPT | Business/Enterprise/Edu: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
+| ChatGPT | Personal testing: Plugins > Add > Upload plugin archive; see [packaging](codex.md#chatgpt). Workspace import: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
 break EGM, because the skills read `agents/` and
@@ -36,18 +36,20 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 | --- | --- | --- | --- |
 | Antigravity | `plugin.json` | `skills/` (default) | `agents/` (default) |
 | Gemini CLI | `gemini-extension.json` | `skills/` (default) | `agents/` (default) |
-| Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Listed file by file in `plugin.json` `agents` |
+| Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Claude adapters and orchestrators listed in `plugin.json` `agents` |
 | Claude Cowork | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Subagents run inside Cowork; hooks n/a |
 | OpenAI Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
-| ChatGPT | `.agents/plugins/marketplace.json` | `skills` path | Not available; no subagent tool |
+| ChatGPT | `plugin.json`, `.codex-plugin/plugin.json`; `.agents/plugins/marketplace.json` for workspace import | `skills` path | Detect native tools in the current session; general-purpose agent reads the persona |
 
 Persona prompts live in `agents/`, the directory Antigravity and Gemini CLI
 scan for subagents. Each persona has `name` and `description` frontmatter, so
 harnesses that load `agents/*.md` register them as named subagents
 (`egm-design`, `egm-zoom-out`, and so on).
 
-When you add a persona, also add its path to `agents` in
-`.claude-plugin/plugin.json`. Claude Code does not scan a directory there.
+When you add a reviewer persona, add a Claude adapter under
+`.claude-plugin/agents/` and list it in `.claude-plugin/plugin.json`.
+The adapter reads the shared persona and sets Claude's read-only tools and
+context isolation. This avoids imposing Claude tool names on other hosts.
 
 ## Delegation
 
@@ -61,16 +63,16 @@ phrase to its own tool:
 | Claude Code | Agent (Task) tool | Yes | Up to 3 levels by default |
 | Claude Cowork | Cowork subagents | Yes | Subagents run inside Cowork |
 | OpenAI Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
-| ChatGPT | Not available | No | Not available |
+| ChatGPT | Native spawn/wait tools when exposed by the current Work session | No | Detect at runtime; direct dispatch fallback |
 
 Where a harness has no named persona, the skill spawns a general-purpose
 subagent and tells it to read `agents/<file>.md` first. If a harness cannot
 nest subagents, use direct dispatch instead of the synthesizer.
 
 A Goldfish review needs a fresh context. If a harness has no subagent tool,
-the review skills stop instead of running in the same context. ChatGPT falls
-into this category. Its skills run via `@egm`, but Goldfish reviews stop and
-report this limitation.
+the review skills stop instead of running in the same context. Check actual
+tool availability rather than inferring it from the product name. This applies
+to ChatGPT modes that do not expose native fresh-context delegation.
 
 ## Common pitfalls
 
@@ -102,7 +104,8 @@ Our initial release officially supports **Antigravity** and **Gemini CLI**.
 
 Community support verified or in progress includes **Claude Code**, **Claude Cowork**, and **OpenAI Codex**.
 
-**ChatGPT** is supported for skills only via `@egm` without reviewer delegation. Its status is skills only, unverified.
+**ChatGPT** support depends on the current session's native delegation tools.
+See the [verification record](harness-verification.md) for tested surfaces and limits.
 
 We welcome contributors who want to help verify and expand harness support.
 

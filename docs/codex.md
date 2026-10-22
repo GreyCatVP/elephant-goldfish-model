@@ -69,8 +69,23 @@ the plugin alone does not establish end-to-end workflow support.
 
 ## ChatGPT
 
+For personal testing, open Plugins > Add > Upload plugin archive in ChatGPT.
+Package the runtime files from the repository root:
+
+```sh
+zip -r egm-chatgpt.zip plugin.json .codex-plugin skills agents resources docs LICENSE README.md
+```
+
+Upload the archive, install the plugin, and use **Try in chat** in a new Work
+chat. This path was exercised separately from workspace marketplace import.
+Keep repository marketplace catalogs and development files outside this archive.
+
 Enterprise, Business, and Edu workspaces can import the plugin via Admin > Plugins > Add > Import marketplace.
 Set the repository URL to `https://github.com/google/elephant-goldfish-model` and marketplace path to `.agents/plugins`.
 Skills are accessible via `@egm` for direct interaction.
-ChatGPT lacks subagent tools, so Goldfish reviewer isolation is not available.
-Do not claim verified support for ChatGPT workflows.
+Check the native tools in the current chat before starting a Goldfish review.
+Some ChatGPT Work sessions expose native `spawn_agent` with `fork_turns: "none"`.
+Use the fresh-context instructions above when those tools are available. If
+they are absent, stop and report that isolation is unavailable; never simulate
+reviewers in the parent context. Availability in one Work session does not
+establish support across every ChatGPT mode or account.

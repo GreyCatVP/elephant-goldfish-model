@@ -21,11 +21,18 @@ def frontmatter(path: Path) -> dict:
 
 @pytest.mark.parametrize("name", REVIEWERS)
 def test_reviewers_are_read_only_with_fresh_context(name: str) -> None:
-  config = frontmatter(ROOT / "agents" / f"{name}.md")
-  assert {t.strip() for t in config["tools"].split(",")} == {"Read", "Grep", "Glob"}
+  adapter = ROOT / ".claude-plugin/agents" / f"{name}.md"
+  config = frontmatter(adapter)
+  assert isinstance(config["tools"], list), "Shared tools must be a YAML sequence"
+  assert set(config["tools"]) == {"Read", "Grep", "Glob"}
   assert config["model"] == "inherit"
   assert config["omitClaudeMd"] is True
   assert "memory" not in config
+  assert f'${{CLAUDE_PLUGIN_ROOT}}/agents/{name}.md' in adapter.read_text()
+  canonical = frontmatter(ROOT / "agents" / f"{name}.md")
+  assert canonical["name"] == config["name"]
+  assert "tools" not in canonical
+  assert "omitClaudeMd" not in canonical
 
 
 def test_skills_reference_claude_guide() -> None:

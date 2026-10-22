@@ -2,9 +2,6 @@
 name: egm-zoom-out
 description: Skeptical Architect persona focused on high-altitude simplicity, minimalism, YAGNI, and codebase reuse.
 license: Apache-2.0
-tools: Read, Grep, Glob
-model: inherit
-omitClaudeMd: true
 ---
 
 # Core Mandates (Universal Goldfish Context)
