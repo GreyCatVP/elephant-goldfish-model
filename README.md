@@ -19,7 +19,7 @@ Elephant-Goldfish Model (EGM) is an open-source plugin for Spec-Driven Developme
 
 1. **Ideate & Stress-Test**: Run `/egm-brainstorm` to explore problem boundaries and test early concepts with a Goldfish swarm.
 2. **Draft**: Run `/egm-draft` to convert the concept brief into a living design document under `docs/designs/<feature>.md`.
-3. **Review & Resolve**: Run `/egm-review docs/designs/<feature>.md` to launch the multi-stage Goldfish reviewer swarm.
+3. **Review & Resolve**: Run `/egm-review docs/designs/<feature>.md` to run the multi-stage Goldfish reviewer swarm.
 4. **Submit & Implement**: Submit the verified design doc via pull request and implement code against the approved specification.
 
 In Claude Code, commands use the `/egm:` prefix (for example `/egm:egm-brainstorm`).
@@ -42,9 +42,9 @@ For detailed setup guides and walkthroughs, see [Getting Started](docs/getting_s
 
 EGM uses two animal metaphors to structure AI agents across the software development lifecycle:
 
-* 🐘 **The Elephant (Remembers Everything)**: Deep-context agents loaded with system history, architecture diagrams, component boundaries, and user journeys. The Elephant conducts structured brainstorming, probes operational limits, and drafts comprehensive specifications.
-* 🐠 **The Goldfish (Zero-Context Memory)**: Stateless, isolated subagents that read only the draft design specification and live source code without conversational bias. The Goldfish swarm subjects designs to adversarial stress-testing across multiple conflicting perspectives (Design Critic, Naive Reader, Tech Lead, Codebase Auditor, Structural Validator, Style Editor, and Zoom Out Architect; defined under `agents/`).
-* 🧑‍💻 **The Human (Owns the Outcomes)**: AI is an exploration partner and automated auditor, but human engineers own architectural decisions, trade-offs, and final outcomes.
+* 🐘 **The Elephant (Remembers Everything)**: Deep-context agents load system history, architecture diagrams, component boundaries, and user journeys. The Elephant runs structured brainstorming, probes operational limits, and drafts comprehensive specifications.
+* 🐠 **The Goldfish (Zero-Context Memory)**: Stateless, isolated subagents read only the draft spec and live source code, without conversational bias. The Goldfish swarm stress-tests designs from conflicting perspectives. Personas in `agents/` include Design Critic, Naive Reader, Tech Lead, Codebase Auditor, Structural Validator, Style Editor, and Zoom Out Architect.
+* 🧑‍💻 **The Human (Owns the Outcomes)**: AI is an exploration partner and automated auditor, while human engineers own architectural decisions, trade-offs, and final outcomes.
 
 For the foundational essay introducing this methodology, see Dave Rensin's article: [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874).
 
@@ -54,6 +54,6 @@ We welcome community contributions! Please review [Harnesses](docs/harnesses.md)
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
+Apache 2.0 License applies to this project - see the [LICENSE](LICENSE) file for details.
 
 This is not an officially supported Google product.

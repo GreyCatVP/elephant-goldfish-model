@@ -10,12 +10,13 @@ const essay =
     <div class="section-head">
       <h2 class="headline">How the model works</h2>
       <p class="lead">
-        Based on <a href="https://dkr.bio" target="_blank" rel="noopener">Dave Rensin</a>&rsquo;s essay{' '}
+        <a href="https://dkr.bio" target="_blank" rel="noopener">Dave Rensin</a> introduces this
+        approach in{' '}
         <a href={essay} target="_blank" rel="noopener">
           Elephants, Goldfish, and the New Golden Age of Software Engineering
         </a>
-        , the drafting agent holds full repository context while reviewing subagents start with a
-        blank slate, exposing blind spots before they become code.
+        . Drafting agents hold full repository context while reviewing subagents start with a blank
+        slate to expose blind spots early.
       </p>
     </div>
 
@@ -25,8 +26,8 @@ const essay =
         <h3 class="title">Elephant</h3>
         <p class="role-sub">Full context</p>
         <p class="muted">
-          Deep-context agents loaded with system history, architecture, component boundaries, and
-          user journeys. The Elephant runs structured brainstorming, probes operational limits, and
+          Deep-context agents load system history, architecture, component boundaries, and user
+          journeys. The Elephant runs structured brainstorming, probes operational limits, and
           drafts the specification.
         </p>
       </article>
@@ -35,9 +36,9 @@ const essay =
         <h3 class="title">Goldfish</h3>
         <p class="role-sub">Zero context</p>
         <p class="muted">
-          Stateless, isolated subagents that read only the draft spec and the live source, with none
-          of the conversation&rsquo;s bias. A swarm of goldfish stress-tests the design from
-          conflicting perspectives before any code exists.
+          Stateless, isolated subagents read only the draft spec and live source code, without
+          conversation bias. A Goldfish swarm stress-tests the design from conflicting perspectives
+          before you write code.
         </p>
       </article>
     </div>
@@ -50,7 +51,8 @@ const essay =
         <p class="role-sub">Final decision</p>
       </div>
       <p class="muted">
-        Agents explore options and audit drafts, while engineers make the architectural trade-offs and approve every specification before implementation.
+        Agents explore options and audit drafts, while engineers make the architectural trade-offs
+        and approve every specification before implementation.
       </p>
     </div>
   </div>

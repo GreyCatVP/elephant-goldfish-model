@@ -1,15 +1,21 @@
 ---
 import Button from './gb/Button.astro';
-import IconButton from './gb/IconButton.astro';
 
 const repo = 'https://github.com/google/elephant-goldfish-model';
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 
-const paths = [
-  { label: 'Ask your agent', text: `Install ${repo}`, copyLabel: 'Copy prompt', kind: 'prompt' },
-  { label: 'Antigravity CLI', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command', kind: 'cli' },
-  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model\nclaude plugin install egm@egm`, copyLabel: 'Copy Claude Code command', kind: 'cli' },
-  { label: 'Codex', text: `codex plugin marketplace add google/elephant-goldfish-model\ncodex plugin add egm@egm`, copyLabel: 'Copy Codex command', kind: 'cli' },
+const promptPath = {
+  label: 'Ask your agent',
+  text: `Install ${repo}`,
+  copyLabel: 'Copy prompt',
+};
+
+const cliPaths = [
+  { label: 'Antigravity', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command' },
+  { label: 'Claude', text: `claude plugin marketplace add google/elephant-goldfish-model && \\
+claude plugin install egm@egm`, copyLabel: 'Copy Claude command' },
+  { label: 'Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && \\
+codex plugin add egm@egm`, copyLabel: 'Copy Codex command' },
 ];
 ---
 
@@ -18,7 +24,7 @@ const paths = [
     <div class="section-head">
       <h2 class="headline">Install the plugin</h2>
       <p class="lead">
-        Built for <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>,{' '}
+        Runs in <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>,{' '}
         <a href="https://code.claude.com" target="_blank" rel="noopener">Claude Code</a>,{' '}
         <a href="https://claude.ai/plugins" target="_blank" rel="noopener">Claude Cowork</a>, and{' '}
         <a href="https://openai.com/codex" target="_blank" rel="noopener">Codex</a>.
@@ -26,30 +32,63 @@ const paths = [
     </div>
 
     <div class="paths">
-      {
-        paths.map((path) => (
-          <div class="path">
-            <p class="path-label">{path.label}</p>
-            <div class:list={['copybox', path.kind === 'prompt' ? 'copybox-prompt' : 'copybox-cli']}>
-              {path.kind === 'prompt' ? (
-                <span class="prompt-text">{path.text}</span>
-              ) : (
+      <div class="path">
+        <p class="path-label">{promptPath.label}</p>
+        <button
+          type="button"
+          class="copybox copybox-prompt focus-ring-outer"
+          aria-label={promptPath.copyLabel}
+          data-copy={promptPath.text}
+        >
+          <span class="prompt-text">{promptPath.text}</span>
+          <span class="copy-action" aria-hidden="true">
+            <span class="copied-badge">Copied</span>
+            <span class="icon-btn icon-btn-tonal icon-btn-sm">
+              <svg class="icon-copy" viewBox="0 -960 960 960">
+                <path
+                  d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                ></path>
+              </svg>
+              <svg class="icon-check" viewBox="0 -960 960 960">
+                <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
+              </svg>
+            </span>
+          </span>
+        </button>
+      </div>
+
+      <hr class="divider paths-divider" />
+
+      <div class="cli-paths">
+        {
+          cliPaths.map((path) => (
+            <div class="path">
+              <p class="path-label">{path.label}</p>
+              <button
+                type="button"
+                class="copybox copybox-cli focus-ring-outer"
+                aria-label={path.copyLabel}
+                data-copy={path.text}
+              >
                 <code class="command">{path.text}</code>
-              )}
-              <IconButton label={path.copyLabel} color="tonal" size="sm" data-copy={path.text}>
-                <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
-                  <path
-                    d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-                  ></path>
-                </svg>
-                <svg class="icon-check" viewBox="0 -960 960 960" aria-hidden="true">
-                  <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
-                </svg>
-              </IconButton>
+                <span class="copy-action" aria-hidden="true">
+                  <span class="copied-badge">Copied</span>
+                  <span class="icon-btn icon-btn-tonal icon-btn-sm">
+                    <svg class="icon-copy" viewBox="0 -960 960 960">
+                      <path
+                        d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                      ></path>
+                    </svg>
+                    <svg class="icon-check" viewBox="0 -960 960 960">
+                      <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path>
+                    </svg>
+                  </span>
+                </span>
+              </button>
             </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
 
     <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>
@@ -58,6 +97,7 @@ const paths = [
 
 <script>
   // Clipboard copy for the install command and prompt. This is the only script on the page.
+  const timers = new WeakMap<HTMLElement, number>();
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy]')) {
     const label = button.getAttribute('aria-label') ?? '';
     button.addEventListener('click', async () => {
@@ -66,12 +106,15 @@ const paths = [
       } catch {
         return; // No clipboard permission; the command is still selectable text.
       }
+      const prev = timers.get(button);
+      if (prev) window.clearTimeout(prev);
       button.classList.add('copied');
       button.setAttribute('aria-label', 'Copied');
-      setTimeout(() => {
+      const timer = window.setTimeout(() => {
         button.classList.remove('copied');
         button.setAttribute('aria-label', label);
-      }, 1600);
+      }, 1800);
+      timers.set(button, timer);
     });
   }
 </script>
@@ -82,11 +125,21 @@ const paths = [
   }
 
   .paths {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
     max-inline-size: 760px;
     margin-block-end: clamp(32px, 5vw, 48px);
+  }
+
+  .paths-divider {
+    margin: 0;
+  }
+
+  .cli-paths {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
   }
 
   .path-label {
@@ -96,11 +149,20 @@ const paths = [
   }
 
   .copybox {
+    inline-size: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 8px 8px 8px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
+    color: var(--md-sys-color-on-surface);
+    text-align: start;
+    cursor: pointer;
+    transition: border-color 140ms ease, background-color 140ms ease;
+  }
+
+  .copybox:hover {
+    border-color: var(--md-sys-color-outline);
   }
 
   .copybox-prompt {
@@ -114,24 +176,49 @@ const paths = [
     background: var(--md-sys-color-surface-container-low);
   }
 
+  .copybox:global(.copied) {
+    border-color: var(--md-sys-color-primary);
+  }
+
   .prompt-text {
     flex: 1;
     min-inline-size: 0;
     font: var(--md-sys-typescale-body-md);
     overflow-x: auto;
     white-space: nowrap;
-    user-select: all;
   }
 
   .command {
     flex: 1;
     min-inline-size: 0;
     padding-block: 4px;
+    font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.9375rem;
     line-height: 1.55;
     overflow-x: auto;
     white-space: pre;
-    user-select: all;
+  }
+
+  .copy-action {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .copied-badge {
+    display: none;
+    font: var(--md-sys-typescale-label-md);
+    color: var(--md-sys-color-primary);
+  }
+
+  :global(.copied) .copied-badge {
+    display: inline;
+  }
+
+  :global(.copied) .icon-btn {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
   }
 
   .icon-check,
@@ -142,5 +229,4 @@ const paths = [
   :global(.copied) .icon-check {
     display: block;
   }
-
 </style>
