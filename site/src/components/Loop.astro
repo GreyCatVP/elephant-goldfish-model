@@ -16,7 +16,7 @@ const steps = [
     name: 'Review',
     role: 'Goldfish',
     command: '/egm-review',
-    body: 'A fresh, zero-context Goldfish session checks completeness, clarity, self-containment, and readiness. Expect a lot of feedback. That is the point.',
+    body: 'Fresh zero-context Goldfish subagents check completeness, clarity, self-containment, and implementation readiness.',
   },
 ];
 ---
@@ -24,11 +24,7 @@ const steps = [
 <section class="section loop">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">From idea to verified spec to code.</h2>
-      <p class="lead">
-        Three skills take a feature from a rough idea to a verified spec. After that, any coding
-        agent can build it.
-      </p>
+      <h2 class="headline">From idea to a verified spec</h2>
     </div>
     <ol class="steps">
       {
@@ -56,7 +52,7 @@ const steps = [
         </div>
         <span class="no-skill">No skill needed</span>
         <p class="muted">
-          The verified spec is complete enough to hand directly to your LLM to execute.
+          Hand the verified spec directly to your coding agent to build the feature.
         </p>
       </li>
       <li class="step drift">
@@ -72,7 +68,7 @@ const steps = [
           <code class="cmd">/egm-drift-report</code>
         </div>
         <p class="muted">
-          Flags where the code and the spec have drifted apart. You pick which one moves.
+          Compare your codebase against your specs to find where they diverge.
         </p>
       </li>
     </ol>
@@ -92,6 +88,10 @@ const steps = [
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     row-gap: 48px;
+  }
+
+  .step .muted {
+    text-wrap: balance;
   }
 
   .step {

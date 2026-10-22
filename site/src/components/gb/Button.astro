@@ -14,9 +14,10 @@ interface Props {
   target?: '_blank' | '_self';
   class?: string;
   label?: string;
+  [key: `data-${string}`]: string | undefined;
 }
 
-const { color = 'text', size = 'sm', href, target, class: className, label } = Astro.props;
+const { color = 'text', size = 'sm', href, target, class: className, label, ...data } = Astro.props;
 const classes = ['ripple', 'focus-ring-outer', 'btn', `btn-${color}`, `btn-${size}`, className]
   .filter(Boolean)
   .join(' ');
@@ -25,11 +26,11 @@ const rel = target === '_blank' ? 'noopener' : undefined;
 
 {
   href ? (
-    <a class={classes} href={href} target={target} rel={rel} aria-label={label}>
+    <a class={classes} href={href} target={target} rel={rel} aria-label={label} {...data}>
       <slot />
     </a>
   ) : (
-    <button type="button" class={classes} aria-label={label}>
+    <button type="button" class={classes} aria-label={label} {...data}>
       <slot />
     </button>
   )
