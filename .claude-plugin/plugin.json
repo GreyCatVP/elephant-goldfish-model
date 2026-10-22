@@ -16,7 +16,7 @@
     "./.claude-plugin/agents/implementation_readiness.md",
     "./.claude-plugin/agents/structural.md",
     "./.claude-plugin/agents/style.md",
-    "./agents/synthesizer.md",
+    "./.claude-plugin/agents/synthesizer.md",
     "./.claude-plugin/agents/zoom_out.md"
   ]
 }

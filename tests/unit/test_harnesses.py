@@ -119,6 +119,21 @@ def test_claude_reviewers_are_read_only_with_fresh_context(name: str) -> None:
   assert "omitClaudeMd" not in canonical
 
 
+def test_claude_synthesizer_adapter_is_tool_restricted() -> None:
+  adapter = ROOT / ".claude-plugin/agents/synthesizer.md"
+  config = frontmatter(adapter)
+  assert set(config["tools"]) == {"Agent", "Read", "Grep", "Glob", "Write"}
+  assert config["model"] == "inherit"
+  assert "memory" not in config
+  assert "${CLAUDE_PLUGIN_ROOT}/agents/synthesizer.md" in adapter.read_text()
+  canonical = frontmatter(ROOT / "agents/synthesizer.md")
+  assert canonical["name"] == config["name"]
+  assert "tools" not in canonical
+  manifest = read_json(".claude-plugin/plugin.json")["agents"]
+  assert "./.claude-plugin/agents/synthesizer.md" in manifest
+  assert "./agents/synthesizer.md" not in manifest
+
+
 def test_claude_manifest_agents_and_shared_personas_resolve() -> None:
   paths = read_json(".claude-plugin/plugin.json")["agents"]
   assert all((ROOT / path).is_file() for path in paths)

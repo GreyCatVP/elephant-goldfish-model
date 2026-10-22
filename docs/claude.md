@@ -18,10 +18,16 @@ claude plugin install egm@egm
 Enable the installed plugin with `claude plugin enable egm@egm`.
 Start messages with `/egm:egm-brainstorm`, `/egm:egm-draft`, or `/egm:egm-review`.
 Skills retain `disable-model-invocation: true`: their absence from automatic
-skill discovery is expected. Keep drafting and orchestration in the main context.
-Dispatch reviewers directly from the main context. Native Claude subagents
-cannot spawn further subagents, so do not launch a synthesizer child to manage
-the review swarm. The main context collects findings and writes the report.
+skill discovery is expected. The `Skill` tool refuses these skills, so to run
+another EGM skill (for example `egm-review-loop` or `egm-resolve` during review
+Stages 7 and 9), read its `SKILL.md` and follow it in the same thread. Do not
+use the `Skill` tool for EGM skills. Keep drafting and orchestration in the
+main context.
+In Claude Code, `egm:egm-synthesizer` may spawn reviewers (nesting is allowed
+up to 3 levels by default), or the main context may dispatch reviewers directly.
+In Claude Cowork, subagents cannot spawn further subagents, so dispatch
+reviewers directly from the main context instead of launching a synthesizer
+child. In both cases the main context collects findings and writes the report.
 Keep review stages 5, 6, 7, 8, and 9 sequential. Parallelize only reviewers
 within the current stage. Wait for every reviewer in that stage, write its
 report, and complete required remediation before dispatching the next stage.
@@ -35,6 +41,14 @@ invoked skill. Never guess a cache version or search another installed copy.
 Review targets and generated artifacts belong to the user's workspace, not the
 plugin cache. Pass absolute resource and target paths to each reviewer.
 
+Personas and standards live in the plugin cache, outside the project. Reading
+them is not pre-approved: in an interactive session each read prompts the user,
+and in a headless session with no permission rules the read fails and the
+reviewer reports an incomplete review. For headless runs pass
+`--allowedTools Read,Grep,Glob` or add equivalent `permissions.allow` rules
+for the plugin root. Approve these prompts in interactive sessions; a
+reviewer that cannot read its persona or standard has not reviewed.
+
 ## Reviewer isolation
 
 Spawn a new native Agent of the plugin's registered reviewer type for each
@@ -47,8 +61,10 @@ Claude adapters in `.claude-plugin/agents/` declare `tools: [Read, Grep, Glob]`,
 persona from `agents/` through `${CLAUDE_PLUGIN_ROOT}`. Keep Claude tool names
 out of shared persona frontmatter: other hosts can interpret `tools` themselves.
 Reviewers cannot edit files or run shell commands, and no persistent `memory`
-is configured. Bootstrap and synthesis orchestrators keep their capabilities.
-The parent handles fixes.
+is configured. The synthesizer adapter declares
+`tools: [Agent, Read, Grep, Glob, Write]` so it can spawn reviewers and write
+reports but cannot run shell commands or use the session's MCP connectors.
+The bootstrap orchestrator keeps its capabilities. The parent handles fixes.
 
 Normal subagents exclude parent conversation history. `omitClaudeMd` additionally
 excludes user/project/local instruction files, but managed policies still apply.
