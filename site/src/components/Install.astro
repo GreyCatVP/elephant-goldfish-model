@@ -52,10 +52,6 @@ const paths = [
       }
     </div>
 
-    <p class="muted then">
-      Then run <code>/egm-brainstorm</code> on a real feature and let the goldfish shoot down the first idea.
-    </p>
-
     <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>
   </div>
 </section>
@@ -90,6 +86,7 @@ const paths = [
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
     max-inline-size: 760px;
+    margin-block-end: clamp(32px, 5vw, 48px);
   }
 
   .path-label {
@@ -146,8 +143,4 @@ const paths = [
     display: block;
   }
 
-  .then {
-    max-inline-size: 760px;
-    margin: clamp(32px, 5vw, 48px) 0;
-  }
 </style>
