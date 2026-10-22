@@ -75,12 +75,9 @@ Stateless system prompt instructions for isolated Goldfish reviewer subagents
 Structural Validator, Style Editor, and Synthesizer).
 
 ### 3. Document Standards (`resources/document_standards/`)
-Objective evaluation rubrics used by Goldfish reviewers to grade specifications:
-*   `heilmeier-standard.md`: Problem clarity and value proposition.
-*   `zoom-out-standard.md`: Simplicity, YAGNI, and codebase reuse.
-*   `feature-spec-standard.md`: Architecture completeness and scale limits.
-*   `implementation-readiness-standard.md`: Path verification and test readiness.
-*   `re-implementation-standard.md`: Codebase state documentation bar.
+Goldfish reviewers load the versioned rubrics listed in the
+[shared runtime resources](../../resources/README.md). Those files own the
+evaluation requirements; this design describes how the layers use them.
 
 ### 4. Living Documentation (`docs/`)
 User guides (`getting_started.md`, `faq.md`) and technical design specifications

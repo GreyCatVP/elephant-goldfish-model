@@ -25,6 +25,15 @@ skill's directory. Resolve user documents and generated artifacts against
 the user's working directory. Never substitute similarly named files in the
 user's project for bundled personas or standards.
 
+In ChatGPT Work, a skill may be exposed through a cloud resource identifier
+while supporting files live in the installed local bundle. Use the installed
+path supplied by the skill inventory or installation metadata for those files;
+do not construct cloud resource identifiers for arbitrary supporting paths.
+If no installed path is available, report the missing capability instead of
+guessing a cache location. Read reviewer filenames and frontmatter from the
+bundle: a role such as `egm-design` maps to `agents/design_critic.md`, not
+`agents/design.md`. Confirm each resolved path before dispatch.
+
 ## Fresh-context reviewers
 
 Inspect the available native subagent tool schema. Tool names can be
@@ -35,6 +44,11 @@ This applies to reviewers launched by a synthesizer too. Use a general-purpose a
 and pass absolute paths to the persona, standards, target document, and
 explicitly selected reading list. Do not pass the parent transcript, private
 reasoning, or answers the document is supposed to explain.
+
+Require the reviewer to read its persona, target, and every supplied standard
+before returning findings. A missing read or inaccessible file is an incomplete
+review, not a clean result. Verify native tool results when the host exposes
+them; a parent-written completion summary is not equivalent evidence.
 
 Wait for actual reviewer completion before synthesizing findings. Propagate
 failures and timeouts; a launched reviewer is not a completed review. If

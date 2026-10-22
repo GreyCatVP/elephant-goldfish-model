@@ -19,6 +19,9 @@ Enable the installed plugin with `claude plugin enable egm@egm`.
 Start messages with `/egm:egm-brainstorm`, `/egm:egm-draft`, or `/egm:egm-review`.
 Skills retain `disable-model-invocation: true`: their absence from automatic
 skill discovery is expected. Keep drafting and orchestration in the main context.
+Dispatch reviewers directly from the main context. Native Claude subagents
+cannot spawn further subagents, so do not launch a synthesizer child to manage
+the review swarm. The main context collects findings and writes the report.
 
 Claude substitutes `${CLAUDE_PLUGIN_ROOT}` in plugin skill and agent bodies. Use that
 resolved absolute root for `agents/`, `resources/`, and `docs/`; use the invoked

@@ -1,5 +1,20 @@
 # Elephant-Goldfish Model (EGM)
 
+## Find the right document
+
+| Location | Purpose |
+| --- | --- |
+| [Getting started](getting_started.md) and [FAQ](faq.md) | Installation and everyday use. |
+| [Harnesses](harnesses.md), [Claude](claude.md), and [Codex](codex.md) | Host-specific installation and execution. |
+| [Design documents](designs/README.md) | Architecture, workflow rationale, and implementation plans. |
+| [Shared runtime resources](../resources/README.md) | Authoritative execution rules and review standards. |
+| [Testing playbook](../TESTING.md) | Commands and evidence requirements. |
+| [PR #103 verification reports](https://github.com/google/elephant-goldfish-model/pull/103) | Detailed harness results and known verification gaps. |
+
+`docs/` explains the system to contributors and users. `resources/` contains
+rules that the runtime reads. Link to those rules when explaining them here;
+keep requirements in their canonical resource files.
+
 AI has changed software development. Everything is different now and we all know
 it.
 

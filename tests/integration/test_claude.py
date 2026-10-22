@@ -63,7 +63,7 @@ Do not read other plugins or logs, use MCP, or modify files.
   project = "".join(c if c.isalnum() else "-" for c in str(workspace.resolve()))
   traces = Path.home() / ".claude/projects" / project
   parent = [json.loads(line) for line in
-            (traces / f"{session}.jsonl").read_text().splitlines()]
+            (traces / f"{session}.jsonl").read_text().split("\n") if line.strip()]
   calls, successful = {}, set()
   for event in parent:
     content = event.get("message", {}).get("content", [])
@@ -87,7 +87,9 @@ Do not read other plugins or logs, use MCP, or modify files.
   assert all(marker not in raw for marker in markers)
   answers = []
   child_reads = []
-  for line in raw.splitlines():
+  for line in raw.split("\n"):
+    if not line.strip():
+      continue
     event = json.loads(line)
     if event.get("type") == "assistant":
       for block in event["message"]["content"]:

@@ -6,6 +6,7 @@
 import json
 from pathlib import Path
 import re
+import runpy
 
 import pytest
 import yaml
@@ -29,6 +30,24 @@ REVIEWERS = (
     "codebase_details", "comprehension", "design_critic",
     "implementation_readiness", "structural", "style", "zoom_out",
 )
+
+
+@pytest.mark.parametrize("separator", ["\u0085", "\u2028", "\u2029"])
+def test_jsonl_preserves_unicode_separators(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, separator: str
+) -> None:
+  """JSONL records end at LF, not Unicode separators inside JSON strings."""
+  read_trace = runpy.run_path(str(ROOT / "tests/integration/test_codex.py"))[
+      "read_trace"
+  ]
+  monkeypatch.setenv("CODEX_HOME", str(tmp_path))
+  sessions = tmp_path / "sessions"
+  sessions.mkdir()
+  event = {"type": "response_item", "payload": {"text": f"left{separator}right"}}
+  (sessions / "fixture-id.jsonl").write_text(
+      json.dumps(event, ensure_ascii=False) + "\n", encoding="utf-8"
+  )
+  assert read_trace("fixture-id") == [event]
 
 
 def read_json(path: str) -> dict:

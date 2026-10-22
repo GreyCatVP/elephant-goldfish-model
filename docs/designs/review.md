@@ -120,20 +120,10 @@ All reviewer persona prompts reside under [`agents/`](../../agents/):
 
 ## Document Standards & Rubrics (`resources/document_standards/`)
 
-Reviewers evaluate drafts against versioned markdown standards:
-
-*   **`zoom-out-standard.md`**: Enforces root-problem focus, simplicity, YAGNI,
-    anti-weeds altitude control, and platform infrastructure reuse.
-*   **`heilmeier-standard.md`**: Evaluates objectives, existing limitations,
-    novelty, impact, risks, costs, and quantifiable verification metrics.
-*   **`feature-spec-standard.md`**: Mandates standard feature specification
-    sections (CUJs, architecture diagrams, error handling, telemetry).
-*   **`implementation-readiness-standard.md`**: Sets the bar for actionable
-    implementation plans (complete file targets, explicit rationale, testing
-    matrices, no code blocks).
-*   **`re-implementation-standard.md`**: Evaluates whether a specification is
-    sufficiently clear and self-contained that a clean-room implementation can
-    reproduce the system without author guidance.
+Reviewers evaluate drafts against the versioned standards listed in the
+[shared runtime resources](../../resources/README.md). Read the actual standard
+for its requirements. The stage breakdown above maps each review to its
+standards; it does not replace those rubrics.
 
 --------------------------------------------------------------------------------
 

@@ -67,7 +67,7 @@ def read_trace(thread_id: str) -> list[dict]:
     paths = list(sessions.rglob(f"*{thread_id}.jsonl"))
     assert len(paths) == 1, f"Expected one retained Codex trace for {thread_id}"
     return [
-        json.loads(line) for line in paths[0].read_text().splitlines()
+        json.loads(line) for line in paths[0].read_text().split("\n")
         if line.strip()
     ]
 
@@ -163,7 +163,7 @@ def run_codex(
             timeout=1200,
         )
     assert result.returncode == 0, f"Codex failed; inspect {log} and its .stderr"
-    events = [json.loads(line) for line in log.read_text().splitlines() if line.strip()]
+    events = [json.loads(line) for line in log.read_text().split("\n") if line.strip()]
     assert any(e["type"] == "turn.completed" for e in events), log
     assert not any(e["type"] in {"error", "turn.failed"} for e in events), log
     thread_id = next(e["thread_id"] for e in events if e["type"] == "thread.started")

@@ -177,11 +177,13 @@ To support lightweight provenance tracking and human inspection, all design
 
 ## Standards Alignment
 
-| Authoring Step | Governing Standard | Focus Area |
-| :------------- | :----------------- | :--------- |
-| Architecture Outline | [`zoom-out-standard.md`](../../resources/document_standards/zoom-out-standard.md) | Simplicity, YAGNI, existing infrastructure reuse |
-| Document Structure | [`feature-spec-standard.md`](../../resources/document_standards/feature-spec-standard.md) | Standard heading hierarchy, CUJs, failure modes |
-| Detailed Plan | [`implementation-readiness-standard.md`](../../resources/document_standards/implementation-readiness-standard.md) | Exhaustive file listing, test strategies, no code dumps |
+Read the linked standard for its requirements.
+
+| Authoring Step | Governing Standard |
+| :------------- | :----------------- |
+| Architecture Outline | [Zoom-out standard](../../resources/document_standards/zoom-out-standard.md) |
+| Document Structure | [Feature specification standard](../../resources/document_standards/feature-spec-standard.md) |
+| Detailed Plan | [Implementation readiness standard](../../resources/document_standards/implementation-readiness-standard.md) |
 
 --------------------------------------------------------------------------------
 

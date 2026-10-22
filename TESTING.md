@@ -82,11 +82,16 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Antigravity CLI | 1.4.5 | 2026-10-21 | Pass; validator warnings | Not run | Not run | Not run | Packaging regression only; broader AGY work is separate. |
 | Claude Code | 2.1.308 | 2026-10-21 | Pass (`--plugin-dir`) | Pass (fixture) | Pass (fixture) | Pass (fixture) | 15 native reviewers in stage order; separate isolation probe passed. |
-| Claude Cowork | Current desktop, cloud task | 2026-10-21 | Pass (ZIP) | Completed | Completed | Partial verification | Five reports exist; malformed exported traces and missing standard read prevent a clean verification result. |
+| Claude Cowork | Current desktop, cloud task | 2026-10-21 | Pass (ZIP) | Completed | Completed | Partial verification | Five reports and 15 valid JSONL traces exist; a missing standard read and isolation evidence remain tracked in #105. |
 | OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Final fresh command: 2 passed in 568.10s, including isolation. |
 | ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-21 | Pass (runtime ZIP) | Completed with recovery | Completed | Completed | Native UI confirms delegation; exported artifacts match. Raw trace coverage limited. |
 
 ### Interpreting native test results
+
+Keep full run reports in the [PR description](https://github.com/google/elephant-goldfish-model/pull/103).
+This table is a summary. Record the tested commit, client version, commands,
+native evidence, and limitations in each report. Parse JSONL on literal LF;
+Python `splitlines()` also splits valid Unicode characters inside JSON strings.
 
 Track open cloud verification gaps in [#105 (Cowork)](https://github.com/google/elephant-goldfish-model/issues/105) and [#106 (ChatGPT Work)](https://github.com/google/elephant-goldfish-model/issues/106).
 
