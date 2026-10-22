@@ -44,9 +44,9 @@ const base = `http://127.0.0.1:${server.address().port}`;
 // channel: 'chrome' finds the installed Chrome on Linux, macOS, and Windows; CHROME_PATH overrides it.
 const browser = await puppeteer.launch({ channel: 'chrome', executablePath: process.env.CHROME_PATH, args: ['--no-sandbox'] });
 
-async function capture({ url, out, width, height, scheme = 'light', fullPage = false }) {
+async function capture({ url, out, width, height, scheme = 'light', fullPage = false, scale = 1 }) {
   const page = await browser.newPage();
-  await page.setViewport({ width, height });
+  await page.setViewport({ width, height, deviceScaleFactor: scale });
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);
   await page.goto(url, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
@@ -56,7 +56,7 @@ async function capture({ url, out, width, height, scheme = 'light', fullPage = f
 }
 
 try {
-  await capture({ url: pathToFileURL(join(site, 'scripts/og.html')).href, out: 'public/og.png', width: 1200, height: 630 });
+  await capture({ url: pathToFileURL(join(site, 'scripts/og.html')).href, out: 'public/og.png', width: 1200, height: 630, scale: 2 });
   await capture({ url: `${base}/`, out: 'screenshots/hero-light.png', width: 1200, height: 600 });
   await capture({ url: `${base}/`, out: 'screenshots/hero-dark.png', width: 1200, height: 600, scheme: 'dark' });
   await capture({ url: `${base}/`, out: 'screenshots/full-light.png', width: 1000, height: 800, fullPage: true });
