@@ -9,14 +9,14 @@ import Button from './gb/Button.astro';
       Review with a goldfish
     </h1>
     <p class="lead">
-      <span class="nowrap">Deep-context</span> agents draft the specification and <span class="nowrap">zero-context</span> subagents stress-test it before any code is written.
+      An <span class="nowrap">open-source</span> Google project used by thousands of Google
+      engineers every month, where <span class="nowrap">deep-context</span> agents draft the spec
+      and <span class="nowrap">zero-context</span> subagents <span class="nowrap">stress-test</span>{' '}
+      it before any code is written.
     </p>
     <div class="cta">
       <Button color="filled" size="md" href="#install">Get started</Button>
     </div>
-    <p class="meta muted">
-      An open-source project by Google &middot; Used by thousands of Google engineers every month
-    </p>
   </div>
 </section>
 
@@ -34,26 +34,10 @@ import Button from './gb/Button.astro';
   }
 
   .lead {
-    max-inline-size: 58ch;
-  }
-
-  /* Authored breaks once the lead is at full width: first sentence alone, then a clause break.
-     Below that the browser wraps; the nowrap spans keep the hyphenated words whole. */
-  .wide {
-    display: none;
-  }
-
-  @media (min-width: 720px) {
-    .wide {
-      display: inline;
-    }
+    max-inline-size: 62ch;
   }
 
   .cta {
     margin-block-start: 8px;
-  }
-
-  .meta {
-    font: var(--md-sys-typescale-label-lg);
   }
 </style>
