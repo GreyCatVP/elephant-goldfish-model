@@ -73,7 +73,7 @@ const cliPaths = [
               <p class="path-label">
                 {path.links.map((link, i) => (
                   <>
-                    {i > 0 && ' / '}
+                    {i > 0 && <span class="label-sep">&middot;</span>}
                     <a href={link.href} target="_blank" rel="noopener">
                       {link.label}
                     </a>
@@ -143,33 +143,47 @@ const cliPaths = [
   .paths {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 28px;
     max-inline-size: 760px;
     margin-block-end: clamp(32px, 5vw, 48px);
   }
 
   .paths-divider {
-    margin: 0;
+    margin: 4px 0 0;
   }
 
   .cli-paths {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+    gap: 24px;
   }
 
   .path-label {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     font: var(--md-sys-typescale-label-lg);
     color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .path-label a {
+    text-decoration: none;
+  }
+
+  .path-label a:hover {
+    color: var(--md-sys-color-on-surface);
+    text-decoration: underline;
+  }
+
+  .label-sep {
+    margin-inline: 8px;
+    opacity: 0.6;
   }
 
   .copybox {
     inline-size: 100%;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
+    gap: 16px;
+    padding: 14px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
     color: var(--md-sys-color-on-surface);
     text-align: start;
@@ -186,6 +200,7 @@ const cliPaths = [
   }
 
   .copybox-prompt {
+    padding-inline: 22px 20px;
     border-radius: 999px;
     background: var(--md-sys-color-surface);
     border-color: var(--md-sys-color-outline);
@@ -213,7 +228,7 @@ const cliPaths = [
     min-inline-size: 0;
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.9375rem;
-    line-height: 1.55;
+    line-height: 1.6;
     overflow-x: auto;
     white-space: pre;
   }
