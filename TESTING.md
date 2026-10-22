@@ -100,16 +100,22 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Claude Code | | | Not run | | | | |
-| OpenAI Codex | 0.161.0 | 2026-10-07 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | 15 native reviewers; isolation probe passed. Interactive gates and nesting not tested. |
+| Claude Code | 2.1.308 | 2026-10-21 | Pass (`--plugin-dir`) | Pass (fixture) | Pass (fixture) | Pass (fixture) | 15 native reviewers in stage order; separate isolation probe passed. |
+| Claude Cowork | Current desktop, cloud task | 2026-10-21 | Pass (ZIP) | Completed | Completed | Partial verification | Five reports exist; malformed exported traces and missing standard read prevent a clean verification result. |
+| OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Final fresh command: 2 passed in 568.10s, including isolation. |
+| ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-21 | Pass (runtime ZIP) | Completed with recovery | Completed | Completed | Native UI confirms delegation; exported artifacts match. Raw trace coverage limited. |
 | Cursor | | | Not run | | | | |
-| Gemini CLI | | | Not run | | | | |
-| Antigravity | | | Not run | | | | |
+| Gemini CLI | 0.65.0 | 2026-10-21 | Manifest validated | Not run | Not run | Not run | Legacy migration work is separate from PR #103. |
+| Antigravity CLI | 1.4.5 | 2026-10-21 | Pass; validator warnings | Not run | Not run | Not run | Packaging regression only; broader AGY work is separate. |
 
 ### Interpreting native test results
 
 See the [combined harness verification record](docs/harness-verification.md)
 for a worked example with explicit limits and partial results.
+
+Known cloud verification gaps remain open in [#105 (Cowork)](https://github.com/google/elephant-goldfish-model/issues/105)
+and [#106 (ChatGPT Work)](https://github.com/google/elephant-goldfish-model/issues/106).
+Each issue defines the evidence required before upgrading its support status.
 
 - Record the candidate commit, host version, model, invocation, and artifact
   locations. When testing several pending PRs, use their combined candidate;
