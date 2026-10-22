@@ -7,8 +7,8 @@ const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 const harnesses = `${repo}/blob/HEAD/docs/harnesses.md`;
 
 const paths = [
+  { label: 'Ask your agent', text: `Please install this plugin: ${repo}`, copyLabel: 'Copy prompt' },
   { label: 'Antigravity CLI', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command' },
-  { label: 'Or ask Antigravity', text: `Please install this plugin: ${repo}`, copyLabel: 'Copy Antigravity prompt' },
   { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@elephant-goldfish-model`, copyLabel: 'Copy Claude Code command' },
   { label: 'OpenAI Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@elephant-goldfish-model`, copyLabel: 'Copy Codex command' },
 ];
@@ -19,7 +19,9 @@ const paths = [
     <div class="section-head">
       <h2 class="headline">Install the plugin.</h2>
       <p class="lead">
-        Built for <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>, Claude Code, and OpenAI Codex.
+        Built for <a href="https://antigravity.google" target="_blank" rel="noopener">Antigravity</a>,{' '}
+        <a href="https://code.claude.com" target="_blank" rel="noopener">Claude Code</a>, and{' '}
+        <a href="https://openai.com/codex" target="_blank" rel="noopener">OpenAI Codex</a>.
       </p>
     </div>
 
