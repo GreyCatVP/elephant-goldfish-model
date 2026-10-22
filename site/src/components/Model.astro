@@ -1,5 +1,8 @@
 ---
 import Mark from './Mark.astro';
+
+const essay =
+  'https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874';
 ---
 
 <section class="section" id="model">
@@ -7,7 +10,12 @@ import Mark from './Mark.astro';
     <div class="section-head">
       <h2 class="headline">How the model works</h2>
       <p class="lead">
-        The drafting agent holds full repository context while reviewing subagents start with a blank slate, exposing blind spots before they become code.
+        Based on <a href="https://dkr.bio" target="_blank" rel="noopener">Dave Rensin</a>&rsquo;s essay{' '}
+        <a href={essay} target="_blank" rel="noopener">
+          Elephants, Goldfish, and the New Golden Age of Software Engineering
+        </a>
+        , the drafting agent holds full repository context while reviewing subagents start with a
+        blank slate, exposing blind spots before they become code.
       </p>
     </div>
 
