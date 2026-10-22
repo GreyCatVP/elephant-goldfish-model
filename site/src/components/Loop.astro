@@ -16,7 +16,7 @@ const steps = [
     name: 'Review',
     role: 'Goldfish',
     command: '/egm-review',
-    body: 'A fresh, zero-context Goldfish session checks completeness, clarity, self-containment, and readiness. Expect a lot of feedback. That is the point.',
+    body: 'Fresh zero-context Goldfish subagents check completeness, clarity, self-containment, and implementation readiness.',
   },
 ];
 ---
@@ -24,10 +24,9 @@ const steps = [
 <section class="section loop">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">From idea to verified spec to code.</h2>
+      <h2 class="headline">From idea to verified specification</h2>
       <p class="lead">
-        Three skills take a feature from a rough idea to a verified spec. After that, any coding
-        agent can build it.
+        Three skills take a feature from a rough concept to an implementation-ready design document.
       </p>
     </div>
     <ol class="steps">
@@ -72,7 +71,7 @@ const steps = [
           <code class="cmd">/egm-drift-report</code>
         </div>
         <p class="muted">
-          Flags where the code and the spec have drifted apart. You pick which one moves.
+          Compares the live codebase against the specification and flags where they have diverged.
         </p>
       </li>
     </ol>
