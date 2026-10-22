@@ -8,8 +8,8 @@ const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 const paths = [
   { label: 'Ask your agent', text: `Install ${repo}`, copyLabel: 'Copy prompt', kind: 'prompt' },
   { label: 'Antigravity CLI', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command', kind: 'cli' },
-  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm`, copyLabel: 'Copy Claude Code command', kind: 'cli' },
-  { label: 'Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm`, copyLabel: 'Copy Codex command', kind: 'cli' },
+  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model\nclaude plugin install egm@egm`, copyLabel: 'Copy Claude Code command', kind: 'cli' },
+  { label: 'Codex', text: `codex plugin marketplace add google/elephant-goldfish-model\ncodex plugin add egm@egm`, copyLabel: 'Copy Codex command', kind: 'cli' },
 ];
 ---
 
@@ -129,16 +129,12 @@ const paths = [
   .command {
     flex: 1;
     min-inline-size: 0;
+    padding-block: 4px;
     font-size: 0.9375rem;
+    line-height: 1.55;
     overflow-x: auto;
-    white-space: nowrap;
+    white-space: pre;
     user-select: all;
-  }
-
-  .command::before {
-    content: '$ ';
-    color: var(--md-sys-color-on-surface-variant);
-    user-select: none;
   }
 
   .icon-check,
