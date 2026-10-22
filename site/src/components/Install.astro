@@ -216,12 +216,22 @@ codex plugin add egm@egm`, copyLabel: 'Copy Codex command' },
     display: inline;
   }
 
+  .icon-btn {
+    inline-size: 40px;
+    block-size: 40px;
+    flex: none;
+  }
+
   :global(.copied) .icon-btn {
     background: var(--md-sys-color-primary);
     color: var(--md-sys-color-on-primary);
   }
 
-  .icon-check,
+  .icon-check {
+    display: none;
+    transform: scale(0.82);
+  }
+
   :global(.copied) .icon-copy {
     display: none;
   }
