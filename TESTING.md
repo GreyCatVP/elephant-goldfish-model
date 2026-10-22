@@ -80,11 +80,11 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Antigravity CLI | 1.4.5 | 2026-10-21 | Pass; validator warnings | Not run | Not run | Not run | Packaging regression only; broader AGY work is separate. |
-| Claude Code | 2.1.308 | 2026-10-21 | Pass (`--plugin-dir`) | Pass (fixture) | Pass (fixture) | Pass (fixture) | 15 native reviewers in stage order; separate isolation probe passed. |
-| Claude Cowork | Current desktop, cloud task | 2026-10-21 | Pass (ZIP) | Completed | Completed | Partial verification | Five reports and 15 valid JSONL traces exist; a missing standard read and isolation evidence remain tracked in #105. |
-| OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Final fresh command: 2 passed in 568.10s, including isolation. |
-| ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-21 | Pass (runtime ZIP) | Completed with recovery | Completed | Completed | Native UI confirms delegation; exported artifacts match. Raw trace coverage limited. |
+| Antigravity CLI | 1.4.5 | 2026-10-22 | Pass; validator warnings | Not run | Not run | Not run | Exact candidate installed, discovered, then removed. Bootstrap exceeds loaded-size limit; live isolation configuration not established. |
+| Claude Code | 2.1.308 | 2026-10-22 | Pass (`--plugin-dir`) | Pass (fixture) | Pass (fixture) | Pass after fix (fixture) | Isolation probe passed. Initial stage-order failure retained; focused nine-reviewer rerun verifies sequential stages and required reads. Process shutdown and parent no-shell fixture limits remain in the full report. |
+| Claude Cowork | Opus 5.5 Medium, connected cloud task | 2026-10-22 | Pass (ZIP) | Completed with direct-dispatch recovery | Completed | Partial: stages 5–7 | Usage limit interrupted stage 8. Final artifacts, stage 9 and actual isolation-child output remain unverified; #105. Earlier complete run is reported separately. |
+| OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Two live tests passed in 573.13s; isolation, 15 native reviewers, ordered stages and required reads verified. |
+| ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-22 | Pass; installed hashes verified | Completed | Completed | Nine native reviewers completed | Fresh probe returned UNKNOWN. Artifact download/final audit and full child tool traces remain outstanding; #106. |
 
 ### Interpreting native test results
 
