@@ -50,7 +50,7 @@ const cliPaths = [
           <span class="prompt-text">{promptPath.text}</span>
           <span class="copy-action" aria-hidden="true">
             <span class="copied-badge">Copied</span>
-            <span class="icon-btn icon-btn-tonal icon-btn-sm">
+            <span class="copy-icon">
               <svg class="icon-copy" viewBox="0 -960 960 960">
                 <path
                   d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
@@ -89,7 +89,7 @@ const cliPaths = [
                 <code class="command">{path.text}</code>
                 <span class="copy-action" aria-hidden="true">
                   <span class="copied-badge">Copied</span>
-                  <span class="icon-btn icon-btn-tonal icon-btn-sm">
+                  <span class="copy-icon">
                     <svg class="icon-copy" viewBox="0 -960 960 960">
                       <path
                         d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
@@ -169,7 +169,7 @@ const cliPaths = [
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 8px 8px 20px;
+    padding: 12px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
     color: var(--md-sys-color-on-surface);
     text-align: start;
@@ -179,6 +179,10 @@ const cliPaths = [
 
   .copybox:hover {
     border-color: var(--md-sys-color-outline);
+  }
+
+  .copybox:hover .copy-icon {
+    color: var(--md-sys-color-on-surface);
   }
 
   .copybox-prompt {
@@ -207,7 +211,6 @@ const cliPaths = [
   .command {
     flex: 1;
     min-inline-size: 0;
-    padding-block: 4px;
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.9375rem;
     line-height: 1.55;
@@ -219,7 +222,7 @@ const cliPaths = [
     flex: none;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
   .copied-badge {
@@ -232,22 +235,26 @@ const cliPaths = [
     display: inline;
   }
 
-  .icon-btn {
-    inline-size: 40px;
-    block-size: 40px;
-    flex: none;
+  .copy-icon {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 20px;
+    block-size: 20px;
+    color: var(--md-sys-color-on-surface-variant);
+    transition: color 140ms ease;
   }
 
-  :global(.copied) .icon-btn {
-    background: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
+  .copy-icon > svg {
+    inline-size: 20px;
+    block-size: 20px;
+    fill: currentColor;
   }
 
-  .icon-check {
-    display: none;
-    transform: scale(0.82);
+  :global(.copied) .copy-icon {
+    color: var(--md-sys-color-primary);
   }
 
+  .icon-check,
   :global(.copied) .icon-copy {
     display: none;
   }
