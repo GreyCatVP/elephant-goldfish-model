@@ -23,6 +23,12 @@ another EGM skill (for example `egm-review-loop` or `egm-resolve` during review
 Stages 7 and 9), read its `SKILL.md` and follow it in the same thread. Do not
 use the `Skill` tool for EGM skills. Keep drafting and orchestration in the
 main context.
+Claude Code has no artifact comments. To request draft revisions, edit
+`design_draft.md` directly or add `<!-- -->` comments in it, or give the notes
+in chat; the model reads the draft again before each revision.
+Write briefs, drafts, and reports to the user's working directory. The
+per-session scratchpad is not the artifact directory: it belongs to one
+session, and the deliverables must outlive it.
 In Claude Code, `egm:egm-synthesizer` may spawn reviewers (nesting is allowed
 up to 3 levels by default), or the main context may dispatch reviewers directly.
 In Claude Cowork, subagents cannot spawn further subagents, so dispatch
@@ -64,7 +70,12 @@ Reviewers cannot edit files or run shell commands, and no persistent `memory`
 is configured. The synthesizer adapter declares
 `tools: [Agent, Read, Grep, Glob, Write]` so it can spawn reviewers and write
 reports but cannot run shell commands or use the session's MCP connectors.
-The bootstrap orchestrator keeps its capabilities. The parent handles fixes.
+The bootstrap orchestrator adapter keeps all tools because the bootstrap
+skill uses the shell; it routes workers to the bootstrap `SKILL.md` so they
+return the JSON `subtree_index` instead of prose. The parent handles fixes.
+Reviewers cannot open URLs. Do not pass documentation URLs in
+`GoldfishContext` to Claude reviewers: save the raw page as a file in the
+workspace and pass that path instead.
 
 Normal subagents exclude parent conversation history. `omitClaudeMd` additionally
 excludes user/project/local instruction files, but managed policies still apply.

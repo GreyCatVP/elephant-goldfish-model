@@ -134,6 +134,21 @@ def test_claude_synthesizer_adapter_is_tool_restricted() -> None:
   assert "./agents/synthesizer.md" not in manifest
 
 
+def test_claude_bootstrap_adapter_routes_to_skill() -> None:
+  adapter = ROOT / ".claude-plugin/agents/bootstrap_orchestrator.md"
+  config = frontmatter(adapter)
+  assert "tools" not in config
+  assert config["model"] == "inherit"
+  text = adapter.read_text()
+  assert "${CLAUDE_PLUGIN_ROOT}/agents/bootstrap_orchestrator.md" in text
+  assert "${CLAUDE_PLUGIN_ROOT}/skills/egm_bootstrap/SKILL.md" in text
+  canonical = frontmatter(ROOT / "agents/bootstrap_orchestrator.md")
+  assert canonical["name"] == config["name"]
+  manifest = read_json(".claude-plugin/plugin.json")["agents"]
+  assert "./.claude-plugin/agents/bootstrap_orchestrator.md" in manifest
+  assert "./agents/bootstrap_orchestrator.md" not in manifest
+
+
 def test_claude_manifest_agents_and_shared_personas_resolve() -> None:
   paths = read_json(".claude-plugin/plugin.json")["agents"]
   assert all((ROOT / path).is_file() for path in paths)

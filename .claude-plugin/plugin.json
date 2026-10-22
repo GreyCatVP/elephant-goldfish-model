@@ -9,7 +9,7 @@
   "repository": "https://github.com/google/elephant-goldfish-model",
   "license": "Apache-2.0",
   "agents": [
-    "./agents/bootstrap_orchestrator.md",
+    "./.claude-plugin/agents/bootstrap_orchestrator.md",
     "./.claude-plugin/agents/codebase_details.md",
     "./.claude-plugin/agents/comprehension.md",
     "./.claude-plugin/agents/design_critic.md",
