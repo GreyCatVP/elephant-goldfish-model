@@ -4,13 +4,12 @@ import IconButton from './gb/IconButton.astro';
 
 const repo = 'https://github.com/google/elephant-goldfish-model';
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
-const harnesses = `${repo}/blob/HEAD/docs/harnesses.md`;
 
 const paths = [
-  { label: 'Ask your agent', text: `Please install this plugin: ${repo}`, copyLabel: 'Copy prompt' },
+  { label: 'Ask your agent', text: `Install ${repo}`, copyLabel: 'Copy prompt' },
   { label: 'Antigravity CLI', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command' },
-  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@elephant-goldfish-model`, copyLabel: 'Copy Claude Code command' },
-  { label: 'OpenAI Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@elephant-goldfish-model`, copyLabel: 'Copy Codex command' },
+  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm`, copyLabel: 'Copy Claude Code command' },
+  { label: 'OpenAI Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm`, copyLabel: 'Copy Codex command' },
 ];
 ---
 
@@ -50,7 +49,6 @@ const paths = [
 
     <p class="muted then">
       Then run <code>/egm-brainstorm</code> on a real feature and let the goldfish shoot down the first idea.
-      Using another agent? <a href={harnesses} target="_blank" rel="noopener">See the harness guide</a>.
     </p>
 
     <Button color="outlined" size="md" href={guide} target="_blank">Read the setup guide</Button>

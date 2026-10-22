@@ -69,7 +69,7 @@ def test_compatibility_metadata_matches_root(path: str) -> None:
 def test_marketplace_resolves_shared_package(path: str) -> None:
   canonical = read_json("plugin.json")
   marketplace = read_json(path)
-  assert marketplace["name"] == "elephant-goldfish-model"
+  assert marketplace["name"] == "egm"
   assert len(marketplace["plugins"]) == 1
   entry = marketplace["plugins"][0]
   assert entry["name"] == canonical["name"]
