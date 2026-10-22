@@ -68,7 +68,7 @@ EGM_CODEX_LIVE=1 pytest tests/integration/test_codex.py -v
 
 Tests verify candidate installation, fresh-context reviewer isolation, and workflow artifacts.
 Each test runs with an authenticated Codex CLI in an isolated sandbox.
-See [Codex integration](docs/codex.md) and [Codex support design](docs/designs/codex_support.md).
+See [Codex integration](docs/codex.md).
 
 ---
 
