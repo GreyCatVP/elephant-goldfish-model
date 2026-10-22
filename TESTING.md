@@ -60,35 +60,15 @@ sees no parent or project `CLAUDE.md` context. See [Claude integration](docs/cla
 
 ## Native Codex Integration Tests (Opt-in)
 
-Unit tests include Codex manifest, discovery, and bundled-resource checks; they
-do not execute the native Codex plugin, filesystem tools, or subagents.
-
-To test those boundaries, run from a Git checkout with an authenticated Codex
-CLI and native subagent support. These tests consume model usage and can take
-several minutes:
+Opt-in integration tests run the live candidate through a temporary Codex marketplace:
 
 ```sh
 EGM_CODEX_LIVE=1 pytest tests/integration/test_codex.py -v
 ```
 
-Each scenario has a 20-minute timeout. Without `EGM_CODEX_LIVE=1`, integration
-tests skip before installing or invoking Codex.
-
-The fixture installs the current candidate through a uniquely named local
-marketplace and removes that temporary plugin and
-marketplace afterward. It leaves existing EGM installations intact. It ignores
-user configuration and disables unrelated remote plugins, hooks, and memories
-for the model run, while using normal CLI authentication. Do not run concurrent
-plugin configuration edits while this fixture is installing or cleaning up.
-
-Tests run outside the source checkout. The isolation probe checks the actual
-child response for a random parent-only marker. The workflow test checks
-brainstorm and draft artifacts, five review reports, and native reviewer
-completion. Its synthetic user explicitly approves all fixture gates; it does
-not verify interactive question UI or human approval behavior.
-
-Traces stay in pytest's tmp dir; see `tests/integration/test_codex.py` for what
-is checked.
+Tests verify candidate installation, fresh-context reviewer isolation, and workflow artifacts.
+Each test runs with an authenticated Codex CLI in an isolated sandbox.
+See [Codex integration](docs/codex.md) and [Codex support design](docs/designs/codex_support.md).
 
 ---
 
@@ -100,36 +80,17 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| Antigravity CLI | 1.4.5 | 2026-10-21 | Pass; validator warnings | Not run | Not run | Not run | Packaging regression only; broader AGY work is separate. |
 | Claude Code | 2.1.308 | 2026-10-21 | Pass (`--plugin-dir`) | Pass (fixture) | Pass (fixture) | Pass (fixture) | 15 native reviewers in stage order; separate isolation probe passed. |
 | Claude Cowork | Current desktop, cloud task | 2026-10-21 | Pass (ZIP) | Completed | Completed | Partial verification | Five reports exist; malformed exported traces and missing standard read prevent a clean verification result. |
 | OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Final fresh command: 2 passed in 568.10s, including isolation. |
 | ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-21 | Pass (runtime ZIP) | Completed with recovery | Completed | Completed | Native UI confirms delegation; exported artifacts match. Raw trace coverage limited. |
-| Cursor | | | Not run | | | | |
-| Gemini CLI | 0.65.0 | 2026-10-21 | Manifest validated | Not run | Not run | Not run | Legacy migration work is separate from PR #103. |
-| Antigravity CLI | 1.4.5 | 2026-10-21 | Pass; validator warnings | Not run | Not run | Not run | Packaging regression only; broader AGY work is separate. |
 
 ### Interpreting native test results
 
-See the [combined harness verification record](docs/harness-verification.md)
-for a worked example with explicit limits and partial results.
+Track open cloud verification gaps in [#105 (Cowork)](https://github.com/google/elephant-goldfish-model/issues/105) and [#106 (ChatGPT Work)](https://github.com/google/elephant-goldfish-model/issues/106).
 
-Known cloud verification gaps remain open in [#105 (Cowork)](https://github.com/google/elephant-goldfish-model/issues/105)
-and [#106 (ChatGPT Work)](https://github.com/google/elephant-goldfish-model/issues/106).
-Each issue defines the evidence required before upgrading its support status.
-
-- Record the candidate commit, host version, model, invocation, and artifact
-  locations. When testing several pending PRs, use their combined candidate;
-  separate passing runs cannot reveal interactions between their changes.
-- Check native tool traces for reviewer launches, completion, and reads of the
-  intended installed resources. A parent's success message or a folder of
-  reports alone is insufficient evidence.
-- Verify stage order and reviewer roles as well as artifact existence. A run
-  can produce every report while parallelizing stages that should be sequential
-  or assigning the wrong review lens. Record this as a deviation.
-- Distinguish review findings about the fixture's design from failures of the
-  review workflow. Finding a design defect is not itself a harness failure.
-- A fixture that preapproves user decisions does not test interactive approval
-  gates. Direct dispatch does not test nested delegation. Record both limits.
-- Keep discovery, installation, workflow execution, and isolation results
-  separate. An explicit-path workaround must not count as successful automatic
-  discovery; malformed or incomplete traces leave the affected checks unverified.
+- Inspect native tool traces for reviewer launches, completion, and intended resource reads.
+- Verify sequential stage execution and persona lenses in addition to artifact existence.
+- Distinguish fixture design findings from execution failures of the review workflow.
+- Keep installation, execution, and transcript isolation results recorded separately.

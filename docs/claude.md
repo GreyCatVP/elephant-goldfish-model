@@ -10,6 +10,11 @@ must not be treated as verified Goldfish isolation environments.
 
 ## Invocation and resources
 
+```sh
+claude plugin marketplace add google/elephant-goldfish-model
+claude plugin install egm@elephant-goldfish-model
+```
+
 Enable the installed plugin with `claude plugin enable egm@elephant-goldfish-model`.
 Start messages with `/egm:egm-brainstorm`, `/egm:egm-draft`, or `/egm:egm-review`.
 Skills retain `disable-model-invocation: true`: their absence from automatic

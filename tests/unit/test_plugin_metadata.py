@@ -13,21 +13,12 @@ ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_URL = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 NAME_RE = r"(?!.*(?:--|\.\.))[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?"
 COMPATIBILITY_MANIFESTS = [
-    path for path in [
-        ".claude-plugin/plugin.json",
-        ".codex-plugin/plugin.json",
-        ".cursor-plugin/plugin.json",
-        "gemini-extension.json",
-    ]
-    if (ROOT / path).is_file()
+    ".claude-plugin/plugin.json",
+    ".codex-plugin/plugin.json",
 ]
 MARKETPLACES = [
-    path for path in [
-        ".agents/plugins/marketplace.json",
-        ".claude-plugin/marketplace.json",
-        ".cursor-plugin/marketplace.json",
-    ]
-    if (ROOT / path).is_file()
+    ".agents/plugins/marketplace.json",
+    ".claude-plugin/marketplace.json",
 ]
 
 

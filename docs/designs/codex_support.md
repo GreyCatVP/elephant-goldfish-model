@@ -45,18 +45,21 @@ Non-goals:
   Goldfish starts without the parent transcript.
 - `tests/unit/test_codex_packaging.py` validates that
   `.agents/plugins/marketplace.json` resolves to `.codex-plugin/plugin.json`,
+  specifies `authentication: "ON_INSTALL"` and `category: "Productivity"`,
   and checks skill identities, bundled persona and template references, and
   access to the shared Codex guide. Existing offline CI discovers these tests.
 - `tests/integration/test_codex.py` runs only when `EGM_CODEX_LIVE=1`. It
   installs a copied candidate under a unique temporary marketplace name, uses
   the user's existing `codex login` session, and removes the installation
-  afterward. It runs `codex exec --ignore-user-config --sandbox
-  workspace-write --json` with `features.multi_agent=true` and
+  afterward. It runs `codex exec --skip-git-repo-check --ignore-user-config
+  --sandbox workspace-write --json` with `features.multi_agent=true` and
   `features.remote_plugin`, `features.hooks`, and `features.memories` disabled.
 - Reviewer evidence comes from the Codex trace. The test reads `thread_id`
   from the `thread.started` event on stdout, locates
   `$CODEX_HOME/sessions/**/*<thread_id>.jsonl`, requires `SubAgentActivity`
-  started and completed events, and then reads each child trace.
+  started and completed events, and then reads each child trace. The
+  `successful_reads` helper inspects both `stdout` and `aggregated_output`,
+  and accepts literal absolute multi-file `cat` commands.
 - The isolation scenario puts a random marker only in the parent's input; the
   child must answer `UNKNOWN`. The workflow scenario produces a brief, a
   design, and all five review reports for an offline line-counting tool. Human

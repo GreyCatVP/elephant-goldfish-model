@@ -8,11 +8,10 @@ text.
 
 | Harness | Install |
 | --- | --- |
-| Antigravity | `/plugin`, then install from `https://github.com/google/elephant-goldfish-model` |
-| Gemini CLI | `gemini extensions install https://github.com/google/elephant-goldfish-model` |
-| Claude Code | `/plugin marketplace add google/elephant-goldfish-model`, then `/plugin install egm@elephant-goldfish-model` |
+| Antigravity | `agy plugin install https://github.com/google/elephant-goldfish-model` (or `/plugin` in the IDE) |
+| Claude Code | `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@elephant-goldfish-model` |
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
-| OpenAI Codex | `codex plugin marketplace add google/elephant-goldfish-model`, then install `egm` from `/plugins` |
+| OpenAI Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@elephant-goldfish-model` |
 | ChatGPT | Personal testing: Plugins > Add > Upload plugin archive; see [packaging](codex.md#chatgpt). Workspace import: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
@@ -35,14 +34,13 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 | Harness | Manifest | Skills | Subagents |
 | --- | --- | --- | --- |
 | Antigravity | `plugin.json` | `skills/` (default) | `agents/` (default) |
-| Gemini CLI | `gemini-extension.json` | `skills/` (default) | `agents/` (default) |
 | Claude Code | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Claude adapters and orchestrators listed in `plugin.json` `agents` |
 | Claude Cowork | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Subagents run inside Cowork; hooks n/a |
 | OpenAI Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
 | ChatGPT | `plugin.json`, `.codex-plugin/plugin.json`; `.agents/plugins/marketplace.json` for workspace import | `skills` path | Detect native tools in the current session; general-purpose agent reads the persona |
 
-Persona prompts live in `agents/`, the directory Antigravity and Gemini CLI
-scan for subagents. Each persona has `name` and `description` frontmatter, so
+Persona prompts live in `agents/`, the directory Antigravity
+scans for subagents. Each persona has `name` and `description` frontmatter, so
 harnesses that load `agents/*.md` register them as named subagents
 (`egm-design`, `egm-zoom-out`, and so on).
 
@@ -59,7 +57,6 @@ phrase to its own tool:
 | Harness | Subagent tool | Named personas | Nesting |
 | --- | --- | --- | --- |
 | Antigravity | `invoke_subagent` | Yes | Yes |
-| Gemini CLI | Subagents | Yes | Not verified |
 | Claude Code | Agent (Task) tool | Yes | Up to 3 levels by default |
 | Claude Cowork | Cowork subagents | Yes | Subagents run inside Cowork |
 | OpenAI Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
@@ -74,38 +71,13 @@ the review skills stop instead of running in the same context. Check actual
 tool availability rather than inferring it from the product name. This applies
 to ChatGPT modes that do not expose native fresh-context delegation.
 
-## Common pitfalls
-
-- **Testing the wrong copy:** An existing installation can take precedence over
-  a local candidate. Use a uniquely named test plugin where supported and
-  verify the paths actually read by the agent.
-- **Incomplete installation:** Keep the whole bundle together. Skills need
-  personas, reference files, and document standards; copying only skill files
-  is insufficient.
-- **Discovery versus invocation:** Skills with `disable-model-invocation: true`
-  may be absent from automatic discovery. Invoke them explicitly using the
-  host's command syntax before concluding that installation failed.
-- **Resource lookup:** Resolve bundled files from the installed plugin, and
-  keep generated artifacts in the user's project. Do not guess cache versions.
-  See [TESTING.md](../TESTING.md#interpreting-native-test-results) for how to
-  record an explicit-path workaround.
-- **Isolation limits:** Fresh subagent context does not imply filesystem
-  isolation or exclusion of all host instructions. Verify the host's behavior.
-- **Task constraints:** Pass offline, read-only, and resource-scope requirements
-  explicitly to each delegated reviewer. Check its tool use; parent instructions
-  alone do not establish that a child followed those restrictions.
-
-For Codex, read [Codex integration](codex.md) for installed-resource paths,
-explicit fresh-context delegation, question-tool fallbacks, and artifact links.
-
 ## Support Status & Contributing Other Harnesses
 
-Our initial release officially supports **Antigravity** and **Gemini CLI**.
+**Antigravity**, **Claude Code**, and **OpenAI Codex** pass automated installation, reviewer isolation, and end-to-end workflow fixtures.
 
-Community support verified or in progress includes **Claude Code**, **Claude Cowork**, and **OpenAI Codex**.
+**Claude Cowork** ([#105](https://github.com/google/elephant-goldfish-model/issues/105)) and **ChatGPT Work** ([#106](https://github.com/google/elephant-goldfish-model/issues/106)) have working installation paths with open cloud trace verification gaps.
 
-**ChatGPT** support depends on the current session's native delegation tools.
-See the [verification record](harness-verification.md) for tested surfaces and limits.
+See the [harness test record](../TESTING.md#harness-test-record) for tested surfaces and limits.
 
 We welcome contributors who want to help verify and expand harness support.
 
