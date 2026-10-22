@@ -6,10 +6,10 @@ const repo = 'https://github.com/google/elephant-goldfish-model';
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 
 const paths = [
-  { label: 'Ask your agent', text: `Install ${repo}`, copyLabel: 'Copy prompt' },
-  { label: 'Antigravity CLI', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command' },
-  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm`, copyLabel: 'Copy Claude Code command' },
-  { label: 'OpenAI Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm`, copyLabel: 'Copy Codex command' },
+  { label: 'Ask your agent', text: `Install ${repo}`, copyLabel: 'Copy prompt', kind: 'prompt' },
+  { label: 'Antigravity CLI', text: `agy plugin install ${repo}`, copyLabel: 'Copy Antigravity command', kind: 'cli' },
+  { label: 'Claude Code', text: `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm`, copyLabel: 'Copy Claude Code command', kind: 'cli' },
+  { label: 'OpenAI Codex', text: `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm`, copyLabel: 'Copy Codex command', kind: 'cli' },
 ];
 ---
 
@@ -29,8 +29,12 @@ const paths = [
         paths.map((path) => (
           <div class="path">
             <p class="path-label">{path.label}</p>
-            <div class="copybox">
-              <code class="command">{path.text}</code>
+            <div class:list={['copybox', path.kind === 'prompt' ? 'copybox-prompt' : 'copybox-cli']}>
+              {path.kind === 'prompt' ? (
+                <span class="prompt-text">{path.text}</span>
+              ) : (
+                <code class="command">{path.text}</code>
+              )}
               <IconButton label={path.copyLabel} color="tonal" size="sm" data-copy={path.text}>
                 <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
                   <path
@@ -84,7 +88,7 @@ const paths = [
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
-    max-inline-size: 640px;
+    max-inline-size: 760px;
   }
 
   .path-label {
@@ -99,8 +103,26 @@ const paths = [
     gap: 12px;
     padding: 8px 8px 8px 20px;
     border: 1px solid var(--md-sys-color-outline-variant);
-    border-radius: var(--md-sys-shape-corner-lg);
+  }
+
+  .copybox-prompt {
+    border-radius: 999px;
+    background: var(--md-sys-color-surface);
+    border-color: var(--md-sys-color-outline);
+  }
+
+  .copybox-cli {
+    border-radius: var(--md-sys-shape-corner-md);
     background: var(--md-sys-color-surface-container-low);
+  }
+
+  .prompt-text {
+    flex: 1;
+    min-inline-size: 0;
+    font: var(--md-sys-typescale-body-md);
+    overflow-x: auto;
+    white-space: nowrap;
+    user-select: all;
   }
 
   .command {
@@ -110,6 +132,12 @@ const paths = [
     overflow-x: auto;
     white-space: nowrap;
     user-select: all;
+  }
+
+  .command::before {
+    content: '$ ';
+    color: var(--md-sys-color-on-surface-variant);
+    user-select: none;
   }
 
   .icon-check,
@@ -122,7 +150,7 @@ const paths = [
   }
 
   .then {
-    max-inline-size: 640px;
+    max-inline-size: 760px;
     margin: clamp(32px, 5vw, 48px) 0;
   }
 </style>
