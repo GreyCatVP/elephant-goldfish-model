@@ -67,7 +67,7 @@ If your harness has no subagent tool, run the scout steps inline.
     subdirectories, you MUST immediately request user approval (using a structured question tool, if your harness has one, or plain chat) before proceeding with full-tree execution
     or unbounded subagent spawning.
 
---------------------------------------------------------------------------------
+---
 
 ## Workflow
 
@@ -83,7 +83,7 @@ If your harness has no subagent tool, run the scout steps inline.
     *   None found: `<test-command>`
 2.  Record as `VerificationCommand` to populate generated README contracts.
 
---------------------------------------------------------------------------------
+---
 
 ### Step 1: Startup Branching Control
 
@@ -93,7 +93,7 @@ If your harness has no subagent tool, run the scout steps inline.
 3.  If `is_worker` is `false` or unset, proceed as the Root Orchestrator to
     **Step 2: Incremental Scoping & Safety Gate**.
 
---------------------------------------------------------------------------------
+---
 
 ### Step 2: Incremental Scoping & Safety Gate (Root Orchestrator)
 
@@ -151,7 +151,7 @@ If your harness has no subagent tool, run the scout steps inline.
 4.  Calculate the total count of pruned directories and maximum depth. Proceed
     to **Step 3: Execution Strategy Selection**.
 
---------------------------------------------------------------------------------
+---
 
 ### Step 3: Execution Strategy Selection (Root Orchestrator)
 
@@ -197,7 +197,7 @@ If your harness has no subagent tool, run the scout steps inline.
     *   Go idle and wait for all worker subagents to return their JSON subtree
         index payloads. Jump to **Step 5: Root Compilation & Termination**.
 
---------------------------------------------------------------------------------
+---
 
 ### Step 4: Sub-Orchestrator Worker Flow
 
@@ -315,12 +315,13 @@ If your harness has no subagent tool, run the scout steps inline.
     the `subtree_index` array containing the `path`, `summary`, `interface`,
     `invariants`, and `side_effects` for every processed directory.
 
-4.  If `is_worker` is `true`, return this JSON payload (matching the `Worker
-    Return Interface Schema`) to the Root Orchestrator and terminate. If
+4.  If `is_worker` is `true`, read the [Worker Return Interface Schema](references/worker-return.schema.json)
+    relative to this skill directory, then return a matching JSON payload to
+    the Root Orchestrator and terminate. If
     `is_worker` is `false` (sequential mode), proceed directly to **Step 5: Root
     Compilation & Termination**.
 
---------------------------------------------------------------------------------
+---
 
 ### Step 5: Root Compilation & Termination (Root Orchestrator)
 
@@ -393,7 +394,7 @@ If your harness has no subagent tool, run the scout steps inline.
 
 6.  Terminate execution successfully.
 
---------------------------------------------------------------------------------
+---
 
 ## Templates
 
@@ -454,33 +455,4 @@ If your harness has no subagent tool, run the scout steps inline.
 
 ## Subdirectories & Boundaries
 - [Subdirectory Name]: [Relative link to existing child contract file (e.g., `./subdir/README.md` or `./subdir/${target_filename}`) or `./subdir/SKILL.md`] - [Summary of child contract/role]
-```
-
---------------------------------------------------------------------------------
-
-## Schemas
-
-### Worker Return Interface Schema (JSON)
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "subtree_index": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "path": { "type": "string" },
-          "summary": { "type": "string" },
-          "interface": { "type": "array", "items": { "type": "string" } },
-          "invariants": { "type": "array", "items": { "type": "string" } },
-          "side_effects": { "type": "array", "items": { "type": "string" } }
-        },
-        "required": ["path", "summary"]
-      }
-    }
-  },
-  "required": ["subtree_index"]
-}
 ```

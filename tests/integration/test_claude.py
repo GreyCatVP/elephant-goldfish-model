@@ -18,6 +18,13 @@ pytestmark = pytest.mark.skipif(
 )
 
 
+def trace_directory(workspace: Path) -> Path:
+  """Locates native transcripts under Claude's configured directory."""
+  config = Path(os.environ.get("CLAUDE_CONFIG_DIR") or Path.home() / ".claude")
+  project = "".join(c if c.isalnum() else "-" for c in str(workspace.resolve()))
+  return config / "projects" / project
+
+
 def test_native_reviewer_isolation(tmp_path: Path) -> None:
   root = Path(__file__).resolve().parents[2]
   plugin = tmp_path / "plugin"
@@ -60,8 +67,7 @@ Do not read other plugins or logs, use MCP, or modify files.
   )
   assert result.returncode == 0, result.stderr
   assert not json.loads(result.stdout).get("is_error")
-  project = "".join(c if c.isalnum() else "-" for c in str(workspace.resolve()))
-  traces = Path.home() / ".claude/projects" / project
+  traces = trace_directory(workspace)
   parent = [json.loads(line) for line in
             (traces / f"{session}.jsonl").read_text().split("\n") if line.strip()]
   calls, successful = {}, set()
