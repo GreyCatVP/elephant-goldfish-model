@@ -10,6 +10,7 @@ import zipfile
 
 SHARED = (
     "plugin.json", "LICENSE", "README.md", "TESTING.md",
+    "CONTRIBUTING.md", "AI_POLICY.md", ".github/PULL_REQUEST_TEMPLATE.md",
     "skills/*/SKILL.md", "skills/*/references/*.md",
     "skills/*/references/*.json", "agents/*.md", "resources/*.md",
     "resources/document_standards/*.md", "docs/*.md", "docs/designs/*.md",

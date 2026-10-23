@@ -19,8 +19,12 @@ build = runpy.run_path(str(ROOT / "scripts/pack_plugin.py"))["build"]
 def source(tmp_path: Path) -> Path:
   root = tmp_path / "source"
   root.mkdir()
-  for name in ("plugin.json", "LICENSE", "README.md", "TESTING.md"):
+  for name in ("plugin.json", "LICENSE", "README.md", "TESTING.md",
+               "CONTRIBUTING.md", "AI_POLICY.md"):
     shutil.copyfile(ROOT / name, root / name)
+  (root / ".github").mkdir()
+  shutil.copyfile(ROOT / ".github/PULL_REQUEST_TEMPLATE.md",
+                  root / ".github/PULL_REQUEST_TEMPLATE.md")
   for name in ("skills", "agents", "resources", "docs", "assets",
                ".claude-plugin", ".codex-plugin"):
     shutil.copytree(ROOT / name, root / name)
@@ -50,7 +54,10 @@ def test_runtime_bundle_is_complete_and_reproducible(
     assert "docs/codex.md" in names
     assert "docs/claude.md" in names
     assert "assets/icon.svg" in names
-    assert not any(p.startswith(("site/", "tests/", ".github/", ".agents/"))
+    assert "CONTRIBUTING.md" in names
+    assert "AI_POLICY.md" in names
+    assert ".github/PULL_REQUEST_TEMPLATE.md" in names
+    assert not any(p.startswith(("site/", "tests/", ".github/workflows/", ".agents/"))
                    or "hooks/" in p or p.endswith("test_scenarios.yaml")
                    or p.endswith("/TEST.md") or p.endswith("marketplace.json")
                    for p in names)
@@ -122,3 +129,17 @@ def test_refuses_unbundled_services(source: Path, tmp_path: Path, field: str) ->
   path.write_text(json.dumps(manifest))
   with pytest.raises(ValueError, match="dependencies"):
     build(source, "openai", tmp_path / "output")
+
+
+def test_published_claude_runtime_is_current(tmp_path: Path) -> None:
+  """The directory subfolder must contain exactly the reviewed runtime."""
+  generated, _ = build(ROOT, "claude", tmp_path)
+  published = ROOT / "distributions/claude"
+
+  def contents(folder: Path) -> dict[str, bytes]:
+    return {p.relative_to(folder).as_posix(): p.read_bytes()
+            for p in folder.rglob("*") if p.is_file()}
+
+  assert contents(published) == contents(generated), (
+      "Regenerate distributions/claude with scripts/pack_plugin.py"
+  )
