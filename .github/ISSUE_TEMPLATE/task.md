@@ -2,7 +2,6 @@
 name: "Task"
 about: "Track maintenance, documentation, validation, or other scoped work"
 type: Task
-labels: ["needs-triage"]
 license: "Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0"
 ---
 
