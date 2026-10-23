@@ -1,7 +1,6 @@
 ---
 name: "Feature / Architectural Inquiry"
 about: "Reach out to maintainers to align on a new feature, skill, or large change (> 100 lines) before opening a Design Doc PR"
-title: "[Feature]: "
 type: Feature
 labels: ["needs-triage"]
 license: "Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0"
