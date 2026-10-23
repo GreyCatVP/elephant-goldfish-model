@@ -5,11 +5,13 @@
 <p align="center">Design with an elephant. Review with a goldfish.</p>
 
 <p align="center">
-  <a href="#install">Install</a> ·
-  <a href="#try-your-first-design">Quickstart</a> ·
-  <a href="docs/getting_started.md">Documentation</a> ·
+  <a href="#install">Install</a> &ensp;·&ensp;
+  <a href="#try-your-first-design">Quickstart</a> &ensp;·&ensp;
+  <a href="docs/getting_started.md">Documentation</a> &ensp;·&ensp;
   <a href="https://egm.dev">Website</a>
 </p>
+
+<br>
 
 Thousands of Google engineers use EGM, an open-source plugin, to draft specs with deep-context agents and stress-test them with zero-context subagents before writing code.
 
