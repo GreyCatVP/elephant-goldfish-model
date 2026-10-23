@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://egm.dev"><img src="docs/assets/readme-header.svg" width="640" height="156" alt="Elephant-Goldfish Model"></a>
+  <a href="https://egm.dev"><img src="docs/assets/readme-header.svg" width="480" height="156" alt="Elephant-Goldfish Model"></a>
 </p>
 
 <p align="center">Design with an elephant. Review with a goldfish.</p>
