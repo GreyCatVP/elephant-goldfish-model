@@ -1,8 +1,6 @@
 <p align="center">
-  <a href="https://egm.dev"><img src="site/public/favicon.svg" width="96" height="96" alt="Elephant-Goldfish Model"></a>
+  <a href="https://egm.dev"><img src="docs/assets/readme-header.svg" width="640" height="156" alt="Elephant-Goldfish Model"></a>
 </p>
-
-<h1 align="center">Elephant-Goldfish Model</h1>
 
 <p align="center">Design with an elephant. Review with a goldfish.</p>
 
@@ -81,11 +79,14 @@ See the [workflow guide](docs/getting_started.md) for the full process, includin
 
 ## How it works
 
-| Role | Context | Responsibility |
-| --- | --- | --- |
-| **Elephant** | Your project, requirements, and earlier decisions | Explore the problem and draft the specification. |
-| **Goldfish** | The document and its referenced source material, without the earlier conversation | Find missing assumptions, unclear requirements, and implementation risks. |
-| **You** | The goals and constraints that matter | Resolve trade-offs, approve the design, and decide what to build. |
+<table>
+  <thead><tr><th align="left">Role</th><th align="left">Context</th><th align="left">Responsibility</th></tr></thead>
+  <tbody>
+    <tr valign="top"><td><strong>Elephant</strong></td><td>Your project, requirements, and earlier decisions</td><td>Explore the problem and draft the specification.</td></tr>
+    <tr valign="top"><td><strong>Goldfish</strong></td><td>The document and its referenced source material, without the earlier conversation</td><td>Find missing assumptions, unclear requirements, and implementation risks.</td></tr>
+    <tr valign="top"><td><strong>You</strong></td><td>The goals and constraints that matter</td><td>Resolve trade-offs, approve the design, and decide what to build.</td></tr>
+  </tbody>
+</table>
 
 Goldfish reviews require fresh subagent contexts. If your agent cannot create them, EGM stops the review. A review does not replace tests or human judgment. See [supported environments and verification limits](docs/harnesses.md#support-status--contributing-other-harnesses).
 
@@ -94,7 +95,7 @@ Goldfish reviews require fresh subagent contexts. If your agent cannot create th
 You can use each skill when you need it. You do not have to follow the full sequence.
 
 | Skill | Use it to… |
-| --- | --- |
+| :--- | :--- |
 | [`egm-brainstorm`](skills/egm_brainstorm/SKILL.md) | Test an idea and write a concept brief. |
 | [`egm-draft`](skills/egm_draft/SKILL.md) | Turn a brief or existing notes into a design document. |
 | [`egm-review`](skills/egm_review/SKILL.md) | Review a design with fresh agents across five stages. |
