@@ -32,4 +32,3 @@
     to the user in plain text, point out the contradiction, and ask for
     resolution. You are strictly forbidden from planning or executing any
     file-writing/editing tool in the same turn as you discover a contradiction.
-
