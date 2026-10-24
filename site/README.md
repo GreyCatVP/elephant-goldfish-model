@@ -37,9 +37,13 @@ Use Node.js 22.12 or newer. Run these commands from `site/`:
 ```sh
 npm ci
 npm run dev      # http://localhost:4321
+```
+
+Before submitting changes, stop the server or use another terminal in `site/`:
+
+```sh
 npm run check
 npm run build    # output: dist/
-npm run capture  # rebuild and refresh images
 ```
 
 After visual changes, run `npm run capture`. This command requires Chrome.
