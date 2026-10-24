@@ -3,6 +3,7 @@ name: egm-style
 description: Technical style reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 

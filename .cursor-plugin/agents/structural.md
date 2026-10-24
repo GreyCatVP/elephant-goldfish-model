@@ -3,6 +3,7 @@ name: egm-structural
 description: Document structure reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 

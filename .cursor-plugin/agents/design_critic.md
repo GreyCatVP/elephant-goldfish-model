@@ -3,6 +3,7 @@ name: egm-design
 description: Design critique reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 

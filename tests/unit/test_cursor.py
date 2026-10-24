@@ -3,10 +3,13 @@
 
 """Offline Cursor package contracts, not native workflow or isolation proof."""
 
+import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 
 import pytest
 import yaml
@@ -38,9 +41,11 @@ def test_manifest_selects_native_adapters(installed: Path) -> None:
         (installed / ".cursor-plugin/plugin.json").read_text(encoding="utf-8")
     )
     canonical = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
-    for field in ("name", "version", "description", "author", "homepage",
+    for field in ("name", "version", "homepage",
                   "repository", "license"):
         assert manifest[field] == canonical[field]
+    assert manifest["author"] == {"name": "Google"}
+    assert manifest["description"] == "Draft specs, review designs, and check implementation drift."
     assert manifest["skills"] == "./skills/"
     assert manifest["agents"] == "./.cursor-plugin/agents/"
     assert manifest["rules"] == "./.cursor-plugin/rules/"
@@ -62,9 +67,12 @@ def test_reviewers_use_canonical_personas(installed: Path, name: str) -> None:
     persona = installed / "agents" / f"{name}.md"
     assert config["name"] == frontmatter(persona)["name"]
     assert config["readonly"] is True
+    assert config["permissionMode"] == "readonly"
     assert config["is_background"] is False
     assert config["model"] == "inherit"
-    assert set(config) == {"name", "description", "model", "readonly", "is_background"}
+    assert set(config) == {
+        "name", "description", "model", "readonly", "permissionMode", "is_background",
+    }
     text = adapter.read_text(encoding="utf-8")
     paths = re.findall(r"EGM_ROOT/([\w/.-]+\.md)", text)
     assert paths == [f"agents/{name}.md"]
@@ -111,3 +119,56 @@ def test_host_rule_and_guide_keep_failure_and_artifact_contracts() -> None:
     assert "EGM artifact directory: <path>" in guide
     assert "Grok Bot remains a separate, unverified surface" in guide
     assert "No Cursor trace parser is supplied" in guide
+
+
+def test_installed_cursor_native_loader(installed: Path) -> None:
+    """Opt-in probe of the actual pinned loader, with no CLI main or model call."""
+    bundle_path = os.environ.get("EGM_CURSOR_BUNDLE")
+    if not bundle_path:
+        pytest.skip("Set EGM_CURSOR_BUNDLE for the pinned native offline probe")
+    bundle = Path(bundle_path).resolve()
+    assert hashlib.sha256(bundle.read_bytes()).hexdigest() == (
+        "f6bd8dece34b56431ee74f1ac827e032d054381085e7da7088e85abdd1008330"
+    ), "Re-audit the private loader interface before changing this version pin"
+    script = r'''
+const fs = require('node:fs')
+const Module = require('node:module')
+const [filename, packageRoot] = process.argv.slice(1)
+const entry = 'var __webpack_exports__=__webpack_require__("./src/main.tsx")'
+const source = fs.readFileSync(filename, 'utf8')
+if (!source.includes(entry)) throw new Error('Unrecognized bundle entry')
+const deny = () => { throw new Error('Network/process use forbidden in offline probe') }
+require('node:net').Socket.prototype.connect = deny
+globalThis.fetch = deny
+for (const key of ['spawn', 'spawnSync', 'exec', 'execSync', 'execFile', 'execFileSync', 'fork']) {
+  require('node:child_process')[key] = deny
+}
+const loaded = new Module(filename, module)
+loaded.filename = filename
+loaded.paths = Module._nodeModulePaths(require('node:path').dirname(filename))
+loaded._compile(source.replace(entry,
+  'module.exports=__webpack_require__("../cursor-plugins/dist/index.js")'), filename)
+loaded.exports.Y__(packageRoot, 'egm').then(plugin => {
+  console.log(JSON.stringify({
+    skills: plugin.skills.map(skill => skill.name),
+    agents: plugin.agents.map(({ name, model, permissionMode }) => ({ name, model, permissionMode })),
+    rules: plugin.rules.map(({ alwaysApply }) => ({ alwaysApply }))
+  }))
+}).catch(error => { console.error(error.message); process.exitCode = 1 })
+'''
+    result = subprocess.run(
+        [str(bundle.parent / "node"), "-e", script, str(bundle), str(installed)],
+        capture_output=True, text=True, check=True, timeout=30,
+    )
+    native = json.loads(result.stdout)
+    assert set(native["skills"]) == {
+        frontmatter(path)["name"] for path in (ROOT / "skills").glob("*/SKILL.md")
+    }
+    expected_agents = {
+        frontmatter(ROOT / "agents" / f"{name}.md")["name"] for name in REVIEWERS
+    }
+    assert {agent["name"] for agent in native["agents"]} == expected_agents
+    assert len(native["agents"]) == len(expected_agents)
+    assert all(agent["permissionMode"] == "readonly" for agent in native["agents"])
+    assert all(agent["model"] == "inherit" for agent in native["agents"])
+    assert native["rules"] == [{"alwaysApply": True}]

@@ -3,6 +3,7 @@ name: egm-zoom-out
 description: Simplicity and scope reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 

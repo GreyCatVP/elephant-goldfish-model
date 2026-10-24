@@ -3,6 +3,7 @@ name: egm-comprehension
 description: Independent comprehension reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 

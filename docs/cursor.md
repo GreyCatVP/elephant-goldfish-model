@@ -13,7 +13,7 @@ See the [design](designs/additional-harnesses.md) and [issue #145](https://githu
 
 The selected CLI reference is `2026.10.01-e373342`, inspected on 2026-10-24.
 Its help lists `--plugin-dir`, `--model`, `--workspace`, and `--output-format`.
-Only help and version commands ran. No model or native reviewer ran.
+Help, version, and the native offline loader probe ran. No model or reviewer ran.
 This is an inspected version, not a verified minimum version.
 
 The first version command stopped at a locked macOS keychain.
@@ -23,8 +23,13 @@ help and version inspection. No account configuration changed.
 The native manifest is `.cursor-plugin/plugin.json`. It selects shared
 `skills/`, Cursor adapters in `.cursor-plugin/agents/`, and the Cursor rule in
 `.cursor-plugin/rules/`. The explicit agent path excludes raw shared personas.
-Each of the seven reviewers declares `readonly: true`, `model: inherit`, and
-`is_background: false`. Select a model explicitly for a future live run and
+Each reviewer declares `readonly: true`, `permissionMode: readonly`,
+`model: inherit`, and `is_background: false`.
+The selected CLI's plugin loader reads `permissionMode`, not `readonly`.
+The documented `readonly` field remains for the local Agent interface.
+The native loader probe confirms all seven reviewers register as read-only.
+This does not prove runtime enforcement or foreground behavior.
+Select a model explicitly for a future live run and
 record its actual identifier from the task records.
 
 Sources: [plugin reference](https://cursor.com/docs/reference/plugins),
@@ -109,7 +114,26 @@ Never write reports into the installed plugin. Preserve canonical approval pause
 
 Offline checks run with `pytest tests/unit/test_cursor.py` or `pytest tests/unit`.
 They check metadata, native configuration, and a relocated package with spaces
-and Unicode in its path. They do not prove host discovery or tool enforcement.
+and Unicode in its path. The optional native check skips without a local bundle.
+
+Run the native loader probe against the inspected macOS arm64 CLI bundle:
+
+```sh
+EGM_CURSOR_BUNDLE="$HOME/.local/share/cursor-agent/versions/2026.10.01-e373342/index.js" \
+  pytest tests/unit/test_cursor.py
+```
+
+The probe pins the bundle SHA-256 to
+`f6bd8dece34b56431ee74f1ac827e032d054381085e7da7088e85abdd1008330`.
+It invokes the installed plugin loader without the CLI entry point.
+It blocks network connections and subprocess launches within the probe.
+It does not patch the installed CLI or start a model session.
+The private loader export is version-specific. Re-audit it before changing the pin.
+
+The probe discovers seven skills, seven read-only reviewer registrations, and
+one active rule in the relocated package. Initially, `readonly: true` alone
+registered default permissions. The added `permissionMode` field corrects that result.
+These are native parsing results, not interactive installation or runtime evidence.
 
 Before a live run, obtain explicit approval for model usage.
 Use a clean workspace and profile without unrelated MCP services or memory.
@@ -118,14 +142,14 @@ Keep these results separate:
 
 | Gate | Required evidence | Current result |
 | --- | --- | --- |
-| Installation | Native component discovery and reads of installed personas, standards, and guides | Unverified |
+| Installation | Interactive discovery and actual reads of installed personas, standards, and guides | Unverified; offline native discovery passed |
 | Workflow | Brainstorm, draft, review, artifacts, and an actual human approval pause | Unverified |
 | Isolation | Fresh child records, required reads, read-only denial, and every reviewer completion | Unverified |
 
 For isolation, place a random marker only in the parent conversation.
 Inspect the child input and tool records as well as its answer.
 Probe write denial against a disposable fixture and verify its bytes remain unchanged.
-The native `readonly` setting restricts writes; it is not a filesystem boundary.
+The native read-only mode restricts writes; it is not a filesystem boundary.
 The prompt also forbids shell and MCP use, but these are not proven tool allowlists.
 Assess injected rules, repository instructions, memory, MCP access, and shared files
 separately. A fresh task does not remove those possible sources of information.

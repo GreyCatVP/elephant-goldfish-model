@@ -3,6 +3,7 @@ name: egm-codebase-details
 description: Codebase details reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 

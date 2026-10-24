@@ -3,6 +3,7 @@ name: egm-implementation-readiness
 description: Implementation readiness reviewer.
 model: inherit
 readonly: true
+permissionMode: readonly
 is_background: false
 ---
 
