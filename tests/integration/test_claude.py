@@ -25,6 +25,34 @@ def trace_directory(workspace: Path) -> Path:
   return config / "projects" / project
 
 
+def assert_child_probe(raw: str, persona: Path, markers: list[str]) -> None:
+  """Check the native child's answer, tool restrictions, and completed read."""
+  assert all(marker not in raw for marker in markers)
+  answers = []
+  child_reads = []
+  successful = set()
+  for line in raw.split("\n"):
+    if not line.strip():
+      continue
+    event = json.loads(line)
+    content = event.get("message", {}).get("content", [])
+    for block in content if isinstance(content, list) else []:
+      if event.get("type") == "assistant":
+        if block["type"] == "tool_use":
+          assert block["name"] == "Read"
+          child_reads.append((block["id"], block["input"]["file_path"]))
+        if block["type"] == "text":
+          answers.append(block["text"])
+      if (event.get("type") == "user" and block["type"] == "tool_result"
+          and not block.get("is_error") and block.get("content")):
+        successful.add(block["tool_use_id"])
+  assert answers and answers[-1].strip() == "UNKNOWN"
+  assert [path for _, path in child_reads] == [str(persona)]
+  assert all(call_id in successful for call_id, _ in child_reads), (
+      "Persona read has no successful native tool result"
+  )
+
+
 def test_native_reviewer_isolation(tmp_path: Path) -> None:
   root = Path(__file__).resolve().parents[2]
   plugin = tmp_path / "plugin"
@@ -90,19 +118,4 @@ Do not read other plugins or logs, use MCP, or modify files.
   children = list((traces / session / "subagents").glob("agent-*.jsonl"))
   assert len(children) == 1
   raw = children[0].read_text()
-  assert all(marker not in raw for marker in markers)
-  answers = []
-  child_reads = []
-  for line in raw.split("\n"):
-    if not line.strip():
-      continue
-    event = json.loads(line)
-    if event.get("type") == "assistant":
-      for block in event["message"]["content"]:
-        if block["type"] == "tool_use":
-          assert block["name"] == "Read"
-          child_reads.append(block["input"]["file_path"])
-        if block["type"] == "text":
-          answers.append(block["text"])
-  assert answers[-1].strip() == "UNKNOWN"
-  assert child_reads == [str(plugin / "agents/zoom_out.md")]
+  assert_child_probe(raw, plugin / "agents/zoom_out.md", markers)

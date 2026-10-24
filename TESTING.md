@@ -99,3 +99,21 @@ Track open cloud verification gaps in [#105 (Cowork)](https://github.com/google/
 - Verify sequential stage execution and persona lenses in addition to artifact existence.
 - Distinguish fixture design findings from execution failures of the review workflow.
 - Keep installation, execution, and transcript isolation results recorded separately.
+
+### Offline evidence checks
+
+Run `pytest tests/unit/test_claude_traces.py` to exercise the Claude probe's
+native child validator with synthetic records. A persona read request alone is
+not a successful read: require a matching, non-error, nonempty native tool
+result. Missing or unrelated results fail even when the child says `UNKNOWN`.
+These tests do not invoke models or establish cloud support. A successful tool
+result also does not by itself prove that the entire resource was read.
+
+For Cowork and ChatGPT Work, retain separate evidence for every reviewer:
+native launch arguments, canonical persona/target/standard paths, actual read
+results and coverage, completion, and stage timestamps. Child-written receipts
+and parent summaries cannot substitute for unavailable tool records. Inspect
+the actual isolation child's answer; test host-added context separately from
+parent-turn isolation. Keep raw account-bearing records private. Publish only
+sanitized findings and candidate identifiers. If the surface cannot expose the
+required evidence, record that boundary and leave the affected checks open.
