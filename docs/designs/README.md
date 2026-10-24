@@ -6,7 +6,7 @@ operational guardrails.
 
 | Document | Author | Primary Component |
 | :------- | :----- | :---------------- |
-| [additional-harnesses.md](additional-harnesses.md)<br>Proposal for verified Cursor, OpenCode, and Copilot CLI support; maintainer scope approval is pending. | [@n3wth](https://github.com/n3wth) | [Harness integrations](../harnesses.md) |
+| [additional-harnesses.md](additional-harnesses.md)<br>Proposed support for Cursor, OpenCode, and Copilot CLI. Maintainer scope approval is pending. | [@n3wth](https://github.com/n3wth) | [Harness integrations](../harnesses.md) |
 | [architecture.md](architecture.md)<br>System architecture of the EGM framework covering component models, end-to-end dataflow, and agent lifecycle. | [@quinnjim](https://github.com/quinnjim), [@eewing314](https://github.com/eewing314) | [EGM Framework Architecture](../../README.md) |
 | [brainstorm.md](brainstorm.md)<br>Fast zero-doc ideation tool using a 6-lens Goldfish swarm to audit and stress-test early concepts before drafting. | [@briansuchy](https://github.com/briansuchy) | [`egm_brainstorm`](../../skills/egm_brainstorm/SKILL.md) |
 | [draft.md](draft.md)<br>Iterative section-by-section specification drafting protocol and semantic boundary definitions. | [@quinnjim](https://github.com/quinnjim), [@eewing314](https://github.com/eewing314) | [`egm_draft`](../../skills/egm_draft/SKILL.md) |
