@@ -16,6 +16,11 @@ These general principles guide development of the EGM framework:
 
 ## Contribution Tracks & Workflow
 
+Write a short PR title that starts with an action verb. Use sentence case and
+describe the change. Omit unnecessary words when the meaning stays clear.
+Keep articles such as "a" and "the" when needed for clarity.
+Example: `Explain ignored agents folder warning in Claude Code`.
+
 All contributions must comply with our [AI & Automated Contribution Policy](AI_POLICY.md):
 every pull request requires a human author who has reviewed and tested the change. They
 should be able to explain it themselves.

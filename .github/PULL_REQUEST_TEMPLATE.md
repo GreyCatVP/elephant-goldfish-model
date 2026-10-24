@@ -1,3 +1,7 @@
+<!-- Title: Start with an action verb and use sentence case. Describe the change.
+Omit unnecessary words when the meaning stays clear. Keep articles when needed.
+Example: Explain ignored agents folder warning in Claude Code -->
+
 ## Contribution Type
 
 Please select the track that matches this pull request:
