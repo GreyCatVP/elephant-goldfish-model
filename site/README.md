@@ -21,7 +21,8 @@ GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.
 - [Material Web](https://github.com/material-components/material-web) for styles.
 - [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
   [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code) are stored in
-  [src/assets/fonts/](src/assets/fonts/). Both use the SIL Open Font License (OFL).
+  [src/assets/fonts/](src/assets/fonts/). Both use the
+  [SIL Open Font License (OFL)](https://openfontlicense.org/).
 
 ## Rules
 
