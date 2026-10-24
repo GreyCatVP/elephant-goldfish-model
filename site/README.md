@@ -1,7 +1,6 @@
 # egm.dev
 
-Landing site for the Elephant-Goldfish Model, served at https://egm.dev from
-GitHub Pages.
+The Elephant-Goldfish Model website, hosted on [GitHub Pages](https://egm.dev).
 
 | Light | Dark |
 | --- | --- |
@@ -18,39 +17,35 @@ GitHub Pages.
 
 ## Stack
 
-- [Astro](https://astro.build) static output, one page, no client framework.
-- [Material Web](https://github.com/material-components/material-web) (`@material/web`
-  `labs/gb`) in its native-element form: the page emits the package's own
-  class names (`btn`, `icon-btn`, `list-item`, `badge`, `divider`) and imports the
-  package stylesheets. No custom elements, no Lit runtime.
+- [Astro](https://astro.build) for the static site.
+- [Material Web](https://github.com/material-components/material-web) for styles.
 - [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
   [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted under
   `src/assets/fonts/` (OFL).
 
 ## Rules
 
-- No analytics, no cookies, no third-party scripts, and no requests to Google
-  hosts at runtime. The open-source release depends on it.
+- No analytics, cookies, third-party scripts, or runtime requests to Google hosts.
 - Theme only through Material Web tokens (`src/styles/tokens.css`) and the
   components' documented custom properties. Do not restyle component boxes.
 - Keep skill names and commands identical to the repository README.
 
 ## Develop
 
+Run from `site/` with Node.js 22.12 or newer:
+
 ```sh
-npm install
+npm ci
 npm run dev      # http://localhost:4321
-npm run check    # astro check
-npm run build    # writes dist/
-npm run capture  # rebuilds, then regenerates public/og.png and screenshots/*.png
+npm run check
+npm run build    # output: dist/
+npm run capture  # rebuild and refresh images
 ```
 
-`npm run capture` needs a local Chrome (set `CHROME_PATH` if it is not found).
-The social image comes from `scripts/og.html`; edit that file, not the PNG.
-Run `npm run capture` after any visible change so the committed images stay in sync.
+After visual changes, run `npm run capture`. It requires Chrome; set `CHROME_PATH`
+if needed. Edit `scripts/og.html` to change the social image.
 
 ## Deploy
 
-`.github/workflows/deploy-site.yml` builds and publishes `dist/` on every push
-to `main` that touches `site/`, and on manual dispatch. `public/CNAME` pins the
-custom domain.
+[Deploy site](../.github/workflows/deploy-site.yml) publishes changes to `site/`
+on `main`. It also supports manual runs.
