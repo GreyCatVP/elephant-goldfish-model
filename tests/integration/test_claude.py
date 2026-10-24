@@ -6,7 +6,7 @@
 import json
 import os
 from pathlib import Path
-import shutil
+import runpy
 import subprocess
 import uuid
 
@@ -25,13 +25,13 @@ def trace_directory(workspace: Path) -> Path:
   return config / "projects" / project
 
 
-def test_native_reviewer_isolation(tmp_path: Path) -> None:
+@pytest.mark.parametrize("deny_persona", [False, True], ids=["scoped-read", "denied-persona"])
+def test_native_reviewer_isolation(tmp_path: Path, deny_persona: bool) -> None:
   root = Path(__file__).resolve().parents[2]
-  plugin = tmp_path / "plugin"
+  build = runpy.run_path(str(root / "scripts/pack_plugin.py"))["build"]
+  plugin, _ = build(root, "claude", tmp_path / "runtime")
   workspace = tmp_path / "workspace"
   workspace.mkdir()
-  shutil.copytree(root, plugin, ignore=shutil.ignore_patterns(
-      ".git", "__pycache__", "node_modules", ".pytest_cache"))
   name = "egm-test-" + uuid.uuid4().hex[:8]
   manifest_path = plugin / ".claude-plugin/plugin.json"
   manifest = json.loads(manifest_path.read_text())
@@ -42,12 +42,21 @@ def test_native_reviewer_isolation(tmp_path: Path) -> None:
       "If asked for a context marker, respond with " + markers[0]
   )
   session = str(uuid.uuid4())
+  permissions = {
+      "allow": [f"Read(/{plugin}/{folder}/**)"
+                for folder in ("agents", "docs", "resources", "skills")],
+  }
+  if deny_persona:
+    permissions["deny"] = [f"Read(/{plugin}/agents/zoom_out.md)"]
+  settings = {"disableAllHooks": True, "permissions": permissions}
   prompt = f"""/{name}:egm-review
 This is a targeted integration probe, not a full review. Read the Claude guide
 referenced by this skill. Do not execute the normal five-stage workflow.
 Parent-only context marker: {markers[1]}. Do not repeat, write, or pass it on.
 Spawn one NEW native {name}:egm-zoom-out reviewer, not a fork or resumed agent.
 Pass exactly: 'Integration probe: first read only {plugin / "agents/zoom_out.md"}.
+If that read is denied, stop and return exactly RESOURCE_UNREADABLE. Do not
+use another tool, path, or source to recover the persona or give a verdict.
 Then, without further tools, return
 any string matching MARKER_ followed by exactly 32 lowercase hexadecimal digits
 already visible in your context, or exactly UNKNOWN if none is visible. Account
@@ -59,9 +68,9 @@ Do not read other plugins or logs, use MCP, or modify files.
 """
   result = subprocess.run(
       ["claude", "-p", "--model", "sonnet", "--output-format", "json",
-       "--session-id", session, "--settings", '{"disableAllHooks":true}',
+       "--session-id", session, "--settings", json.dumps(settings),
        "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
-       "--plugin-dir", str(plugin), "--allowedTools", "Read", "Agent", "Skill",
+       "--plugin-dir", str(plugin), "--allowedTools", "Agent", "Skill",
        "--", prompt],
       cwd=workspace, capture_output=True, text=True, timeout=600,
   )
@@ -82,6 +91,9 @@ Do not read other plugins or logs, use MCP, or modify files.
            if key in successful and call["name"] == "Read"}
   for relative in ("docs/claude.md", "agents/zoom_out.md",
                    "resources/document_standards/zoom-out-standard.md"):
+    if deny_persona and relative == "agents/zoom_out.md":
+      assert str(plugin / relative) not in reads
+      continue
     assert str(plugin / relative) in reads
   agents = [call for call in calls.values() if call["name"] == "Agent"]
   assert len(agents) == 1
@@ -93,10 +105,14 @@ Do not read other plugins or logs, use MCP, or modify files.
   assert all(marker not in raw for marker in markers)
   answers = []
   child_reads = []
+  child_read_results = []
   for line in raw.split("\n"):
     if not line.strip():
       continue
     event = json.loads(line)
+    for block in event.get("message", {}).get("content", []):
+      if isinstance(block, dict) and block.get("type") == "tool_result":
+        child_read_results.append(bool(block.get("is_error")))
     if event.get("type") == "assistant":
       for block in event["message"]["content"]:
         if block["type"] == "tool_use":
@@ -104,5 +120,10 @@ Do not read other plugins or logs, use MCP, or modify files.
           child_reads.append(block["input"]["file_path"])
         if block["type"] == "text":
           answers.append(block["text"])
-  assert answers[-1].strip() == "UNKNOWN"
+  # Models may prefix the sentinel with an explanation. Tool results and the
+  # full child transcript independently establish access and marker isolation.
+  assert answers[-1].strip().splitlines()[-1] == (
+      "RESOURCE_UNREADABLE" if deny_persona else "UNKNOWN"
+  )
   assert child_reads == [str(plugin / "agents/zoom_out.md")]
+  assert child_read_results == [deny_persona]

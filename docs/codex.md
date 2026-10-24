@@ -87,10 +87,11 @@ For personal testing, open Plugins > Add > Upload plugin archive in ChatGPT.
 Package the runtime files from the repository root:
 
 ```sh
-zip -r egm-chatgpt.zip plugin.json .codex-plugin skills agents resources docs assets LICENSE README.md TESTING.md
+python3 scripts/pack_plugin.py --target openai --output /tmp/egm-chatgpt
 ```
 
-Upload the archive and install the plugin in the ChatGPT desktop app. Use
+Use a fresh output directory. Upload `/tmp/egm-chatgpt/egm-openai.zip` and
+install the plugin in the ChatGPT desktop app. Use
 **Try in chat** in a new thread that runs locally. The earlier cloud Work
 test in `TESTING.md` predates this package's desktop-only declaration.
 Keep repository marketplace catalogs and development files outside this archive.
