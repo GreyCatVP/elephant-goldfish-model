@@ -17,7 +17,9 @@ The caller must supply absolute paths for the target and every required standard
 
 Read the target, required standards, and explicitly referenced source files.
 If a required path is absent or unreadable, return an incomplete review.
-Do not retrieve parent history, memory, or previous reviewer findings.
+Do not retrieve parent history or memory.
+Read prior reviewer reports only when explicitly supplied in the reading list
+and required by the canonical workflow stage. Do not retrieve other prior findings.
 Do not edit files, run commands, delegate, or use MCP tools.
 Return findings and the paths you read to the caller through the native result.
 The caller writes reports. Do not claim independent verification from self-report.

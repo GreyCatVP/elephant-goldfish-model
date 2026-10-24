@@ -93,7 +93,13 @@ Each reviewer permits only `read` and `search`. Reviewers cannot delegate or wri
 Start a new native child for every reviewer invocation, including repeat reviews.
 Use a task that contains only the requested mode, target, line ranges, persona,
 standards, and explicit reading list. Do not forward the conversation, private
-rationale, memory, previous findings, or answers the target should explain.
+rationale, memory, or answers the target should explain.
+Do not retrieve parent history or memory.
+Read prior reviewer reports only when explicitly supplied in the reading list
+and required by the canonical workflow stage. Do not retrieve other prior findings.
+For example, Step 8 (Intermediate Zoom Out) requires the caller to include the
+absolute path to `zoom_out_report.md` in the reading list. Do not forward other
+previous findings.
 
 Use direct dispatch for the shared skills' synthesizer steps. Read the canonical
 `agents/synthesizer.md` for reviewer selection and report format. The main session

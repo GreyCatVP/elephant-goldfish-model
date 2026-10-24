@@ -49,6 +49,23 @@ def test_copilot_profiles_use_canonical_read_only_reviewers(repo_root: Path) -> 
     assert "<EGM_ROOT>/docs/copilot.md" in entry.read_text(encoding="utf-8")
 
 
+@pytest.mark.parametrize("persona", [*REVIEWERS, None])
+def test_copilot_prior_reports_require_explicit_stage_input(
+    repo_root: Path, persona: str | None,
+) -> None:
+    """Stage 8 may read its prior report without opening parent context."""
+    path = repo_root / "docs/copilot.md"
+    if persona is not None:
+        name = frontmatter(repo_root / f"agents/{persona}.md")["name"]
+        path = repo_root / f"com.github.copilot/agents/{name}.agent.md"
+    text = " ".join(path.read_text(encoding="utf-8").split())
+    assert "Do not retrieve parent history or memory." in text
+    assert (
+        "Read prior reviewer reports only when explicitly supplied in the reading "
+        "list and required by the canonical workflow stage."
+    ) in text
+
+
 @pytest.fixture
 def copilot_package(repo_root: Path, tmp_path: Path) -> Path:
     """Relocate the full runtime, including paths with spaces and Unicode."""
