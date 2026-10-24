@@ -60,7 +60,8 @@ def install(destination: Path) -> Path:
             "description": f"EGM read-only {reviewer} reviewer (experimental)",
             "mode": "subagent",
             "permission": {
-                "*": "deny", "read": "allow", "glob": "allow", "grep": "allow",
+                "*": "deny", "read": {"*": "allow", "mcp:*": "deny"},
+                "glob": "allow", "grep": "allow",
                 "external_directory": {"*": "deny", f"{bundle}/**": "allow"},
             },
             "prompt": context + f"Read {persona} before the target and supplied standards. "

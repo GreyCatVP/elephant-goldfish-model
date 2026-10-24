@@ -64,6 +64,10 @@ Report a missing start, completion, required read, or malformed result as incomp
 Stop if native delegation is unavailable. Never simulate Goldfish reviewers in the parent conversation.
 
 Reviewers deny every tool except `read`, `glob`, and `grep`.
+V1 maps MCP resource reads and resource lists to the `read` permission.
+The reviewer `read` rules allow local reads, then deny `mcp:*`.
+This denies `mcp:<server>:<uri>` reads and `mcp:<server>:*` resource or template lists.
+MCP resource tool names can remain visible. Their resource access is denied at the permission check.
 The adapter's external-directory exception covers only the installed bundle.
 OpenCode also adds access to its tool-output directory in the resolved agent configuration.
 Shell commands, edits, network tools, MCP tools, skills, and delegation remain denied.
@@ -122,6 +126,8 @@ Reviewed on 2026-10-24. The versioned sources define this adapter's interface:
 - [V1 config and merge order](https://github.com/anomalyco/opencode/blob/v1.18.29/packages/web/src/content/docs/config.mdx)
 - [V1 skill discovery](https://github.com/anomalyco/opencode/blob/v1.18.29/packages/web/src/content/docs/skills.mdx)
 - [V1 task implementation](https://github.com/anomalyco/opencode/blob/v1.18.29/packages/opencode/src/tool/task.ts)
+- [V1 permission evaluator](https://github.com/anomalyco/opencode/blob/v1.18.29/packages/opencode/src/permission/index.ts)
+- [V1 MCP resource permission paths](https://github.com/anomalyco/opencode/blob/v1.18.29/packages/opencode/src/session/tools.ts)
 - [Current official agent guide](https://opencode.ai/docs/agents/)
 
 Cursor local Agent and Grok Bot are separate surfaces under [#145](https://github.com/google/elephant-goldfish-model/issues/145).

@@ -52,9 +52,14 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
         agent = config["agent"][ADAPTER["name"](persona)]
         assert agent["mode"] == "subagent"
         assert agent["permission"] == {
-            "*": "deny", "read": "allow", "glob": "allow", "grep": "allow",
+            "*": "deny", "read": {"*": "allow", "mcp:*": "deny"},
+            "glob": "allow", "grep": "allow",
             "external_directory": {"*": "deny", f"{destination}/bundle/**": "allow"},
         }
+        # V1 maps resource reads and both list tools to read. Last match wins.
+        assert list(agent["permission"]["read"].items()) == [
+            ("*", "allow"), ("mcp:*", "deny"),
+        ]
         assert str(persona) in agent["prompt"]
         assert "Read-only Protocol" not in agent["prompt"]
     primary = config["agent"]["egm"]
