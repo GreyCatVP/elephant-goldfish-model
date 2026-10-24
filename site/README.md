@@ -12,7 +12,11 @@ GitHub Pages.
 
 ![Full page, light scheme](screenshots/full-light.png)
 
-![Mobile, 375px wide](screenshots/mobile.png)
+![Full page, dark scheme](screenshots/full-dark.png)
+
+| Mobile light, 375px wide | Mobile dark, 375px wide |
+| --- | --- |
+| ![Mobile light](screenshots/mobile-light.png) | ![Mobile dark](screenshots/mobile-dark.png) |
 
 </details>
 
@@ -48,7 +52,8 @@ npm run capture -- --only full-light,full-dark  # refresh only full-page images
 `npm run capture` needs a local Chrome (set `CHROME_PATH` if it is not found).
 The social image comes from `scripts/og.html`; edit that file, not the PNG.
 After a visible change, capture the affected views with `--only`. Omit it to refresh all images.
-Valid names: `og`, `hero-light`, `hero-dark`, `full-light`, `full-dark`, and `mobile`.
+Valid names: `og`, `hero-light`, `hero-dark`, `full-light`, `full-dark`, `mobile-light`, and `mobile-dark`.
+Both mobile captures show the full page, including the chart.
 Git ignores extra files in `screenshots/`. Keep temporary review images outside the repository.
 
 ## Deploy
