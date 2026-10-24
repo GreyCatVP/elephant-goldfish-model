@@ -54,9 +54,9 @@ def test_runtime_bundle_is_complete_and_reproducible(
     assert "docs/codex.md" in names
     assert "docs/claude.md" in names
     assert "assets/icon.svg" in names
-    assert "CONTRIBUTING.md" in names
-    assert "AI_POLICY.md" in names
-    assert ".github/PULL_REQUEST_TEMPLATE.md" in names
+    assert not names.intersection({"CONTRIBUTING.md", "AI_POLICY.md", "TESTING.md",
+                                   ".github/PULL_REQUEST_TEMPLATE.md"})
+    assert not any(p.startswith("docs/designs/") for p in names)
     assert not any(p.startswith(("site/", "tests/", ".github/workflows/", ".agents/"))
                    or "hooks/" in p or p.endswith("test_scenarios.yaml")
                    or p.endswith("/TEST.md") or p.endswith("marketplace.json")
@@ -72,6 +72,10 @@ def test_runtime_bundle_is_complete_and_reproducible(
       assert info.date_time == (1980, 1, 1, 0, 0, 0)
       assert info.external_attr >> 16 == 0o100644
       assert bundle.read(info) == (first / info.filename).read_bytes()
+  check_links = runpy.run_path(str(ROOT / "tests/unit/test_link_integrity.py"))[
+      "test_relative_markdown_links_resolve_on_disk"
+  ]
+  check_links(first)
 
 
 @pytest.mark.parametrize("target", ["claude", "openai"])

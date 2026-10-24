@@ -9,11 +9,10 @@ from pathlib import Path
 import zipfile
 
 SHARED = (
-    "plugin.json", "LICENSE", "README.md", "TESTING.md",
-    "CONTRIBUTING.md", "AI_POLICY.md", ".github/PULL_REQUEST_TEMPLATE.md",
+    "plugin.json", "LICENSE", "README.md",
     "skills/*/SKILL.md", "skills/*/references/*.md",
     "skills/*/references/*.json", "agents/*.md", "resources/*.md",
-    "resources/document_standards/*.md", "docs/*.md", "docs/designs/*.md",
+    "resources/document_standards/*.md", "docs/*.md",
     "assets/*.svg", "assets/*.png", "docs/assets/*.svg", "docs/assets/*.png",
 )
 HOST = {
@@ -43,7 +42,7 @@ def build(root: Path, target: str, output: Path) -> tuple[Path, Path]:
         raise ValueError(f"Path outside source: {relative}")
       if path.is_file() and relative.as_posix() != "docs/directory.md":
         files.add(relative)
-  for name in ("plugin.json", "LICENSE", "README.md", "TESTING.md",
+  for name in ("plugin.json", "LICENSE", "README.md",
                HOST[target][0]):
     if Path(name) not in files:
       raise ValueError(f"Missing required file: {name}")

@@ -82,7 +82,7 @@ Do not use `file://` links in Codex chat.
 ## Verification
 
 Run the offline packaging checks with `pytest tests/unit`. The opt-in native
-workflow tests are documented in [TESTING.md](../TESTING.md). They require
+workflow tests are documented in [TESTING.md](https://github.com/google/elephant-goldfish-model/blob/main/TESTING.md). They require
 an authenticated Codex CLI and consume model usage. Installing or discovering
 the plugin alone does not establish end-to-end workflow support.
 
