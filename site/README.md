@@ -49,7 +49,7 @@ npm run build    # output: dist/
 
 After visual changes, run `npm run capture`. This command requires Chrome.
 If Chrome is not found, set `CHROME_PATH` to its executable path.
-Edit the [social-image template](scripts/og.html) to change the social image.
+Edit the [social-image template](scripts/og.html), then run `npm run capture`.
 
 ## Deploy
 
