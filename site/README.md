@@ -19,7 +19,7 @@ GitHub Pages.
 ## Stack
 
 - [Astro](https://astro.build) static output, one page, no client framework.
-- [gBreeze](https://www.npmjs.com/package/@material/web) (`@material/web`
+- [Material Web](https://github.com/material-components/material-web) (`@material/web`
   `labs/gb`) in its native-element form: the page emits the package's own
   class names (`btn`, `icon-btn`, `list-item`, `badge`, `divider`) and imports the
   package stylesheets. No custom elements, no Lit runtime.
@@ -30,7 +30,7 @@ GitHub Pages.
 
 - No analytics, no cookies, no third-party scripts, and no requests to Google
   hosts at runtime. The open-source release depends on it.
-- Theme only through gBreeze tokens (`src/styles/tokens.css`) and the
+- Theme only through Material Web tokens (`src/styles/tokens.css`) and the
   components' documented custom properties. Do not restyle component boxes.
 - Keep skill names and commands identical to the repository README.
 
