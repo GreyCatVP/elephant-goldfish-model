@@ -14,7 +14,7 @@ SHARED = (
     "skills/*/SKILL.md", "skills/*/references/*.md",
     "skills/*/references/*.json", "agents/*.md", "resources/*.md",
     "resources/document_standards/*.md", "docs/*.md", "docs/designs/*.md",
-    "assets/*.svg", "assets/*.png",
+    "assets/*.svg", "assets/*.png", "docs/assets/*.svg", "docs/assets/*.png",
 )
 HOST = {
     "claude": (".claude-plugin/plugin.json", ".claude-plugin/icon.png",
