@@ -84,18 +84,34 @@ separately. Context isolation is not filesystem or process isolation.
 | OpenCode CLI | OpenCode 1.18.29 V1 configuration with native commands, skill aliases, and restrictive JSON agent definitions. Install the complete EGM tree before exposing entry skills. | Verify `task` dispatch, `permission` enforcement, isolated child sessions, and package-relative reads. |
 | GitHub Copilot CLI | Native plugin installation and custom agent profiles with an explicit tool allowlist. Leave repository-instruction inclusion disabled for reviewers. | Verify the installed package layout, child context, shared persona reads, tool denial, and reliable result collection. |
 
-The native plugin manifest and path mapping for each host must be confirmed
-against the chosen host version before implementation. Do not claim that
-Claude-compatible syntax guarantees equivalent behavior.
+Confirm native plugin manifests and paths against the selected host version.
+Do not assume Claude-compatible syntax guarantees equivalent behavior.
+
+The Cursor candidate targets CLI `2026.10.01-e373342` for offline discovery.
+Its `.cursor-plugin/plugin.json` selects `skills/`, `.cursor-plugin/agents/`,
+and `.cursor-plugin/rules/`. Each reviewer declares `readonly: true` and
+`permissionMode: readonly`. The pinned CLI loader requires the latter to
+register read-only permissions. Offline discovery found seven skills, seven
+reviewers, and one active routing rule. Native enforcement remains unverified.
 
 The OpenCode implementation targets version 1.18.29 and the V1 interface.
 It generates a separate `opencode.json` with `agent`, `command`, and
 `skills.paths` entries. Reviewers use `mode: subagent` and `permission` rules
-that deny all tools except `read`, `glob`, and `grep`. The primary agent uses
+that permit local `read`, `glob`, and `grep` operations. MCP resource reads
+must be denied explicitly because V1 maps those tools to `read` permissions.
+The primary agent uses
 `task` with a registered `subagent_type` and omits `task_id` for fresh reviews.
 The native CLI accepted this configuration and discovered the seven installed
 skills offline. Runtime enforcement and context isolation remain unverified.
 Do not combine this mapping with V2 `subagent` or `permissions` interfaces.
+
+The Copilot CLI candidate targets version 1.0.82 and the root Agent Plugins 1.0
+`plugin.json`. Profiles live in `com.github.copilot/agents/*.agent.md`.
+Native IDs are `egm:egm` for the entry agent and `egm:<persona-name>` for reviewers.
+Skills remain in `skills/*/SKILL.md`. The native session inventories found all
+eight profiles and seven enabled skills without a model request. Reviewers use
+`tools: [read, search]`, `include-custom-instructions: false`, and
+`user-invocable: false`. Live enforcement and isolation remain unverified.
 
 Retain the current artifact-directory contract in the host guides. Report where
 files were written. Do not introduce a new default output directory here.
