@@ -35,7 +35,7 @@ Inspect the host inventories before any live test.
 After explicit authorization for model usage, start Copilot from the target project:
 
 ```sh
-copilot --plugin-dir "$EGM_ROOT" --add-dir "$EGM_ROOT" --agent egm
+copilot --plugin-dir "$EGM_ROOT" --add-dir "$EGM_ROOT" --agent egm:egm
 ```
 
 In the first message, supply the absolute package root and requested skill:
@@ -47,7 +47,7 @@ EGM artifact directory: .dev/docs
 ```
 
 Use `egm-draft` or `egm-review` in later requests. Provide the target document
-for review. Use the `egm` entry agent so the host mapping loads before a skill.
+for review. Use the `egm:egm` entry agent so the host mapping loads before a skill.
 Selecting a reviewer as the main session does not establish a fresh Goldfish context.
 Check `/agent` for name conflicts before use; personal profiles can override package profiles.
 
@@ -75,19 +75,20 @@ This adapter does not assume that Copilot expands variables inside Markdown bodi
 ## Native delegation
 
 Use Copilot's native custom-agent delegation tool. Inspect its exposed schema.
-Select the registered profile by its exact name; do not invent tool arguments.
+Select the registered profile by its namespaced ID; do not invent tool arguments.
+Map each canonical persona name to `egm:<name>` for native delegation.
 The entry profile permits `agent` for delegation and `edit` for artifacts.
 Each reviewer permits only `read` and `search`. Reviewers cannot delegate or write reports.
 
 | Profile | Canonical persona |
 | --- | --- |
-| `egm-design` | `agents/design_critic.md` |
-| `egm-codebase-details` | `agents/codebase_details.md` |
-| `egm-comprehension` | `agents/comprehension.md` |
-| `egm-implementation-readiness` | `agents/implementation_readiness.md` |
-| `egm-structural` | `agents/structural.md` |
-| `egm-style` | `agents/style.md` |
-| `egm-zoom-out` | `agents/zoom_out.md` |
+| `egm:egm-design` | `agents/design_critic.md` |
+| `egm:egm-codebase-details` | `agents/codebase_details.md` |
+| `egm:egm-comprehension` | `agents/comprehension.md` |
+| `egm:egm-implementation-readiness` | `agents/implementation_readiness.md` |
+| `egm:egm-structural` | `agents/structural.md` |
+| `egm:egm-style` | `agents/style.md` |
+| `egm:egm-zoom-out` | `agents/zoom_out.md` |
 
 Start a new native child for every reviewer invocation, including repeat reviews.
 Use a task that contains only the requested mode, target, line ranges, persona,
@@ -126,17 +127,44 @@ Run `pytest tests/unit/test_copilot_adapter.py` and `pytest tests/unit` offline.
 The host-specific tests check profiles, path resolution, and canonical resource
 preservation in a relocated package. They do not call a model.
 
-With CLI 1.0.82 installed, include its offline registration check:
+With CLI 1.0.82 installed, include its offline native discovery check:
 
 ```sh
 EGM_COPILOT_OFFLINE=1 pytest tests/unit
 ```
 
-On 2026-10-24, CLI 1.0.82 registered the mounted root package with
-`COPILOT_OFFLINE=true` and a disposable `COPILOT_HOME`. Registration does not prove
-profile discovery, skill execution, tool denial, or context isolation.
-On this version, `copilot --plugin-dir "$EGM_ROOT" skill list` did not list the
-mounted package's skills. Native skill and profile discovery remain unverified.
+On 2026-10-24, CLI 1.0.82 loaded all eight profiles and seven skills from the
+mounted package. The test uses a disposable `COPILOT_HOME` and `COPILOT_OFFLINE=true`.
+It starts the installed CLI with `--headless --stdio`, then calls these native
+SDK protocol operations without sending a prompt:
+
+1. `session.create` creates a session with a local rejecting provider.
+2. `session.agent.list` returns eight `source: plugin` records with absolute profile paths.
+3. `session.skills.list` returns seven enabled skills with absolute canonical paths.
+4. `session.destroy` removes the session.
+
+The test checks exact IDs, paths, tool lists, reviewer `userInvocable: false`,
+and empty agent MCP definitions. The local provider receives **zero requests**.
+The model name `gpt-4.1` is session metadata only; no model executes.
+No additional manifest mapping is necessary.
+
+The inspected macOS arm64 CLI binary has SHA-256
+`948a5e69d924559fdfb2292d9cd8584b8fba28f8fd0349eeefc18711225e340f`.
+
+Representative native records, with the local root abbreviated as `<package>`:
+
+```json
+{"id":"egm:egm-design","source":"plugin","path":"<package>/com.github.copilot/agents/egm-design.agent.md","tools":["read","search"],"userInvocable":false,"mcpServers":{}}
+{"name":"egm-review","commandName":"egm:egm-review","source":"plugin","path":"<package>/skills/egm_review/SKILL.md","enabled":true}
+```
+
+The standalone `skill list` command omitted mounted skills on this version.
+Its output is not a session loader inventory. Local `plugins list --help` also
+states that custom-agent inspection requires a session. The native SDK inventory
+resolves this discovery gap without a model run.
+
+Discovery does not prove skill execution, write denial, or context isolation.
+The RPC inventory does not expose `include-custom-instructions` enforcement.
 
 Before a support claim, run the existing brainstorm, draft, and review scenarios
 from each skill's `test_scenarios.yaml` with explicit model-use authorization.
@@ -162,5 +190,6 @@ This Copilot adapter provides no evidence of support for either surface.
 - [Custom agents and instruction inheritance](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli)
 - [Agent tools and aliases](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
 - [CLI command reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
+- [Official SDK protocol operations](https://github.com/github/copilot-sdk/blob/main/python/copilot/generated/rpc.py)
 
 These references describe capabilities. They are not EGM runtime test evidence.

@@ -3,11 +3,15 @@
 
 """Offline Copilot package contracts; no model or isolation claims."""
 
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
 import os
 from pathlib import Path
+import queue
 import re
 import shutil
 import subprocess
+import threading
 
 import pytest
 
@@ -72,22 +76,114 @@ def test_copilot_relocated_resources(repo_root: Path, copilot_package: Path) -> 
     assert not (copilot_package / "com.github.copilot/skills").exists()
 
 
-def test_copilot_native_offline_registration(
+def test_copilot_native_offline_discovery(
     copilot_package: Path, tmp_path: Path,
 ) -> None:
-    """Opt-in local CLI inspection only; never start an agent or prompt."""
+    """Inspect the native session loader without sending a model prompt."""
     if os.environ.get("EGM_COPILOT_OFFLINE") != "1":
-        pytest.skip("Set EGM_COPILOT_OFFLINE=1 for the CLI registration check")
+        pytest.skip("Set EGM_COPILOT_OFFLINE=1 for native loader inspection")
     executable = shutil.which("copilot")
     if executable is None:
         pytest.skip("Copilot CLI is not installed")
-    env = dict(
-        os.environ, COPILOT_OFFLINE="true",
-        COPILOT_HOME=str(tmp_path / "profile"),
-    )
-    result = subprocess.run(
-        [executable, "--plugin-dir", str(copilot_package), "plugin", "list"],
-        cwd=tmp_path, env=env, capture_output=True, text=True, timeout=30, check=True,
-    )
-    assert "External Plugins (via --plugin-dir):" in result.stdout
-    assert re.search(r"(?m)^\s*• egm\s*$", result.stdout), result.stdout
+    version = subprocess.check_output([executable, "--version"], text=True)
+    assert "GitHub Copilot CLI 1.0.82." in version
+    provider_requests = []
+
+    class RejectProvider(BaseHTTPRequestHandler):
+        def do_POST(self) -> None:
+            provider_requests.append(self.path)
+            self.send_error(503)
+
+        do_GET = do_POST
+
+        def log_message(self, *args: object) -> None:
+            pass
+
+    with ThreadingHTTPServer(("127.0.0.1", 0), RejectProvider) as provider:
+        threading.Thread(target=provider.serve_forever, daemon=True).start()
+        env = {k: v for k, v in os.environ.items() if not any(
+            token in k for token in ("TOKEN", "API_KEY", "BEARER", "COPILOT_")
+        )}
+        base_url = f"http://127.0.0.1:{provider.server_port}/v1"
+        env.update(COPILOT_OFFLINE="true", COPILOT_HOME=str(tmp_path / "profile"),
+                   COPILOT_PROVIDER_BASE_URL=base_url, COPILOT_MODEL="gpt-4.1")
+        responses: queue.Queue = queue.Queue()
+        with (tmp_path / "loader.log").open("w") as log:
+            process = subprocess.Popen(
+                [executable, "--plugin-dir", str(copilot_package), "--headless",
+                 "--stdio", "--no-auto-update", "--no-auto-login",
+                 "--disable-builtin-mcps"],
+                cwd=tmp_path, env=env, stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE, stderr=log,
+            )
+
+            def receive() -> None:
+                try:
+                    while True:
+                        line = process.stdout.readline()
+                        if not line:
+                            raise EOFError("Copilot loader closed stdout")
+                        if line.lower().startswith(b"content-length:"):
+                            length = int(line.split(b":")[1])
+                            while process.stdout.readline().strip():
+                                pass
+                            responses.put(json.loads(process.stdout.read(length)))
+                except Exception as error:
+                    responses.put(error)
+
+            threading.Thread(target=receive, daemon=True).start()
+            request_id = 0
+
+            def rpc(method: str, params: dict) -> dict:
+                nonlocal request_id
+                request_id += 1
+                body = json.dumps({"jsonrpc": "2.0", "id": request_id,
+                                   "method": method, "params": params}).encode()
+                header = f"Content-Length: {len(body)}\r\n\r\n".encode()
+                process.stdin.write(header + body)
+                process.stdin.flush()
+                while True:
+                    response = responses.get(timeout=20)
+                    if isinstance(response, Exception):
+                        raise response
+                    if response.get("id") == request_id:
+                        assert "error" not in response, response
+                        return response["result"]
+
+            try:
+                session = rpc("session.create", {
+                    "model": "gpt-4.1", "workingDirectory": str(tmp_path),
+                    "provider": {"type": "openai", "baseUrl": base_url},
+                })
+                params = {"sessionId": session["sessionId"]}
+                agents = rpc("session.agent.list", params)["agents"]
+                profiles = copilot_package / "com.github.copilot/agents"
+                expected = {f"egm:{frontmatter(p)['name']}": p
+                            for p in profiles.glob("*.agent.md")}
+                loaded = {a["id"]: a for a in agents if a["source"] == "plugin"}
+                assert set(loaded) == set(expected)
+                for name, path in expected.items():
+                    config = frontmatter(path)
+                    assert Path(loaded[name]["path"]) == path
+                    assert loaded[name]["tools"] == config["tools"]
+                    assert loaded[name]["userInvocable"] == config.get(
+                        "user-invocable", True
+                    )
+                    assert loaded[name]["mcpServers"] == {}
+                skills = rpc("session.skills.list", params)["skills"]
+                loaded_skills = {s["commandName"]: s for s in skills
+                                 if s["source"] == "plugin"}
+                expected_skills = {f"egm:{frontmatter(p)['name']}": p
+                                   for p in (copilot_package / "skills").glob("*/SKILL.md")}
+                assert set(loaded_skills) == set(expected_skills)
+                for name, path in expected_skills.items():
+                    assert Path(loaded_skills[name]["path"]) == path
+                    assert loaded_skills[name]["enabled"] is True
+                rpc("session.destroy", params)
+            finally:
+                process.terminate()
+                process.wait(timeout=5)
+                process.stdin.close()
+                process.stdout.close()
+                provider.shutdown()
+                assert provider_requests == [], "Loader attempted model access"
