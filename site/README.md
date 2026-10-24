@@ -54,4 +54,7 @@ Edit the [social-image template](scripts/og.html), then run `npm run capture`.
 ## Deploy
 
 The [Deploy site workflow](../.github/workflows/deploy-site.yml) publishes the site
-when changes to `site/` reach `main`. You can also start the workflow manually.
+when changes to `site/` reach `main`.
+
+To deploy manually, open [Deploy site](https://github.com/google/elephant-goldfish-model/actions/workflows/deploy-site.yml),
+select **Run workflow**, choose `main`, and select **Run workflow** again.
