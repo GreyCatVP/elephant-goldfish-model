@@ -27,14 +27,14 @@ This document defines the architectural specification, manifest schemas, directo
 
 | Catechism Dimension | Project Evaluation |
 | :--- | :--- |
-| **Objective** | Provide declarative manifest adapters and documented delegation contracts so users of Hermes Agent, OpenClaw, and Delta can install EGM and run workflows without modifying skill text. |
-| **State of the Art** | EGM supports Antigravity, Claude, and Codex. Other harnesses require manual file copies, which violate EGM's single-source principle and break relative links to personas and document standards. |
-| **New Approach** | Introduce lightweight, static manifest adapters (`.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, `.delta/plugin.json`) that point directly to shared `skills/` and `agents/` directories without runtime transpilation or build steps. |
-| **Impact** | Enables users of OpenClaw, Hermes Agent, and Delta to run EGM spec-driven workflows with guaranteed reviewer isolation, expanding EGM's ecosystem footprint. |
-| **Risks & Payoffs** | Primary risks are upstream manifest schema drift and accidental parent context leakage. Payoffs are zero code duplication and platform-agnostic specification engineering. |
-| **Cost & Token Economics** | Packaging overhead is zero runtime dependencies or daemon processes. For runtime execution, full multi-stage reviews consume an estimated 16k–32k input tokens per reviewer run (~60k–120k tokens total across 5–9 stages). Alternative hosts running local inference (e.g. vLLM, Ollama) should utilize models with $\ge$ 32k context windows and configure sequential dispatch (concurrency limit = 1) to prevent VRAM exhaustion. Offline unit tests execute in under 10 seconds. |
-| **Timeline & Staging** | Two-stage lifecycle: **Stage 1 (this proposal)** establishes design and manifest contracts. **Stage 2** captures live execution traces and promotes harness status from Unverified to Pass. |
-| **Metrics & Verification** | Stage 1 requires 100% pass on offline schema synchronization and strict JSON/YAML validation (`pytest tests/unit/test_harnesses.py`). Stage 2 requires verified child session transcripts proving zero parent context leak via automated canary token assertions. |
+| **Objectives**<br>*(No Jargon)* | Enable developers using Hermes Agent, OpenClaw, and Delta to install and run the Elephant-Goldfish Model directly from this repository without copying files, editing configuration scripts, or changing the shared skill instructions. |
+| **State of the Art** | EGM officially packages manifests for Antigravity, Claude Code/Cowork, and OpenAI Codex/ChatGPT. Developers on other emerging agent platforms (Hermes Agent, OpenClaw, Delta) must manually copy skill files or maintain private forks. This duplicates text, breaks relative markdown links to personas and rubrics, risks leaking parent conversation history into reviewers (violating zero-context isolation), and burdens users with manual updates whenever upstream prompts improve. |
+| **New Approach** | Introduce lightweight, static manifest adapters (`.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, `.delta/plugin.json`) pointing directly to shared `skills/` and `agents/` directories without runtime transpilation or build steps. This succeeds because modern agent platforms natively support declarative plugin manifests and isolated subprocess/child-session spawning, allowing single-source prompt text to execute within each host's native isolation boundaries. |
+| **Impact** | Developers on Hermes Agent, OpenClaw, and Delta gain first-class access to spec-driven development with verified reviewer isolation. EGM maintainers avoid managing disparate forks or complex transpilation pipelines, expanding EGM's reach across the autonomous agent ecosystem with zero ongoing build overhead. |
+| **Risks & Payoffs** | **Risks**: Upstream manifest schema drift, accidental parent context leakage during subagent dispatch, and premature support claims before live execution proof.<br>**Payoffs**: Universal single-source distribution across six agent platforms, guaranteed reviewer isolation, and automated offline regression prevention. |
+| **Cost & Token Economics** | **Infrastructure & Runtime**: Zero financial cost, zero background daemons, zero external cloud dependencies. Manifest parsing overhead is under 5 ms.<br>**Token Budget**: Multi-stage reviews consume an estimated 16k–32k input tokens per reviewer run (~60k–120k tokens total across stages 5–9). Local inference hosts (e.g., vLLM, Ollama) require models with $\ge$ 32k context windows and sequential dispatch (concurrency limit = 1) to prevent VRAM exhaustion.<br>**Headcount**: Zero additional maintainer headcount; manifest synchronization is verified via CI unit tests executing offline in under 10 seconds. |
+| **Timeline** | **Stage 1 (Design & Contracts)**: Immediate; delivered and verified in PR #119.<br>**Stage 2 (Live Trace Promotion)**: Estimated 2 to 4 weeks per harness, driven asynchronously as community contributors or maintainers capture live execution traces and canary isolation proofs. |
+| **Metrics & Exams** | **Mid-Term Exam (Stage 1)**: 100% pass on offline schema synchronization and strict JSON/YAML validation (`pytest tests/unit/test_harnesses.py`), zero broken relative links (`pytest tests/unit/test_link_integrity.py`), and 100% compliance with EGM document standards.<br>**Final Exam (Stage 2)**: Captured end-to-end execution logs and child session transcripts for `/egm-brainstorm`, `/egm-draft`, and `/egm-review` on live harnesses, verifying (1) zero parent context leakage via canary assertions and (2) strict enforcement of read-only tools (`Read`, `Grep`, `Glob`) with write/edit/shell blocked. |
 
 ---
 
@@ -225,25 +225,116 @@ If an upstream harness release breaks manifest parsing, alters plugin discovery 
 
 ## 9. Detailed Implementation Plan & Work Breakdown
 
-Executing the Stage 1 deliverable partitions into the following sequential steps:
+In accordance with the **Implementation Readiness Standard** (`resources/document_standards/implementation-readiness-standard.md`) and the **Re-Implementation Standard** (`resources/document_standards/re-implementation-standard.md`), this plan provides deterministic, unambiguous execution instructions leaving zero architectural decisions to the implementer.
 
-* **Task 1: Create Static Manifest Adapters**
-  * Create `.hermes/plugin.yaml` pointing to shared `skills/` and `agents/`.
-  * Create `.openclaw/openclaw.plugin.json` pointing to shared `skills/` and `agents/`.
-  * Create `.delta/plugin.json` pointing to shared `skills/` and `agents/`.
-* **Task 2: Polymorphic Test Suite Updates (`tests/unit/test_harnesses.py`)**
-  * Add `.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, and `.delta/plugin.json` to `COMPATIBILITY_MANIFESTS`.
-  * Update `read_manifest()` to branch on file extension: parse `.json` strictly with `json.loads` and `.yaml` with `yaml.safe_load`.
-  * Validate metadata consistency (`name`, `version`, `description`, `repository`, `license`) without schema drift.
-* **Task 3: Update Harness Documentation (`docs/harnesses.md`)**
-  * Add Hermes, OpenClaw, and Delta to the Install table, Manifests table, and Delegation table.
-  * Document subagent delegation tool signatures (`hermes.spawn`, `sessions_spawn`, `delta.spawn`).
-  * Add `### Subagent Isolation Guidelines` under `## Delegation`.
-  * Update Support Status to reflect unverified status with open verification gaps.
-* **Task 4: Update Test Playbook (`TESTING.md`)**
-  * Add Hermes Agent, OpenClaw, and Delta rows to the Harness Test Record table with status `Unverified` and references to tracking issue [#116](https://github.com/google/elephant-goldfish-model/issues/116).
-* **Task 5: Register in Design Index (`docs/designs/README.md`)**
-  * Add `multi_harness_support.md` row to the design index table.
-* **Task 6: Test Suite & Diff Verification**
-  * Execute: `pytest tests/unit/test_harnesses.py tests/unit/test_link_integrity.py tests/unit/test_frontmatter.py -v`
-  * Execute: `git diff --check`
+### 9.1 Target Scope
+
+The Stage 1 delivery scope is strictly partitioned across the following files:
+
+| Target File Path | Operation | Component Role & Implementation Rationale |
+| :--- | :--- | :--- |
+| `.hermes/plugin.yaml` | **Create** | Static YAML manifest adapter enabling native discovery in Hermes Agent. |
+| `.openclaw/openclaw.plugin.json` | **Create** | Static strict JSON manifest adapter enabling native discovery in OpenClaw. |
+| `.delta/plugin.json` | **Create** | Static strict JSON manifest adapter enabling native discovery in Delta. |
+| `tests/unit/test_harnesses.py` | **Modify** | Adds polymorphic `read_manifest()` (branching on `.yaml`/`.json`) and registers new manifests in `COMPATIBILITY_MANIFESTS` for offline schema and parity enforcement. |
+| `docs/harnesses.md` | **Modify** | Documents install commands, manifest paths, subagent tool mappings, subagent isolation guidelines, and unverified support statuses. |
+| `TESTING.md` | **Modify** | Adds Hermes Agent, OpenClaw, and Delta entries to the Harness Test Record table with Unverified status and tracking issue [#116](https://github.com/google/elephant-goldfish-model/issues/116). |
+| `docs/designs/README.md` | **Modify** | Registers `multi_harness_support.md` in the technical design specification catalog. |
+| `docs/designs/multi_harness_support.md` | **Create** | Canonical technical design proposal (this document). |
+
+### 9.2 Phasing & Intermediate Checkpoints
+
+Execution is divided into four incremental, testable phases:
+
+* **Phase 1: Declarative Manifest Adapter Creation**
+  * Create `.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, and `.delta/plugin.json` matching the schema specifications in Section 5.
+  * *Checkpoint*: Manifest files exist on disk with valid YAML and JSON syntax.
+* **Phase 2: Polymorphic Test Suite Updates & Validation**
+  * Extend `tests/unit/test_harnesses.py` with polymorphic parsing supporting both strict JSON (via `json.loads`) and YAML (via `yaml.safe_load`).
+  * Add all three manifest paths to `COMPATIBILITY_MANIFESTS`.
+  * *Checkpoint*: `pytest tests/unit/test_harnesses.py` executes offline and passes 100% of tests (40 items).
+* **Phase 3: Ecosystem Documentation & Index Alignment**
+  * Update `docs/harnesses.md`, `TESTING.md`, and `docs/designs/README.md` to reflect new harness support and unverified Stage 1 status.
+  * *Checkpoint*: `pytest tests/unit/test_link_integrity.py` passes with zero broken relative links or anchors.
+* **Phase 4: Full Offline Regression Verification & Merge Readiness**
+  * Execute full offline unit test suite across the repository.
+  * Verify clean git status and formatting with `git diff --check`.
+  * *Checkpoint*: All 50 offline unit tests pass; 100% compliance with EGM document standards.
+
+### 9.3 Actionable Execution Steps (The Zero-Decision Rule)
+
+#### Step 1: Manifest Construction
+1. Create `.hermes/plugin.yaml` with UTF-8 encoding:
+   * Top-level keys: `name: egm`, `version: 0.1.0`, `description: "..."`, `author.name: Google LLC`, `homepage: https://egm.dev`, `repository: https://github.com/google/elephant-goldfish-model`, `license: Apache-2.0`, `skills: skills`, `agents: agents`.
+2. Create `.openclaw/openclaw.plugin.json` and `.delta/plugin.json` with UTF-8 encoding:
+   * Strict JSON object conforming to RFC 8259 containing the identical top-level fields: `"name": "egm"`, `"version": "0.1.0"`, `"description": "..."`, `"author": {"name": "Google LLC"}`, `"homepage": "https://egm.dev"`, `"repository": "https://github.com/google/elephant-goldfish-model"`, `"license": "Apache-2.0"`, `"skills": "skills"`, `"agents": "agents"`.
+
+#### Step 2: Test Suite Extension (`tests/unit/test_harnesses.py`)
+1. In `COMPATIBILITY_MANIFESTS`, append:
+   * `".hermes/plugin.yaml"`
+   * `".openclaw/openclaw.plugin.json"`
+   * `".delta/plugin.json"`
+2. Replace `read_json(path)` with `read_manifest(path: str | Path) -> dict`:
+   * Resolve target path: `target = ROOT / path if not Path(path).is_absolute() else Path(path)`.
+   * Read raw text with explicit UTF-8 decoding: `content = target.read_text(encoding="utf-8")`.
+   * Parse based on extension: if `target.suffix in (".yaml", ".yml")`, call `yaml.safe_load(content)`; otherwise call `json.loads(content)`.
+   * Assert `isinstance(data, dict)` to reject non-object root structures.
+   * Return `data`.
+   * Retain alias `read_json = read_manifest` for backward compatibility.
+3. In `test_compatibility_metadata_matches_root`, ensure mandatory assertions run for all manifests:
+   * Mandatory fields: `name`, `version`, `description`, `repository`, `license`.
+   * Author validation: match `author` dictionary or `interface.developerName`.
+   * Component paths: verify `skills` resolves to canonical `skills/` containing all 7 expected skills, and `agents` resolves to canonical `agents/`.
+
+#### Step 3: Documentation Alignment
+1. In `docs/harnesses.md`:
+   * `## Install`: Add rows for Hermes Agent (`hermes plugins install <repo>`), OpenClaw (`openclaw plugins install <repo>`), and Delta (`delta skills tap add <repo>`).
+   * `## Manifests`: Add rows mapping `.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, and `.delta/plugin.json` to canonical `skills` (default) and subagent isolation policies.
+   * `## Delegation`: Add rows mapping Hermes Agent to `hermes.spawn`, OpenClaw to `sessions_spawn`, and Delta to Runner delegation tool (`delta.spawn`).
+   * `### Subagent Isolation Guidelines`: Add subsection mandating zero-context fresh sessions and read-only tool whitelisting (`Read`, `Grep`, `Glob`).
+   * `## Support Status & Contributing Other Harnesses`: Record Hermes Agent, OpenClaw, and Delta as having manifest structures with open live trace verification gaps (#116).
+2. In `TESTING.md`:
+   * `## Harness Test Record`: Add rows for Hermes Agent (0.8.2), OpenClaw (1.0.4), and Delta (0.9.0) with Install status `Unverified` and Notes referencing issue [#116](https://github.com/google/elephant-goldfish-model/issues/116).
+   * Reference issue [#116](https://github.com/google/elephant-goldfish-model/issues/116) in tracking gap notes.
+3. In `docs/designs/README.md`:
+   * Add `[multi_harness_support.md](multi_harness_support.md)` to technical design index table.
+
+### 9.4 Test Plan
+
+#### Happy Path Test Scenarios
+1. **Manifest Schema & Parity**:
+   * `test_compatibility_metadata_matches_root` executes against all 5 compatibility manifests.
+   * Asserts exact string equality with root `plugin.json` for `name`, `version`, `description`, `repository`, and `license`.
+   * Asserts `author.name == "Google LLC"`.
+2. **Component Directory Resolution**:
+   * Asserts `skills` path resolves to `skills/` containing exactly the 7 expected skills (`egm-bootstrap`, `egm-brainstorm`, `egm-draft`, `egm-drift-report`, `egm-resolve`, `egm-review`, `egm-review-loop`).
+   * Asserts `agents` path resolves to `agents/`.
+3. **Cross-Document Link Integrity**:
+   * `test_relative_markdown_links_resolve_on_disk` parses all Markdown files in the repository.
+   * Verifies all relative links and intra-document anchor slugs resolve cleanly to existing files and headers.
+
+#### Edge Cases & Failure Mode Handling
+1. **Strict JSON Validation (RFC 8259)**:
+   * Trailing commas, unquoted keys, single-quoted strings, or JavaScript-style comments in `.json` files trigger `json.JSONDecodeError` during `read_manifest()`.
+2. **Strict YAML Validation**:
+   * Tab characters for indentation or invalid syntax in `.yaml` files trigger `yaml.YAMLError` during `read_manifest()`.
+3. **Non-Object Root Rejection**:
+   * A manifest parsing into a list, integer, or string triggers `AssertionError` with a message identifying the unexpected type.
+4. **Metadata Drift Detection**:
+   * Modifying `version` or `description` in an adapter without synchronizing root `plugin.json` fails the parity assertion with an explicit drift error.
+5. **Path Resolution Failure**:
+   * A manifest pointing `skills` or `agents` to a non-existent or misnamed directory fails path resolution assertions.
+
+---
+
+## 10. References
+
+* [EGM Architecture & System Lifecycle](architecture.md)
+* [EGM Goldfish Review Protocol & Resolution Engine](review.md)
+* [EGM Harness Architecture Guide](../harnesses.md)
+* [EGM Testing Playbook](../../TESTING.md)
+* [EGM Repository Root](../../README.md)
+* Dave Rensin, [Elephants, Goldfish, and the New Golden Age of Software Engineering](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874) (Medium, 2026).
+* DARPA, [The Heilmeier Catechism](https://www.darpa.mil/about/heilmeier-catechism).
+* Agent Plugins 1.0.0 Schema Specification, [agent-plugins.org](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json).
+* Issue #116: [Support Hermes Agent, OpenClaw, and Delta](https://github.com/google/elephant-goldfish-model/issues/116).
