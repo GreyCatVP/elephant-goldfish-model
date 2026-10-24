@@ -85,6 +85,14 @@ def test_source_destination_is_rejected() -> None:
         ADAPTER["install"](ROOT / "unused-opencode-test-destination")
 
 
+def test_command_interpolation_paths_are_rejected(tmp_path: Path) -> None:
+    # V1 replaces positional placeholders and $ARGUMENTS across the template.
+    for component in ("$ARGUMENTS", "$1"):
+        with pytest.raises(ValueError, match="template or glob"):
+            ADAPTER["install"](tmp_path / component / "candidate")
+    assert not list(tmp_path.iterdir())
+
+
 def test_symlink_parent_cannot_bypass_path_validation(tmp_path: Path) -> None:
     target = tmp_path / "unsafe*"
     target.mkdir()

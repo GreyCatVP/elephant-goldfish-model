@@ -34,7 +34,7 @@ def install(destination: Path) -> Path:
         raise FileExistsError(destination)
     destination = destination.resolve()
     # Check resolved parents too: paths enter glob rules and prompt templates.
-    if any(c in str(destination) for c in '*?[]{}!@`\n\r'):
+    if any(c in str(destination) for c in '*?[]{}!@`$\n\r'):
         raise ValueError("Installation path contains template or glob characters")
     if destination.is_relative_to(ROOT):
         raise ValueError("Install outside the source tree")
