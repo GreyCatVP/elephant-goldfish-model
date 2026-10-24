@@ -258,6 +258,7 @@ Execution is divided into four incremental, testable phases:
 * **Phase 2: Polymorphic Test Suite Updates & Validation**
   * Extend `tests/unit/test_harnesses.py` with polymorphic parsing supporting both strict JSON (via `json.loads`) and YAML (via `yaml.safe_load`).
   * Add all three manifest paths to `COMPATIBILITY_MANIFESTS`.
+  * Enforce explicit UTF-8 decoding in `tests/integration/test_codex.py` when reading retained JSONL traces.
   * *Checkpoint*: `pytest tests/unit/test_harnesses.py` executes offline and passes 100% of tests (40 items).
 * **Phase 3: Ecosystem Documentation & Index Alignment**
   * Update `docs/harnesses.md`, `TESTING.md`, and `docs/designs/README.md` to reflect new harness support and unverified Stage 1 status.
@@ -275,8 +276,8 @@ Execution is divided into four incremental, testable phases:
 2. Create `.openclaw/openclaw.plugin.json` and `.delta/plugin.json` with UTF-8 encoding:
    * Strict JSON object conforming to RFC 8259 containing the identical top-level fields: `"name": "egm"`, `"version": "0.1.0"`, `"description": "..."`, `"author": {"name": "Google LLC"}`, `"homepage": "https://egm.dev"`, `"repository": "https://github.com/google/elephant-goldfish-model"`, `"license": "Apache-2.0"`, `"skills": "skills"`, `"agents": "agents"`.
 
-#### Step 2: Test Suite Extension (`tests/unit/test_harnesses.py`)
-1. In `COMPATIBILITY_MANIFESTS`, register the relative paths for all three new adapters:
+#### Step 2: Test Suite Extension & Trace Ingestion Hardening (`tests/unit/test_harnesses.py`, `tests/integration/test_codex.py`)
+1. In `COMPATIBILITY_MANIFESTS` (`tests/unit/test_harnesses.py`), register the relative paths for all three new adapters:
    * `".hermes/plugin.yaml"`
    * `".openclaw/openclaw.plugin.json"`
    * `".delta/plugin.json"`
@@ -290,6 +291,11 @@ Execution is divided into four incremental, testable phases:
    * **Mandatory Metadata Fields**: Assert presence and exact value equality against root `plugin.json` for `name`, `version`, `description`, `repository`, and `license`.
    * **Author Synchronization**: Match `author` mapping or `interface.developerName` against `plugin.json` author name (`Google LLC`).
    * **Canonical Component Paths**: Verify `skills` path resolves to root `skills/` containing all 7 canonical skills (`egm-bootstrap`, `egm-brainstorm`, `egm-draft`, `egm-drift-report`, `egm-resolve`, `egm-review`, `egm-review-loop`), and `agents` path resolves to root `agents/`.
+4. In `tests/unit/test_harnesses.py`, incorporate cross-platform test execution helpers:
+   * Implement `find_posix_shell()` to locate `sh` or `bash` in Git for Windows installations, ensuring `run_read_hook()` can execute `.claude-plugin/hooks/allow_plugin_reads.sh` without Win32 application execution errors (`WinError 193`).
+   * Add `test_jsonl_preserves_unicode_separators` parameterized across Unicode separator codepoints (`\u0085`, `\u2028`, `\u2029`) to verify that JSONL records are delimited solely by literal `\n`.
+5. In `tests/integration/test_codex.py`:
+   * In `read_trace(thread_id: str)`, specify `encoding="utf-8"` in `paths[0].read_text(encoding="utf-8")` to prevent Windows ANSI/CP1252 decoding errors when ingesting retained execution traces.
 
 #### Step 3: Documentation Alignment
 1. In `docs/harnesses.md`:
@@ -329,6 +335,8 @@ Execution is divided into four incremental, testable phases:
    * Modifying `version` or `description` in an adapter without synchronizing root `plugin.json` fails the parity assertion with an explicit drift error.
 5. **Path Resolution Failure**:
    * A manifest pointing `skills` or `agents` to a non-existent or misnamed directory fails path resolution assertions.
+6. **JSONL Unicode Separator Preservation**:
+   * Verify that Unicode line breaks and paragraph separators (`\u0085`, `\u2028`, `\u2029`) within trace JSON payload strings do not trigger improper record splitting, ensuring JSONL records are delimited solely by literal LF (`\n`).
 
 ---
 
@@ -339,6 +347,8 @@ Execution is divided into four incremental, testable phases:
 * [EGM Harness Architecture Guide](../harnesses.md)
 * [EGM Testing Playbook](../../TESTING.md)
 * [EGM Repository Root](../../README.md)
+* [EGM Agent Guidelines & Contribution Taxonomy](../../AGENTS.md)
+* [EGM Pull Request Template](../../.github/PULL_REQUEST_TEMPLATE.md)
 * [EGM Heilmeier Catechism Standard](../../resources/document_standards/heilmeier-standard.md)
 * [EGM Zoom Out Standard](../../resources/document_standards/zoom-out-standard.md)
 * [EGM Implementation Readiness Standard](../../resources/document_standards/implementation-readiness-standard.md)
