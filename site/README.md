@@ -20,16 +20,16 @@ GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.
 - [Astro](https://astro.build) for the static site.
 - [Material Web](https://github.com/material-components/material-web) for styles.
 - [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
-  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code) are stored in
-  [src/assets/fonts/](src/assets/fonts/). Both use the
-  [SIL Open Font License (OFL)](https://openfontlicense.org/).
+  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted in
+  [src/assets/fonts/](src/assets/fonts/) under the
+  [SIL Open Font License](https://openfontlicense.org/).
 
 ## Rules
 
-- Do not add analytics, cookies, third-party scripts, or runtime requests to Google hosts.
+- Do not add analytics, cookies, or third-party scripts. Self-host fonts.
 - Use only Material Web [design tokens](src/styles/tokens.css) and documented
   component properties to change the theme. Do not override component box styles.
-- Keep skill names and commands identical to the [repository README](../README.md).
+- Match skill names and commands to the [repository README](../README.md).
 
 ## Develop
 
