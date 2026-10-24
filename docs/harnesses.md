@@ -71,6 +71,23 @@ the review skills stop instead of running in the same context. Check actual
 tool availability rather than inferring it from the product name. This applies
 to ChatGPT modes that do not expose native fresh-context delegation.
 
+## Artifact Directory
+
+Skills write briefs, drafts, and reports to the working directory, or to the
+harness's artifact directory if it has one. In Claude Code, Claude Cowork,
+Codex, and ChatGPT, you can name another folder. Add this line to your prompt,
+or to an agent instructions file that your harness loads (`CLAUDE.md` or
+`AGENTS.md`, in the project or at user level):
+
+```text
+EGM artifact directory: .dev/docs
+```
+
+A relative path is relative to the working directory. Design docs and other
+project files do not move. Claude Code reads a project `AGENTS.md` only when
+the project has no `CLAUDE.md`. To keep the files out of git, add the folder to
+`.gitignore`.
+
 ## Support Status & Contributing Other Harnesses
 
 **Antigravity**, **Claude Code**, and **Codex** pass automated installation, reviewer isolation, and end-to-end workflow fixtures.
