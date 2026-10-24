@@ -3,8 +3,8 @@
 
 """Offline regression coverage for Claude's native transcript directory."""
 
-from pathlib import Path
 import json
+from pathlib import Path
 import runpy
 
 import pytest
@@ -33,7 +33,10 @@ def test_trace_directory(
   )
 
 
-@pytest.mark.parametrize("result", ["success", "error", "missing", "unrelated", "empty"])
+@pytest.mark.parametrize("result", [
+    "success", "error", "missing", "unrelated", "empty", "whitespace",
+    "empty_text_block", "whitespace_text_block", "valid_text_blocks",
+])
 def test_child_probe_requires_successful_read(result: str) -> None:
   check = runpy.run_path(str(ROOT / "tests/integration/test_claude.py"))[
       "assert_child_probe"
@@ -44,17 +47,27 @@ def test_child_probe_requires_successful_read(result: str) -> None:
       "input": {"file_path": str(persona)},
   }]}}]
   if result != "missing":
+    content = {
+        "empty": "",
+        "whitespace": " \t\n",
+        "empty_text_block": [{"type": "text", "text": ""}],
+        "whitespace_text_block": [{"type": "text", "text": " \t\n"}],
+        "valid_text_blocks": [
+            {"type": "text", "text": ""},
+            {"type": "text", "text": "Persona text"},
+        ],
+    }.get(result, "Persona text")
     events.append({"type": "user", "message": {"content": [{
         "type": "tool_result",
         "tool_use_id": "other-read" if result == "unrelated" else "read-persona",
         "is_error": result == "error",
-        "content": "" if result == "empty" else "Persona text",
+        "content": content,
     }]}})
   events.append({"type": "assistant", "message": {"content": [{
       "type": "text", "text": "UNKNOWN",
   }]}})
   raw = "\n".join(json.dumps(event) for event in events)
-  if result == "success":
+  if result in {"success", "valid_text_blocks"}:
     check(raw, persona, ["parent-only-marker"])
   else:
     with pytest.raises(AssertionError, match="successful native tool result"):

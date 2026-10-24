@@ -44,8 +44,15 @@ def assert_child_probe(raw: str, persona: Path, markers: list[str]) -> None:
         if block["type"] == "text":
           answers.append(block["text"])
       if (event.get("type") == "user" and block["type"] == "tool_result"
-          and not block.get("is_error") and block.get("content")):
-        successful.add(block["tool_use_id"])
+          and not block.get("is_error")):
+        result = block.get("content", "")
+        if isinstance(result, list):
+          result = "".join(
+              part["text"] for part in result
+              if part.get("type") == "text" and isinstance(part.get("text"), str)
+          )
+        if isinstance(result, str) and result.strip():
+          successful.add(block["tool_use_id"])
   assert answers and answers[-1].strip() == "UNKNOWN"
   assert [path for _, path in child_reads] == [str(persona)]
   assert all(call_id in successful for call_id, _ in child_reads), (

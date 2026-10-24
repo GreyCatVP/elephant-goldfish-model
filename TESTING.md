@@ -105,7 +105,8 @@ Track open cloud verification gaps in [#105 (Cowork)](https://github.com/google/
 Run `pytest tests/unit/test_claude_traces.py` to exercise the Claude probe's
 native child validator with synthetic records. A persona read request alone is
 not a successful read: require a matching, non-error, nonempty native tool
-result. Missing or unrelated results fail even when the child says `UNKNOWN`.
+result containing non-whitespace text, either as a string or in native text
+blocks. Missing or unrelated results fail even when the child says `UNKNOWN`.
 These tests do not invoke models or establish cloud support. A successful tool
 result also does not by itself prove that the entire resource was read.
 
