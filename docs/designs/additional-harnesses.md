@@ -17,7 +17,9 @@ another passes verification.
 
 This proposal changes no runtime behavior and establishes no support claim.
 It is independent of the packaging and release stack in #135, #136, and #137.
-Implementation starts only after maintainer scope approval and design approval.
+Experimental implementations can be prepared in draft PRs stacked on this design.
+Maintainer scope approval and design approval remain merge prerequisites.
+Draft implementations do not establish host support or satisfy live verification.
 
 ## Scope
 
@@ -161,12 +163,17 @@ No inline simulation of independent reviewers is permitted.
 
 ## Rollout and rollback
 
-After scope and design approval, implement one host at a time, starting with
-Cursor, then OpenCode and Copilot CLI. Each implementation PR references this
-design and closes only its own issue after acceptance criteria pass.
+Prepare each host in a separate draft implementation PR based on this design
+branch. The adapters have independent package layouts and verification results.
+Merge the design first, then retarget and validate each implementation against
+main. Maintainer approval remains required before an implementation merges.
+Each implementation references its issue. Use a closing reference only when
+merging that implementation completes every acceptance criterion.
 
-Update installation documentation and the support table in the same implementation
-PR as the adapter and evidence. Preserve existing host behavior and tests.
+Include installation documentation and offline checks with each adapter.
+Keep live installation, workflow, and isolation results explicitly unverified
+until the required host runs pass. Update the support table with that evidence.
+Preserve existing host behavior and tests.
 A broken integration can be reverted independently. Downgrade its support statement
 and retain the failure record. Do not remove unrelated user configuration.
 
