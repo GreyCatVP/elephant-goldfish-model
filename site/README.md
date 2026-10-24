@@ -23,7 +23,8 @@ GitHub Pages.
   `labs/gb`) in its native-element form: the page emits the package's own
   class names (`btn`, `icon-btn`, `list-item`, `badge`, `divider`) and imports the
   package stylesheets. No custom elements, no Lit runtime.
-- Google Sans Flex and Google Sans Code, self-hosted under
+- [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
+  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted under
   `src/assets/fonts/` (OFL).
 
 ## Rules
