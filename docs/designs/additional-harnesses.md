@@ -63,9 +63,8 @@ text rather than maintaining a second copy of its review rules.
    writes the reports, and stops at the existing human approval gates.
 
 Use direct dispatch when nested delegation is unavailable. A missing reviewer
-must not be represented as a passing review. Retry only the failed reviewer when
-the native host can preserve the required isolation. Otherwise, report the
-incomplete stage and ask the user how to proceed.
+must not be represented as a passing review. Report the incomplete stage and ask
+the user how to proceed. Defer selective retries until a host requires them.
 
 Reviewers have read-only access. Drafting and report-writing roles retain only
 the workspace access needed for their outputs. Do not globally weaken host
@@ -157,10 +156,7 @@ No inline simulation of independent reviewers is permitted.
 ## Risks and mitigations
 
 - Host API drift: record exact versions in test records and update the adapter with regression checks.
-- Hidden context injection: inspect host records. Keep unknowns explicit.
-- Missing package resources: validate the installed tree, not just the source checkout.
 - Excessive model cost: run small fixtures manually and record usage when available.
-- Partial reviewer completion: fail the stage visibly. Do not synthesize a pass.
 - Maintenance growth: keep each adapter independent and avoid unused capabilities.
 
 ## Rollout and rollback
