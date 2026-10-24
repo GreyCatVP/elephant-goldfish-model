@@ -53,9 +53,13 @@ With an authenticated Claude Code 2.1.271+ installation, run:
 EGM_CLAUDE_LIVE=1 pytest tests/integration/test_claude.py
 ```
 
-This uses the account's model quota. It loads a copy of the plugin, invokes
-the review skill, and checks that a native reviewer reads only its persona and
-sees no parent or project `CLAUDE.md` context. See [Claude integration](docs/claude.md).
+This uses the account's model quota. It builds the Claude runtime and gives it
+a unique test name. Two probes invoke the review skill with folder-scoped read
+permissions and no approval hook. They check that a native reviewer reads only
+its persona, sees no parent or project `CLAUDE.md` context, and stops without a
+verdict when an explicit deny rule blocks its persona. This is a focused probe,
+not the full review workflow or a marketplace installation test.
+See [Claude integration](docs/claude.md).
 ---
 
 ## Native Codex Integration Tests (Opt-in)
@@ -107,6 +111,9 @@ native child validator with synthetic records. A persona read request alone is
 not a successful read: require a matching, non-error, nonempty native tool
 result containing non-whitespace text, either as a string or in native text
 blocks. Missing or unrelated results fail even when the child says `UNKNOWN`.
+The denied-persona case requires exactly one error result correlated to the sole
+persona Read and a final `RESOURCE_UNREADABLE` sentinel. Missing, unrelated,
+duplicate or successful results cannot establish denial; extra reads also fail.
 These tests do not invoke models or establish cloud support. A successful tool
 result also does not by itself prove that the entire resource was read.
 

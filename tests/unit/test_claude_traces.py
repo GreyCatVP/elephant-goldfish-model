@@ -97,3 +97,39 @@ def test_child_probe_keeps_unicode_inside_json_records(separator: str) -> None:
   check(raw, persona, ["parent-only-marker"])
   with pytest.raises(AssertionError):
     check(raw, persona, ["Persona"])
+
+
+@pytest.mark.parametrize("result", [
+    "denied", "missing", "unrelated", "success", "empty", "duplicate",
+    "wrong_sentinel", "extra_read",
+])
+def test_denied_persona_requires_correlated_error(result: str) -> None:
+  check = runpy.run_path(str(ROOT / "tests/integration/test_claude.py"))[
+      "assert_child_probe"
+  ]
+  persona = Path("/plugin/agents/zoom_out.md")
+  read = {"type": "tool_use", "id": "persona", "name": "Read",
+          "input": {"file_path": str(persona)}}
+  events = [{"type": "assistant", "message": {"content": [read]}}]
+  if result != "missing":
+    response = {"type": "tool_result",
+                "tool_use_id": "other" if result == "unrelated" else "persona",
+                "is_error": result != "success",
+                "content": [{"type": "text", "text": (
+                    "" if result == "empty" else "Permission denied"
+                )}]}
+    events.append({"type": "user", "message": {"content": [response]}})
+    if result == "duplicate":
+      events.append(events[-1])
+  if result == "extra_read":
+    events.append({"type": "assistant", "message": {"content": [read]}})
+  events.append({"type": "assistant", "message": {"content": [{
+      "type": "text", "text": "UNKNOWN" if result == "wrong_sentinel"
+      else "Cannot read the persona.\nRESOURCE_UNREADABLE",
+  }]}})
+  raw = "\n".join(json.dumps(event) for event in events)
+  if result == "denied":
+    check(raw, persona, ["parent-only-marker"], deny_persona=True)
+  else:
+    with pytest.raises(AssertionError):
+      check(raw, persona, ["parent-only-marker"], deny_persona=True)

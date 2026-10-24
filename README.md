@@ -24,7 +24,7 @@ Elephant-Goldfish Model (EGM) is an open-source plugin for Spec-Driven Developme
 
 In Claude Code, commands use the `/egm:` prefix (for example `/egm:egm-brainstorm`).
 
-For detailed setup guides and walkthroughs, see [Getting Started](docs/getting_started.md), [Harnesses](docs/harnesses.md), and [Framework Architecture](docs/designs/architecture.md).
+For detailed setup guides and walkthroughs, see [Getting Started](docs/getting_started.md), [Harnesses](docs/harnesses.md), and [Framework Architecture](https://github.com/google/elephant-goldfish-model/blob/main/docs/designs/architecture.md).
 
 ## Skills
 
@@ -50,7 +50,7 @@ For the foundational essay introducing this methodology, see Dave Rensin's artic
 
 ## Contributing
 
-We welcome community contributions! Please review [Harnesses](docs/harnesses.md) and our [Contribution Guidelines](CONTRIBUTING.md) before submitting pull requests.
+We welcome community contributions! Please review [Harnesses](docs/harnesses.md) and our [Contribution Guidelines](https://github.com/google/elephant-goldfish-model/blob/main/CONTRIBUTING.md) before submitting pull requests.
 
 ## License
 
