@@ -1,6 +1,6 @@
 # egm.dev
 
-The Elephant-Goldfish Model website, hosted on [GitHub Pages](https://egm.dev).
+The Elephant-Goldfish Model website at [egm.dev](https://egm.dev), hosted on GitHub Pages.
 
 | Light | Dark |
 | --- | --- |
@@ -21,14 +21,14 @@ The Elephant-Goldfish Model website, hosted on [GitHub Pages](https://egm.dev).
 - [Material Web](https://github.com/material-components/material-web) for styles.
 - [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
   [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted under
-  `src/assets/fonts/` (OFL).
+  [src/assets/fonts/](src/assets/fonts/) (OFL).
 
 ## Rules
 
 - No analytics, cookies, third-party scripts, or runtime requests to Google hosts.
-- Theme only through Material Web tokens (`src/styles/tokens.css`) and the
+- Theme only through Material Web [design tokens](src/styles/tokens.css) and the
   components' documented custom properties. Do not restyle component boxes.
-- Keep skill names and commands identical to the repository README.
+- Keep skill names and commands identical to the [repository README](../README.md).
 
 ## Develop
 
@@ -43,7 +43,7 @@ npm run capture  # rebuild and refresh images
 ```
 
 After visual changes, run `npm run capture`. It requires Chrome; set `CHROME_PATH`
-if needed. Edit `scripts/og.html` to change the social image.
+if needed. Edit the [social-image template](scripts/og.html) to change the social image.
 
 ## Deploy
 
