@@ -97,6 +97,21 @@ files were written. Do not introduce a new default output directory here.
 
 ## Validation and release gates
 
+### Grok Bot compatibility
+
+Assess [Grok Bot](https://cursor.com/docs/grok-bot) separately under #145.
+Its persistent memory and shared cloud computer differ from Cursor local Agent.
+The [Grok Bot guide](https://cursor.com/docs/grok-bot/work) describes skills and
+bot handoffs. It does not establish compatibility with the Cursor adapter.
+
+Check package import, required resource reads, fresh reviewer context, read-only
+enforcement, completion records, and human approval pauses. Check whether reviewer
+memory and shared files expose prior findings. Keep support unverified until these
+checks pass. A passing Cursor local Agent run cannot establish Grok Bot support.
+Propose any required implementation separately after this assessment.
+
+### Shared checks
+
 Offline checks must cover:
 
 - Manifest parsing and identity/version consistency with the existing package.
