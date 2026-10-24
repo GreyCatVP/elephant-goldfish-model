@@ -1,6 +1,6 @@
 # egm.dev
 
-The Elephant-Goldfish Model website at [egm.dev](https://egm.dev), hosted on GitHub Pages.
+GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.dev).
 
 | Light | Dark |
 | --- | --- |
@@ -15,24 +15,24 @@ The Elephant-Goldfish Model website at [egm.dev](https://egm.dev), hosted on Git
 
 </details>
 
-## Stack
+## Tools and fonts
 
 - [Astro](https://astro.build) for the static site.
 - [Material Web](https://github.com/material-components/material-web) for styles.
 - [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
-  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted under
-  [src/assets/fonts/](src/assets/fonts/) (OFL).
+  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code) are stored in
+  [src/assets/fonts/](src/assets/fonts/). Both use the SIL Open Font License (OFL).
 
 ## Rules
 
-- No analytics, cookies, third-party scripts, or runtime requests to Google hosts.
-- Theme only through Material Web [design tokens](src/styles/tokens.css) and the
-  components' documented custom properties. Do not restyle component boxes.
+- Do not add analytics, cookies, third-party scripts, or runtime requests to Google hosts.
+- Use only Material Web [design tokens](src/styles/tokens.css) and documented
+  component properties to change the theme. Do not override component box styles.
 - Keep skill names and commands identical to the [repository README](../README.md).
 
 ## Develop
 
-Run from `site/` with Node.js 22.12 or newer:
+Use Node.js 22.12 or newer. Run these commands from `site/`:
 
 ```sh
 npm ci
@@ -42,10 +42,11 @@ npm run build    # output: dist/
 npm run capture  # rebuild and refresh images
 ```
 
-After visual changes, run `npm run capture`. It requires Chrome; set `CHROME_PATH`
-if needed. Edit the [social-image template](scripts/og.html) to change the social image.
+After visual changes, run `npm run capture`. This command requires Chrome.
+If Chrome is not found, set `CHROME_PATH` to its executable path.
+Edit the [social-image template](scripts/og.html) to change the social image.
 
 ## Deploy
 
-[Deploy site](../.github/workflows/deploy-site.yml) publishes changes to `site/`
-on `main`. It also supports manual runs.
+The [Deploy site workflow](../.github/workflows/deploy-site.yml) publishes the site
+when changes to `site/` reach `main`. You can also start the workflow manually.
