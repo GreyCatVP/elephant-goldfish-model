@@ -50,6 +50,13 @@ async function capture({ url, out, width, height, scheme = 'light', fullPage = f
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);
   await page.goto(url, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
+  if (fullPage) {
+    await page.evaluate(async () => {
+      const images = [...document.querySelectorAll('img[loading="lazy"]')];
+      for (const image of images) image.loading = 'eager';
+      await Promise.all(images.map((image) => image.decode()));
+    });
+  }
   await page.screenshot({ path: join(site, out), fullPage });
   await page.close();
   console.log(`wrote ${out}`);
@@ -60,6 +67,7 @@ try {
   await capture({ url: `${base}/`, out: 'screenshots/hero-light.png', width: 1200, height: 600 });
   await capture({ url: `${base}/`, out: 'screenshots/hero-dark.png', width: 1200, height: 600, scheme: 'dark' });
   await capture({ url: `${base}/`, out: 'screenshots/full-light.png', width: 1000, height: 800, fullPage: true });
+  await capture({ url: `${base}/`, out: 'screenshots/full-dark.png', width: 1000, height: 800, scheme: 'dark', fullPage: true });
   await capture({ url: `${base}/`, out: 'screenshots/mobile.png', width: 375, height: 812 });
 } finally {
   await browser.close();
