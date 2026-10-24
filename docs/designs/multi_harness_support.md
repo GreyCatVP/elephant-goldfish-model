@@ -1,6 +1,6 @@
 # Multi-Harness Support: Hermes Agent, OpenClaw, and Delta
 
-* **Authors:** Sriram (@Seburan), yathamsriram243-blip (@yathamsriram243-blip)
+* **Authors:** Sriram ([@Seburan](https://github.com/Seburan)), Sriram Yatham ([@yathamsriram243-blip](https://github.com/yathamsriram243-blip))
 * **Status:** Stage 1 Design Proposal (Draft Adapters; Live Traces Unverified)
 * **Date:** 2026-10-24
 * **Refs:** [#116](https://github.com/google/elephant-goldfish-model/issues/116)
@@ -179,7 +179,7 @@ In accordance with EGM's contribution guidelines ([AGENTS.md](../../AGENTS.md)),
 * **Decoupled Promotion**: Hermes Agent, OpenClaw, and Delta may be promoted independently across separate follow-up PRs as contributors or maintainers capture live evidence for each target.
 * **Submission Format**: Live evidence may be submitted as:
   * Formatted execution summaries with raw JSONL traces attached directly to the Pull Request body (following [Pull Request Template](../../.github/PULL_REQUEST_TEMPLATE.md)), or
-  * Automated opt-in integration tests under `tests/integration/` (matching the `test_codex.py` harness pattern).
+  * Automated opt-in integration tests under `tests/integration/` (matching the `test_codex.py` harness pattern: `tests/integration/test_hermes.py` activated via `EGM_HERMES_LIVE=1`, `tests/integration/test_openclaw.py` activated via `EGM_OPENCLAW_LIVE=1`, and `tests/integration/test_delta.py` activated via `EGM_DELTA_LIVE=1`).
 * **Required Evidence Checklist for Each Harness**:
   1. **Installation Log**: Clean terminal transcript of the plugin installation command.
   2. **Workflow Execution**: Verified artifacts from end-to-end execution of `/egm-brainstorm`, `/egm-draft`, and `/egm-review`.
@@ -205,6 +205,9 @@ If an upstream harness release breaks manifest parsing, alters plugin discovery 
 3. **Discrete Static Compatibility Manifests (Selected)**:
    * *Concept*: Maintain thin static metadata adapters (`.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, `.delta/plugin.json`) pointing to shared `skills/` and `agents/`.
    * *Adoption Rationale*: Retains single-source textual integrity, requires no runtime build steps, and integrates cleanly with unit test assertions against metadata drift.
+4. **Monolithic Root Manifest Extension**:
+   * *Concept*: Embed harness-specific configuration blocks directly inside root `plugin.json` (e.g., `"hermes": {...}`, `"openclaw": {...}`, `"delta": {...}`).
+   * *Rejection Rationale*: External harnesses scan for specific filenames and directory conventions (`.hermes/plugin.yaml` requires YAML format, `.openclaw/openclaw.plugin.json` resides in `.openclaw/`). Injecting harness-specific schemas into root `plugin.json` violates the portable Agent Plugins 1.0.0 JSON schema contract and creates unnecessary coupling between independent harness ecosystems.
 
 ---
 
@@ -225,6 +228,9 @@ If an upstream harness release breaks manifest parsing, alters plugin discovery 
 * **Risk 5: Local Host Resource Exhaustion**:
   * *Failure Mode*: On local model runners (e.g., Ollama, vLLM, LM Studio), concurrent fan-out of multiple reviewer subagents exceeds GPU VRAM or context window limits, leading to process crashes or degraded output.
   * *Mitigation*: Subagent dispatch policies for local harnesses mandate sequential execution (concurrency limit = 1) and models with context windows of at least 32k tokens, preventing out-of-memory faults during multi-stage reviews.
+* **Risk 6: Cross-Platform File Path & Shell Incompatibilities**:
+  * *Failure Mode*: On Windows hosts, direct execution of POSIX shell scripts (`.sh`) fails with `WinError 193` (`%1 is not a valid Win32 application`), unescaped Windows backslashes in `CLAUDE_PLUGIN_ROOT` corrupt bash case patterns, and reading trace files with default system encodings (ANSI/CP1252) triggers `UnicodeDecodeError` on UTF-8 payload characters.
+  * *Mitigation*: Dynamically discover POSIX shell binaries (`find_posix_shell()`), normalize paths passed into bash environments with forward slashes (`ROOT.as_posix()`), and mandate explicit `encoding="utf-8"` across all file reading utilities (`read_manifest`, `read_trace`, and prompt adapter tests).
 
 ---
 
@@ -292,23 +298,30 @@ Execution is divided into four incremental, testable phases:
    * **Author Synchronization**: Match `author` mapping or `interface.developerName` against `plugin.json` author name (`Google LLC`).
    * **Canonical Component Paths**: Verify `skills` path resolves to root `skills/` containing all 7 canonical skills (`egm-bootstrap`, `egm-brainstorm`, `egm-draft`, `egm-drift-report`, `egm-resolve`, `egm-review`, `egm-review-loop`), and `agents` path resolves to root `agents/`.
 4. In `tests/unit/test_harnesses.py`, incorporate cross-platform test execution helpers:
-   * Implement `find_posix_shell()` to locate `sh` or `bash` in Git for Windows installations, ensuring `run_read_hook()` can execute `.claude-plugin/hooks/allow_plugin_reads.sh` without Win32 application execution errors (`WinError 193`).
+   * Implement `find_posix_shell()` to locate `sh` or `bash` in Git for Windows installations, ensuring `run_read_hook()` can execute `.claude-plugin/hooks/allow_plugin_reads.sh` without Win32 application execution errors (`WinError 193`). Normalize plugin paths using forward slashes (`ROOT.as_posix()`) to prevent bash subshell backslash escaping issues on Windows.
    * Add `test_jsonl_preserves_unicode_separators` parameterized across Unicode separator codepoints (`\u0085`, `\u2028`, `\u2029`) to verify that JSONL records are delimited solely by literal `\n`.
+   * Enforce explicit UTF-8 decoding (`read_text(encoding="utf-8")`) across adapter inspection tests.
 5. In `tests/integration/test_codex.py`:
    * In `read_trace(thread_id: str)`, specify `encoding="utf-8"` in `paths[0].read_text(encoding="utf-8")` to prevent Windows ANSI/CP1252 decoding errors when ingesting retained execution traces.
 
 #### Step 3: Documentation Alignment
 1. In `docs/harnesses.md`:
-   * `## Install`: Add rows for Hermes Agent (`hermes plugins install <repo>`), OpenClaw (`openclaw plugins install <repo>`), and Delta (`delta skills tap add <repo>`).
-   * `## Manifests`: Add rows mapping `.hermes/plugin.yaml`, `.openclaw/openclaw.plugin.json`, and `.delta/plugin.json` to canonical `skills` (default) and subagent isolation policies.
-   * `## Delegation`: Add rows mapping Hermes Agent to `hermes.spawn`, OpenClaw to `sessions_spawn`, and Delta to Runner delegation tool (`delta.spawn`).
+   * `## Install`: Add rows for Hermes Agent (`hermes plugins install https://github.com/google/elephant-goldfish-model`), OpenClaw (`openclaw plugins install https://github.com/google/elephant-goldfish-model`), and Delta (`delta skills tap add https://github.com/google/elephant-goldfish-model`).
+   * `## Manifests`: Add table entries:
+     * Hermes Agent: Manifest `.hermes/plugin.yaml`, Skills `skills` (default), Subagents `Subagent spawns with isolated context and read-only tools`.
+     * OpenClaw: Manifest `.openclaw/openclaw.plugin.json`, Skills `skills` (default), Subagents `Subagent spawns with fresh session and read-only tools`.
+     * Delta: Manifest `.delta/plugin.json`, Skills `skills` (default), Subagents `Fresh runner subprocess with read-only tools`.
+   * `## Delegation`: Add table entries:
+     * Hermes Agent: Subagent tool `Native task/spawn tool (hermes.spawn)`, Named personas `Yes`, Nesting `Direct dispatch`.
+     * OpenClaw: Subagent tool `Native subagent tool (sessions_spawn)`, Named personas `Yes`, Nesting `Direct dispatch / sub-session`.
+     * Delta: Subagent tool `Runner delegation tool (delta.spawn)`, Named personas `Yes`, Nesting `Subprocess runner`.
    * `### Subagent Isolation Guidelines`: Add subsection mandating zero-context fresh sessions and read-only tool whitelisting (`Read`, `Grep`, `Glob`).
-   * `## Support Status & Contributing Other Harnesses`: Record Hermes Agent, OpenClaw, and Delta as having manifest structures with open live trace verification gaps (#116).
+   * `## Support Status & Contributing Other Harnesses`: Record Hermes Agent, OpenClaw, and Delta as having manifest structures with open live trace verification gaps referencing issue [#116](https://github.com/google/elephant-goldfish-model/issues/116).
 2. In `TESTING.md`:
-   * `## Harness Test Record`: Add rows for Hermes Agent (0.8.2), OpenClaw (1.0.4), and Delta (0.9.0) with Install status `Unverified` and Notes referencing issue [#116](https://github.com/google/elephant-goldfish-model/issues/116).
-   * Reference issue [#116](https://github.com/google/elephant-goldfish-model/issues/116) in tracking gap notes.
+   * `## Harness Test Record`: Add entries for Hermes Agent (0.8.2), OpenClaw (1.0.4), and Delta (0.9.0) with Date `2026-10-23`, Install status `Unverified (<command>)`, Brainstorm/Draft/Review `Pending live trace`, and Notes detailing offline verification status and tracking issue [#116](https://github.com/google/elephant-goldfish-model/issues/116).
+   * Update tracking gap notes to include [#116 (Hermes, OpenClaw, Delta)](https://github.com/google/elephant-goldfish-model/issues/116).
 3. In `docs/designs/README.md`:
-   * Add `[multi_harness_support.md](multi_harness_support.md)` to technical design index table.
+   * Register `multi_harness_support.md` in the design index table with Document column `[multi_harness_support.md](multi_harness_support.md)<br>Manifest schemas, discovery mappings, and subagent delegation for Hermes Agent, OpenClaw, and Delta.`, Author column `[@Seburan](https://github.com/Seburan), [@yathamsriram243-blip](https://github.com/yathamsriram243-blip)`, and Primary Component `[Harness Architecture](../harnesses.md)`.
 
 ### 9.4 Test Plan
 
@@ -323,6 +336,8 @@ Execution is divided into four incremental, testable phases:
 3. **Cross-Document Link Integrity**:
    * `test_relative_markdown_links_resolve_on_disk` parses all Markdown files in the repository.
    * Verifies all relative links and intra-document anchor slugs resolve cleanly to existing files and headers.
+4. **Artifact Directory Override Documentation Invariant**:
+   * `test_artifact_directory_override_is_documented_for_each_harness` verifies that `docs/harnesses.md` documents the exact configuration marker `EGM artifact directory: <path>` for prompt-level override parity with `docs/claude.md` and `docs/codex.md`.
 
 #### Edge Cases & Failure Mode Handling
 1. **Strict JSON Validation (RFC 8259)**:
@@ -337,6 +352,8 @@ Execution is divided into four incremental, testable phases:
    * A manifest pointing `skills` or `agents` to a non-existent or misnamed directory fails path resolution assertions.
 6. **JSONL Unicode Separator Preservation**:
    * Verify that Unicode line breaks and paragraph separators (`\u0085`, `\u2028`, `\u2029`) within trace JSON payload strings do not trigger improper record splitting, ensuring JSONL records are delimited solely by literal LF (`\n`).
+7. **Windows POSIX Shell Resolution Fallback**:
+   * When executing on Windows environments where no POSIX shell (`sh` or `bash`) is installed or discoverable on PATH, `run_read_hook` safely skips via `pytest.skip("POSIX shell not available on Windows")` rather than failing with `WinError 193`.
 
 ---
 
