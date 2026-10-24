@@ -37,7 +37,18 @@ Dispatch the workflow manually from `main` with an existing version tag. Resolve
 the tag to a commit and require that commit to be an ancestor of `main`. Check
 out that commit, run offline tests, and prepare its archives.
 
-The build job has read-only repository permission. A separate draft job receives
+The build job has `contents: read`, `id-token: write`, and `attestations: write`.
+After building, use a commit-pinned `actions/attest` to sign provenance for both
+runtime ZIPs and store it in GitHub. Disable registry storage records; no registry
+or artifact-metadata permission is needed. Attestation failure stops the build.
+Local preparation does not create attestations.
+
+The provenance identifies the workflow dispatched from `main`. Its source
+identity can differ from the selected tag checked out during the job. Release
+notes record the tagged source SHA. Review both identities before publication.
+Attestations establish artifact provenance, not host compatibility or code safety.
+
+A separate draft job receives
 the artifacts, verifies their checksums, rechecks tag identity, and creates a
 draft with contents-write permission. Duplicate release creation fails without
 replacing existing assets. Neither job creates tags or publishes releases.
@@ -50,6 +61,8 @@ replacing existing assets. Neither job creates tags or publishes releases.
 4. Select the reviewed version and commit. Regenerate packaged content and
    validate all included runtime changes before a maintainer creates the tag.
 5. Dispatch the workflow. Inspect both archives, checksums, and source identity.
+   Verify each ZIP with `gh attestation verify FILE --repo google/elephant-goldfish-model`.
+   Require the signing workflow `.github/workflows/release.yml` from `main`.
 6. Complete #60 for each claimed host using these exact artifacts. Record
    installed-file identity, host/model versions, date, and separate installation,
    workflow, and isolation results.
