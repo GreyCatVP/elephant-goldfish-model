@@ -27,7 +27,7 @@ const { values } = parseArgs({ options: { only: { type: 'string' } } });
 const names = ['og', 'hero-light', 'hero-dark', 'full-light', 'full-dark', 'mobile-light', 'mobile-dark'];
 const selected = values.only === undefined ? names : values.only.split(',');
 if (selected.some((name) => !names.includes(name))) {
-  throw new Error(`--only must contain comma-separated names from: ${names.join(', ')}`);
+  throw new Error(`Invalid --only value. Use these names and separate them with commas: ${names.join(', ')}`);
 }
 
 const site = fileURLToPath(new URL('..', import.meta.url));
