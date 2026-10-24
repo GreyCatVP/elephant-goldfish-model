@@ -79,7 +79,7 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 [Harnesses](docs/harnesses.md)). Add a row for each run.
 
 | Harness | Version | Date | Install | Brainstorm | Draft | Review | Notes |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 | Antigravity CLI | 1.4.5 | 2026-10-22 | Pass; validator warnings | Pass (fixture) | Pass (fixture) | Pass (fixture) | Temporary HOME with no hooks, MCP servers, or other plugins. The isolation probe passed on the native child transcript. 16 native reviewers ran. Stages 5 to 9 ran in sequence by timestamp. All required reads occurred. Five stage reports exist. No code was written. The final design differs from the draft in one `Status` line. Not tested: interactive approvals, `egm-bootstrap`, and synthesizer nesting. The bootstrap skill is larger than the load limit. |
 | Claude Code | 2.1.308 | 2026-10-22 | Pass (`--plugin-dir`) | Pass (fixture) | Pass (fixture) | Pass after fix (fixture) | Isolation probe passed. Initial stage-order failure retained; focused nine-reviewer rerun verifies sequential stages and required reads. Process shutdown and parent no-shell fixture limits remain in the full report. |
 | Claude Cowork | Opus 5.5 Medium, connected cloud task | 2026-10-22 | Pass (ZIP) | Completed with direct-dispatch recovery | Completed | Partial: stages 5–7 | Usage limit interrupted stage 8. Final artifacts, stage 9 and actual isolation-child output remain unverified; #105. Earlier complete run is reported separately. |

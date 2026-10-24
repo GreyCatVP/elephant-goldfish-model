@@ -69,7 +69,7 @@ phrase to its own tool:
 | ChatGPT | Native spawn/wait tools when exposed by the current Work session | No | Detect at runtime; direct dispatch fallback |
 | Hermes Agent | Native task/spawn tool (`hermes.spawn`) | Yes | Direct dispatch |
 | OpenClaw | Native subagent tool (`sessions_spawn`) | Yes | Direct dispatch / sub-session |
-| Delta | Runner delegation tool | Yes | Subprocess runner |
+| Delta | Runner delegation tool (`delta.spawn`) | Yes | Subprocess runner |
 
 Where a harness has no named persona, the skill spawns a general-purpose
 subagent and tells it to read `agents/<file>.md` first. If a harness cannot
