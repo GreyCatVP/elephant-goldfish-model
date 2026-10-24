@@ -26,6 +26,14 @@ documentation, licenses, and image assets. Include SVG and PNG files under
 `docs/assets` for README images. Exclude website content, tests, workflows,
 hooks, development marketplace metadata, and unrelated files.
 
+Keep installation guides, host instructions, personas, skills, and review
+standards in the runtime. Exclude repository design documents, `TESTING.md`,
+`CONTRIBUTING.md`, `AI_POLICY.md`, and the PR template. Link to those development
+documents on GitHub from the bundled guides. Reading development documentation
+requires network access; executing the bundled skills does not require it.
+Check relative Markdown links in both generated runtimes. A development-only
+document edit must not require regenerating runtime content.
+
 Reject symlinks, paths outside the source tree, missing required files,
 unbundled manifest references, hooks, and unsupported MCP or app dependencies.
 Refuse an existing output folder or archive. A failed build can leave partial
