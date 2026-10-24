@@ -66,7 +66,8 @@ def install(destination: Path) -> Path:
             },
             "prompt": context + f"Read {persona} before the target and supplied standards. "
             "Return findings to the caller. Do not write reports or delegate. "
-            "Do not retrieve history, memory, or earlier reviewer findings. "
+            "Read prior reports only when explicitly supplied and required by the canonical stage. "
+            "Do not retrieve unsolicited history, memory, or earlier reviewer findings. "
             "Report inaccessible required files as an incomplete review.",
         }
     agents["egm"] = {

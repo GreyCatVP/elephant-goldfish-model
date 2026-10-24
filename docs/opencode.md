@@ -58,7 +58,11 @@ Use foreground tasks. Do not enable background dispatch or reuse a reviewer sess
 The primary agent performs synthesis and writes reports; no nested synthesizer adapter is installed.
 
 Pass absolute paths for the persona, target, standards, and selected sources.
-Do not pass parent history, private reasoning, memory, or previous findings.
+Do not pass parent history, private reasoning, or memory.
+Supply prior report paths only when the canonical stage requires them, such as
+`zoom_out_report.md` for Step 8 (Intermediate Zoom Out).
+Read prior reports only when explicitly supplied and required by the canonical stage.
+Do not retrieve unsolicited history, memory, or earlier reviewer findings.
 Require all specified reads and actual task completion before synthesis.
 Report a missing start, completion, required read, or malformed result as incomplete.
 Stop if native delegation is unavailable. Never simulate Goldfish reviewers in the parent conversation.

@@ -69,6 +69,22 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
     assert "foreground completion" in primary["prompt"]
 
 
+def test_stage_required_reports_preserve_context_boundary(tmp_path: Path) -> None:
+    destination = tmp_path / "candidate"
+    config = json.loads(ADAPTER["install"](destination).read_text())
+    bundle = destination / "bundle"
+    canonical = (bundle / "skills/egm_review/SKILL.md").read_text()
+    assert "include `zoom_out_report.md` path in" in canonical
+    guide = " ".join((bundle / "docs/opencode.md").read_text().split())
+    prompt = config["agent"]["egm-zoom-out"]["prompt"]
+    for instructions in (prompt, guide):
+        assert (
+            "Read prior reports only when explicitly supplied and required by the canonical stage."
+        ) in instructions
+        assert "Do not retrieve unsolicited history, memory, or earlier reviewer findings." in instructions
+    assert "Do not pass parent history, private reasoning, or memory." in guide
+
+
 def test_existing_destination_is_untouched(tmp_path: Path) -> None:
     sentinel = tmp_path / "existing.txt"
     sentinel.write_text("other worker")
