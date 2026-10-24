@@ -71,13 +71,30 @@ the review skills stop instead of running in the same context. Check actual
 tool availability rather than inferring it from the product name. This applies
 to ChatGPT modes that do not expose native fresh-context delegation.
 
+## Artifact Directory
+
+Skills write briefs, drafts, and reports to the working directory, or to the
+harness's artifact directory if it has one. In Claude Code, Claude Cowork,
+Codex, and ChatGPT, you can name another folder. Add this line to your prompt,
+or to an agent instructions file that your harness loads (`CLAUDE.md` or
+`AGENTS.md`, in the project or at user level):
+
+```text
+EGM artifact directory: .dev/docs
+```
+
+A relative path is relative to the working directory. Design docs and other
+project files do not move. Claude Code reads a project `AGENTS.md` only when
+the project has no `CLAUDE.md`. To keep the files out of git, add the folder to
+`.gitignore`.
+
 ## Support Status & Contributing Other Harnesses
 
 **Antigravity**, **Claude Code**, and **Codex** pass automated installation, reviewer isolation, and end-to-end workflow fixtures.
 
 **Claude Cowork** ([#105](https://github.com/google/elephant-goldfish-model/issues/105)) and **ChatGPT Work** ([#106](https://github.com/google/elephant-goldfish-model/issues/106)) have working installation paths with open cloud trace verification gaps.
 
-See the [harness test record](../TESTING.md#harness-test-record) for tested surfaces and limits.
+See the [harness test record](https://github.com/google/elephant-goldfish-model/blob/main/TESTING.md#harness-test-record) for tested surfaces and limits.
 
 We welcome contributors who want to help verify and expand harness support.
 
@@ -93,4 +110,4 @@ support for another harness:
    (`docs/harnesses.md`).
 3. Verify that `/egm-brainstorm`, `/egm-draft`, and `/egm-review` run end to end,
    and attach verification notes or execution transcripts in your Pull Request description
-   (as outlined in the [Pull Request Template](../.github/PULL_REQUEST_TEMPLATE.md)).
+   (as outlined in the [Pull Request Template](https://github.com/google/elephant-goldfish-model/blob/main/.github/PULL_REQUEST_TEMPLATE.md)).

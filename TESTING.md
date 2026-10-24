@@ -53,9 +53,13 @@ With an authenticated Claude Code 2.1.271+ installation, run:
 EGM_CLAUDE_LIVE=1 pytest tests/integration/test_claude.py
 ```
 
-This uses the account's model quota. It loads a copy of the plugin, invokes
-the review skill, and checks that a native reviewer reads only its persona and
-sees no parent or project `CLAUDE.md` context. See [Claude integration](docs/claude.md).
+This uses the account's model quota. It builds the Claude runtime and gives it
+a unique test name. Two probes invoke the review skill with folder-scoped read
+permissions and no approval hook. They check that a native reviewer reads only
+its persona, sees no parent or project `CLAUDE.md` context, and stops without a
+verdict when an explicit deny rule blocks its persona. This is a focused probe,
+not the full review workflow or a marketplace installation test.
+See [Claude integration](docs/claude.md).
 ---
 
 ## Native Codex Integration Tests (Opt-in)
