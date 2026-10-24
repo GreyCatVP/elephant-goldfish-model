@@ -11,7 +11,11 @@ GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.
 
 ![Full page, light scheme](screenshots/full-light.png)
 
-![Mobile, 375px wide](screenshots/mobile.png)
+![Full page in dark mode](screenshots/full-dark.png)
+
+| Mobile in light mode, 375px wide | Mobile in dark mode, 375px wide |
+| --- | --- |
+| ![Mobile light](screenshots/mobile-light.png) | ![Mobile dark](screenshots/mobile-dark.png) |
 
 </details>
 
@@ -45,11 +49,17 @@ Before submitting changes, stop the server or use another terminal in `site/`:
 ```sh
 npm run check
 npm run build    # output: dist/
+npm run capture -- --only full-light,full-dark  # update only the desktop full-page images
 ```
 
-After visual changes, run `npm run capture`. This command requires Chrome.
-If Chrome is not found, set `CHROME_PATH` to its executable path.
-Edit the [social-image template](scripts/og.html), then run `npm run capture`.
+`npm run capture` needs a local Chrome (set `CHROME_PATH` if it is not found).
+The social image comes from `scripts/og.html`; edit that file, not the PNG.
+After a visible change, use `--only` to update the affected screenshots. Omit `--only` to update all images.
+
+Valid names: `og`, `hero-light`, `hero-dark`, `full-light`, `full-dark`, `mobile-light`, and `mobile-dark`.
+Separate multiple names with commas. Both mobile screenshots show the full page, including the chart.
+
+Git ignores additional files in `screenshots/`. Save temporary review images outside the repository.
 
 ## Deploy
 

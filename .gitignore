@@ -6,3 +6,12 @@ venv/
 .pytest_cache/
 eval_results/
 .DS_Store
+
+# Keep only standard screenshots. Save temporary review images outside the repository.
+/site/screenshots/*
+!/site/screenshots/hero-light.png
+!/site/screenshots/hero-dark.png
+!/site/screenshots/full-light.png
+!/site/screenshots/full-dark.png
+!/site/screenshots/mobile-light.png
+!/site/screenshots/mobile-dark.png

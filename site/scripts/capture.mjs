@@ -20,7 +20,15 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { parseArgs } from 'node:util';
 import puppeteer from 'puppeteer-core';
+
+const { values } = parseArgs({ options: { only: { type: 'string' } } });
+const names = ['og', 'hero-light', 'hero-dark', 'full-light', 'full-dark', 'mobile-light', 'mobile-dark'];
+const selected = values.only === undefined ? names : values.only.split(',');
+if (selected.some((name) => !names.includes(name))) {
+  throw new Error(`Invalid --only value. Use these names and separate them with commas: ${names.join(', ')}`);
+}
 
 const site = fileURLToPath(new URL('..', import.meta.url));
 const dist = join(site, 'dist');
@@ -45,11 +53,19 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await puppeteer.launch({ channel: 'chrome', executablePath: process.env.CHROME_PATH, args: ['--no-sandbox'] });
 
 async function capture({ url, out, width, height, scheme = 'light', fullPage = false, scale = 1 }) {
+  if (!selected.includes(out.split('/').at(-1).replace(/\.png$/, ''))) return;
   const page = await browser.newPage();
   await page.setViewport({ width, height, deviceScaleFactor: scale });
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);
   await page.goto(url, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
+  if (fullPage) {
+    await page.evaluate(async () => {
+      const images = [...document.querySelectorAll('img[loading="lazy"]')];
+      for (const image of images) image.loading = 'eager';
+      await Promise.all(images.map((image) => image.decode()));
+    });
+  }
   await page.screenshot({ path: join(site, out), fullPage });
   await page.close();
   console.log(`wrote ${out}`);
@@ -60,7 +76,9 @@ try {
   await capture({ url: `${base}/`, out: 'screenshots/hero-light.png', width: 1200, height: 600 });
   await capture({ url: `${base}/`, out: 'screenshots/hero-dark.png', width: 1200, height: 600, scheme: 'dark' });
   await capture({ url: `${base}/`, out: 'screenshots/full-light.png', width: 1000, height: 800, fullPage: true });
-  await capture({ url: `${base}/`, out: 'screenshots/mobile.png', width: 375, height: 812 });
+  await capture({ url: `${base}/`, out: 'screenshots/full-dark.png', width: 1000, height: 800, scheme: 'dark', fullPage: true });
+  await capture({ url: `${base}/`, out: 'screenshots/mobile-light.png', width: 375, height: 812, fullPage: true });
+  await capture({ url: `${base}/`, out: 'screenshots/mobile-dark.png', width: 375, height: 812, scheme: 'dark', fullPage: true });
 } finally {
   await browser.close();
   server.close();

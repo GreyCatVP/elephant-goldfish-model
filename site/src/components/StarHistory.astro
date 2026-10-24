@@ -1,0 +1,40 @@
+---
+// Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0
+const chart = 'https://api.star-history.com/svg?repos=google/elephant-goldfish-model&type=Date';
+const history = 'https://www.star-history.com/#google/elephant-goldfish-model&Date';
+---
+
+<section class="section" id="star-history" aria-label="GitHub star history">
+  <div class="wrap">
+    <figure>
+      <a href={history} target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset={`${chart}&theme=dark`} />
+          <img
+            src={chart}
+            alt="GitHub star history for google/elephant-goldfish-model"
+            width="800"
+            height="533"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+          />
+        </picture>
+      </a>
+    </figure>
+  </div>
+</section>
+
+<style>
+  figure {
+    margin: 0 auto;
+    max-inline-size: 800px;
+  }
+
+  img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+</style>
