@@ -1,6 +1,4 @@
 ---
-import Button from './Button.astro';
-
 const prompt = 'Install https://github.com/google/elephant-goldfish-model';
 ---
 
@@ -17,11 +15,10 @@ const prompt = 'Install https://github.com/google/elephant-goldfish-model';
       subagents before writing code.
     </p>
     <div class="cta">
-      <Button
-        color="filled"
-        size="md"
-        class="hero-copy-btn"
-        label="Copy install prompt"
+      <button
+        type="button"
+        class="ripple focus-ring-outer btn btn-filled btn-md"
+        aria-label="Copy install prompt"
         data-copy={prompt}
       >
         <svg class="icon-copy" viewBox="0 -960 960 960" aria-hidden="true">
@@ -36,7 +33,7 @@ const prompt = 'Install https://github.com/google/elephant-goldfish-model';
           <span class="label-default">Copy install prompt</span>
           <span class="label-copied" aria-hidden="true">Copied</span>
         </span>
-      </Button>
+      </button>
     </div>
   </div>
 </section>

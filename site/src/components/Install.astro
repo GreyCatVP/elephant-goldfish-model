@@ -1,6 +1,4 @@
 ---
-import Button from './Button.astro';
-
 const repo = 'https://github.com/google/elephant-goldfish-model';
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 
@@ -107,7 +105,7 @@ const cliPaths = [
       </div>
     </div>
 
-    <Button color="outlined" size="md" href={guide} target="_blank">Read the full setup guide</Button>
+    <a class="ripple focus-ring-outer btn btn-outlined btn-md" href={guide} target="_blank" rel="noopener">Read the full setup guide</a>
   </div>
 </section>
 
@@ -136,6 +134,10 @@ const cliPaths = [
 </script>
 
 <style>
+  a.btn {
+    text-decoration: none;
+  }
+
   .install {
     padding-block: var(--section-y-tight) var(--section-y);
   }

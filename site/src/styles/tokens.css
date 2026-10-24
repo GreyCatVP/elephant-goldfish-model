@@ -37,10 +37,8 @@
      Keep in sync with public/favicon.svg. */
   --egm-color-elephant: light-dark(#1b6ef3, #7cacf8);
   --egm-color-on-elephant: light-dark(#ffffff, #041e49);
-  --egm-color-elephant-container: light-dark(#d3e3fd, #041e49);
   --egm-color-goldfish: light-dark(#e86e00, #ff8d41);
   --egm-color-on-goldfish: light-dark(#2c1600, #2c1600);
-  --egm-color-goldfish-container: light-dark(#ffe8d6, #582400);
 
   /* Secondary: focus ring and links */
   --md-sys-color-secondary: light-dark(#0b57d0, #a8c7fa);
