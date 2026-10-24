@@ -1,7 +1,6 @@
 # egm.dev
 
-Landing site for the Elephant-Goldfish Model, served at https://egm.dev from
-GitHub Pages.
+GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.dev).
 
 | Light | Dark |
 | --- | --- |
@@ -16,31 +15,36 @@ GitHub Pages.
 
 </details>
 
-## Stack
+## Tools and fonts
 
-- [Astro](https://astro.build) static output, one page, no client framework.
-- [gBreeze](https://www.npmjs.com/package/@material/web) (`@material/web`
-  `labs/gb`) in its native-element form: the page emits the package's own
-  class names (`btn`, `icon-btn`, `list-item`, `badge`, `divider`) and imports the
-  package stylesheets. No custom elements, no Lit runtime.
-- Google Sans Flex and Google Sans Code, self-hosted under
-  `src/assets/fonts/` (OFL).
+- [Astro](https://astro.build) for the static site.
+- [Material Web](https://github.com/material-components/material-web) for styles.
+- [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
+  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted in
+  [src/assets/fonts/](src/assets/fonts/) under the
+  [SIL Open Font License](https://openfontlicense.org/).
 
 ## Rules
 
-- No analytics, no cookies, no third-party scripts, and no requests to Google
-  hosts at runtime. The open-source release depends on it.
-- Theme only through gBreeze tokens (`src/styles/tokens.css`) and the
-  components' documented custom properties. Do not restyle component boxes.
-- Keep skill names and commands identical to the repository README.
+- Do not add analytics, cookies, or third-party scripts. Self-host fonts.
+- Use only Material Web [design tokens](src/styles/tokens.css) and documented
+  component properties to change the theme. Do not override component box styles.
+- Match skill names and commands to the [repository README](../README.md).
 
 ## Develop
 
+Use Node.js 22.12 or newer. Run these commands from `site/`:
+
 ```sh
-npm install
+npm ci
 npm run dev      # http://localhost:4321
-npm run check    # astro check
-npm run build    # writes dist/
+```
+
+Before submitting changes, stop the server or use another terminal in `site/`:
+
+```sh
+npm run check
+npm run build    # output: dist/
 npm run capture  # rebuilds, then regenerates public/og.png and screenshots/*.png
 ```
 
@@ -50,6 +54,8 @@ Run `npm run capture` after any visible change so the committed images stay in s
 
 ## Deploy
 
-`.github/workflows/deploy-site.yml` builds and publishes `dist/` on every push
-to `main` that touches `site/`, and on manual dispatch. `public/CNAME` pins the
-custom domain.
+The [Deploy site workflow](../.github/workflows/deploy-site.yml) publishes the site
+when changes to `site/` reach `main`.
+
+To deploy manually, open [Deploy site](https://github.com/google/elephant-goldfish-model/actions/workflows/deploy-site.yml),
+select **Run workflow**, choose `main`, and select **Run workflow** again.
