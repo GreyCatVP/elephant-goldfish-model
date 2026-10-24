@@ -20,7 +20,15 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { parseArgs } from 'node:util';
 import puppeteer from 'puppeteer-core';
+
+const { values } = parseArgs({ options: { only: { type: 'string' } } });
+const names = ['og', 'hero-light', 'hero-dark', 'full-light', 'full-dark', 'mobile'];
+const selected = values.only === undefined ? names : values.only.split(',');
+if (selected.some((name) => !names.includes(name))) {
+  throw new Error(`--only must contain comma-separated names from: ${names.join(', ')}`);
+}
 
 const site = fileURLToPath(new URL('..', import.meta.url));
 const dist = join(site, 'dist');
@@ -45,6 +53,7 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await puppeteer.launch({ channel: 'chrome', executablePath: process.env.CHROME_PATH, args: ['--no-sandbox'] });
 
 async function capture({ url, out, width, height, scheme = 'light', fullPage = false, scale = 1 }) {
+  if (!selected.includes(out.split('/').at(-1).replace(/\.png$/, ''))) return;
   const page = await browser.newPage();
   await page.setViewport({ width, height, deviceScaleFactor: scale });
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: scheme }]);

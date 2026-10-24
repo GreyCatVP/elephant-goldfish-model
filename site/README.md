@@ -42,11 +42,14 @@ npm run dev      # http://localhost:4321
 npm run check    # astro check
 npm run build    # writes dist/
 npm run capture  # rebuilds, then regenerates public/og.png and screenshots/*.png
+npm run capture -- --only full-light,full-dark  # refresh only full-page images
 ```
 
 `npm run capture` needs a local Chrome (set `CHROME_PATH` if it is not found).
 The social image comes from `scripts/og.html`; edit that file, not the PNG.
-Run `npm run capture` after any visible change so the committed images stay in sync.
+After a visible change, capture the affected views with `--only`. Omit it to refresh all images.
+Valid names: `og`, `hero-light`, `hero-dark`, `full-light`, `full-dark`, and `mobile`.
+Git ignores extra files in `screenshots/`. Keep temporary review images outside the repository.
 
 ## Deploy
 
