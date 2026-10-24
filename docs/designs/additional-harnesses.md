@@ -81,17 +81,37 @@ separately. Context isolation is not filesystem or process isolation.
 | Host | Proposed mechanism | Required evidence |
 | --- | --- | --- |
 | Cursor local Agent | Native plugin package and custom subagents using the host's read-only setting. Reuse shared persona files through thin adapter prompts. | Verify installed resource paths, enforcement of read-only permissions, host completion records, and what context the child receives. |
-| OpenCode CLI | Native skill discovery plus Markdown subagent definitions and restrictive tool permissions. Install the complete EGM tree before exposing entry skills. | Select and pin V1 or V2 before implementation. Verify its delegation API, permission schema, isolated child sessions, and package-relative reads. |
+| OpenCode CLI | OpenCode 1.18.29 V1 configuration with native commands, skill aliases, and restrictive JSON agent definitions. Install the complete EGM tree before exposing entry skills. | Verify `task` dispatch, `permission` enforcement, isolated child sessions, and package-relative reads. |
 | GitHub Copilot CLI | Native plugin installation and custom agent profiles with an explicit tool allowlist. Leave repository-instruction inclusion disabled for reviewers. | Verify the installed package layout, child context, shared persona reads, tool denial, and reliable result collection. |
 
-The native plugin manifest and path mapping for each host must be confirmed
-against the chosen host version before implementation. Do not claim that
-Claude-compatible syntax guarantees equivalent behavior.
+Confirm native plugin manifests and paths against the selected host version.
+Do not assume Claude-compatible syntax guarantees equivalent behavior.
 
-For OpenCode, the V1 documentation uses task/permission terminology while V2
-documents subagent/permissions. This proposal does not select a version on
-popularity alone. Record the chosen stable version and its exact mapping in this
-document before review of that host's implementation.
+The Cursor candidate targets CLI `2026.10.01-e373342` for offline discovery.
+Its `.cursor-plugin/plugin.json` selects `skills/`, `.cursor-plugin/agents/`,
+and `.cursor-plugin/rules/`. Each reviewer declares `readonly: true` and
+`permissionMode: readonly`. The pinned CLI loader requires the latter to
+register read-only permissions. Offline discovery found seven skills, seven
+reviewers, and one active routing rule. Native enforcement remains unverified.
+
+The OpenCode implementation targets version 1.18.29 and the V1 interface.
+It generates a separate `opencode.json` with `agent`, `command`, and
+`skills.paths` entries. Reviewers use `mode: subagent` and `permission` rules
+that permit local `read`, `glob`, and `grep` operations. MCP resource reads
+must be denied explicitly because V1 maps those tools to `read` permissions.
+The primary agent uses
+`task` with a registered `subagent_type` and omits `task_id` for fresh reviews.
+The native CLI accepted this configuration and discovered the seven installed
+skills offline. Runtime enforcement and context isolation remain unverified.
+Do not combine this mapping with V2 `subagent` or `permissions` interfaces.
+
+The Copilot CLI candidate targets version 1.0.82 and the root Agent Plugins 1.0
+`plugin.json`. Profiles live in `com.github.copilot/agents/*.agent.md`.
+Native IDs are `egm:egm` for the entry agent and `egm:<persona-name>` for reviewers.
+Skills remain in `skills/*/SKILL.md`. The native session inventories found all
+eight profiles and seven enabled skills without a model request. Reviewers use
+`tools: [read, search]`, `include-custom-instructions: false`, and
+`user-invocable: false`. Live enforcement and isolation remain unverified.
 
 Retain the current artifact-directory contract in the host guides. Report where
 files were written. Do not introduce a new default output directory here.
@@ -184,7 +204,7 @@ a release requires regenerated packages and validation of the exact candidate.
 
 - Maintainers must approve or revise the three inquiries.
 - Confirm maintainers can support the validation and ongoing host-version testing.
-- Select the supported OpenCode version and finalize all host manifest mappings.
+- Complete review of the selected OpenCode V1 mapping and the other host mappings.
 - The full EGM review pipeline and live host tests have not been run for this proposal.
   This document is not implementation-ready until those decisions and review findings
   are resolved.
