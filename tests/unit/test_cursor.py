@@ -12,17 +12,10 @@ import shutil
 import subprocess
 
 import pytest
-import yaml
+
+from .test_harnesses import REVIEWERS, frontmatter
 
 ROOT = Path(__file__).resolve().parents[2]
-REVIEWERS = {
-    "codebase_details", "comprehension", "design_critic",
-    "implementation_readiness", "structural", "style", "zoom_out",
-}
-
-
-def frontmatter(path: Path) -> dict:
-    return yaml.safe_load(path.read_text(encoding="utf-8").split("---", 2)[1])
 
 
 @pytest.fixture
@@ -57,7 +50,7 @@ def test_manifest_selects_native_adapters(installed: Path) -> None:
     for component in ("skills", "agents", "rules"):
         assert (installed / manifest[component]).is_dir()
     adapters = installed / manifest["agents"]
-    assert {p.stem for p in adapters.glob("*.md")} == REVIEWERS
+    assert {p.stem for p in adapters.glob("*.md")} == set(REVIEWERS)
 
 
 @pytest.mark.parametrize("name", sorted(REVIEWERS))
