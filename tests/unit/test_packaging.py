@@ -74,6 +74,21 @@ def test_runtime_bundle_is_complete_and_reproducible(
       assert bundle.read(info) == (first / info.filename).read_bytes()
 
 
+@pytest.mark.parametrize("target", ["claude", "openai"])
+def test_bundles_readme_images(source: Path, tmp_path: Path, target: str) -> None:
+  image_dir = source / "docs/assets"
+  image_dir.mkdir(exist_ok=True)
+  image = image_dir / "readme-header.svg"
+  image.write_text('<svg xmlns="http://www.w3.org/2000/svg"/>')
+  (image_dir / "private.txt").write_text("must not ship")
+  readme = source / "README.md"
+  readme.write_text(readme.read_text() + '\n![Header](docs/assets/readme-header.svg)\n')
+  _, archive = build(source, target, tmp_path / "output")
+  with zipfile.ZipFile(archive) as bundle:
+    assert bundle.read("docs/assets/readme-header.svg") == image.read_bytes()
+    assert "docs/assets/private.txt" not in bundle.namelist()
+
+
 @pytest.mark.parametrize("directory", [False, True])
 def test_rejects_symlinked_runtime_paths(
     source: Path, tmp_path: Path, directory: bool,
