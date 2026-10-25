@@ -82,11 +82,6 @@ const skills = [
                 </span>
                 <span class="list-item-supporting-text">{skill.body}</span>
               </span>
-              <span class="list-item-trailing">
-                <svg viewBox="0 -960 960 960" aria-hidden="true">
-                  <path d="m216-160-56-56 464-464H360v-80h400v400h-80v-264L216-160Z" />
-                </svg>
-              </span>
             </a>
           </li>
         ))
@@ -105,12 +100,11 @@ const skills = [
     text-decoration: none;
     --container-shape: var(--md-sys-shape-corner-md);
     --label-text: var(--md-sys-typescale-title-lg);
-    --top-space: 22px;
-    --bottom-space: 24px;
+    --top-space: 14px;
+    --bottom-space: 16px;
     --leading-space: 8px;
     --trailing-space: 8px;
-    --between-space: 24px;
-    --trailing-icon-size: 22px;
+    --between-space: 16px;
     align-items: center;
     /* Keep the first and last rows' hover corners consistent with the middle rows. */
     border-radius: var(--container-shape);
@@ -129,20 +123,16 @@ const skills = [
   }
 
   .skill-heading {
-    display: flex;
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
     align-items: baseline;
-    flex-wrap: wrap;
     gap: 4px 12px;
-  }
-
-  .skills .list-item-trailing {
-    align-self: center;
   }
 
   .skills .list-item-supporting-text {
     max-inline-size: 56ch;
     margin-block-start: 2px;
-    text-wrap: balance;
+    text-wrap: pretty;
   }
 
   .cmd {
@@ -151,11 +141,14 @@ const skills = [
     color: var(--md-sys-color-on-surface-variant);
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 560px) {
+    .skill-heading {
+      grid-template-columns: 1fr;
+      row-gap: 0;
+    }
+
     .skills .list-item {
-      --between-space: 16px;
-      --top-space: 18px;
-      --bottom-space: 20px;
+      align-items: flex-start;
     }
   }
 </style>
