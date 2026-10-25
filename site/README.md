@@ -26,7 +26,8 @@ GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.
 
 ## Rules
 
-- Do not add analytics, cookies, or third-party scripts. Self-host fonts.
+- Do not add analytics, cookies, third-party scripts, or runtime requests to
+  Google hosts. Self-host fonts.
 - Use only Material Web [design tokens](src/styles/tokens.css) and documented
   component properties to change the theme. Do not override component box styles.
 - Match skill names and commands to the [repository README](../README.md).
