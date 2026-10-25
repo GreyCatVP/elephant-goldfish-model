@@ -28,7 +28,6 @@ on:
     branches: [main]
     paths:
       - 'site/**'
-      - 'skills/*/assets/*.svg'
       - '.github/workflows/deploy-site.yml'
   workflow_dispatch:
 

@@ -5,7 +5,8 @@ Author: @n3wth. Date: 2026-10-25.
 
 ## Purpose and scope
 
-Use the same seven skill marks in plugin pickers, the README, and egm.dev.
+Use the same seven skill marks in plugin pickers and the README, with egm.dev
+integration in a separate follow-up PR.
 The approved artwork uses familiar silhouettes with two color facets. This
 change replaces the existing skill artwork; it does not change skill behavior,
 reviewer permissions, installation, or the Elephant-Goldfish logo.
@@ -38,19 +39,14 @@ artwork; do not normalize individual bounding boxes or stroke widths.
   reviewer color keywords and the plugin-level logo stay unchanged.
 - The root README references the canonical paths directly. These relative
   paths also resolve inside generated runtime packages.
-- The site imports the canonical SVGs at build time. A shared `SkillIcon`
-  component renders a 28 px glyph in a 40 px neutral circle using the site's
-  surface tokens. Circles are presentation, not baked into the asset.
-  Keep adjacent skill names and empty image alt text to avoid duplicate
-  announcements. Brainstorm, Draft, and Review form the three-step sequence;
-  a sentence below it explains the handoff to implementation after approval.
-- The site workflow watches canonical SVG changes as well as `site/` changes.
+- The website follow-up will import these SVGs at build time, keep circles
+  in the presentation layer, and use adjacent labels for accessible names.
+  Website layout, copy, deployment triggers, and captures belong to that PR.
 
 ## Verification and rollout
 
-Check metadata colors and SVG structure, runtime byte equality, README image
-inclusion, Astro type checking and production build. Inspect desktop and
-mobile layouts in both color schemes and refresh committed site captures.
+Check metadata colors and SVG structure, runtime byte equality, and README
+image inclusion. Website integration receives its own build and visual checks.
 All seven marks must remain legible beside their labels.
 
 This proposal builds on runtime-packaging PR #136. Its draft status does not
