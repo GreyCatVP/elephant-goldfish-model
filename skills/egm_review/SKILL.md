@@ -326,8 +326,9 @@ plain chat):
 
 1.  **Delegate to Synthesizer Subagent**: Spawn `egm-synthesizer` (or the
     `egm-comprehension` subagent at `agents/comprehension.md`) on `FeatureRange`
-    & `DetailedRange` applying
-    `resources/document_standards/re-implementation-standard.md`.
+    & `DetailedRange` with no document standard. The test is self-containment,
+    not detail. Do not apply `re-implementation-standard.md`: it asks for
+    code-level detail, which the Zoom Out standard forbids in `FeatureRange`.
 2.  **Delivery**: Write findings to `comprehension_report.md` using your
     file-writing tool.
 3.  **Notify User (No Chat Dumps)**: Notify user that findings are written to
