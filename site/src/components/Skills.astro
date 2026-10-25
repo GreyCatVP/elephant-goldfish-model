@@ -1,4 +1,6 @@
 ---
+import SkillIcon from './SkillIcon.astro';
+
 const repo = 'https://github.com/google/elephant-goldfish-model';
 
 // User-facing slash-command entry points from the repository Skills Catalog.
@@ -7,33 +9,52 @@ const skills = [
     name: 'Brainstorm',
     command: '/egm-brainstorm',
     dir: 'egm_brainstorm',
-    body: 'Ideate before any document exists. Clarify the problem and stress-test the raw concept into a structured brief.',
+    icon: 'brainstorm',
+    body: 'Test an idea and write a concept brief.',
   },
   {
     name: 'Draft',
     command: '/egm-draft',
     dir: 'egm_draft',
-    body: 'Compile a markdown design specification section by section, with the Elephant holding the full context.',
+    icon: 'draft',
+    body: 'Turn a brief or existing notes into a design document.',
   },
   {
     name: 'Review',
     command: '/egm-review',
     dir: 'egm_review',
-    body: 'Run the multi-stage Goldfish verification pipeline: zoom out, comprehension, critic, readiness.',
+    icon: 'review',
+    body: 'Review a design with fresh agents across five stages.',
   },
   {
-    name: 'Bootstrap',
-    command: '/egm-bootstrap',
-    dir: 'egm_bootstrap',
-    body: 'Generate bottom-up documentation for an existing codebase and keep it current in sentinel blocks.',
+    name: 'Resolve',
+    command: '/egm-resolve',
+    dir: 'egm_resolve',
+    icon: 'resolve',
+    body: 'Work through review findings and agree on changes.',
   },
   {
     name: 'Drift Report',
     command: '/egm-drift-report',
     dir: 'egm_drift_report',
-    body: 'Scan the syntax tree to flag where live code diverges from checked-in specs.',
+    icon: 'drift_report',
+    body: 'Compare checked-in documents with the current source code.',
   },
-];
+  {
+    name: 'Bootstrap',
+    command: '/egm-bootstrap',
+    dir: 'egm_bootstrap',
+    icon: 'bootstrap',
+    body: 'Create or update documentation for an existing codebase.',
+  },
+  {
+    name: 'Review loop',
+    command: '/egm-review-loop',
+    dir: 'egm_review_loop',
+    icon: 'review_loop',
+    body: 'Run a configured group of reviewers for a specific review task.',
+  },
+] as const;
 ---
 
 <section class="section skills" id="skills">
@@ -52,10 +73,13 @@ const skills = [
               rel="noopener"
             >
               <span class="list-item-leading">
-                <code class="cmd">{skill.command}</code>
+                <SkillIcon skill={skill.icon} />
               </span>
               <span class="list-item-content">
-                {skill.name}
+                <span class="skill-heading">
+                  <span>{skill.name}</span>
+                  <span class="cmd">{skill.command}</span>
+                </span>
                 <span class="list-item-supporting-text">{skill.body}</span>
               </span>
               <span class="list-item-trailing">
@@ -72,9 +96,7 @@ const skills = [
 </section>
 
 <style>
-  /* An index, not a stack of cards: hairline rows, the command in its own column so the
-     five commands read as one aligned list, name and description beside it. List item
-     theming goes through the component's documented custom properties. */
+  /* Each row groups the title, command, and description beside its skill icon. */
   .skills .list {
     border-radius: 0;
     border-block-start: 1px solid var(--md-sys-color-outline-variant);
@@ -94,7 +116,7 @@ const skills = [
     --trailing-space: 8px;
     --between-space: 24px;
     --trailing-icon-size: 22px;
-    align-items: baseline;
+    align-items: center;
     /* The package rounds a list's first and last rows by inheriting the list's own corners.
        With the straight hairline above (list radius 0) that left the end rows half-square on
        hover; every row's state layer now follows its own shape token on all four corners. */
@@ -102,9 +124,22 @@ const skills = [
   }
 
   .skills .list-item-leading {
+    display: flex;
+    align-items: center;
     flex: none;
-    inline-size: 15rem;
+    inline-size: 40px;
     min-height: 0;
+  }
+
+  .skills .list-item-content {
+    min-inline-size: 0;
+  }
+
+  .skill-heading {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 12px;
   }
 
   .skills .list-item-trailing {
@@ -118,26 +153,16 @@ const skills = [
   }
 
   .cmd {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
     color: var(--md-sys-color-on-surface-variant);
   }
 
   @media (max-width: 760px) {
     .skills .list-item {
-      flex-wrap: wrap;
       --between-space: 16px;
       --top-space: 18px;
       --bottom-space: 20px;
-    }
-
-    .skills .list-item-leading {
-      inline-size: 100%;
-      line-height: 1.25rem;
-      margin-block-end: -6px;
-    }
-
-    .skills .list-item-content {
-      flex-basis: 0;
     }
   }
 </style>

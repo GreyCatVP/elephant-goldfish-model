@@ -3,4 +3,4 @@ interface:
   short_description: "Write a design document section by section"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
-  brand_color: "#007BFF"
+  brand_color: "#1B6EF3"

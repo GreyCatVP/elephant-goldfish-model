@@ -5,6 +5,7 @@
 
 import json
 from pathlib import Path
+import re
 import runpy
 import shutil
 from xml.etree import ElementTree
@@ -69,6 +70,8 @@ def test_runtime_bundle_is_complete_and_reproducible(
     assert "docs/codex.md" in names
     assert "docs/claude.md" in names
     assert "assets/icon.svg" in names
+    for image in re.findall(r'<img\b[^>]*\bsrc="([^"]+)"', bundle.read("README.md").decode()):
+      assert image in names, f"Unbundled README image: {image}"
     assert not names.intersection({"CONTRIBUTING.md", "AI_POLICY.md", "TESTING.md",
                                    ".github/PULL_REQUEST_TEMPLATE.md"})
     assert not any(p.startswith("docs/designs/") for p in names)
@@ -93,6 +96,31 @@ def test_runtime_bundle_is_complete_and_reproducible(
       "test_relative_markdown_links_resolve_on_disk"
   ]
   check_links(first)
+
+
+@pytest.mark.parametrize("skill,base,facet", [
+    ("bootstrap", "#1b6ef3", "#7cacf8"),
+    ("brainstorm", "#1b6ef3", "#7cacf8"),
+    ("draft", "#1b6ef3", "#7cacf8"),
+    ("resolve", "#1b6ef3", "#7cacf8"),
+    ("drift_report", "#e86e00", "#ff8d41"),
+    ("review", "#e86e00", "#ff8d41"),
+    ("review_loop", "#e86e00", "#ff8d41"),
+])
+def test_skill_icon_and_host_palette_match(skill: str, base: str, facet: str) -> None:
+  root = ROOT / "skills" / f"egm_{skill}"
+  metadata = yaml.safe_load((root / "agents/openai.yaml").read_text())["interface"]
+  assert metadata["brand_color"].lower() == base
+  for field in ("icon_small", "icon_large"):
+    svg = ElementTree.parse(root / metadata[field]).getroot()
+    assert svg.get("viewBox") == "0 0 24 24"
+    assert svg.findtext("{http://www.w3.org/2000/svg}title")
+    colors = {
+        value.lower() for element in svg.iter()
+        for key, value in element.attrib.items()
+        if key in ("fill", "stroke") and value != "none"
+    }
+    assert colors == {base, facet}
 
 
 @pytest.mark.parametrize("target", ["claude", "openai"])
