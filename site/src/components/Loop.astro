@@ -5,21 +5,18 @@ const steps = [
   {
     name: 'Brainstorm',
     icon: 'brainstorm',
-    role: 'Elephant',
     command: '/egm-brainstorm',
     body: 'Clarify a rough idea through open-ended questioning and stress-test the hypothesis into a concept brief.',
   },
   {
     name: 'Draft',
     icon: 'draft',
-    role: 'Elephant',
     command: '/egm-draft',
     body: 'Turn the brief into a living design doc under docs/designs/, section by section.',
   },
   {
     name: 'Review',
     icon: 'review',
-    role: 'Goldfish',
     command: '/egm-review',
     body: 'Fresh zero-context Goldfish subagents check completeness, clarity, self-containment, and implementation readiness.',
   },
@@ -36,10 +33,7 @@ const steps = [
         steps.map((step) => (
           <li class="step">
             <span class="marker"><SkillIcon skill={step.icon} /></span>
-            <div class="title-row">
-              <h3 class="title">{step.name}</h3>
-              <span class="role">{step.role}</span>
-            </div>
+            <h3 class="title">{step.name}</h3>
             <span class="cmd">{step.command}</span>
             <p class="muted">{step.body}</p>
           </li>
@@ -113,18 +107,6 @@ const steps = [
 
   .cmd {
     font-size: 0.875rem;
-    color: var(--md-sys-color-on-surface-variant);
-  }
-
-  /* Role sits beside the heading, not inside it, so screen readers announce the heading as just the step name. */
-  .title-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-
-  .role {
-    font: var(--md-sys-typescale-label-lg);
     color: var(--md-sys-color-on-surface-variant);
   }
 
