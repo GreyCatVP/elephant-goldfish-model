@@ -16,11 +16,11 @@
   },
   "dependencies": {
     "@material/web": "2.5.0",
-    "astro": "^7.3.8"
+    "astro": "^7.4.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "puppeteer-core": "25.13.0",
+    "puppeteer-core": "25.14.0",
     "typescript": "^6.0.3"
   }
 }
