@@ -1,6 +1,7 @@
 # egm.dev
 
-GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.dev).
+Landing site for the Elephant-Goldfish Model, served at https://egm.dev from
+GitHub Pages.
 
 | Light | Dark |
 | --- | --- |
@@ -19,36 +20,32 @@ GitHub Pages hosts the Elephant-Goldfish Model website at [egm.dev](https://egm.
 
 </details>
 
-## Tools and fonts
+## Stack
 
-- [Astro](https://astro.build) for the static site.
-- [Material Web](https://github.com/material-components/material-web) for styles.
-- [Google Sans Flex](https://fonts.google.com/specimen/Google+Sans+Flex) and
-  [Google Sans Code](https://fonts.google.com/specimen/Google+Sans+Code), self-hosted in
-  [src/assets/fonts/](src/assets/fonts/) under the
-  [SIL Open Font License](https://openfontlicense.org/).
+- [Astro](https://astro.build) static output, one page, no client framework.
+- [gBreeze](https://www.npmjs.com/package/@material/web) (`@material/web`
+  `labs/gb`) in its native-element form: the page emits the package's own
+  class names (`btn`, `icon-btn`, `list-item`, `badge`, `divider`) and imports the
+  package stylesheets. No custom elements, no Lit runtime.
+- Google Sans Flex and Google Sans Code, self-hosted under
+  `src/assets/fonts/` (OFL).
 
 ## Rules
 
-- Do not add analytics, cookies, or third-party scripts. Self-host fonts.
-- Use only Material Web [design tokens](src/styles/tokens.css) and documented
-  component properties to change the theme. Do not override component box styles.
-- Match skill names and commands to the [repository README](../README.md).
+- No analytics, no cookies, no third-party scripts, and no requests to Google
+  hosts at runtime. The open-source release depends on it.
+- Theme only through gBreeze tokens (`src/styles/tokens.css`) and the
+  components' documented custom properties. Do not restyle component boxes.
+- Keep skill names and commands identical to the repository README.
 
 ## Develop
 
-Use Node.js 22.12 or newer. Run these commands from `site/`:
-
 ```sh
-npm ci
+npm install
 npm run dev      # http://localhost:4321
-```
-
-Before submitting changes, stop the server or use another terminal in `site/`:
-
-```sh
-npm run check
-npm run build    # output: dist/
+npm run check    # astro check
+npm run build    # writes dist/
+npm run capture  # rebuilds, then regenerates public/og.png and screenshots/*.png
 npm run capture -- --only full-light,full-dark  # update only the desktop full-page images
 ```
 
@@ -63,8 +60,6 @@ Git ignores additional files in `screenshots/`. Save temporary review images out
 
 ## Deploy
 
-The [Deploy site workflow](../.github/workflows/deploy-site.yml) publishes the site
-when changes to `site/` reach `main`.
-
-To deploy manually, open [Deploy site](https://github.com/google/elephant-goldfish-model/actions/workflows/deploy-site.yml),
-select **Run workflow**, choose `main`, and select **Run workflow** again.
+`.github/workflows/deploy-site.yml` builds and publishes `dist/` on every push
+to `main` that touches `site/`, and on manual dispatch. `public/CNAME` pins the
+custom domain.

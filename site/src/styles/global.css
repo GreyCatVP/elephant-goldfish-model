@@ -1,6 +1,6 @@
 /*
  * Page-level styles. Layout, typography helpers, and plain links only.
- * Material Web component boxes (.btn, .card, .list-item, ...) are never restyled
+ * gBreeze component boxes (.btn, .card, .list-item, ...) are never restyled
  * here; per-instance theming goes through the components' documented
  * custom properties inside each section component.
  */
@@ -41,7 +41,7 @@ p {
   margin: 0;
 }
 
-/* Plain prose links only. Material Web anchors (.btn, .icon-btn, .list-item) keep the package
+/* Plain prose links only. gBreeze anchors (.btn, .icon-btn, .list-item) keep the package
    colors and focus ring; an unlayered rule here would beat their @layer styles. */
 a:not(.btn, .icon-btn, .list-item) {
   color: inherit;
@@ -75,7 +75,7 @@ svg {
   display: block;
 }
 
-/* Inline SVG icons inside Material Web buttons follow the component's icon tokens. */
+/* Inline SVG icons inside gBreeze buttons follow the component's icon tokens. */
 .btn > svg,
 .icon-btn > svg {
   inline-size: var(--icon-size);
@@ -95,9 +95,10 @@ svg {
 
 /* Layout */
 :root {
-  /* Section spacing, with a tighter option for the install section. */
+  /* Section rhythm: one scale, three steps. Tight for asides, loose before a change of register. */
   --section-y-tight: clamp(48px, 6vw, 80px);
   --section-y: clamp(72px, 9vw, 120px);
+  --section-y-loose: clamp(96px, 12vw, 160px);
 }
 
 .wrap {
@@ -113,6 +114,10 @@ svg {
 
 .section {
   padding-block: var(--section-y);
+}
+
+.section-tight {
+  padding-block: var(--section-y-tight);
 }
 
 .section-head {

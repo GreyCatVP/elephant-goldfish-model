@@ -44,7 +44,7 @@ export default defineConfig({
   vite: {
     build: {
       // Keep light-dark(), @layer, relative color syntax and @property untouched.
-      // The Material Web stylesheets rely on them and scoped color-scheme flips need
+      // The gBreeze stylesheets rely on them and scoped color-scheme flips need
       // light-dark() to survive to the browser.
       cssTarget: 'esnext',
     },
