@@ -27,3 +27,15 @@ scenarios:
           - type: "required_pattern"
             pattern: "(Review|Goldfish|findings|persona|comprehension|critic)"
             message: "Review loop orchestrator must acknowledge review personas and structured findings compilation."
+
+  - scenario_id: "convergence_not_zero_findings"
+    description: "Verifies the loop stops on consecutive clean rounds, not on zero findings, and does not re-open settled findings."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_review_loop/SKILL.md"
+    turns:
+      - user_input: "Round 3 of the review loop on docs/design.md returned two Nits and one Major that was contested in round 1. Round 2 was clean. What happens next?"
+        assertions:
+          - type: "required_pattern"
+            pattern: "(?i)(converged|two consecutive clean|settled)"
+            message: "The loop must treat a re-raised settled finding and Nits as non-blocking and report convergence."
