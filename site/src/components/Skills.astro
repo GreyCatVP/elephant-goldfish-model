@@ -76,11 +76,9 @@ const skills = [
                 <SkillIcon skill={skill.icon} />
               </span>
               <span class="list-item-content">
-                <span class="skill-heading">
-                  <span>{skill.name}</span>
-                  <span class="cmd">{skill.command}</span>
-                </span>
+                <span>{skill.name}</span>
                 <span class="list-item-supporting-text">{skill.body}</span>
+                <span class="cmd">{skill.command}</span>
               </span>
             </a>
           </li>
@@ -91,8 +89,11 @@ const skills = [
 </section>
 
 <style>
-  /* Each row groups the title, command, and description beside its skill icon. */
+  /* Keep each skill's purpose and command together in a borderless catalog. */
   .skills .list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 32px;
     border-radius: 0;
   }
 
@@ -105,7 +106,8 @@ const skills = [
     --leading-space: 8px;
     --trailing-space: 8px;
     --between-space: 16px;
-    align-items: center;
+    align-items: flex-start;
+    block-size: 100%;
     /* Keep the first and last rows' hover corners consistent with the middle rows. */
     border-radius: var(--container-shape);
   }
@@ -122,33 +124,23 @@ const skills = [
     min-inline-size: 0;
   }
 
-  .skill-heading {
-    display: grid;
-    grid-template-columns: 8.5rem minmax(0, 1fr);
-    align-items: baseline;
-    gap: 4px 12px;
-  }
-
   .skills .list-item-supporting-text {
-    max-inline-size: 56ch;
-    margin-block-start: 2px;
+    max-inline-size: 40ch;
+    margin-block-start: 4px;
     text-wrap: pretty;
   }
 
   .cmd {
-    font-size: 0.875rem;
+    margin-block-start: 8px;
+    font-size: 0.8125rem;
     font-weight: 400;
     color: var(--md-sys-color-on-surface-variant);
   }
 
-  @media (max-width: 560px) {
-    .skill-heading {
+  @media (max-width: 760px) {
+    .skills .list {
       grid-template-columns: 1fr;
-      row-gap: 0;
-    }
-
-    .skills .list-item {
-      align-items: flex-start;
+      row-gap: 4px;
     }
   }
 </style>
