@@ -99,11 +99,6 @@ const skills = [
   /* Each row groups the title, command, and description beside its skill icon. */
   .skills .list {
     border-radius: 0;
-    border-block-start: 1px solid var(--md-sys-color-outline-variant);
-  }
-
-  .skills .list > li {
-    border-block-end: 1px solid var(--md-sys-color-outline-variant);
   }
 
   .skills .list-item {
@@ -117,9 +112,7 @@ const skills = [
     --between-space: 24px;
     --trailing-icon-size: 22px;
     align-items: center;
-    /* The package rounds a list's first and last rows by inheriting the list's own corners.
-       With the straight hairline above (list radius 0) that left the end rows half-square on
-       hover; every row's state layer now follows its own shape token on all four corners. */
+    /* Keep the first and last rows' hover corners consistent with the middle rows. */
     border-radius: var(--container-shape);
   }
 
