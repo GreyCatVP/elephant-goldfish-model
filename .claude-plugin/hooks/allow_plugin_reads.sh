@@ -11,14 +11,22 @@
 # "..", falls through to the normal permission rules.
 input=$(cat)
 case "$input" in *..*) exit 0 ;; esac
-root=${CLAUDE_PLUGIN_ROOT%/}
+root=$(printf '%s' "$CLAUDE_PLUGIN_ROOT" | tr '\\' '/')
+root=${root%/}
 [ -n "$root" ] || exit 0
 # An absolute or home-relative Glob pattern could name files outside `path`.
 if printf '%s' "$input" | grep -Eq '"tool_name"[[:space:]]*:[[:space:]]*"Glob"' &&
-  printf '%s' "$input" | grep -Eq '"pattern"[[:space:]]*:[[:space:]]*"[/~]'; then
+  printf '%s' "$input" | grep -Eq '"pattern"[[:space:]]*:[[:space:]]*"(/|~|\\|[A-Za-z]:)'; then
   exit 0
 fi
-path=$(printf '%s' "$input" | sed -nE 's/.*"(file_path|path)"[[:space:]]*:[[:space:]]*"([^"\\]*)".*/\2/p' | head -n 1)
+path=$(printf '%s' "$input" | sed -nE 's/.*"(file_path|path)"[[:space:]]*:[[:space:]]*"(([^"\\]|\\\\)*)".*/\2/p' | head -n 1 | sed 's/\\\\/\//g')
+# Case-insensitive comparison on Windows drive-letter roots.
+case "$root" in
+  [A-Za-z]:/*)
+    root=$(printf '%s' "$root" | tr '[:upper:]' '[:lower:]')
+    path=$(printf '%s' "$path" | tr '[:upper:]' '[:lower:]')
+    ;;
+esac
 case "$path" in
   "$root"/agents | "$root"/agents/* | "$root"/docs | "$root"/docs/* | \
   "$root"/resources | "$root"/resources/* | "$root"/skills | "$root"/skills/*)
