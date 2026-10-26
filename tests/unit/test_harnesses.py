@@ -239,3 +239,49 @@ def test_artifact_directory_override_is_documented_for_each_harness() -> None:
   for guide in ("docs/claude.md", "docs/codex.md", "docs/harnesses.md"):
     text = " ".join((ROOT / guide).read_text(encoding="utf-8").split())
     assert marker in text, f"{guide} does not document `{marker}<path>`"
+
+
+def run_read_hook_with_root(root: str, tool_name: str, tool_input: dict) -> str:
+  """Run allow_plugin_reads.sh with CLAUDE_PLUGIN_ROOT set to root."""
+  result = subprocess.run(
+      ["sh", str(ROOT / READ_HOOK)],
+      input=json.dumps({"tool_name": tool_name, "tool_input": tool_input}),
+      text=True,
+      capture_output=True,
+      check=True,
+      env={**os.environ, "CLAUDE_PLUGIN_ROOT": root},
+  )
+  return result.stdout
+
+
+WINDOWS_ROOT = r"C:\Users\dev\.claude\plugins\cache\egm\egm\0.1.0"
+
+
+@pytest.mark.parametrize(
+    ("tool_name", "tool_input", "allowed"),
+    [
+        ("Read", {"file_path": r"{root}\agents\style.md"}, True),
+        ("Read", {"file_path": r"{lower}\docs\claude.md"}, True),
+        ("Read", {"file_path": "{root}/skills/egm_review/SKILL.md"}, True),
+        ("Grep", {"pattern": "x", "path": r"{root}\resources"}, True),
+        ("Glob", {"pattern": "**/*.md", "path": r"{root}\agents"}, True),
+        ("Read", {"file_path": r"{root}\README.md"}, False),
+        ("Read", {"file_path": r"{root}-evil\agents\style.md"}, False),
+        ("Read", {"file_path": r"{root}\agents\..\..\secret.txt"}, False),
+        ("Read", {"file_path": r"C:\Windows\win.ini"}, False),
+        ("Read", {"file_path": r'{root}\agents\"x.md'}, False),
+        ("Glob", {"pattern": r"C:\Windows\*", "path": r"{root}\agents"}, False),
+        ("Glob", {"pattern": "D:/data/*", "path": r"{root}\agents"}, False),
+        ("Glob", {"pattern": r"\\server\share\*", "path": r"{root}\agents"}, False),
+    ],
+)
+def test_claude_read_hook_handles_windows_paths(
+    tool_name: str, tool_input: dict, allowed: bool
+) -> None:
+  """Backslash roots and JSON-escaped Windows paths match like POSIX ones."""
+  substituted_input = {
+      key: value.replace("{root}", WINDOWS_ROOT).replace("{lower}", WINDOWS_ROOT.lower())
+      for key, value in tool_input.items()
+  }
+  output = run_read_hook_with_root(WINDOWS_ROOT, tool_name, substituted_input)
+  assert ('"permissionDecision":"allow"' in output) is allowed
