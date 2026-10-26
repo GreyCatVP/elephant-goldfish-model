@@ -8,7 +8,7 @@ text.
 
 | Harness | Install |
 | --- | --- |
-| Antigravity | `agy plugin install https://github.com/google/elephant-goldfish-model` (or `/plugin` in the IDE; see [below](#antigravity-ide-and-vs-code)) |
+| Antigravity | `agy plugin install https://github.com/google/elephant-goldfish-model` (or `/plugin` in the IDE; see [installation instructions](#antigravity-ide-and-vs-code)) |
 | Claude Code | `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm` |
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
 | Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm` |
@@ -24,7 +24,9 @@ Antigravity IDE and Antigravity for VS Code share the global plugin directory
 `~/.gemini/config/plugins/<name>/`. When not using the `agy` CLI, either ask
 the agent `Install https://github.com/google/elephant-goldfish-model` (or run
 `/plugin`), or copy the full runtime bundle into `~/.gemini/config/plugins/egm/`
-and reload the window:
+for a fresh installation (copying into an existing plugin directory can leave
+obsolete files behind, so remove `~/.gemini/config/plugins/egm` first when
+updating):
 
 ```sh
 git clone https://github.com/google/elephant-goldfish-model.git
@@ -32,6 +34,10 @@ cd elephant-goldfish-model
 mkdir -p ~/.gemini/config/plugins/egm
 cp -R plugin.json README.md LICENSE skills agents resources docs ~/.gemini/config/plugins/egm/
 ```
+
+Reload the window (or restart Antigravity), then confirm that `egm` appears in
+the plugin list and that its skills (`/egm-brainstorm`, `/egm-draft`,
+`/egm-review`) are available.
 
 ## Manifests
 
