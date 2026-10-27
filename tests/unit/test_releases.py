@@ -100,6 +100,6 @@ def test_prepare_cleans_partial_output_after_build_failure(
     monkeypatch.setitem(prepare.__globals__, "build", original_build)
     release["prepare"](ROOT, f"v{version}", destination, "a" * 40)
 
-    assert (destination / "egm-claude-0.1.0.zip").is_file()
-    assert (destination / "egm-openai-0.1.0.zip").is_file()
+    assert (destination / f"egm-claude-{version}.zip").is_file()
+    assert (destination / f"egm-openai-{version}.zip").is_file()
     assert (destination / "SHA256SUMS").is_file()
