@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import re
 import shutil
 import subprocess
@@ -121,9 +122,15 @@ def test_installed_cursor_native_loader(installed: Path) -> None:
     if not bundle_path:
         pytest.skip("Set EGM_CURSOR_BUNDLE for the pinned native offline probe")
     bundle = Path(bundle_path).resolve()
-    assert hashlib.sha256(bundle.read_bytes()).hexdigest() == (
-        "f6bd8dece34b56431ee74f1ac827e032d054381085e7da7088e85abdd1008330"
-    ), "Re-audit the private loader interface before changing this version pin"
+    pins = {
+        ("Darwin", "arm64"): "f6bd8dece34b56431ee74f1ac827e032d054381085e7da7088e85abdd1008330",
+        ("Linux", "aarch64"): "90ec23826cd3089232b0b243b8954ac72fab0454dd86d7d71ddae29d39c75cd2",
+    }
+    expected = pins.get((platform.system(), platform.machine()))
+    assert expected, "The native loader probe has not been audited on this platform"
+    assert hashlib.sha256(bundle.read_bytes()).hexdigest() == expected, (
+        "Re-audit the private loader interface before changing this version pin"
+    )
     script = r'''
 const fs = require('node:fs')
 const Module = require('node:module')

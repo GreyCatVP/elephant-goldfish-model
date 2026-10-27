@@ -116,15 +116,21 @@ Offline checks run with `pytest tests/unit/test_cursor.py` or `pytest tests/unit
 They check metadata, native configuration, and a relocated package with spaces
 and Unicode in its path. The optional native check skips without a local bundle.
 
-Run the native loader probe against the inspected macOS arm64 CLI bundle:
+Run the native loader probe against the inspected arm64 CLI bundle on macOS or Linux:
 
 ```sh
 EGM_CURSOR_BUNDLE="$HOME/.local/share/cursor-agent/versions/2026.10.01-e373342/index.js" \
   pytest tests/unit/test_cursor.py
 ```
 
-The probe pins the bundle SHA-256 to
-`f6bd8dece34b56431ee74f1ac827e032d054381085e7da7088e85abdd1008330`.
+The probe pins Cursor CLI `2026.10.01-e373342` by platform and bundle SHA-256:
+
+- macOS arm64: `f6bd8dece34b56431ee74f1ac827e032d054381085e7da7088e85abdd1008330`.
+- Linux arm64: `90ec23826cd3089232b0b243b8954ac72fab0454dd86d7d71ddae29d39c75cd2`.
+
+The Linux bundle comes from Cursor's [versioned package](https://downloads.cursor.com/lab/2026.10.01-e373342/linux/arm64/agent-cli-package.tar.gz).
+Its downloaded archive SHA-256 was `785c5f6bf2a60eb1121e27ed8c14f5ee07ed1b5b6692324f2d9a997238245eb5`.
+These hashes identify the inspected files. They are not vendor signatures.
 It invokes the installed plugin loader without the CLI entry point.
 It blocks network connections and subprocess launches within the probe.
 It does not patch the installed CLI or start a model session.
