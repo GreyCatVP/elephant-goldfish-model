@@ -231,6 +231,11 @@ The `concepts_brief.md` artifact follows this structure:
 * **In-Scope Goals:** [Explicitly defined scope items]
 * **Out-of-Scope Non-Goals:** [Features intentionally excluded]
 
+## Alternatives Weighed
+
+[Each option rejected during ideation, with the reason. `/egm-draft` copies
+these into Alternatives Considered and has no other source for them.]
+
 ## Key Decisions & Staging for Next Steps
 
 [Key decisions resolved during ideation to be carried forward into `/egm-draft`.]

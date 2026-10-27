@@ -132,3 +132,6 @@ scenarios:
           - type: "required_pattern"
             pattern: "(?i)contradiction"
             message: "Finalization must report the brief/draft contradiction to the user."
+          - type: "forbidden_pattern"
+            pattern: "Save to detected directory"
+            message: "Directory selection must wait until the user decides each contradiction."

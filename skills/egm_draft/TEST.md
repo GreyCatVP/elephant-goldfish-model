@@ -9,5 +9,6 @@ When evaluating or exploring `egm_draft` interactively in chat, verify:
 -   **Step 4 (Alternatives):** Reads rejected alternatives from the brief's
     `Alternatives Weighed` section, or asks the user if it is absent.
 -   **Step 6 (Finalize):** Reports contradictions between the brief and the
-    draft and asks the user to decide each one. Does not self-grade against
+    draft before directory selection, and waits for the user to decide each
+    one. Does not self-grade against
     the Zoom Out standard.
