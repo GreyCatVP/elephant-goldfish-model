@@ -102,6 +102,9 @@ Pass the absolute package root, persona, target, scope, and required standards.
 Pass only explicit Goldfish context, without parent deliberation or history.
 Include previous reports only when the canonical stage explicitly requires them.
 Collect each completion before the next stage. Never reuse a reviewer context.
+Write each completed stage report before dispatching the next stage.
+For Step 8, pass the absolute path of the existing `zoom_out_report.md` to the
+reviewer. Stop if that report is missing.
 If dispatch, required reads, or completion fails, report an incomplete stage and stop.
 Do not replace native reviewers with an in-thread simulation.
 

@@ -26,6 +26,9 @@ Do not dispatch the canonical synthesizer or bootstrap orchestrator as a
 generic child. Their native adapters are not included in this experiment.
 
 Wait for every reviewer completion before advancing the stage.
+Write each completed stage report before dispatching the next stage.
+For Step 8, pass the absolute path of the existing zoom_out_report.md to the
+reviewer. If the report is missing, stop the review.
 Keep the canonical stage order and human approval gates.
 If a reviewer cannot start, read required files, or finish, stop the stage.
 Report the incomplete review. Do not simulate a reviewer in the parent.
