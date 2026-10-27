@@ -32,11 +32,17 @@ GitHub Pages.
 
 ## Rules
 
-- No analytics, no cookies, no third-party scripts, and no requests to Google
-  hosts at runtime. The open-source release depends on it.
 - Theme only through gBreeze tokens (`src/styles/tokens.css`) and the
   components' documented custom properties. Do not restyle component boxes.
 - Keep skill names and commands identical to the repository README.
+- **Cookies and analytics (`egm.dev` only)**: The EGM plugin itself collects zero
+  telemetry. On the canonical `https://egm.dev` site only (when
+  `PUBLIC_GA_MEASUREMENT_ID` is set at build time and
+  `window.location.hostname === 'egm.dev'`), the page loads Google Cookie
+  Notification Bar (`cookienotificationbar.min.js`) with Consent Mode v2 and
+  Google Analytics 4 (`gtag.js`) with client-side URL/referrer scrubbing and
+  Google Signals/Ads personalization disabled. External forks, preview domains,
+  and local builds make zero requests to Google hosts at runtime.
 
 ## Skill icons
 
