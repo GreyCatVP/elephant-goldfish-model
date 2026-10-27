@@ -66,7 +66,7 @@ Modular agent capabilities executable via slash commands or direct invocation:
 *   `egm_review`: Orchestrator for the multi-stage review pipeline.
 *   `egm_review_loop`: Concurrent subagent review dispatcher.
 *   `egm_resolve`: Interactive resolution and patch application.
-*   `egm_drift_report`: AST drift scanner between specs and active code.
+*   `egm_drift_report`: Agent workflow comparing specs and READMEs to code via host search and file-reading tools.
 *   `egm_bootstrap`: Recursive bottom-up codebase documentation generator.
 
 ### 2. Personas Layer (`agents/`)

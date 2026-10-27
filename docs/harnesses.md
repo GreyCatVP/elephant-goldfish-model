@@ -32,7 +32,7 @@ updating):
 git clone https://github.com/google/elephant-goldfish-model.git
 cd elephant-goldfish-model
 mkdir -p ~/.gemini/config/plugins/egm
-cp -R plugin.json README.md LICENSE skills agents resources docs ~/.gemini/config/plugins/egm/
+cp -R plugin.json README.md LICENSE skills agents resources docs assets ~/.gemini/config/plugins/egm/
 ```
 
 Reload the window (or restart Antigravity), then confirm that `egm` appears in
@@ -115,7 +115,7 @@ the project has no `CLAUDE.md`. To keep the files out of git, add the folder to
 
 **Claude Cowork** ([#105](https://github.com/google/elephant-goldfish-model/issues/105)) and **ChatGPT Work** ([#106](https://github.com/google/elephant-goldfish-model/issues/106)) have working installation paths with open cloud trace verification gaps.
 
-See the [harness test record](../TESTING.md#harness-test-record) for tested surfaces and limits.
+See the [harness test record](https://github.com/google/elephant-goldfish-model/blob/main/TESTING.md#harness-test-record) for tested surfaces and limits.
 
 We welcome contributors who want to help verify and expand harness support.
 
@@ -131,4 +131,4 @@ support for another harness:
    (`docs/harnesses.md`).
 3. Verify that `/egm-brainstorm`, `/egm-draft`, and `/egm-review` run end to end,
    and attach verification notes or execution transcripts in your Pull Request description
-   (as outlined in the [Pull Request Template](../.github/PULL_REQUEST_TEMPLATE.md)).
+   (as outlined in the [Pull Request Template](https://github.com/google/elephant-goldfish-model/blob/main/.github/PULL_REQUEST_TEMPLATE.md)).
