@@ -119,6 +119,21 @@ These tests check installation, resource identity, native configuration, and ref
 They do not simulate host completion records or prove enforcement by the host.
 No live model test runs in ordinary CI.
 
+The scoped OpenCode native probe uses a scripted local model, not a live model.
+It checks native child dispatch, one parent marker, and denial of a synthetic
+`.env` read. It requires the pinned OpenCode 1.18.29 Linux x64 executable.
+
+```sh
+npm ci --ignore-scripts --prefix tests/integration/opencode-ci
+python tests/integration/opencode_native_probe.py \
+  --source . \
+  --opencode tests/integration/opencode-ci/node_modules/opencode-linux-x64/bin/opencode \
+  --output /tmp/egm-opencode-probe-new
+```
+
+Choose an output path that does not exist. A passing probe does not establish
+live model behavior, full workflows, or general reviewer isolation.
+
 On 2026-10-24, OpenCode `1.18.29` accepted the generated configuration through `debug config` and `debug agent egm-style`.
 The resolved reviewer toolset enabled only `read`, `glob`, and `grep`.
 The `debug skill` command discovered all seven skills from the installed candidate paths.
