@@ -83,6 +83,12 @@ Require all specified reads and actual task completion before synthesis.
 Report a missing start, completion, required read, or malformed result as incomplete.
 Stop if native delegation is unavailable. Never simulate Goldfish reviewers in the parent conversation.
 
+When brainstorm precedes draft, complete all six brainstorm reviewers first.
+Synthesize their findings into `concepts_brief.md` before drafting.
+For review, write each completed stage report before starting the next stage.
+Before Step 8, verify `zoom_out_report.md` exists in the artifact directory.
+Pass its absolute path to the reviewer. Stop if the report is missing.
+
 Reviewers deny every tool except `read`, `glob`, and `grep`.
 V1 maps MCP resource reads and resource lists to the `read` permission.
 The reviewer `read` rules allow local reads, then deny `mcp:*`.
