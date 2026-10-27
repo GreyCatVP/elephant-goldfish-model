@@ -75,6 +75,30 @@ Replace the example path; do not copy a guessed cache location. These read rules
 also cover Grep and Glob on those files on a best-effort basis. Adding a directory
 with `--add-dir` extends edit access too, so it is not a read-only substitute.
 
+## Claude Code Warning: Default agents/ folder is ignored
+
+In Claude Code (`/plugin` > Errors), you may see the following advisory warning:
+
+```text
+Default agents/ folder is ignored because the manifest sets "agents"
+```
+
+This specific advisory is expected with EGM's explicit adapter list. It does not
+mean the registered adapters failed to load; investigate other errors separately.
+
+EGM maintains two agent directories:
+1. `agents/`: Contains canonical, harness-agnostic reviewer persona markdown prompts loaded by Antigravity and other harnesses.
+2. `.claude-plugin/agents/`: Contains Claude Code adapters. Reviewer adapters use
+   `omitClaudeMd: true` and `tools: [Read, Grep, Glob]`; the synthesizer and bootstrap
+   orchestrator have their own tool lists, described below.
+
+Because `.claude-plugin/plugin.json` explicitly lists the adapters in `"agents"`,
+Claude Code skips auto-loading the root `agents/` folder. The shared personas do
+not declare Claude's read-only tool restrictions. Auto-loading them instead would
+lose the adapter-specific restrictions; available tools would still be subject to
+the host's permissions. Registering both copies would also duplicate reviewer
+names. Keep the explicit adapter list rather than removing it to silence this notice.
+
 ## Reviewer isolation
 
 Spawn a new native Agent of the plugin's registered reviewer type for each
