@@ -148,13 +148,17 @@ file` mode is specified, confirm full-file line bounds).
 Fresh reviewers sample differently each round, so a round with zero findings
 is rare even when the document improves. Use these rules instead:
 
-*   **Settled findings**: A finding is settled when its fix is applied, it is
-    contested, or it is recorded without a fix. Keep the settled list across
+*   **Settled findings**: A finding is settled when it is contested or
+    recorded without a fix (accepted risk). Keep the settled list across
     rounds. If a new reviewer raises a settled finding again (same affected
     scope, same issue), do not re-open it.
+*   **Fixed findings**: An applied fix does not settle a finding. If a later
+    reviewer raises the same issue at the same scope, the fix failed or a
+    later edit reintroduced the issue. Re-open the finding.
 *   **Clean round**: A round is clean when no reviewer raises a Blocker or
     Major finding that is not settled. Nits do not block. A reviewer recorded
-    as not run makes the round not clean.
+    as not run makes the round not clean. Decide this from the review results,
+    before you apply the fixes of that round.
 *   **Converged**: Two consecutive clean rounds. One clean round is not enough,
     because the next fresh reviewer can find a different gap in the same text.
 *   **Cap**: 5 rounds.

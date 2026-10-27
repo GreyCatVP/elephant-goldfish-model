@@ -10,4 +10,4 @@ When evaluating or exploring `egm_review_loop` interactively in chat, verify:
 -   **Step 2.1 (Target Resolution):** Unconditionally re-scans line numbers before auditing.
 -   **Step 2.2 (Review Swarm):** Spawns subagents (or sequentially iterates personas in degraded mode) across requested standards.
 -   **Step 2.3 & 2.4 (Resolve Handoff & Turn Boundary):** Hands findings to `egm-resolve` and respects human decision gates.
--   **Step 2.4 (Round Control):** Keeps settled findings settled, records failed reviewers as not run, stops after two consecutive clean rounds, and asks the user at the 5-round cap or on churn.
+-   **Step 2.4 (Round Control):** Keeps contested and accepted findings settled, re-opens fixed findings that reviewers raise again, judges clean rounds before applying fixes, records failed reviewers as not run, stops after two consecutive clean rounds, and asks the user at the 5-round cap or on churn.

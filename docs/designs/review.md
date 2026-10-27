@@ -158,8 +158,9 @@ The engineer reviews `goldfish_review_report.md` via four interaction modes:
 
 After fixes are applied, the loop presents a mandatory checkpoint asking the
 user whether to run another review pass or complete the workflow. Findings that
-were fixed, contested, or recorded without a fix stay settled across rounds. A
-round is clean when no unsettled Blocker or Major finding remains. The process
+were contested or recorded without a fix stay settled across rounds. A fixed
+finding re-opens if a later review raises it again. A round is clean when its
+review results contain no unsettled Blocker or Major finding. The process
 concludes after two consecutive clean rounds, or when the engineer halts the
 loop. At 5 rounds, or when a new finding would be resolved by reverting an
 earlier fix, the loop asks the engineer to accept, continue, or return to
