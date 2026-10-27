@@ -38,6 +38,10 @@ def install(destination: Path) -> Path:
         c in str(destination) for c in '*?[]{}!@`$\n\r'
     ):
         raise ValueError("Installation path contains template or glob characters")
+    # Read rules match worktree-relative paths and "*" spans "/", so "*.env.*"
+    # would deny every bundle read below such a path.
+    if ".env." in str(destination).lower():
+        raise ValueError("Installation path matches the .env read rules")
     if destination.is_relative_to(ROOT):
         raise ValueError("Install outside the source tree")
     destination.mkdir(parents=True)
