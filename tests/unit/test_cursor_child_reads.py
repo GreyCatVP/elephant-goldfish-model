@@ -96,6 +96,15 @@ def test_malformed_read_call_cannot_be_ignored(tmp_path: Path) -> None:
     assert run.returncode != 0
 
 
+def test_unexpected_read_entry_type_cannot_be_ignored(tmp_path: Path) -> None:
+    path = '/fixture/persona.md'
+    malformed = {'role': 'assistant', 'content': [
+        {'type': 'unexpected', 'toolName': 'ReadFile', 'toolCallId': 'call-2'},
+    ]}
+    run = probe(tmp_path, [call(path), result(path), malformed], path)
+    assert run.returncode != 0
+
+
 def test_live_wal_is_rejected(tmp_path: Path) -> None:
     database = tmp_path / 'child.db'
     with sqlite3.connect(database) as connection:

@@ -49,6 +49,9 @@ def main() -> int:
                 continue
             if not isinstance(call_id, str) or not call_id:
                 raise ValueError('ReadFile entry lacks a call ID')
+            expected_type = 'tool-call' if message['role'] == 'assistant' else 'tool-result'
+            if entry.get('type') != expected_type:
+                raise ValueError(f'Unexpected ReadFile entry type {call_id}')
             if message.get('role') == 'assistant' and entry.get('type') == 'tool-call':
                 arguments = entry.get('args')
                 path = arguments.get('path') if isinstance(arguments, dict) else None
