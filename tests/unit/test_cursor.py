@@ -113,7 +113,7 @@ def test_host_rule_and_guide_keep_failure_and_artifact_contracts() -> None:
     guide = " ".join((ROOT / "docs/cursor.md").read_text(encoding="utf-8").split())
     assert "EGM artifact directory: <path>" in guide
     assert "Grok Bot remains a separate, unverified surface" in guide
-    assert "No Cursor trace parser is supplied" in guide
+    assert "No complete Cursor workflow trace parser is supplied" in guide
 
 
 def test_installed_cursor_native_loader(installed: Path) -> None:

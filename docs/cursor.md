@@ -168,9 +168,25 @@ separately. A fresh task does not remove those possible sources of information.
 
 Record native reviewer starts and completions, not only the parent's summary.
 Missing records leave the corresponding gate unverified.
-No Cursor trace parser is supplied until native records establish its schema.
-Before accepting such a parser, test missing starts, missing completions, malformed
-records, and Unicode line separators. Split JSONL on literal LF only.
+For CLI `2026.10.01-e373342`, `tests/integration/cursor_child_reads.py` checks
+one child's SQLite store for matching `ReadFile` calls and successful results:
+
+```sh
+python tests/integration/cursor_child_reads.py /absolute/path/to/child/store.db \
+  --required /absolute/path/to/persona.md
+```
+
+Select the store using the child ID from its matched parent Task completion.
+After the child stops, use SQLite's backup API to create a closed snapshot.
+The command rejects a snapshot with a WAL file or a changing main file.
+The command exits nonzero if a required path lacks a matched nonempty success.
+The store and output may contain private paths. Keep them private.
+The command checks reads only. It does not validate dispatch, approvals, stage
+order, isolation, or artifacts. The store schema is private and version-specific.
+It counts opaque binary blobs but cannot interpret their contents.
+No complete Cursor workflow trace parser is supplied. Before accepting one, test
+missing starts, missing completions, malformed records, and Unicode line
+separators. Split JSONL on literal LF only.
 Existing Claude and Codex trace tests do not validate Cursor evidence.
 
 ## Grok Bot assessment
