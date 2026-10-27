@@ -13,6 +13,9 @@ text.
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
 | Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm` |
 | ChatGPT | Personal testing: Plugins > Add > Upload plugin archive; see [packaging](codex.md#chatgpt). Workspace import: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
+| Hermes Agent | `hermes plugins install https://github.com/google/elephant-goldfish-model` |
+| OpenClaw | `openclaw plugins install https://github.com/google/elephant-goldfish-model` |
+| Delta | `delta skills tap add https://github.com/google/elephant-goldfish-model` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
 break EGM, because the skills read `agents/` and
@@ -38,6 +41,9 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 | Claude Cowork | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` | `skills/` (default) | Subagents run inside Cowork; hooks n/a |
 | Codex | `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` | `skills` path | Not shipped; general-purpose subagent reads the persona file |
 | ChatGPT | `plugin.json`, `.codex-plugin/plugin.json`; `.agents/plugins/marketplace.json` for workspace import | `skills` path | Detect native tools in the current session; general-purpose agent reads the persona |
+| Hermes Agent | `.hermes/plugin.yaml` | `skills` (default) | Subagent spawns with isolated context and read-only tools |
+| OpenClaw | `.openclaw/openclaw.plugin.json` | `skills` (default) | Subagent spawns with fresh session and read-only tools |
+| Delta | `.delta/plugin.json` | `skills` (default) | Fresh runner subprocess with read-only tools |
 
 Persona prompts live in `agents/`, the directory Antigravity
 scans for subagents. Each persona has `name` and `description` frontmatter, so
@@ -61,6 +67,9 @@ phrase to its own tool:
 | Claude Cowork | Cowork subagents | Yes | Subagents run inside Cowork |
 | Codex | Native spawn/wait tools; inspect the available schema | No | Detect at runtime; direct dispatch fallback |
 | ChatGPT | Native spawn/wait tools when exposed by the current Work session | No | Detect at runtime; direct dispatch fallback |
+| Hermes Agent | Native task/spawn tool (`hermes.spawn`) | Yes | Direct dispatch |
+| OpenClaw | Native subagent tool (`sessions_spawn`) | Yes | Direct dispatch / sub-session |
+| Delta | Runner delegation tool (`delta.spawn`) | Yes | Subprocess runner |
 
 Where a harness has no named persona, the skill spawns a general-purpose
 subagent and tells it to read `agents/<file>.md` first. If a harness cannot
@@ -70,6 +79,12 @@ A Goldfish review needs a fresh context. If a harness has no subagent tool,
 the review skills stop instead of running in the same context. Check actual
 tool availability rather than inferring it from the product name. This applies
 to ChatGPT modes that do not expose native fresh-context delegation.
+
+### Subagent Isolation Guidelines
+
+Goldfish reviews strictly require zero-context, stateless evaluation:
+- **Zero-Context Fresh Session**: Subagents must not inherit parent conversation history. In OpenClaw, spawn reviewer subagents using native `sessions_spawn` with fresh session context. In Hermes Agent and Delta, reviewer subagents are spawned in fresh runner subprocesses with clean environments.
+- **Read-Only Tool Policy**: Goldfish reviewer subagents must be strictly restricted to read-only tools: `Read`, `Grep`, and `Glob`. File modification (`Write`, `Edit`) or shell execution tools must be disabled to ensure review immutability and prevent audit corruption.
 
 ## Artifact Directory
 
@@ -92,7 +107,7 @@ the project has no `CLAUDE.md`. To keep the files out of git, add the folder to
 
 **Antigravity**, **Claude Code**, and **Codex** pass automated installation, reviewer isolation, and end-to-end workflow fixtures.
 
-**Claude Cowork** ([#105](https://github.com/google/elephant-goldfish-model/issues/105)) and **ChatGPT Work** ([#106](https://github.com/google/elephant-goldfish-model/issues/106)) have working installation paths with open cloud trace verification gaps.
+**Claude Cowork** ([#105](https://github.com/google/elephant-goldfish-model/issues/105)), **ChatGPT Work** ([#106](https://github.com/google/elephant-goldfish-model/issues/106)), **Hermes Agent** ([#116](https://github.com/google/elephant-goldfish-model/issues/116)), **OpenClaw** ([#116](https://github.com/google/elephant-goldfish-model/issues/116)), and **Delta** ([#116](https://github.com/google/elephant-goldfish-model/issues/116)) have manifest or adapter structures with open live trace verification gaps.
 
 See the [harness test record](../TESTING.md#harness-test-record) for tested surfaces and limits.
 

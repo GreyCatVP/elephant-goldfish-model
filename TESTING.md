@@ -85,6 +85,9 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 | Claude Cowork | Opus 5.5 Medium, connected cloud task | 2026-10-22 | Pass (ZIP) | Completed with direct-dispatch recovery | Completed | Partial: stages 5–7 | Usage limit interrupted stage 8. Final artifacts, stage 9 and actual isolation-child output remain unverified; #105. Earlier complete run is reported separately. |
 | OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Two live tests passed in 573.13s; isolation, 15 native reviewers, ordered stages and required reads verified. |
 | ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-22 | Pass; installed hashes verified | Completed | Completed | Nine native reviewers completed | Fresh probe returned UNKNOWN. Artifact download/final audit and full child tool traces remain outstanding; #106. |
+| Hermes Agent | 0.8.2 | 2026-10-23 | Unverified (`hermes plugins install`) | Pending live trace | Pending live trace | Pending live trace | `.hermes/plugin.yaml` manifest verified offline. Live subagent execution, isolation proof, and tool restrictions remain unverified; #116. |
+| OpenClaw | 1.0.4 | 2026-10-23 | Unverified (`openclaw plugins install`) | Pending live trace | Pending live trace | Pending live trace | `.openclaw/openclaw.plugin.json` manifest verified offline. Native `sessions_spawn` dispatch, zero-context child isolation, and tool traces remain unverified; #116. |
+| Delta | 0.9.0 | 2026-10-23 | Unverified (`delta skills tap add`) | Pending live trace | Pending live trace | Pending live trace | `.delta/plugin.json` manifest verified offline. Runner delegation, subprocess isolation, and live workflow traces remain unverified; #116. |
 
 ### Interpreting native test results
 
@@ -93,7 +96,7 @@ This table is a summary. Record the tested commit, client version, commands,
 native evidence, and limitations in each report. Parse JSONL on literal LF;
 Python `splitlines()` also splits valid Unicode characters inside JSON strings.
 
-Track open cloud verification gaps in [#105 (Cowork)](https://github.com/google/elephant-goldfish-model/issues/105) and [#106 (ChatGPT Work)](https://github.com/google/elephant-goldfish-model/issues/106).
+Track open cloud and host verification gaps in [#105 (Cowork)](https://github.com/google/elephant-goldfish-model/issues/105), [#106 (ChatGPT Work)](https://github.com/google/elephant-goldfish-model/issues/106), and [#116 (Hermes, OpenClaw, Delta)](https://github.com/google/elephant-goldfish-model/issues/116).
 
 - Inspect native tool traces for reviewer launches, completion, and intended resource reads.
 - Verify sequential stage execution and persona lenses in addition to artifact existence.
