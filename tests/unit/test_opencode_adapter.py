@@ -54,7 +54,7 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
         assert agent["permission"] == {
             "*": "deny", "read": {"*": "allow", "mcp:*": "deny"},
             "glob": "allow", "grep": "allow",
-            "external_directory": {"*": "deny", f"{destination}/bundle/**": "allow"},
+            "external_directory": {"*": "deny", f"{destination / 'bundle'}/**": "allow"},
         }
         # V1 maps resource reads and both list tools to read. Last match wins.
         assert list(agent["permission"]["read"].items()) == [
