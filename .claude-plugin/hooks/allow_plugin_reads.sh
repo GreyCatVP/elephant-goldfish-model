@@ -11,22 +11,36 @@
 # "..", falls through to the normal permission rules.
 input=$(cat)
 case "$input" in *..*) exit 0 ;; esac
-root=$(printf '%s' "$CLAUDE_PLUGIN_ROOT" | tr '\\' '/')
-root=${root%/}
+
+# Backslash is a path separator only on Windows; on POSIX it is a legal
+# filename character.
+case "$CLAUDE_PLUGIN_ROOT" in
+  [A-Za-z]:[\\/]*) windows=1 ;;
+  *) windows= ;;
+esac
+
+if [ -n "$windows" ]; then
+  root=$(printf '%s' "$CLAUDE_PLUGIN_ROOT" | tr '\\' '/')
+  root=${root%/}
+else
+  root=${CLAUDE_PLUGIN_ROOT%/}
+fi
 [ -n "$root" ] || exit 0
+
 # An absolute or home-relative Glob pattern could name files outside `path`.
 if printf '%s' "$input" | grep -Eq '"tool_name"[[:space:]]*:[[:space:]]*"Glob"' &&
   printf '%s' "$input" | grep -Eq '"pattern"[[:space:]]*:[[:space:]]*"(/|~|\\|[A-Za-z]:)'; then
   exit 0
 fi
-path=$(printf '%s' "$input" | sed -nE 's/.*"(file_path|path)"[[:space:]]*:[[:space:]]*"(([^"\\]|\\\\)*)".*/\2/p' | head -n 1 | sed 's/\\\\/\//g')
-# Case-insensitive comparison on Windows drive-letter roots.
-case "$root" in
-  [A-Za-z]:/*)
-    root=$(printf '%s' "$root" | tr '[:upper:]' '[:lower:]')
-    path=$(printf '%s' "$path" | tr '[:upper:]' '[:lower:]')
-    ;;
-esac
+
+if [ -n "$windows" ]; then
+  path=$(printf '%s' "$input" | sed -nE 's/.*"(file_path|path)"[[:space:]]*:[[:space:]]*"(([^"\\]|\\\\)*)".*/\2/p' | head -n 1 | sed 's/\\\\/\//g')
+  root=$(printf '%s' "$root" | tr '[:upper:]' '[:lower:]')
+  path=$(printf '%s' "$path" | tr '[:upper:]' '[:lower:]')
+else
+  path=$(printf '%s' "$input" | sed -nE 's/.*"(file_path|path)"[[:space:]]*:[[:space:]]*"([^"\\]*)".*/\2/p' | head -n 1)
+fi
+
 case "$path" in
   "$root"/agents | "$root"/agents/* | "$root"/docs | "$root"/docs/* | \
   "$root"/resources | "$root"/resources/* | "$root"/skills | "$root"/skills/*)

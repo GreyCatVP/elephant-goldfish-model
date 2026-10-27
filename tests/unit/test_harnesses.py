@@ -285,3 +285,34 @@ def test_claude_read_hook_handles_windows_paths(
   }
   output = run_read_hook_with_root(WINDOWS_ROOT, tool_name, substituted_input)
   assert ('"permissionDecision":"allow"' in output) is allowed
+
+
+POSIX_ROOT = "/home/dev/.claude/plugins/cache/egm/egm/0.1.0"
+
+
+@pytest.mark.parametrize(
+    ("tool_name", "tool_input", "allowed"),
+    [
+        # root-level file named agents\style.md
+        ("Read", {"file_path": r"{root}/agents\style.md"}, False),
+        ("Read", {"file_path": r"{root}/docs\claude.md"}, False),
+        ("Grep", {"pattern": "x", "path": r"{root}/skills\egm_review"}, False),
+        ("Read", {"file_path": r"{root}\agents\style.md"}, False),
+        # control: normal POSIX path still approved
+        ("Read", {"file_path": "{root}/agents/style.md"}, True),
+        # POSIX stays case-sensitive
+        ("Read", {"file_path": "{ROOTUPPER}/agents/style.md"}, False),
+    ],
+)
+def test_claude_read_hook_keeps_posix_backslashes_literal(
+    tool_name: str, tool_input: dict, allowed: bool
+) -> None:
+  """On POSIX roots a backslash is part of a filename, never a separator."""
+  substituted_input = {
+      key: value.replace("{ROOTUPPER}", POSIX_ROOT.upper()).replace(
+          "{root}", POSIX_ROOT
+      )
+      for key, value in tool_input.items()
+  }
+  output = run_read_hook_with_root(POSIX_ROOT, tool_name, substituted_input)
+  assert ('"permissionDecision":"allow"' in output) is allowed
