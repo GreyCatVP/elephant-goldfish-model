@@ -116,7 +116,7 @@ def install(destination: Path) -> Path:
         "name": metadata["name"], "version": metadata["version"],
         "host_version": HOST_VERSION, "status": "experimental",
         "sha256": {
-            str(path.relative_to(destination)): hashlib.sha256(path.read_bytes()).hexdigest()
+            path.relative_to(destination).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted(bundle.rglob("*")) if path.is_file()
         },
     }, indent=2) + "\n", encoding="utf-8")
