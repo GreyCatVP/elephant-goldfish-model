@@ -63,7 +63,12 @@ def install(destination: Path) -> Path:
             "mode": "subagent",
             "color": "#E86E00",
             "permission": {
-                "*": "deny", "read": {"*": "allow", "mcp:*": "deny"},
+                "*": "deny",
+                # Later rules win, so "*" alone would override OpenCode's default .env rules.
+                "read": {
+                    "*": "allow", "*.env": "deny", "*.env.*": "deny",
+                    "*.env.example": "allow", "mcp:*": "deny",
+                },
                 "glob": "allow", "grep": "allow",
                 "external_directory": {"*": "deny", f"{bundle}/**": "allow"},
             },
@@ -78,7 +83,9 @@ def install(destination: Path) -> Path:
         "mode": "primary",
         "color": "#1B6EF3",
         "permission": {
-            "*": "ask", "read": "allow", "glob": "allow", "grep": "allow",
+            "*": "ask",
+            "read": {"*": "allow", "*.env": "ask", "*.env.*": "ask", "*.env.example": "allow"},
+            "glob": "allow", "grep": "allow",
             "skill": {"*": "deny", "egm-*": "allow"},
             "task": {"*": "deny", **{key: "allow" for key in agents}},
             "external_directory": {"*": "ask", f"{bundle}/**": "allow"},
