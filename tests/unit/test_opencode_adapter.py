@@ -30,7 +30,7 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
     for directory in ("skills", "agents", "resources", "docs"):
         for source in (ROOT / directory).rglob("*"):
             if source.is_file():
-                assert f"bundle/{source.relative_to(ROOT)}" in identity["sha256"]
+                assert (Path("bundle") / source.relative_to(ROOT)).as_posix() in identity["sha256"]
 
     assert config["default_agent"] == "egm"
     assert config["autoupdate"] is False
@@ -117,7 +117,7 @@ def test_command_interpolation_paths_are_rejected(tmp_path: Path) -> None:
 
 
 def test_symlink_parent_cannot_bypass_path_validation(tmp_path: Path) -> None:
-    target = tmp_path / "unsafe*"
+    target = tmp_path / "unsafe[glob]"
     target.mkdir()
     alias = tmp_path / "safe"
     alias.symlink_to(target, target_is_directory=True)
