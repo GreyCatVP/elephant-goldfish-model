@@ -26,7 +26,7 @@ source .venv/bin/activate
 pip install -r requirements-dev.txt
 ```
 
-If your Python version is older than 3.10, install a newer version from [python.org/downloads](https://www.python.org/downloads/) or your system's package manager. Open a new terminal and verify the updated version before continuing.
+If your Python version is older than 3.10, install a newer version from [python.org/downloads](https://www.python.org/downloads/) or your system's package manager. Open a new terminal and verify the updated version before continuing. If `python3` still points to the older version, use the newer interpreter explicitly (for example, `python3.12 -m venv .venv`).
 
 If you previously created `.venv` using an older Python version, delete it and recreate it using the updated version.
 
