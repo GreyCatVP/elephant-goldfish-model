@@ -140,6 +140,13 @@ For each finding, the Elephant determines:
     strings or structural edits.
 *   **`CONTEST`**: The critique is invalid or based on a misunderstanding. Cites
     concrete codebase evidence defending the current text.
+*   **`ESCALATE`**: The critique is invalid, but only knowledge outside the
+    reviewed files refutes it. The user decides. The Elephant does not add
+    context that only a zero-context reviewer needs.
+*   **`DECLINE`**: The finding is a Nit. It is recorded and not fixed.
+
+A contest must cite evidence the reviewer could read. Comprehension gaps cannot
+be contested, and severities cannot be changed without a contest.
 
 ### 2. User Triage Modes
 

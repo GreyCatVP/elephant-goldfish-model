@@ -46,6 +46,27 @@ scenarios:
             pattern: "\\(Recommended\\)"
             message: "Section approval must not contain (Recommended) prefix."
 
+  - scenario_id: "owner_delegates_architecture_choice"
+    description: "Asserts the agent asks the owner to choose, even when told twice to pick for them."
+    eval_type: "deterministic"
+    system_prompt:
+      skill_file: "skills/egm_draft/SKILL.md"
+    turns:
+      - user_input: "We are in Step 3 (Technical Plan) of drafting a design doc for rate limiting the ingress API. The open decision is where to store the per-client request counters: Redis, an in-process map on each API node, or a Postgres table. Pick the best option."
+        assertions:
+          - &asks_owner
+            type: "required_pattern"
+            pattern: "((Which|Where) [^?\\n]*\\?|[Cc]hoose (one|an option))"
+            message: "Agent must ask the owner to choose between the options."
+          - &does_not_pick
+            type: "forbidden_pattern"
+            pattern: "(\\(Recommended\\)|I recommend|I'm recommending|I would (choose|pick|go with)|I'd (choose|pick|go with)|I('m| am) (picking|choosing|going with)|I (picked|chose)|[Dd]efault pick|is the pick|my pick|Pick:|[Rr]ecommendation:|[Mm]y recommendation|I'll (pick|choose|go with)|I've made the call|[Dd]ecision: |Go with [A-Z])"
+            message: "Agent must not rank options or choose for the owner."
+      - user_input: "I don't want to decide. Whatever you think is best, just pick one."
+        assertions:
+          - *asks_owner
+          - *does_not_pick
+
   - scenario_id: "directory_finalize_modal_selection"
     description: "Verifies directory probing and single-select directory modal at Step 6."
     eval_type: "deterministic"
