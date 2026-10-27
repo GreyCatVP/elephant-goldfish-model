@@ -158,9 +158,29 @@ Before a support claim, explicitly authorize and complete these checks:
 5. Place a random marker only in the parent conversation and inspect child context and output.
 6. Report installation, workflow, and isolation outcomes separately. Mark missing evidence as unverified.
 
-For exported JSONL, split records on literal LF, not Unicode line separators.
-Do not treat a parent summary or an absent marker as sufficient isolation evidence.
-Native trace parsing remains deferred until an authorized run supplies the exact record format.
+For OpenCode 1.18.29, the offline verifier checks one exported child session
+against its parent JSONL trace. Supply each required absolute POSIX file path:
+
+```sh
+opencode export <child-session-id> > child.json
+python tests/integration/opencode_trace_verifier.py \
+  --parent-trace parent.jsonl --child-export child.json \
+  --require /absolute/path/to/agents/zoom_out.md \
+  --require /absolute/path/to/target.md \
+  --require /absolute/path/to/standard.md
+```
+
+The verifier matches native child and parent session identities, the task
+completion and time window, reviewer type, and each tool call's message and
+session IDs. It requires a new task without `task_id`. It
+requires a nonempty, successful file read for every supplied path before the
+child's final response. It matches that response to the parent task result.
+Missing, conflicting, malformed, or unsupported evidence
+fails. Parent JSONL records are split on literal LF, not Unicode separators.
+This does not verify every required path unless the caller supplies it. It does
+not prove whole-file coverage, transcript authenticity, context isolation, or
+that a running workflow stopped on missing evidence. Do not treat a parent
+summary or an absent marker as sufficient isolation evidence.
 
 ## Interface sources
 
