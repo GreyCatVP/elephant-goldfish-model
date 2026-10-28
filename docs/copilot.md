@@ -161,7 +161,7 @@ Representative native records, with the local root abbreviated as `<package>`:
 
 ```json
 {"id":"egm:egm-design","source":"plugin","path":"<package>/com.github.copilot/agents/egm-design.agent.md","tools":["read","search"],"userInvocable":false,"mcpServers":{}}
-{"name":"egm-review","commandName":"egm:egm-review","source":"plugin","path":"<package>/skills/egm_review/SKILL.md","enabled":true}
+{"name":"egm-review","commandName":"egm:egm-review","source":"plugin","path":"<package>/skills/egm-review/SKILL.md","enabled":true}
 ```
 
 The standalone `skill list` command omitted mounted skills on this version.

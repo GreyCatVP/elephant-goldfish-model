@@ -71,7 +71,7 @@ def copilot_package(repo_root: Path, tmp_path: Path) -> Path:
     """Relocate the full runtime, including paths with spaces and Unicode."""
     package = tmp_path / "relocated EGM café"
     package.mkdir()
-    for directory in ("skills", "agents", "resources", "docs", "com.github.copilot"):
+    for directory in ("skills", "agents", "resources", "docs", "com.github.copilot", ".plugin"):
         shutil.copytree(repo_root / directory, package / directory)
     shutil.copy2(repo_root / "plugin.json", package / "plugin.json")
     return package
