@@ -108,6 +108,30 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
               'https://www.gstatic.com/glue/cookienotificationbar/cookienotificationbar.min.css';
             document.head.appendChild(cnbCss);
 
+            // CNB loads its consent configuration asynchronously after its script.
+            // Its loaded callback runs after the initial consent commands are queued.
+            let analyticsStarted = false;
+            window.glueCookieNotificationBarLoaded = () => {
+              if (analyticsStarted) return;
+              analyticsStarted = true;
+
+              gtag('js', new Date());
+              gtag('config', gaMeasurementId, {
+                page_location: cleanUrl.toString(),
+                page_referrer: cleanReferrer,
+                page_title: pageTitle,
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false,
+              });
+
+              const gtagScript = document.createElement('script');
+              gtagScript.async = true;
+              gtagScript.src =
+                'https://www.googletagmanager.com/gtag/js?id=' +
+                encodeURIComponent(gaMeasurementId);
+              document.head.appendChild(gtagScript);
+            };
+
             const cnbScript = document.createElement('script');
             cnbScript.src =
               'https://www.gstatic.com/glue/cookienotificationbar/cookienotificationbar.min.js';
@@ -116,21 +140,6 @@ const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
             cnbScript.dataset.glueCookieNotificationBarAutoMarginClass = 'footer';
             document.head.appendChild(cnbScript);
 
-            const gtagScript = document.createElement('script');
-            gtagScript.async = true;
-            gtagScript.src =
-              'https://www.googletagmanager.com/gtag/js?id=' +
-              encodeURIComponent(gaMeasurementId);
-            document.head.appendChild(gtagScript);
-
-            gtag('js', new Date());
-            gtag('config', gaMeasurementId, {
-              page_location: cleanUrl.toString(),
-              page_referrer: cleanReferrer,
-              page_title: pageTitle,
-              allow_google_signals: false,
-              allow_ad_personalization_signals: false,
-            });
           }
         </script>
       )
