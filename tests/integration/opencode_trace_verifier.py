@@ -172,19 +172,18 @@ def verify(parent_events: list[Any], child_export: Any, required_paths: list[str
     final_info = _object(final_message.get('info'), 'final message info')
     final_time = _object(final_info.get('time'), 'final message time')
     final_end = final_time.get('completed')
-    if (final_info.get('finish') != 'stop' or type(final_end) is not int
-            or not task_start <= final_end <= task_end
-            or not any(isinstance(part, dict) and part.get('type') == 'text'
-                       and isinstance(part.get('text'), str) and part['text'].strip()
-                       for part in final_message['parts'])):
-        raise EvidenceError('missing completed child final text')
-    if any(end > final_end for end in required_read_ends):
-        raise EvidenceError('required read completed after the child final response')
-    final_text = '\n'.join(
+    text_parts = [
         part['text'] for part in final_message['parts']
         if isinstance(part, dict) and part.get('type') == 'text'
         and isinstance(part.get('text'), str)
-    )
+    ]
+    if (final_info.get('finish') != 'stop' or type(final_end) is not int
+            or not task_start <= final_end <= task_end
+            or not text_parts or not text_parts[-1].strip()):
+        raise EvidenceError('missing completed child final text')
+    if any(end > final_end for end in required_read_ends):
+        raise EvidenceError('required read completed after the child final response')
+    final_text = text_parts[-1]
     expected_output = (
         f'<task id="{child_id}" state="completed">\n<task_result>\n'
         f'{final_text}\n</task_result>\n</task>'

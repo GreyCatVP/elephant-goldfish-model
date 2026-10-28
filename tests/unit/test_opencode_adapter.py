@@ -83,7 +83,7 @@ def test_stage_required_reports_preserve_context_boundary(tmp_path: Path) -> Non
     destination = tmp_path / "candidate"
     config = json.loads(ADAPTER["install"](destination).read_text())
     bundle = destination / "bundle"
-    canonical = (bundle / "skills/egm_review/SKILL.md").read_text()
+    canonical = (bundle / "skills/egm-review/SKILL.md").read_text()
     assert "include `zoom_out_report.md` path in" in canonical
     guide = " ".join((bundle / "docs/opencode.md").read_text().split())
     prompt = config["agent"]["egm-zoom-out"]["prompt"]

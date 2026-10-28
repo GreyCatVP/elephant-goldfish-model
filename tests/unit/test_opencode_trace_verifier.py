@@ -80,6 +80,17 @@ def test_accepts_correlated_nonempty_read_results(evidence: tuple[list[dict], di
     verify(parent, child, [PERSONA, TARGET])
 
 
+def test_accepts_last_text_part_from_multi_part_final_message(
+    evidence: tuple[list[dict], dict],
+) -> None:
+    parent, child = evidence
+    child['messages'][2]['parts'] = [
+        {'type': 'text', 'text': 'First'},
+        {'type': 'text', 'text': 'Completed'},
+    ]
+    verify(parent, child, [PERSONA, TARGET])
+
+
 def test_accepts_native_system_reminder_suffix(evidence: tuple[list[dict], dict]) -> None:
     parent, child = evidence
     part = child['messages'][1]['parts'][0]
