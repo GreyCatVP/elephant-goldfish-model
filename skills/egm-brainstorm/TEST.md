@@ -4,7 +4,7 @@ Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../T
 
 ## Protocol Verification Checklist
 
-When evaluating or exploring `egm_brainstorm` interactively in chat, verify:
+When evaluating or exploring `egm-brainstorm` interactively in chat, verify:
 
 -   **Step 1 (Open-Ended Clarification & Gate):** Drills down into half-baked concepts
     using open-ended chat questions (without structured question tools or multiple-choice lists)

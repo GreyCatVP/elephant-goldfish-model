@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-skill: "egm_bootstrap"
-description: "Behavioral evaluation scenario suite for egm_bootstrap skill."
+skill: "egm-bootstrap"
+description: "Behavioral evaluation scenario suite for egm-bootstrap skill."
 
 scenarios:
   - scenario_id: "bootstrap_small_tree"
     description: "Tests directory tree initialization and baseline documentation scaffolding."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_bootstrap/SKILL.md"
+      skill_file: "skills/egm-bootstrap/SKILL.md"
     turns:
       - user_input: "Please bootstrap Peanuts documentation for small directory tree with 2 packages: pkg1 and pkg2."
         assertions:
@@ -32,7 +32,7 @@ scenarios:
     description: "Verifies confirmation gate before creating or overwriting existing tree structures in large directories."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_bootstrap/SKILL.md"
+      skill_file: "skills/egm-bootstrap/SKILL.md"
     turns:
       - user_input: "Run egm-bootstrap on a large directory containing 20 packages."
         assertions:

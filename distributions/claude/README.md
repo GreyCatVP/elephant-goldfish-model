@@ -51,7 +51,7 @@ Open your project in your coding agent and choose a feature that needs design de
 
 Use the commands below in Antigravity. In Claude Code, use the `/egm:` prefix, for example `/egm:egm-brainstorm`. In Codex, select the corresponding EGM skill from the skill picker. Brainstorming and review require a session that can create fresh subagents.
 
-<img src="skills/egm_brainstorm/assets/icon.svg" width="20" height="20" align="top" alt=""> **Explore the idea**
+<img src="skills/egm-brainstorm/assets/icon.svg" width="20" height="20" align="top" alt=""> **Explore the idea**
 
 ```text
 /egm-brainstorm Add webhook delivery to this project.
@@ -59,7 +59,7 @@ Use the commands below in Antigravity. In Claude Code, use the `/egm:` prefix, f
 
 Discuss requirements and trade-offs with the agent. Fresh reviewers challenge the proposal, and the agent saves the agreed direction in `concepts_brief.md`.
 
-<img src="skills/egm_draft/assets/icon.svg" width="20" height="20" align="top" alt=""> **Draft the specification**
+<img src="skills/egm-draft/assets/icon.svg" width="20" height="20" align="top" alt=""> **Draft the specification**
 
 ```text
 /egm-draft
@@ -67,7 +67,7 @@ Discuss requirements and trade-offs with the agent. Fresh reviewers challenge th
 
 The agent turns the brief into `design_draft.md`, pausing after each section for your feedback in chat.
 
-<img src="skills/egm_review/assets/icon.svg" width="20" height="20" align="top" alt=""> **Review the draft**
+<img src="skills/egm-review/assets/icon.svg" width="20" height="20" align="top" alt=""> **Review the draft**
 
 ```text
 /egm-review design_draft.md
@@ -99,13 +99,13 @@ You can use each skill when you need it. You do not have to follow the full sequ
 <table>
   <thead><tr><th align="left">Skill</th><th align="left">Use it to…</th></tr></thead>
   <tbody>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_brainstorm/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_brainstorm/SKILL.md">Brainstorm</a></td><td>Test an idea and write a concept brief.</td></tr>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_draft/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_draft/SKILL.md">Draft</a></td><td>Turn a brief or existing notes into a design document.</td></tr>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_resolve/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_resolve/SKILL.md">Resolve</a></td><td>Work through review findings and agree on changes.</td></tr>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_bootstrap/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_bootstrap/SKILL.md">Bootstrap</a></td><td>Create or update documentation for an existing codebase.</td></tr>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_review/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_review/SKILL.md">Review</a></td><td>Review a design with fresh agents across five stages.</td></tr>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_review_loop/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_review_loop/SKILL.md">Review&nbsp;loop</a></td><td>Run a configured group of reviewers for a specific review task.</td></tr>
-    <tr valign="top"><td width="160" valign="top"><img src="skills/egm_drift_report/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm_drift_report/SKILL.md">Drift&nbsp;report</a></td><td>Compare checked-in documents with the current source code.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-brainstorm/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-brainstorm/SKILL.md">Brainstorm</a></td><td>Test an idea and write a concept brief.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-draft/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-draft/SKILL.md">Draft</a></td><td>Turn a brief or existing notes into a design document.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-resolve/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-resolve/SKILL.md">Resolve</a></td><td>Work through review findings and agree on changes.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-bootstrap/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-bootstrap/SKILL.md">Bootstrap</a></td><td>Create or update documentation for an existing codebase.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-review/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-review/SKILL.md">Review</a></td><td>Review a design with fresh agents across five stages.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-review-loop/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-review-loop/SKILL.md">Review&nbsp;loop</a></td><td>Run a configured group of reviewers for a specific review task.</td></tr>
+    <tr valign="top"><td width="160" valign="top"><img src="skills/egm-drift-report/assets/icon.svg" width="20" height="20" alt="" align="top">&nbsp;<a href="skills/egm-drift-report/SKILL.md">Drift&nbsp;report</a></td><td>Compare checked-in documents with the current source code.</td></tr>
   </tbody>
 </table>
 
