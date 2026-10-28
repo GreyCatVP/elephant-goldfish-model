@@ -4,7 +4,7 @@ Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../T
 
 ## Protocol Verification Checklist
 
-When evaluating or exploring `egm_review_loop` interactively in chat, verify:
+When evaluating or exploring `egm-review-loop` interactively in chat, verify:
 
 -   **Step 1 (Intake & Config):** Validates required inputs and resolves standard paths.
 -   **Step 2.1 (Target Resolution):** Unconditionally re-scans line numbers before auditing.

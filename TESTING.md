@@ -99,6 +99,7 @@ A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
 | Claude Cowork | Opus 5.5 Medium, connected cloud task | 2026-10-22 | Pass (ZIP) | Completed with direct-dispatch recovery | Completed | Partial: stages 5–7 | Usage limit interrupted stage 8. Final artifacts, stage 9 and actual isolation-child output remain unverified; #105. Earlier complete run is reported separately. |
 | OpenAI Codex | 0.163.0 | 2026-10-22 | Pass | Pass (fixture) | Pass (fixture) | Pass (fixture) | Two live tests passed in 573.13s; isolation, 15 native reviewers, ordered stages and required reads verified. |
 | ChatGPT Work | GPT-6.1 Sol, Light | 2026-10-22 | Pass; installed hashes verified | Completed | Completed | Nine native reviewers completed | Fresh probe returned UNKNOWN. Artifact download/final audit and full child tool traces remain outstanding; #106. |
+| omp | v18.12.6 | 2026-10-27 | Pass (community install) | Not run | Not run | Not run | Community verification, not a fixture run: all seven skills discover and resolve via `skill://` in fresh headless sessions; all nine reviewer personas register as native `task` agents. TUI `/skill:` autocomplete for hidden skills unverified; end-to-end fixtures not run. Required manifest fixes: hyphenated skill directory names (underscore dirs are rejected by omp's validator) and no `$schema` key in `plugin.json` (omp's strict agent-plugins validation rejects `disable-model-invocation`); see #186. |
 
 ### Interpreting native test results
 

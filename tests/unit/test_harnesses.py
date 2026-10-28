@@ -13,7 +13,6 @@ import pytest
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMA_URL = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
 NAME_RE = r"(?!.*(?:--|\.\.))[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?"
 COMPATIBILITY_MANIFESTS = (
     ".claude-plugin/plugin.json",
@@ -60,8 +59,10 @@ def frontmatter(path: Path) -> dict:
 
 
 def test_portable_manifest_schema() -> None:
+  # The $schema key is deliberately omitted: omp (Oh My Pi) routes manifests
+  # that declare the agent-plugins 1.0.0 schema to its strict validator, which
+  # rejects the skills' disable-model-invocation frontmatter field.
   manifest = read_json("plugin.json")
-  assert manifest["$schema"] == SCHEMA_URL
   assert re.fullmatch(NAME_RE, manifest["name"])
   assert re.fullmatch(r"\d+\.\d+\.\d+", manifest["version"])
 
@@ -168,7 +169,7 @@ def test_claude_bootstrap_adapter_routes_to_skill() -> None:
   assert config["model"] == "inherit"
   text = adapter.read_text()
   assert "${CLAUDE_PLUGIN_ROOT}/agents/bootstrap_orchestrator.md" in text
-  assert "${CLAUDE_PLUGIN_ROOT}/skills/egm_bootstrap/SKILL.md" in text
+  assert "${CLAUDE_PLUGIN_ROOT}/skills/egm-bootstrap/SKILL.md" in text
   canonical = frontmatter(ROOT / "agents/bootstrap_orchestrator.md")
   assert canonical["name"] == config["name"]
   manifest = read_json(".claude-plugin/plugin.json")["agents"]
