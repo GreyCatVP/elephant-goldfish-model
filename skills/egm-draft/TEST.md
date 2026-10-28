@@ -4,7 +4,7 @@ Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../T
 
 ## Protocol Verification Checklist
 
-When evaluating or exploring `egm_draft` interactively in chat, verify:
+When evaluating or exploring `egm-draft` interactively in chat, verify:
 
 -   **Step 4 (Alternatives):** Reads rejected alternatives from the brief's
     `Alternatives Weighed` section, or asks the user if it is absent.
