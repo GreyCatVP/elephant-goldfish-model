@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-skill: "egm_review_loop"
-description: "Behavioral evaluation scenario suite for egm_review_loop skill."
+skill: "egm-review-loop"
+description: "Behavioral evaluation scenario suite for egm-review-loop skill."
 
 scenarios:
   - scenario_id: "orchestrate_parallel_critiques"
     description: "Verifies review persona orchestration and findings compilation."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_review_loop/SKILL.md"
+      skill_file: "skills/egm-review-loop/SKILL.md"
     turns:
       - user_input: "Orchestrate multi-perspective Goldfish review on docs/design.md."
         assertions:

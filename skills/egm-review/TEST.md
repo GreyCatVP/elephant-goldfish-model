@@ -4,7 +4,7 @@ Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../T
 
 ## Protocol Verification Checklist
 
-When evaluating or exploring `egm_review` interactively in chat, verify:
+When evaluating or exploring `egm-review` interactively in chat, verify:
 
 -   **Step 1 (Intake):** Gathers `TargetFile` and optional `GoldfishContext`.
 -   **Step 2 (Semantic Split):** Discovers the split line between Feature Spec
