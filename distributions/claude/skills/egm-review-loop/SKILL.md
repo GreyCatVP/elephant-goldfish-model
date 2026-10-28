@@ -115,7 +115,8 @@ file` mode is specified, confirm full-file line bounds).
         The synthesizer spawns the Goldfish review swarm in
         parallel, deduplicates findings, writes the report artifact, and
         returns a single summary message to avoid context pollution in the root
-        conversation.
+        conversation. Pass it the Failed Reviewers rule below. Its summary must
+        give a status, `completed` or `not run`, for each requested reviewer.
     *   **Direct Dispatch (Flat Swarm)**: Alternatively, spawn each requested
         reviewer subagent in `Reviewers` directly.
         Instruct each subagent to first read its persona definition in
@@ -130,7 +131,9 @@ file` mode is specified, confirm full-file line bounds).
     scope.
 3.  **Failed Reviewers**: A reviewer that times out, fails, or returns no report
     did not review. Retry it once. If it fails again, record it as **not run**
-    in the report. Never count it as a reviewer with zero findings.
+    in the report. Never count it as a reviewer with zero findings. If the
+    synthesizer summary has no status for a requested reviewer, record that
+    reviewer as not run.
 
 #### 2.3 Aggregated Resolution Hand-off
 
