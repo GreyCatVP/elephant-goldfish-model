@@ -104,7 +104,7 @@ scenarios:
     description: "Verifies the Comprehension Test does not apply the re-implementation standard to a design document."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_review/SKILL.md"
+      skill_file: "skills/egm-review/SKILL.md"
     turns:
       - user_input: "Run only Stage 6 (Comprehension Test) on docs/designs/rate_limit.md. Which document standard does the reviewer apply?"
         assertions:
@@ -116,7 +116,7 @@ scenarios:
     description: "Verifies the Comprehension Test report keeps the reviewer's paraphrase."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_review/SKILL.md"
+      skill_file: "skills/egm-review/SKILL.md"
     turns:
       - user_input: "Run only Stage 6 (Comprehension Test) on docs/designs/rate_limit.md. The reviewer reports no findings. What goes in comprehension_report.md?"
         assertions:
