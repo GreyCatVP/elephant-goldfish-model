@@ -125,7 +125,7 @@ scenarios:
     description: "Verifies Step 6 reconciles the draft against the brief and does not self-grade against the Zoom Out standard."
     eval_type: "deterministic"
     system_prompt:
-      skill_file: "skills/egm_draft/SKILL.md"
+      skill_file: "skills/egm-draft/SKILL.md"
     turns:
       - user_input: "All sections are approved. concepts_brief.md chose PostgreSQL; the draft uses Spanner. Finalize the document."
         assertions:
