@@ -3,6 +3,15 @@
 We welcome contributions! We all benefit when new ideas, skills, and reviewer
 perspectives are shared across the open-source community.
 
+## Which track is my change?
+
+Not sure where your change fits? Start here, then read [Contribution Tracks & Workflow](#contribution-tracks--workflow) for the actual rules.
+
+- **Small fix or patch:** open a PR using the [PR template](.github/PULL_REQUEST_TEMPLATE.md). No prior issue needed.
+- **New feature or architectural change:** open a [feature proposal issue](.github/ISSUE_TEMPLATE/feature_proposal.md) first, then register your design in [`docs/designs/README.md`](docs/designs/README.md).
+
+Empty or off-topic issues and PRs are closed.
+
 ## Design Principles
 
 These general principles guide development of the EGM framework:
