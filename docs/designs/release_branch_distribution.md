@@ -31,10 +31,6 @@ folder. The test now fails on `main` and on every open pull request, including
 Dependabot's. PR #209 ("fix(packaging): sync the packaged readme") regenerates
 the folder once. It does not prevent the next drift.
 
-The Windows unit job runs the same failing test. The matrix uses the default
-`fail-fast: true`, so Ubuntu's failure cancels Windows and the check reads
-"cancelled" instead of "failed".
-
 ### Directory portal constraints
 
 Source: Anthropic, [Submit your plugin](https://claude.com/docs/plugins/submit),
@@ -76,7 +72,7 @@ depends on, is not measured (see Open Questions).
 
 ## Open Questions
 
-1.  **Existing submission and layout** (gates Phase 4): Has anyone submitted this
+1.  **Existing submission and layout** (owner: @n3wth; gates Phase 4): Has anyone submitted this
     repository to the directory, from any organization or through the earlier
     Console form at `platform.claude.com/plugins/submissions`? The portal refuses
     a second submission for the same repository and plugin path from another
@@ -282,6 +278,15 @@ request still fails through
     that `release.yml` ran. The extra check adds a failure mode and no new
     guarantee.
 
+### Alternative F: Put the Git steps in the workflow and drop the script
+
+*   **Pros**: Fewer files. No Python between the workflow and Git.
+*   **Cons**: Shell steps in YAML cannot run in the unit suite. The guards for
+    older versions, the same version with other content, line endings, and a
+    rejected push would have no test on Ubuntu and Windows.
+*   **Reason for Rejection**: The script has unit tests that run on both
+    operating systems and a rehearsal on a fork. YAML shell has neither.
+
 ## Risks & Mitigations
 
 | Risk | Mitigation or acceptance |
@@ -380,14 +385,7 @@ group, `publish-claude-branch`, has `cancel-in-progress: false`.
     *   The command line publishes, repeats as a no-op, and exits nonzero on a
         tampered folder.
 
-#### 4. `.github/workflows/tests.yml` (Modify, separate pull request)
-
-*   **Type / Scope**: `jobs.unit.strategy`.
-*   **Proposed Changes**: Add `fail-fast: false`. It has no dependency on the rest
-    and can ship at any time. To check it, make one matrix entry fail on a
-    scratch branch.
-
-#### 5. Phase 6 changes (Modify or Delete)
+#### 4. Phase 6 changes (Modify or Delete)
 
 *   **Type / Scope**: One pull request.
 *   **Proposed Changes**:
