@@ -128,13 +128,12 @@ and its test remain.
 
 ## Proposed Architecture
 
-```text
-publish release        verify and extract              release/claude         portal
----------------        ------------------              --------------         ------
-release.yml built      gh attestation verify           one commit per         tracks the
-and attested the  ---> unzip egm-claude-<v>.zip  ----> published release,    branch and
-ZIP; maintainer        checks: tag, version, order     fast-forward   ------> scans each
-publishes it                                           only                   commit
+```mermaid
+flowchart LR
+  A[Maintainer publishes release] --> B[Verify attestation of<br/>egm-claude ZIP]
+  B --> C[Extract ZIP]
+  C --> D[One commit on<br/>release/claude]
+  D --> E[Directory portal<br/>scans the branch]
 ```
 
 ### Trigger
