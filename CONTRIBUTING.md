@@ -7,10 +7,8 @@ perspectives are shared across the open-source community.
 
 Not sure where your change fits? Start here, then read [Contribution Tracks & Workflow](#contribution-tracks--workflow) for the actual rules.
 
-- **Small fix or patch:** open a PR using the [PR template](.github/PULL_REQUEST_TEMPLATE.md). No prior issue needed.
-- **New feature or architectural change:** open a [feature proposal issue](.github/ISSUE_TEMPLATE/feature_proposal.md) first, then register your design in [`docs/designs/README.md`](docs/designs/README.md).
-
-Empty or off-topic issues and PRs are closed.
+- **Bug fix or minor patch:** open a PR using the [PR template](.github/PULL_REQUEST_TEMPLATE.md). No prior issue is needed if the non-test diff is `<= 100` lines and touches `< 3` core files in `skills/` or `agents/`.
+- **New feature or architectural change:** open a [feature proposal issue](https://github.com/google/elephant-goldfish-model/issues/new?template=feature_proposal.md) first. After a maintainer applies `design-ready`, submit a design doc PR, then the implementation PR once the issue is `pr-ready`.
 
 ## Design Principles
 
