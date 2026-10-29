@@ -11,7 +11,10 @@ Create and activate an isolated Python 3.10+ virtual environment:
 
 ```bash
 # Navigate to the repository root
-cd /path/to/egm_opensource
+cd /path/to/elephant-goldfish-model
+
+# Check Python version (3.10 or newer)
+python3 --version
 
 # Create virtual environment
 python3 -m venv .venv
@@ -22,6 +25,12 @@ source .venv/bin/activate
 # Install testing dependencies
 pip install -r requirements-dev.txt
 ```
+
+If your Python version is older than 3.10, install a newer version from [python.org/downloads](https://www.python.org/downloads/) or your system's package manager. Open a new terminal and verify the updated version before continuing. If `python3` still points to the older version, use the newer interpreter explicitly (for example, `python3.12 -m venv .venv`).
+
+If you previously created `.venv` using an older Python version, delete it and recreate it using the updated version.
+
+With Python 3.9 or older, `pytest` stops during test collection with `TypeError: unsupported operand type(s) for |`.
 
 ---
 
