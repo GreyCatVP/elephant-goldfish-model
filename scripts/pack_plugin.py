@@ -25,16 +25,16 @@ HOST = {
     "openai": (".codex-plugin/plugin.json",),
 }
 SKILLS = (
-    "egm_bootstrap", "egm_brainstorm", "egm_draft", "egm_drift_report",
-    "egm_resolve", "egm_review", "egm_review_loop",
+    "egm-bootstrap", "egm-brainstorm", "egm-draft", "egm-drift-report",
+    "egm-resolve", "egm-review", "egm-review-loop",
 )
 REQUIRED_SHARED = (
     "plugin.json", "LICENSE", "README.md", "assets/icon.svg",
     "docs/index.md", "docs/getting_started.md", "docs/harnesses.md",
     "docs/claude.md", "docs/codex.md", "docs/faq.md", "docs/privacy.md",
     "resources/README.md", "resources/execution_instructions.md",
-    "skills/egm_bootstrap/references/worker-return.schema.json",
-    "skills/egm_draft/references/design_doc.md",
+    "skills/egm-bootstrap/references/worker-return.schema.json",
+    "skills/egm-draft/references/design_doc.md",
 ) + tuple(
     f"skills/{skill}/{name}"
     for skill in SKILLS
@@ -88,7 +88,10 @@ def build(root: Path, target: str, output: Path) -> tuple[Path, Path]:
   interface = openai.get("interface", {})
   if target == "openai":
     interface = interface or manifest.get("interface", {})
-    references += [interface[key] for key in ("composerIcon", "logo")]
+    for key in ("composerIcon", "logo"):
+      if not interface.get(key):
+        raise ValueError(f"Missing OpenAI interface reference: {key}")
+      references.append(interface[key])
   else:
     references.append(manifest.get("icon", "./.claude-plugin/icon.png"))
   for reference in references:
