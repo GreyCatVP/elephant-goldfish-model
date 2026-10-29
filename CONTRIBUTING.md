@@ -72,6 +72,18 @@ follows the EGM Spec-Driven Development process:
     `pr-ready`, open the implementation PR (`Closes #<issue>`)
     referencing `docs/designs/<name>.md`.
 
+## Before Opening a Pull Request
+
+Run the local pre-review in your coding agent before opening the pull request.
+This is the only pre-review step; do not stack additional generic review tools
+on top of it.
+
+*   **Design Doc PRs (Stage 1)**: Run `/egm-review docs/designs/<name>.md`,
+    work through the findings with `/egm-resolve`, and verify relative links
+    with `pytest tests/unit/test_link_integrity.py`.
+*   **Bug Fix / Implementation PRs (Stage 2)**: Add or update unit tests or
+    `test_scenarios.yaml` for the change and run `pytest tests/unit`.
+
 ## Automated Validation & Testing
 
 *   **Skill Definitions**: Ensure all `SKILL.md` files contain valid YAML
