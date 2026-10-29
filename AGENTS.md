@@ -4,16 +4,7 @@ You are assisting development in the EGM repository.
 
 ## Contribution Boundaries
 
-* **No Autonomous PRs**: You must never automatically open a pull request without
-  explicit human review, testing, and approval.
-* **Triage Taxonomy**: Ensure the human operator selects the appropriate track in
-  [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md):
-  * `Bug Fix / Minor Patch` (non-test diff `<= 100` lines and `< 3` core files in
-    `skills/` or `agents/`; no design doc required, but please update an existing
-    design if appropriate).
-  * `Feature / Architectural Change — Stage 1: Design Doc PR` (requires an aligned
-    issue with `design-ready`, uses `Refs #<issue>`, and adds
-    `docs/designs/<name>.md` + updates `docs/designs/README.md`).
+* **No Autonomous PRs**: You must never automatically open a pull request withoutame>.md` + updates `docs/designs/README.md`).
   * `Feature / Architectural Change — Stage 2: Implementation PR` (requires an
     aligned issue with `pr-ready` and a merged
     `docs/designs/<name>.md`).
