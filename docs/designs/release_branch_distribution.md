@@ -129,11 +129,11 @@ and its test remain.
 ## Proposed Architecture
 
 ```mermaid
-flowchart LR
-  A[Maintainer publishes release] --> B[Verify attestation of<br/>egm-claude ZIP]
+flowchart TD
+  A[Maintainer publishes release] --> B[Verify attestation of egm-claude ZIP]
   B --> C[Extract ZIP]
-  C --> D[One commit on<br/>release/claude]
-  D --> E[Directory portal<br/>scans the branch]
+  C --> D[One commit on release/claude]
+  D --> E[Directory portal scans the branch]
 ```
 
 ### Trigger
