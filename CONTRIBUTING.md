@@ -3,6 +3,13 @@
 We welcome contributions! We all benefit when new ideas, skills, and reviewer
 perspectives are shared across the open-source community.
 
+## Which track is my change?
+
+Not sure where your change fits? Start here, then read [Contribution Tracks & Workflow](#contribution-tracks--workflow) for the actual rules.
+
+- **Bug fix or minor patch:** open a PR using the [PR template](.github/PULL_REQUEST_TEMPLATE.md). No prior issue is needed if the non-test diff is `<= 100` lines and touches `< 3` core files in `skills/` or `agents/`.
+- **New feature or architectural change:** open a [feature proposal issue](https://github.com/google/elephant-goldfish-model/issues/new?template=feature_proposal.md) first. After a maintainer applies `design-ready`, submit a design doc PR, then the implementation PR once the issue is `pr-ready`.
+
 ## Design Principles
 
 These general principles guide development of the EGM framework:
