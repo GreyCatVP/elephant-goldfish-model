@@ -8,7 +8,9 @@ text.
 
 | Harness | Install |
 | --- | --- |
-| Antigravity | `agy plugin install https://github.com/google/elephant-goldfish-model` (or `/plugin` in the IDE; see [installation instructions](#antigravity-ide-and-vs-code)) |
+| Antigravity CLI | `agy plugin install https://github.com/google/elephant-goldfish-model` |
+| Antigravity App | Run `/plugin` or see [installation instructions](#antigravity-app-and-antigravity-for-ides) |
+| Antigravity for IDEs | Run `/plugin` or see [installation instructions](#antigravity-app-and-antigravity-for-ides) |
 | Claude Code | `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm` |
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
 | Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm` |
@@ -19,15 +21,17 @@ Install the whole plugin. Skill-only installers that copy `skills/` alone
 break EGM, because the skills read `agents/` and
 `resources/document_standards/` at run time.
 
-### Antigravity IDE and VS Code
+### Antigravity App and Antigravity for IDEs
 
-Antigravity IDE and Antigravity for VS Code share the global plugin directory
-`~/.gemini/config/plugins/<name>/`. When not using the `agy` CLI, either ask
-the agent `Install https://github.com/google/elephant-goldfish-model` (or run
-`/plugin`), or copy the full runtime bundle into `~/.gemini/config/plugins/egm/`
-for a fresh installation (copying into an existing plugin directory can leave
-obsolete files behind, so remove `~/.gemini/config/plugins/egm` first when
-updating):
+- **Antigravity App**: Run `/plugin`, ask the agent `Install https://github.com/google/elephant-goldfish-model`, or manually install into `~/.gemini/config/plugins/egm/` using the commands below.
+- **Antigravity for IDEs (Extension for Visual Studio Code, JetBrains, etc.)**: Run `/plugin`, ask the agent `Install https://github.com/google/elephant-goldfish-model`, or manually install into `~/.gemini/config/plugins/egm/` using the commands below.
+- **Antigravity IDE (Standalone)**: Not supported at this time. Although the plugin and skills load from `~/.gemini/config/plugins/egm/`, standalone Antigravity IDE (tested on macOS and Linux) does not expose the fresh-context subagent tool (`invoke_subagent`) required for Goldfish reviews (`/egm-brainstorm` and `/egm-review`).
+
+The Antigravity App and Antigravity for IDEs share the global plugin directory
+`~/.gemini/config/plugins/<name>/`. For a fresh manual installation without the
+`agy` CLI, copy the full runtime bundle into `~/.gemini/config/plugins/egm/`
+(copying into an existing plugin directory can leave obsolete files behind, so
+remove `~/.gemini/config/plugins/egm` first when updating):
 
 ```sh
 git clone https://github.com/google/elephant-goldfish-model.git
@@ -36,8 +40,8 @@ mkdir -p ~/.gemini/config/plugins/egm
 cp -R plugin.json README.md LICENSE skills agents resources docs assets ~/.gemini/config/plugins/egm/
 ```
 
-Reload the window (or restart Antigravity), then confirm that `egm` appears in
-the plugin list and that its skills (`/egm-brainstorm`, `/egm-draft`,
+Reload the window (or restart the Antigravity App), then confirm that `egm`
+appears in the plugin list and that its skills (`/egm-brainstorm`, `/egm-draft`,
 `/egm-review`) are available.
 
 ## Manifests
@@ -96,7 +100,8 @@ nest subagents, use direct dispatch instead of the synthesizer.
 A Goldfish review needs a fresh context. If a harness has no subagent tool,
 the review skills stop instead of running in the same context. Check actual
 tool availability rather than inferring it from the product name. This applies
-to ChatGPT modes that do not expose native fresh-context delegation.
+to standalone Antigravity IDE and to ChatGPT modes that do not expose native
+fresh-context delegation.
 
 ## Artifact Directory
 
